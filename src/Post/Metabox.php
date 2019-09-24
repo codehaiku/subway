@@ -7,56 +7,72 @@ use Subway\Helpers\Helpers;
 
 class Metabox {
 
-	public function __construct()
+	private $post;
+	private $view;
+	private $options;
+	private $helpers;
+
+	private function set_post( Post $post )
 	{
-		$this->post = new Post();
-		$this->view = new View();
-		$this->option = new Options();
-		$this->helper = new Helpers();
+		$this->post = $post;
+		return $this;
 	}
 
-	public function add_meta_boxes()
+	private function set_view( View $view ){
+		$this->view = $view;
+		return $this;
+	}
+
+	private function set_options( Options $options )
+	{
+		$this->options = $options;
+		return $this;
+	}
+
+	private function set_helpers( Helpers $helpers )
+	{
+		$this->helpers = $helpers; 
+	}
+
+	private function add_meta_boxes()
 	{
 		$post_types = $this->post->get_types();
 
 		foreach ( $post_types as $post_type => $value ) {
 			add_meta_box( 'subway_comment_metabox',
 				esc_html__( 'Membership Discussion', 'subway' ),
-				array( $this, 'discussion' ), $post_type, 'side', 'high'
+				function( $post ) { $this->discussion( $post ); } , 
+				$post_type, 'side', 'high'
 			);
 
 			add_meta_box('subway_visibility_metabox',
 				esc_html__( 'Membership Access', 'subway' ),
-				array( $this, 'visibility' ), $post_type, 'side', 'high'
+				function( $post ){ $this->visibility( $post ); }, 
+				$post_type, 'side', 'high'
 			);
 		}
 
 	}
 
-	public function visibility( $post ) 
+	private function visibility( $post ) 
 	{
-		
 		$this->view->render('form-post-visiblity-metabox', [
 				'class_post' => $this->post,
-				'options' => $this->option,
-				'helper' => $this->helper,
+				'options' => $this->options,
+				'helpers' => $this->helpers,
 				'post' => $post 
 			]);
 	}
 
-	public function discussion()
+	private function discussion( $post )
 	{
-
+		$this->view->render('form-post-discussion-metabox', [
+				'post_id' => $post->ID,
+				'helpers' => $this->helpers
+			]);
 	}
 
-	public function attach_hooks() 
-	{
-
-		$this->define_hooks();
-
-	}
-
-	public function save( $post_id )
+	private function save( $post_id )
 	{
 		
 		if ( wp_is_post_autosave( $post_id ) ) {
@@ -143,10 +159,37 @@ class Metabox {
 
 	}
 
+	public function hook_add_meta_boxes()
+	{
+		$this->add_meta_boxes();
+		
+		return $this;
+
+	}
+
+	public function hook_save_post( $post_id )
+	{
+		$this->save( $post_id );
+
+		return $this;
+	}
+
+	public function attach_hooks() 
+	{
+		$this->define_hooks();
+	}
+
 	private function define_hooks()
 	{
-		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
-		add_action( 'save_post', array( $this, 'save' ) );
+		$this->set_options( new Options() )
+			 ->set_post( new Post() )
+			 ->set_view( new View() )
+			 ->set_helpers( new Helpers() );
 
+		add_action( 'add_meta_boxes', array( $this, 'hook_add_meta_boxes' ), 10, 1 );
+
+		add_action( 'save_post', array( $this, 'hook_save_post' ), 10, 1 );
+
+		return;
 	}
 }

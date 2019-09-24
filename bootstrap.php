@@ -13,6 +13,7 @@ final class Bootstrap{
 				'Subway\Options\Options',
 				'Subway\Post\Metabox',
 				'Subway\Post\Post',
+				'Subway\Post\Comments',
 				'Subway\Widgets\Options'
 			);
 	}

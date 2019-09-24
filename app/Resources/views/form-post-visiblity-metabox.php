@@ -74,7 +74,7 @@ wp_nonce_field( basename( __FILE__ ),  'subway_post_visibility_nonce' );
 
 	?>
 
-	<?php $helper->display_roles_checkbox( $cb_args ); ?>
+	<?php $helpers->display_roles_checkbox( $cb_args ); ?>
 
 	<dl>
 		<dt>
