@@ -1,0 +1,8 @@
+{
+    "autoload": {
+        "psr-4": {
+            "Subway\\": "src/"
+        },
+        "files"   : ["bootstrap.php"]
+    }
+}
