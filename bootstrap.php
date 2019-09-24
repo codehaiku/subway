@@ -33,8 +33,11 @@ final class Bootstrap{
 $bootstrap = new Bootstrap();
 $bootstrap->boot();
 
+$user = new User();
+$view = new View();
+
 // Load our widgets.
-$widget = new Widget_Options( new User(), new View() );
+$widget = new Widget_Options( $user, $view );
 $widget->attach_hooks();
 
 // Enqueue Everything.
