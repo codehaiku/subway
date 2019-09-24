@@ -39,17 +39,5 @@ class Options {
         return add_query_arg( apply_filters( 'subway_redirected_url', 
             array('_redirected'=> 'redirected') ), $login_url );
 	}
-	
-	public function attach_hooks() 
-	{
-
-		$this->define_hooks();
-
-	}
-
-	private function define_hooks()
-	{
-		// Blank.
-	}
 
 }

@@ -15,10 +15,10 @@ class Options {
 
 	var $user = '';
 
-	public function __construct()
+	public function __construct( User $user, View $view )
 	{
-		$this->view = new View();
-		$this->user = new User();
+		$this->view = $view;
+		$this->user = $user;
 	}
 
 	public function form( $widget, $return, $instance )
