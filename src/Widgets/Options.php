@@ -76,7 +76,7 @@ class Options {
 						return true;
 					}
 					
-					echo wp_kses_post( $this->display_message( $settings, $args ) );
+					$this->display_message( $settings, $args );
 
 					return false;
 
@@ -88,7 +88,7 @@ class Options {
 			return true;
 		}
 		
-		echo wp_kses_post( $this->display_message( $settings, $args ) );
+	 	$this->display_message( $settings, $args );
 
 		return false;
 	}
