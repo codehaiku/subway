@@ -8,9 +8,9 @@ class Helpers
 
 	protected $view = '';
 
-    public function __construct()
+    public function __construct( View $view )
     {
-        $this->view = new View();
+        $this->view = $view;
     }
 
 	public function display_roles_checkbox( $args )
@@ -18,16 +18,6 @@ class Helpers
         $post_id = get_the_id();
         $defaults = array( 'name' => '', 'option_name' => '');
         $this->view->render('helper-roles-checkbox', [ 'args' => $args ] );
-	}
-
-	public function attach_hooks() 
-	{
-        $this->define_hooks();
-	}
-
-	private function define_hooks()
-	{
-		
 	}
 
 }

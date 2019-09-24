@@ -8,7 +8,6 @@ final class Bootstrap{
 	public function __construct()
 	{
 		$this->services = array(
-				'Subway\Helpers\Helpers',
 				'Subway\Enqueue\Enqueue',
 				'Subway\Options\Options',
 				'Subway\Post\Metabox',

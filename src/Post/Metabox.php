@@ -181,10 +181,12 @@ class Metabox {
 
 	private function define_hooks()
 	{
+		$view = new View();
+
 		$this->set_options( new Options() )
 			 ->set_post( new Post() )
-			 ->set_view( new View() )
-			 ->set_helpers( new Helpers() );
+			 ->set_view( $view )
+			 ->set_helpers( new Helpers( $view ) );
 
 		add_action( 'add_meta_boxes', array( $this, 'hook_add_meta_boxes' ), 10, 1 );
 
