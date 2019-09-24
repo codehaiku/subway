@@ -11,22 +11,13 @@ class Helpers {
 		$this->view = new View();
 	}
 
-	public function display_roles_checkbox()
+	public function display_roles_checkbox( $args )
 	{
 		$post_id = get_the_id();
        
-        $defaults = array(
-                'name' => '',
-                'option_name' => ''
-            );
+        $defaults = array( 'name' => '', 'option_name' => '');
 
-        $args = wp_parse_args( $args, $defaults );
-
-        $r = array(
-        	'args' => $args
-        );
-
-        $this->view->render('helper-roles-checkbox', $r );
+        $this->view->render('helper-roles-checkbox', [ 'args' => $args ] );
 
 	}
 

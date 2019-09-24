@@ -24,7 +24,7 @@ class Post {
 		return $post_types;
 	}
 
-	public function get_allowed_roles( $id )
+	public function get_allowed_roles( $post_id )
 	{
 		$allowed_roles = array();
 
@@ -34,9 +34,12 @@ class Post {
 			if ( metadata_exists( 'post', $post_id, 'subway-visibility-settings-allowed-user-roles' ) ) {
 
 				$allowed_roles = get_post_meta( $post_id, 'subway-visibility-settings-allowed-user-roles', true );
-				if ( ! is_null( $allowed_roles ) ) {
+				
+				if ( ! is_null( $allowed_roles ) ) 
+				{
 					return $allowed_roles;
 				}
+
 				return false;
 				
 			} else {
@@ -51,7 +54,7 @@ class Post {
 
 	}
 
-	public function get_no_access_type( $id )
+	public function get_no_access_type( $post_id )
 	{
 		$allowed_no_access_type = array('block_content', 'redirect');
 
@@ -65,7 +68,7 @@ class Post {
         return $post_no_access_type;
 	}
 
-	public function is_private( $id )
+	public function is_private( $post_id )
 	{
 		$meta_value = '';
 

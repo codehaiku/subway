@@ -25,7 +25,7 @@ $private_setting_label = __( 'Members Only', 'subway' );
 
 $is_post_private = $class_post->is_private( $post->ID );
 
-// Make sure the form request comes from WordPress
+// Make sure the form request comes from WordPress.
 wp_nonce_field( basename( __FILE__ ),  'subway_post_visibility_nonce' );
 
 // Disable the options (radio) when site is selected as public
@@ -33,8 +33,14 @@ wp_nonce_field( basename( __FILE__ ),  'subway_post_visibility_nonce' );
 <input type="hidden" name="subway-visibility-form-submitted" value="1" />
 <p>
 	<label class="subway-visibility-settings-checkbox-label" for="subway-visibility-public">
-		<input type="radio" class="subway-visibility-settings-radio" id="subway-visibility-public" name="subway-visibility-settings" value="public" <?php echo checked( false, $is_post_private, false ); ?>>
+		
+		<input type="radio" class="subway-visibility-settings-radio" 
+			id="subway-visibility-public" name="subway-visibility-settings" 
+				value="public" <?php echo checked( false, $is_post_private, false ); ?> 
+					/>
+		
 		<?php esc_html_e( 'Anyone', 'subway' ) ?>
+
 	</label>
 </p>
 
@@ -43,22 +49,31 @@ wp_nonce_field( basename( __FILE__ ),  'subway_post_visibility_nonce' );
 <?php $internal_pages = $options->get_internal_pages(); ?>
 
 <?php if ( ! in_array( $current_page_id, $internal_pages ) ) : ?>
-<p>
-	<label class="subway-visibility-settings-checkbox-label" for="subway-visibility-private">
-		<input type="radio" class="subway-visibility-settings-radio" id="subway-visibility-private" name="subway-visibility-settings"
-		value="private" <?php echo checked( true, $is_post_private, false ); ?>>
-		<?php esc_html_e( 'Members Only', 'subway' ) ?>
-	 </label>
-</p>
+	<p>
+		<label class="subway-visibility-settings-checkbox-label" for="subway-visibility-private">
+			
+			<input type="radio" class="subway-visibility-settings-radio" 
+				id="subway-visibility-private" 
+					name="subway-visibility-settings"
+						value="private" <?php echo checked( true, $is_post_private, false ); ?> 
+							/>
+			
+			<?php esc_html_e( 'Members Only', 'subway' ) ?>
+
+		 </label>
+	</p>
 <?php endif ;?>
+
 <div id="subway-roles-access-visibility-fields" class="hidden">
 	
 	<?php
 		$cb_args = array();
 		$cb_args['name'] = 'subway-visibility-settings-user-role';
 		$cb_args['saved_roles'] = $class_post->get_allowed_roles( $post->ID );
-		$cb_args['howto'] = esc_html__( 'Uncheck the user roles that you do not want to have access to this content', 'subway' )
+		$cb_args['howto'] = esc_html__( 'Uncheck the user roles that you do not want to have access to this content', 'subway' );
+
 	?>
+
 	<?php $helper->display_roles_checkbox( $cb_args ); ?>
 
 	<dl>
