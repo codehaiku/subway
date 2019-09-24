@@ -10,16 +10,6 @@ class Comments {
 
     protected $view;
 
-    protected function set_user( User $user )
-    {
-        $this->user = $user;
-    }
-
-     protected function set_view( View $view )
-    {
-        $this->view = $view;
-    }
-
     public function is_current_user_allowed()
     {
         
@@ -58,7 +48,17 @@ class Comments {
 
     }
 
-    public function display()
+    protected function set_user( User $user )
+    {
+        $this->user = $user;
+    }
+
+    protected function set_view( View $view )
+    {
+        $this->view = $view;
+    }
+
+    protected function display()
     {
         if ( ! $this->is_current_user_allowed() )
         {
@@ -67,7 +67,7 @@ class Comments {
 
     }
 
-    public function restrict()
+    protected function restrict()
     {
         // Check if coming from submit form.
         $requested_post_id = filter_input( INPUT_POST, 'comment_post_ID', FILTER_VALIDATE_INT);
@@ -123,4 +123,5 @@ class Comments {
         add_filter('comments_open', array( $this, 'hook_comments_open'), 10, 2 );
         add_action('comment_form_comments_closed', array( $this, 'hook_comment_form_comments_closed' ) );
     }
+    
 }
