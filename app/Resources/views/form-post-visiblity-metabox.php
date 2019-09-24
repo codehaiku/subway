@@ -71,7 +71,6 @@ wp_nonce_field( basename( __FILE__ ),  'subway_post_visibility_nonce' );
 		$cb_args['name'] = 'subway-visibility-settings-user-role';
 		$cb_args['saved_roles'] = $class_post->get_allowed_roles( $post->ID );
 		$cb_args['howto'] = esc_html__( 'Uncheck the user roles that you do not want to have access to this content', 'subway' );
-
 	?>
 
 	<?php $helpers->display_roles_checkbox( $cb_args ); ?>
