@@ -23,6 +23,7 @@ class Metabox {
 	 * @param Helpers $helpers
 	 */
 	public function __construct( Post $post, View $view, Options $options, Helpers $helpers ) {
+		
 		$this->post    = $post;
 		$this->view    = $view;
 		$this->options = $options;

@@ -90,8 +90,9 @@ display: block;
     padding: 10px;
     color: rgba(255, 0, 0, 0.87);
     border-radius: 5px;
-    font-size: medium;
-    margin-bottom: 20px;
+    margin: 20px 0;
+    font-size: 1em;
+    line-height: 1.5em;
     border: 1px solid #ff000030;
 }
 

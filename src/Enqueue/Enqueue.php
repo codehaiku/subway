@@ -9,6 +9,17 @@ class Enqueue {
 		wp_register_style( 'subway-general', 
 			plugins_url('subway/web/css/subway.css', SUBWAY_DIR_PATH), 
 				array(), false, 'all' );
+
+		// Global scripts.
+		wp_register_script( 'subway-global',
+			plugins_url('subway/web/js/global.js', SUBWAY_DIR_PATH),
+			array('jquery'), false, false );
+
+		// Localize the script.
+		wp_localize_script( 'subway-global', 'subway_config', array(
+			'ajax_url' => admin_url('admin-ajax.php'),
+			'login_http_error' => esc_html__( 'An error occured while transmitting the data. Refresh the page and try again', 'subway' ), )
+		);
 	}
 
 	public function assets_admin_loaded()
@@ -17,6 +28,8 @@ class Enqueue {
 		wp_register_script( 'subway-general', 
 			plugins_url('subway/web/js/general.js', SUBWAY_DIR_PATH), 
 				array('jquery'), false, false );
+
+
 	}
 
 	public function attach_hooks() 

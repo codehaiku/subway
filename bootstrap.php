@@ -1,6 +1,9 @@
 <?php
 namespace Subway\Bootstrap;
 
+use Subway\Archives\Author;
+use Subway\Options\Admin\Settings;
+use Subway\Post\Shortcodes\Login;
 use Subway\Widgets\Options as WidgetOptions;
 use Subway\Options\Options as PluginOptions;
 use Subway\Post\Post;
@@ -44,3 +47,15 @@ $comments->attach_hooks();
 // Load Taxonomy.
 $comments = new Taxonomy( $view );
 $comments->attach_hooks();
+
+// Load Author Archives
+$archives_author = new Author( $options, $user );
+$archives_author->attach_hooks();
+
+// Load Login Shortcode
+$login_shortcode = new Login( $view );
+$login_shortcode->attach_hooks();
+
+// Load Admin Settings
+$admin_settings = new Settings();
+$admin_settings->attach_hooks();
