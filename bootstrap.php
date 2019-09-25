@@ -42,5 +42,5 @@ $comments->attach_hooks();
 
 
 // Load Taxonomy.
-$comments = new Taxonomy();
+$comments = new Taxonomy( $view );
 $comments->attach_hooks();
