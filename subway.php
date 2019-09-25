@@ -33,5 +33,11 @@ define( 'SUBWAY_DIR_PATH', trailingslashit( plugin_dir_path( __FILE__ ) ) );
 // Define Subway URL Path.
 define( 'SUBWAY_DIR_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
 
-// Require our autoloder.
+// Assets CSS URL.
+define( 'SUBWAY_CSS_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'web/css/' );
+
+// Assets JS URL.
+define( 'SUBWAY_JS_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'web/js/' );
+
+// Require our autoloader.
 require_once SUBWAY_DIR_PATH . 'vendor' . '/autoload.php';

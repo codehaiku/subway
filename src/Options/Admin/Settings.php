@@ -12,6 +12,9 @@ class Settings {
 
 	public function menu() {
 
+		// Require Stylesheet.
+		wp_enqueue_script( 'subway-settings-style' );
+
 		// Add top-level menu "Membership".
 		add_menu_page(
 			esc_html__( 'Memberships Settings', 'subway' ),
@@ -100,7 +103,7 @@ class Settings {
 			array(
 				'id'       => 'subway_logged_in_user_no_access_page',
 				'label'    => __( 'No Access Page', 'subway' ),
-				'callback' => 'subway_logged_in_user_no_access_page',
+				'callback' => array( $settings_callback, 'login_user_no_access_page' ),
 				'section'  => 'subway-settings-section',
 				'group'    => 'subway-page-visibility-section'
 			),
@@ -108,7 +111,7 @@ class Settings {
 			array(
 				'id'       => 'subway_author_archives',
 				'label'    => __( 'Author', 'subway' ),
-				'callback' => 'subway_author_archives',
+				'callback' => array( $settings_callback, 'author_archives' ),
 				'section'  => 'subway-settings-section',
 				'group'    => 'subway-archives-section'
 			),
@@ -116,7 +119,7 @@ class Settings {
 			array(
 				'id'       => 'subway_date_archives',
 				'label'    => __( 'Date', 'subway' ),
-				'callback' => 'subway_date_archives',
+				'callback' => array( $settings_callback, 'date_archives' ),
 				'section'  => 'subway-settings-section',
 				'group'    => 'subway-archives-section'
 			),
@@ -197,13 +200,13 @@ class Settings {
 
 	public function assets( $hook ) {
 
-		wp_register_script( 'subway-settings-script',
-			plugins_url( '/assets/js/settings.js', __FILE__ ) );
+		// wp_register_script( 'subway-settings-script',
+		// plugins_url( '/assets/js/settings.js', SUBWAY_JS_URL . 'settings.js' ) );
 
-		wp_register_style( 'subway-settings-style',
-			plugins_url( '/assets/css/settings.css', __FILE__ ) );
+		wp_register_style( 'subway-settings-style', SUBWAY_CSS_URL . 'settings.css' );
 
-		if ( in_array( $hook, [ 'memberships_page_subway-membership-general' ] ) ) {
+		if ( in_array( $hook, [ 'memberships_page_subway-membership-general' ] ) )
+		{
 			// Enqueues the script only on the Subway Settings page.
 			wp_enqueue_script( 'subway-settings-script' );
 			wp_enqueue_style( 'subway-settings-style' );

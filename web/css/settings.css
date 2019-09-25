@@ -1,0 +1,66 @@
+/*
+ * Copyright (c) 2019. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+ * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
+ * Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna.
+ * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
+ * Vestibulum commodo. Ut rhoncus gravida arcu.
+ */
+
+.subway-tooltip {
+    max-width: 600px;
+}
+.subway-redirect-option-section {
+    background: #fff;
+    padding: 15px 20px;
+    margin: 15px 0;
+}
+.subway-redirect-type-choices > label {
+    margin-right: 15px;
+}
+
+.subway-redirect-type-choices > label:last-child {
+    margin-right:  0;
+}
+
+#subway_public_post {
+    background-color: #e0e0e0;
+    cursor: not-allowed;
+}
+.subway-settings-notice {
+    color: #e53935;
+    font-weight: bold;
+}
+.subway-settings-text-notice {
+    color: #e53935;
+}
+
+textarea#subway_public_post,
+select#subway_login_page,
+select#subway_redirect_page_id {
+    max-width: 620px;
+}
+
+.subway-widget-access-type-roles {
+    display: none;
+}
+.subway-widget-access-type-roles.active {
+    display: block;
+}
+.subway-widget-membership-options dl p {
+    margin: 0 0 5px 0;
+}
+.subway-widget-options-toggle .dashicons-lock {
+    margin-top: 2px;
+    margin-left: -5px;
+}
+
+label.subway-archive-roles {
+    background: #fff;
+    margin: 5px 10px 5px 0;
+    padding: 5px 10px;
+    display: inline-block;
+    box-shadow: 5px 5px 0px -1px #b3b3b3;
+    border: 1px solid #b3b3b3;
+    border-radius: 5px;
+}
+
