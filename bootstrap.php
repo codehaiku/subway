@@ -1,45 +1,46 @@
 <?php
 namespace Subway\Bootstrap;
 
-use Subway\Widgets\Options as Widget_Options;
+use Subway\Widgets\Options as WidgetOptions;
+use Subway\Options\Options as PluginOptions;
+use Subway\Post\Post;
+use Subway\Post\Metabox;
+use Subway\Post\Comments;
 use Subway\View\View;
 use Subway\User\User;
 use Subway\Enqueue\Enqueue;
+use Subway\Helpers\Helpers;
+use Subway\Taxonomy\Taxonomy;
 
-final class Bootstrap{
-	
-	var $services = array();
+// Get our repositories.
+$user    = new User();
+$view    = new View();
+$options = new PluginOptions();
 
-	public function __construct()
-	{
-		// @todo get out of this shit.
-		$this->services = array(
-				'Subway\Post\Metabox',
-				'Subway\Post\Post',
-				'Subway\Post\Comments',
-			);
-	}
-
-	public function boot() 
-	{
-		foreach( $this->services as $service )
-		{
-			$_service = new $service;
-			$_service->attach_hooks();
-		}
-	}
-}
-
-$bootstrap = new Bootstrap();
-$bootstrap->boot();
-
-$user = new User();
-$view = new View();
+// Load our helpers.
+$helpers = new Helpers( $view );
 
 // Load our widgets.
-$widget = new Widget_Options( $user, $view );
+$widget = new WidgetOptions( $user, $view );
 $widget->attach_hooks();
 
 // Enqueue Everything.
 $assets = new Enqueue();
 $assets->attach_hooks();
+
+// Load our post hooks.
+$post = new Post( $user, $options );
+$post->attach_hooks();
+
+// Load our metabox.
+$metabox = new Metabox( $post, $view, $options, $helpers );
+$metabox->attach_hooks();
+
+// Load Comments.
+$comments = new Comments( $user, $view );
+$comments->attach_hooks();
+
+
+// Load Taxonomy.
+$comments = new Taxonomy();
+$comments->attach_hooks();

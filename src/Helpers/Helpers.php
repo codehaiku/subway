@@ -1,23 +1,38 @@
 <?php
+
 namespace Subway\Helpers;
 
 use Subway\View\View;
 
-class Helpers 
-{
+/**
+ * Class Helpers
+ * @package Subway\Helpers
+ */
+class Helpers {
 
+	/**
+	 * @var string|View
+	 */
 	protected $view = '';
 
-    public function __construct( View $view )
-    {
-        $this->view = $view;
-    }
+	/**
+	 * Helpers constructor.
+	 *
+	 * @param View $view
+	 */
+	public function __construct( View $view ) {
+		$this->view = $view;
+	}
 
-	public function display_roles_checkbox( $args )
-	{
-        $post_id = get_the_id();
-        $defaults = array( 'name' => '', 'option_name' => '');
-        $this->view->render('helper-roles-checkbox', [ 'args' => $args ] );
+	/**
+	 * @param $args
+	 */
+	public function display_roles_checkbox( $args ) {
+		$post_id  = get_the_id();
+		$defaults = array( 'name' => '', 'option_name' => '' );
+		$this->view->render(
+			'helper-roles-checkbox', [ 'args' => $args ]
+		);
 	}
 
 }

@@ -54,7 +54,7 @@ jQuery(document).ready(function($) {
 			$('#subway_redirect_page_option_section').addClass('hidden');
 		}
 
-		return;
+
 	}
 
 	function subway_toggle_use_custom_url() {
@@ -67,7 +67,7 @@ jQuery(document).ready(function($) {
 
 		}
 
-		return;
+
 	}
 
 	function subway_toggle_use_custom_page() {
@@ -79,7 +79,7 @@ jQuery(document).ready(function($) {
 			$('#subway_redirect_page_option_section').removeClass('hidden');
 		}
 
-		return;
+
 	}
 
 	function subway_is_checkbox_checked( selector, elements_affected, the_class ) {
@@ -109,14 +109,14 @@ jQuery(document).ready(function($) {
 			});
 		}
 
-		return;
+
 	}
 
 	function subway_toggle_widget_options( el ) 
 	{
 		var target = el.attr('data-target');
 			$('#' + target).toggle();
-		return;
+
 	}	
 
 });

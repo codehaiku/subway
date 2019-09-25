@@ -1,6 +1,7 @@
 <?php
 namespace Subway\User;
 use Subway\Post\Post;
+use Subway\Options\Options;
 
 if ( ! defined('ABSPATH') ) {
     return;
@@ -40,16 +41,17 @@ class User {
 			return true;
 		}
 		
+		$allowed_user_roles = get_post_meta( $post_id, 'subway-visibility-settings-allowed-user-roles', true );
+
+		$access_type = get_post_meta( $post_id, 'subway_visibility_meta_key', true);
+
 		// Check the subscribe type of the current post type.
-		$obj_post = new Post();
-		$post_subscribe_type = $obj_post->get_access_type( $post_id );
-		
-		if ( 'private' === $post_subscribe_type['type'] )
+		if ( 'private' === $access_type )
 		{
 			$user_role = $this->get_role( get_current_user_id() );
 
 			// If the user role matches checked subscription role.
-			if ( ! array_intersect( $user_role, $post_subscribe_type['roles'] ) ) 
+			if ( ! array_intersect( $user_role, $allowed_user_roles ) ) 
 			{
 				return false;
 			}

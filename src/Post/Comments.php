@@ -10,6 +10,12 @@ class Comments {
 
     protected $view;
 
+    public function __construct( User $user, View $view)
+    {
+        $this->user = $user;
+        $this->view = $view;
+    }
+
     public function is_current_user_allowed()
     {
         
@@ -46,16 +52,6 @@ class Comments {
         
         return apply_filters('subway_post_discussion_allow_comment', false);
 
-    }
-
-    protected function set_user( User $user )
-    {
-        $this->user = $user;
-    }
-
-    protected function set_view( View $view )
-    {
-        $this->view = $view;
     }
 
     protected function display()
@@ -117,8 +113,6 @@ class Comments {
 
     private function define_hooks()
     {
-        $this->set_user( new User() );
-        $this->set_view( new View() );
 
         add_filter('comments_open', array( $this, 'hook_comments_open'), 10, 2 );
         add_action('comment_form_comments_closed', array( $this, 'hook_comment_form_comments_closed' ) );

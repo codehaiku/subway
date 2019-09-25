@@ -164,7 +164,7 @@ wp_nonce_field( basename( __FILE__ ),  'subway_post_visibility_nonce' );
 			}else {
 				$('#access-type-block-wrap').css('display', 'none');
 			}
-			return;
+
 		});
 	});
 </script>
