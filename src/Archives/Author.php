@@ -109,14 +109,14 @@ class Author {
 	 */
 	public function attach_hooks() {
 
-		$this->define_hook();
+		$this->define_hooks();
 
 	}
 
 	/**
 	 * Attach class method to wp's hook system.
 	 */
-	protected function define_hook() {
+	protected function define_hooks() {
 
 		add_action( 'wp', array( $this, 'redirect' ) );
 
