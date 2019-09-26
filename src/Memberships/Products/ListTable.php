@@ -88,17 +88,22 @@ class ListTable extends \WP_List_Table {
 			case 'description':
 				return $item[ $column_name ];
 			default:
-				return;
-			// return print_r( $item, true ) ; //Show the whole array for troubleshooting purposes
+				return false;
 		}
 	}
 
 	function column_name( $item ) {
 
+		$trash_uri = add_query_arg( array(
+			'action' => 'listing_delete_action',
+			'id' => $item['id'],
+		), get_admin_url() . 'admin-post.php' );
+
 		$delete_url = wp_nonce_url(
-			sprintf( '?page=%s&action=%s&product=%s', $_REQUEST['page'], 'delete', $item['id'] ),
+			$trash_uri,
 			sprintf( 'trash_product_%s', $item['id'] ),
-			'_wpnonce' );
+			'_wpnonce'
+		);
 
 		$edit_url = wp_nonce_url(
 			sprintf( '?page=%s&edit=%s&product=%s', $_REQUEST['page'], 'yes', $item['id'] ),

@@ -9,6 +9,7 @@ namespace Subway\Api;
 class Products extends \WP_REST_Controller {
 
 	public function register_routes() {
+
 		$version   = 1;
 		$namespace = 'subway/v' . $version;
 		$base      = 'membership';
@@ -18,6 +19,16 @@ class Products extends \WP_REST_Controller {
 			array(
 				'methods'             => \WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'add_product' ),
+				'permission_callback' => array( $this, 'permission_check' ),
+				'args'                => $this->get_endpoint_args_for_item_schema( false ),
+			),
+		) );
+
+		// Delete Product.
+		register_rest_route( $namespace, '/' . $base . '/delete-product', array(
+			array(
+				'methods'             => \WP_REST_Server::READABLE,
+				'callback'            => array( $this, 'delete_product' ),
 				'permission_callback' => array( $this, 'permission_check' ),
 				'args'                => $this->get_endpoint_args_for_item_schema( false ),
 			),
@@ -35,7 +46,25 @@ class Products extends \WP_REST_Controller {
 
 	}
 
+	public function delete_product( $request ) {
+
+		$id       = $request->get_param( 'id' );
+		$redirect = $request->get_param( 'redirect' );
+		$nonce    = $request->get_param( '_wpnonce' );
+
+		check_admin_referer();
+
+		if ( 'yes' === $redirect ) {
+			$url = add_query_arg( 'page', 'subway-membership', get_admin_url() );
+			wp_safe_redirect( esc_url( $url ), 302 );
+		}
+
+		exit;
+
+	}
+
 	public function add_product( $request ) {
+
 		global $wpdb;
 
 		$title = $request->get_param( 'title' );
@@ -79,11 +108,11 @@ class Products extends \WP_REST_Controller {
 
 	public function update_product( $request ) {
 
-		require_once SUBWAY_DIR_PATH . '/classes/subway-membership.php';
+		$id = $request->get_param( 'id' );
 
-		$id    = $request->get_param( 'id' );
 		$title = $request->get_param( 'title' );
-		$desc  = $request->get_param( 'description' );
+
+		$desc = $request->get_param( 'description' );
 
 		$membership = new \Subway\Memberships\Products\Products();
 
@@ -107,9 +136,11 @@ class Products extends \WP_REST_Controller {
 	}
 
 	public function get_table_name() {
+
 		global $wpdb;
 
 		return $wpdb->prefix . 'memberships_products';
+
 	}
 
 	public function register_scripts() {
@@ -134,8 +165,39 @@ class Products extends \WP_REST_Controller {
 		return;
 	}
 
+	public function listing_delete_action( $test ) {
+
+		status_header( 200 );
+
+		$products = new \Subway\Memberships\Products\Products();
+
+		$product_id = filter_input( INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT );
+
+		check_admin_referer( 'trash_product_' . absint( $product_id ) );
+
+		$is_deleted = $products->delete( $product_id );
+
+		if ( $is_deleted ) {
+
+			$http_referrer = add_query_arg(
+				[ 'page' => 'subway-membership' ],
+				get_admin_url() . 'admin.php'
+			);
+
+			wp_safe_redirect(
+				esc_url( $http_referrer ),
+				302
+			);
+
+		}
+
+		die;
+	}
+
 	public function attach_hooks() {
+
 		$this->define_hooks();
+
 	}
 
 	protected function define_hooks() {
@@ -145,6 +207,14 @@ class Products extends \WP_REST_Controller {
 		add_action( 'rest_api_init', function () {
 			$this->register_routes();
 		} );
+
+		// Add delete action as part of the api (for now).
+
+		add_action( 'admin_post_listing_delete_action', array( $this, 'listing_delete_action' ) );
+
+
+		return $this;
+
 	}
 
 }

@@ -13,25 +13,17 @@
 
 <?php $is_deleted = false; ?>
 
-<?php if ( "delete" === $action ): ?>
-
-	<?php check_admin_referer( 'trash_product_' . $product_id ); ?>
-
-	<?php $is_deleted = $products->delete( $product_id ); ?>
-
-<?php endif; ?>
-
 <?php if ( "yes" === $new ): ?>
 
     <div class="wrap">
 
         <h1 class="wp-heading-inline">
-            <?php esc_html_e( 'Add New Product', 'subway' ); ?>
+			<?php esc_html_e( 'Add New Product', 'subway' ); ?>
         </h1>
 
         <hr class="wp-header-end">
 
-        <?php $view->render('form-memberships-products-new', [] ); ?>
+		<?php $view->render( 'form-memberships-products-new', [] ); ?>
 
     </div>
 
@@ -40,14 +32,12 @@
     <div class="wrap">
 
         <h1 class="wp-heading-inline">
-            <?php esc_html_e( 'Edit Product', 'subway' ); ?>
+			<?php esc_html_e( 'Edit Product', 'subway' ); ?>
         </h1>
 
         <hr class="wp-header-end">
 
-        <?php $membership = new Products(); ?>
-
-	    <?php $view->render('form-memberships-products-edit', ['membership' => $membership] ); ?>
+		<?php $view->render( 'form-memberships-products-edit', [ 'membership' => $products ] ); ?>
 
     </div>
 

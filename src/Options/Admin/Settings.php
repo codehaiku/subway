@@ -274,7 +274,9 @@ class Settings {
 	}
 
 	public function attach_hooks() {
-		$this->define_hooks();;
+
+		$this->define_hooks();
+
 	}
 
 	protected function define_hooks() {
