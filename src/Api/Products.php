@@ -6,6 +6,7 @@ namespace Subway\Api;
  * Class Products
  * @package Subway\Api
  */
+
 class Products extends \WP_REST_Controller {
 
 	public function register_routes() {
