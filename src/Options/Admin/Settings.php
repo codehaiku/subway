@@ -63,32 +63,36 @@ class Settings {
 	 */
 	public function settings() {
 
+		$view = new View();
+
+		$section_callback = new SectionCallback();
+
 		// Register our settings section.
 		add_settings_section(
 			'subway-page-visibility-section', __( 'Pages', 'subway' ),
-			array( $this, 'sectionCallback' ), 'subway-settings-section'
+			array( $section_callback, 'pages' ), 'subway-settings-section'
 		);
 
 		// Register Archives Options pages.
 		add_settings_section(
 			'subway-archives-section', __( 'Archives', 'subway' ),
-			array( $this, 'archivesCallback' ), 'subway-settings-section'
+			array( $section_callback, 'archives' ), 'subway-settings-section'
 		);
 
 		// Register Redirect Options pages.
 		add_settings_section(
 			'subway-redirect-section', __( 'Login Redirect', 'subway' ),
-			array( $this, 'redirectCallback' ), 'subway-settings-section'
+			array( $section_callback, 'login_redirect' ), 'subway-settings-section'
 		);
 
 		// Register Redirect Options pages.
 		add_settings_section(
-			'subway-messages-section', __( 'Messages', 'subway' ),
-			array( $this, 'messagesCallback' ), 'subway-settings-section'
+			'subway-messages-section', __( 'System Messages', 'subway' ),
+			array( $section_callback, 'system_messages' ), 'subway-settings-section'
 		);
 
-		$view = new View();
 		$settings_callback = new SettingsCallback( $view );
+
 		// Register the fields.
 		$fields = array(
 			// Login page settings.
@@ -128,7 +132,7 @@ class Settings {
 			array(
 				'id'       => 'subway_redirect_type',
 				'label'    => __( 'Redirect Type', 'subway' ),
-				'callback' => 'subway_redirect_option_form',
+				'callback' => array( $settings_callback, 'redirect_type'),
 				'section'  => 'subway-settings-section',
 				'group'    => 'subway-redirect-section'
 			),
@@ -136,7 +140,7 @@ class Settings {
 			array(
 				'id'       => 'subway_redirect_wp_admin',
 				'label'    => __( 'WP Login Link', 'subway' ),
-				'callback' => 'subway_lock_wp_admin',
+				'callback' => array( $settings_callback, 'info_wp_login_link'),
 				'section'  => 'subway-settings-section',
 				'group'    => 'subway-redirect-section'
 			),
@@ -144,7 +148,7 @@ class Settings {
 			array(
 				'id'       => 'subway_partial_message',
 				'label'    => __( 'Partial Content Block', 'subway' ),
-				'callback' => 'subway_messages',
+				'callback' => array( $settings_callback, 'partial_message'),
 				'section'  => 'subway-settings-section',
 				'group'    => 'subway-messages-section'
 			),
@@ -152,7 +156,7 @@ class Settings {
 			array(
 				'id'       => 'subway_comment_limited_message',
 				'label'    => __( 'Limited Comment', 'subway' ),
-				'callback' => 'subway_comment_limited_message',
+				'callback' => array( $settings_callback, 'comment_limited'),
 				'section'  => 'subway-settings-section',
 				'group'    => 'subway-messages-section'
 			),
@@ -160,7 +164,7 @@ class Settings {
 			array(
 				'id'       => 'subway_redirected_message_login_form',
 				'label'    => __( 'Login Form', 'subway' ),
-				'callback' => 'subway_redirected_message_login_form',
+				'callback' => array( $settings_callback, 'shortcode_login_form'),
 				'section'  => 'subway-settings-section',
 				'group'    => 'subway-messages-section'
 			),
@@ -200,8 +204,7 @@ class Settings {
 
 	public function assets( $hook ) {
 
-		// wp_register_script( 'subway-settings-script',
-		// plugins_url( '/assets/js/settings.js', SUBWAY_JS_URL . 'settings.js' ) );
+		wp_register_script( 'subway-settings-script', SUBWAY_JS_URL . 'settings.js' );
 
 		wp_register_style( 'subway-settings-style', SUBWAY_CSS_URL . 'settings.css' );
 
@@ -209,7 +212,9 @@ class Settings {
 		{
 			// Enqueues the script only on the Subway Settings page.
 			wp_enqueue_script( 'subway-settings-script' );
+
 			wp_enqueue_style( 'subway-settings-style' );
+
 		}
 
 		return;

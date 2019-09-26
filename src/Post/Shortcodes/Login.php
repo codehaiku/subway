@@ -34,6 +34,8 @@ class Login {
 
 		wp_enqueue_script( 'subway-shortcode-login' );
 
+		wp_enqueue_style( 'subway-general');
+
 		return $this->view->render( 'shortcode-login', [ 'atts' => $atts ], true );
 
 	}

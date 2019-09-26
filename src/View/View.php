@@ -10,6 +10,16 @@ class View {
 
 		$file_path = SUBWAY_DIR_PATH . 'app/Resources/views/' . sanitize_title( $file_location ) . '.php';
 
+		if ( ! file_exists( $file_path ) ) {
+
+			echo "<code>";
+			echo sprintf( __( 'ERROR: Cannot find %s in view directory', 'subway' ), sanitize_title( $file_location ) );
+			echo "</code>";
+
+			return $this;
+
+		}
+
 		if ( $return ) {
 
 			ob_start();
@@ -27,6 +37,8 @@ class View {
 			}
 
 		}
+
+		return $this;
 
 	}
 }

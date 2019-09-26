@@ -12,11 +12,15 @@ class Post {
 	private $options;
 
 	public function __construct( User $user, Options $options ) {
+
 		$this->user    = $user;
+
 		$this->options = $options;
+
 	}
 
 	public function get_types( $args = '', $output = '' ) {
+
 		if ( empty( $args ) ) {
 			$args   = array( 'public' => true );
 			$output = 'names';
@@ -25,9 +29,11 @@ class Post {
 		$post_types = get_post_types( $args, $output );
 
 		return $post_types;
+
 	}
 
 	public function get_allowed_roles( $post_id ) {
+
 		$allowed_roles = array();
 
 		if ( ! empty( $post_id ) ) {
@@ -44,11 +50,15 @@ class Post {
 				return false;
 
 			} else {
+
 				return false;
+
 			}
 
 		} else {
+
 			return false;
+
 		}
 
 		return $allowed_roles;
@@ -56,6 +66,7 @@ class Post {
 	}
 
 	public function get_access_type( $post_id ) {
+
 		$user_roles = get_post_meta( $post_id, 'subway-visibility-settings-allowed-user-roles', true );
 
 		$visibility = get_post_meta( $post_id, 'subway_visibility_meta_key', true );
@@ -73,21 +84,27 @@ class Post {
 			'roles'             => $user_roles,
 			'subscription_type' => array()
 		);
+
 	}
 
 	public function get_no_access_type( $post_id ) {
+
 		$allowed_no_access_type = array( 'block_content', 'redirect' );
 
 		$post_no_access_type = get_post_meta( $post_id, 'subway-visibility-settings-no-access-type', true );
 
 		if ( empty( $post_no_access_type ) || ! in_array( $post_no_access_type, $allowed_no_access_type ) ) {
+
 			$post_no_access_type = 'block_content';
+
 		}
 
 		return $post_no_access_type;
+
 	}
 
 	public function is_private( $post_id ) {
+
 		$meta_value = '';
 
 		if ( ! empty( $post_id ) ) {
@@ -104,9 +121,11 @@ class Post {
 		}
 
 		return false;
+
 	}
 
 	public function is_redirect( $post_id ) {
+
 		$post_no_access_type = get_post_meta( $post_id, 'subway-visibility-settings-no-access-type', true );
 
 		if ( ! empty ( $post_no_access_type ) ) {
@@ -119,6 +138,7 @@ class Post {
 	}
 
 	private function redirect() {
+
 		$internal_pages = $this->options->get_internal_pages();
 
 		$current_page_id = get_queried_object_id();
@@ -130,7 +150,7 @@ class Post {
 		$login_page_url = $this->options->get_redirect_url();
 
 		// Only run on main query.
-		if ( ! is_singular() ) {
+		if ( ! is_singular() && ! is_home() ) {
 			return;
 		}
 
@@ -154,17 +174,22 @@ class Post {
 	}
 
 	public function hook_wp() {
+
 		$this->redirect();
+
 	}
 
 	public function hook_the_content( $content ) {
+
 		$internal_pages  = $this->options->get_internal_pages();
+
 		$current_page_id = get_queried_object_id();
 
 		// Only run on main query.
 		if ( ! is_singular() && is_main_query() && ! is_feed() ) {
 			return $content;
 		}
+
 		// Just show the content if current page is internal page.
 		if ( in_array( $current_page_id, $internal_pages ) ) {
 			return $content;
@@ -185,13 +210,17 @@ class Post {
 	}
 
 	public function attach_hooks() {
+
 		$this->define_hooks();
 
 		return;
+
 	}
 
 	private function define_hooks() {
+
 		add_action( 'wp', array( $this, 'hook_wp' ), 10, 1 );
+
 		add_action( 'the_content', array( $this, 'hook_the_content' ), 10, 1 );
 
 		return;
