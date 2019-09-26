@@ -64,6 +64,13 @@ class Products extends \WP_REST_Controller {
 
 	}
 
+	/**
+	 * Adds a new product to the database.
+	 *
+	 * @param $request
+	 *
+	 * @return \WP_REST_Response
+	 */
 	public function add_product( $request ) {
 
 		global $wpdb;
@@ -107,6 +114,13 @@ class Products extends \WP_REST_Controller {
 			), 200 );
 	}
 
+	/**
+	 * Updates the product record.
+	 *
+	 * @param $request
+	 *
+	 * @return \WP_REST_Response
+	 */
 	public function update_product( $request ) {
 
 		$id = $request->get_param( 'id' );
@@ -131,12 +145,24 @@ class Products extends \WP_REST_Controller {
 
 	}
 
+	/**
+	 * Callback function for checking permissions.
+	 *
+	 * @param $request
+	 *
+	 * @return bool
+	 */
 	public function permission_check( $request ) {
 		// Testing purposes no need permission check for now.
 		return true;
 	}
 
-	public function get_table_name() {
+	/**
+	 * Returns the prefixed table name for memberships_products.
+	 *
+	 * @return string
+	 */
+	protected function get_table_name() {
 
 		global $wpdb;
 
@@ -144,6 +170,11 @@ class Products extends \WP_REST_Controller {
 
 	}
 
+	/**
+	 * Register js files.
+	 *
+	 * @return $this
+	 */
 	public function register_scripts() {
 
 		wp_register_script( 'subway-admin-js',
@@ -163,10 +194,15 @@ class Products extends \WP_REST_Controller {
 			'nonce' => wp_create_nonce( 'wp_rest' )
 		) );
 
-		return;
+		return $this;
 	}
 
-	public function listing_delete_action( $test ) {
+	/**
+	 * Deletes product.
+	 *
+	 * @return $this
+	 */
+	public function listing_delete_action() {
 
 		status_header( 200 );
 
@@ -193,14 +229,29 @@ class Products extends \WP_REST_Controller {
 		}
 
 		die;
+
+		return $this;
+
 	}
 
+	/**
+	 * Attach all wp hooks.
+	 *
+	 * @return $this
+	 */
 	public function attach_hooks() {
 
 		$this->define_hooks();
 
+		return $this;
+
 	}
 
+	/**
+	 * Define all wp hooks.
+	 *
+	 * @return $this
+	 */
 	protected function define_hooks() {
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'register_scripts' ), 10, 1 );
