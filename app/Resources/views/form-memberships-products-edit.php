@@ -17,8 +17,8 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	return;
 }
-
 ?>
+
 <?php $id = filter_input( INPUT_GET, 'product', FILTER_VALIDATE_INT); ?>
 
 <?php $product = $membership->get_product( $id ); ?>

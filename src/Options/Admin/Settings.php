@@ -3,6 +3,7 @@
 namespace Subway\Options\Admin;
 
 use Subway\Memberships\Products\ListTable;
+use Subway\Memberships\Products\Products;
 use Subway\View\View;
 
 class Settings {
@@ -56,14 +57,20 @@ class Settings {
 	}
 
 	public function membership_products() {
+
 		$view = new View();
-		$view->render( 'form-membership-products', ['view' => $view] );
+		$view->render(
+			'form-membership-products',
+			[ 'view' => $view, 'products' => new Products() ]
+		);
 
 		return $this;
 	}
 
 	private function get_icon( $icon = 'dashicons-admin-generic' ) {
+
 		return '<hr /><span class="dashicons ' . esc_attr( $icon ) . '"></span>&nbsp';
+
 	}
 
 	/**
@@ -233,14 +240,14 @@ class Settings {
 		$option = 'per_page';
 
 		$args = array(
-			'label' => esc_html__('Products', 'subway'),
+			'label'   => esc_html__( 'Products', 'subway' ),
 			'default' => 10,
-			'option' => 'products_per_page'
+			'option'  => 'products_per_page'
 		);
 
 		add_screen_option( $option, $args );
 
-		if( ! class_exists( 'WP_List_Table' ) ) {
+		if ( ! class_exists( 'WP_List_Table' ) ) {
 			require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 		}
 

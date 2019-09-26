@@ -1,6 +1,7 @@
 <?php
 namespace Subway\Bootstrap;
 
+use Subway\Api\Products as ApiProducts;
 use Subway\Archives\Author;
 use Subway\Options\Admin\Settings;
 use Subway\Post\Shortcodes\Login;
@@ -59,3 +60,7 @@ $login_shortcode->attach_hooks();
 // Load Admin Settings
 $admin_settings = new Settings();
 $admin_settings->attach_hooks();
+
+// Load our API for products.
+$api = new ApiProducts();
+$api->attach_hooks();

@@ -3,8 +3,6 @@
  * Products Table Template
  */
 
-use Subway\Memberships\Products\Products;
-
 ?>
 <?php global $SubwayListTableMembership; ?>
 
@@ -16,9 +14,11 @@ use Subway\Memberships\Products\Products;
 <?php $is_deleted = false; ?>
 
 <?php if ( "delete" === $action ): ?>
-	<?php $members_products = new Subway_Memberships_Products(); ?>
+
 	<?php check_admin_referer( 'trash_product_' . $product_id ); ?>
-	<?php $is_deleted = $members_products->delete( $product_id ); ?>
+
+	<?php $is_deleted = $products->delete( $product_id ); ?>
+
 <?php endif; ?>
 
 <?php if ( "yes" === $new ): ?>
