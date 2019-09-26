@@ -20,6 +20,13 @@ class SettingsCallback {
 		$this->view->render( 'settings-login-user-no-access-page', [] );
 	}
 
+	public function register_page() {
+		$this->view->render( 'settings-register-page', [] );
+	}
+
+	public function user_account() {
+		$this->view->render( 'settings-account-page', [] );
+	}
 	public function author_archives() {
 		$this->view->render( 'settings-author-archives', [] );
 	}

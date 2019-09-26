@@ -20,7 +20,12 @@ wp_dropdown_pages(
 		'show_option_none' => esc_html__( '---', 'subway' ),
 	)
 );
+?>
+    <button type="button" class="button button-secondary button-medium">Create</button>
+    <p class="description">
 
-echo '<p class="description">' . sprintf( esc_html__( "Select a page to be used as the redirect point for 
-logged-in users that do not have access to the content", 'subway' ) ) . '</span></p>';
+<?php
+echo '<p class="description">' . sprintf( esc_html__( "This page will display all published memberships 
+plans or products in a single page. A shortcode [subway_membership_products] 
+will be automatically added.", 'subway' ) ) . '</span></p>';
 

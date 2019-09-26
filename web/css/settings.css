@@ -9,27 +9,31 @@
 .subway-tooltip {
     max-width: 600px;
 }
+
 .subway-redirect-option-section {
     background: #fff;
     padding: 15px 20px;
     margin: 15px 0;
 }
+
 .subway-redirect-type-choices > label {
     margin-right: 15px;
 }
 
 .subway-redirect-type-choices > label:last-child {
-    margin-right:  0;
+    margin-right: 0;
 }
 
 #subway_public_post {
     background-color: #e0e0e0;
     cursor: not-allowed;
 }
+
 .subway-settings-notice {
     color: #e53935;
     font-weight: bold;
 }
+
 .subway-settings-text-notice {
     color: #e53935;
 }
@@ -43,12 +47,15 @@ select#subway_redirect_page_id {
 .subway-widget-access-type-roles {
     display: none;
 }
+
 .subway-widget-access-type-roles.active {
     display: block;
 }
+
 .subway-widget-membership-options dl p {
     margin: 0 0 5px 0;
 }
+
 .subway-widget-options-toggle .dashicons-lock {
     margin-top: 2px;
     margin-left: -5px;
@@ -64,3 +71,29 @@ label.subway-archive-roles {
     border-radius: 5px;
 }
 
+p.sw-lead {
+    font-size: 1.25em;
+}
+
+form#subway-settings-form p.submit {
+    position: fixed;
+    border: 0;
+    width: calc(100% - 200px);
+    z-index: 999;
+    height: 45px;
+    display: block;
+    bottom: 0;
+    padding: 15px 20px 20px 20px;
+    left: 161px;
+    margin: 0;
+    border-radius: 0;
+    background: #e2e2e2;
+    border-top: 1px solid #ffffff;
+    box-shadow: 0 0 0 1px #dddddd;
+}
+
+form#subway-settings-form p.submit > input {
+    padding: 10px 20px;
+    font-size: 1.5em;
+    height: 48px;
+}

@@ -23,7 +23,7 @@ class Metabox {
 	 * @param Helpers $helpers
 	 */
 	public function __construct( Post $post, View $view, Options $options, Helpers $helpers ) {
-		
+
 		$this->post    = $post;
 		$this->view    = $view;
 		$this->options = $options;
@@ -73,10 +73,29 @@ class Metabox {
 	 * @param $post
 	 */
 	private function discussion( $post ) {
+		// Disable commenting meta in blog page.
+		if ( $this->is_blog_page() ) {
+			echo '<p class="howto">';
+			esc_html_e('You are currently editing blog page. Comment limiting is disabled.');
+			echo '</p>';
+			return false;
+		}
 		$this->view->render( 'form-post-discussion-metabox', [
 			'post_id' => $post->ID,
 			'helpers' => $this->helpers,
 		] );
+	}
+
+	private function is_blog_page() {
+
+		$page_for_posts = absint( get_option( 'page_for_posts' ) );
+		$page_id        = absint( get_the_id() );
+
+		if ( $page_id === $page_for_posts ) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

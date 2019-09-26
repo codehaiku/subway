@@ -36,6 +36,11 @@ wp_dropdown_pages(
 	)
 );
 
+?>
+	<button type="button" class="button button-secondary button-medium">Create</button>
+	<p class="description">
+<?php
+
 echo '<p class="description">' . sprintf( esc_html__( "Select a page to be used for logging in. A shortcode [subway_login] which will display the login form will be automatically added to the content of the selected page", 'subway' ) ) . '</span></p>';
 
 return;
