@@ -50,18 +50,25 @@ if ( 'private' === $instance['subway-widget-access-type'] ) :
 			
 			<label class="subway-access-role-public-toggle">
 			<input data-target="subway-access-role-<?php echo esc_attr( $widget->id ); ?>" 
-			<?php checked( $instance['subway-widget-access-type'], 'public', true ); ?> type="radio" id="<?php echo esc_attr( $widget->get_field_id( 'subway-widget-access-type' ) ); ?>" name="<?php echo esc_attr( $widget->get_field_name( 'subway-widget-access-type' ) ); ?>" value="public" />
+			<?php checked( $instance['subway-widget-access-type'], 'public', true ); ?> type="radio"
+                   id="<?php echo esc_attr( $widget->get_field_id( 'subway-widget-access-type' ) ); ?>"
+                   name="<?php echo esc_attr( $widget->get_field_name( 'subway-widget-access-type' ) ); ?>"
+                   value="public" />
 				<?php esc_html_e( 'Public', 'subway' ); ?>
 			</label>
 		</p>
 		<p>
 			<label class="subway-access-role-private-toggle">
 			<input data-target="subway-access-role-<?php echo esc_attr( $widget->id ); ?>" 
-			<?php checked( $instance['subway-widget-access-type'], 'private', true ); ?> type="radio" id="<?php echo esc_attr( $widget->get_field_id( 'subway-widget-access-type' ) ); ?>" name="<?php echo esc_attr( $widget->get_field_name( 'subway-widget-access-type' ) ); ?>" value="private" />
+			<?php checked( $instance['subway-widget-access-type'], 'private', true ); ?>
+                   type="radio" id="<?php echo esc_attr( $widget->get_field_id( 'subway-widget-access-type' ) ); ?>"
+                   name="<?php echo esc_attr( $widget->get_field_name( 'subway-widget-access-type' ) ); ?>"
+                   value="private" />
 				<?php esc_html_e( 'Private', 'subway' ); ?>
 			</label>
 		</p>
-		<div id="subway-access-role-<?php echo esc_attr( $widget->id ); ?>" class="subway-widget-access-type-roles <?php echo esc_attr( $class ); ?>">
+		<div id="subway-access-role-<?php echo esc_attr( $widget->id ); ?>" class="subway-widget-access-type-roles
+		<?php echo esc_attr( $class ); ?>">
 			<?php $editable_roles = get_editable_roles(); ?>
 			<?php unset( $editable_roles['administrator'] ); ?>
 			<dl>
@@ -103,7 +110,10 @@ if ( 'private' === $instance['subway-widget-access-type'] ) :
 			<h4>
 				<?php esc_html_e( 'No Access Message', 'subway' ); ?>
 			</h4>
-			<textarea name="<?php echo esc_attr( $widget->get_field_name( 'subway-widget-access-roles-message' ) );?> " class="widefat" rows="3" placeholder="<?php esc_attr_e( 'The message that will be displayed if user has no access', 'subway' ); ?>"><?php echo wp_kses_post( $instance['subway-widget-access-roles-message'] ); ?></textarea>
+			<textarea name="<?php echo esc_attr( $widget->get_field_name( 'subway-widget-access-roles-message' ) );?> "
+                      class="widefat" rows="3"
+                      placeholder="<?php esc_attr_e( 'The message that will be displayed if user has no access', 'subway' ); ?>">
+                <?php echo wp_kses_post( $instance['subway-widget-access-roles-message'] ); ?></textarea>
 			<p>
 				<?php esc_html_e( 'Limited HTML are allowed for security reasons', 'subway' ); ?>
 			</p>

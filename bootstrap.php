@@ -1,10 +1,12 @@
 <?php
+
 namespace Subway\Bootstrap;
 
 use Subway\Api\Products as ApiProducts;
 use Subway\Archives\Author;
 use Subway\Options\Admin\Settings;
 use Subway\Post\Shortcodes\Login;
+use Subway\Post\Shortcodes\Register;
 use Subway\Widgets\Options as WidgetOptions;
 use Subway\Options\Options as PluginOptions;
 use Subway\Post\Post;
@@ -44,7 +46,6 @@ $metabox->attach_hooks();
 $comments = new Comments( $user, $view );
 $comments->attach_hooks();
 
-
 // Load Taxonomy.
 $comments = new Taxonomy( $view );
 $comments->attach_hooks();
@@ -53,10 +54,6 @@ $comments->attach_hooks();
 $archives_author = new Author( $options, $user );
 $archives_author->attach_hooks();
 
-// Load Login Shortcode
-$login_shortcode = new Login( $view );
-$login_shortcode->attach_hooks();
-
 // Load Admin Settings
 $admin_settings = new Settings();
 $admin_settings->attach_hooks();
@@ -64,3 +61,12 @@ $admin_settings->attach_hooks();
 // Load our API for products.
 $api = new ApiProducts();
 $api->attach_hooks();
+
+// Load Login Shortcode
+$login_shortcode = new Login( $view );
+$login_shortcode->attach_hooks();
+
+
+// Load Register Shortcode
+$register_shortcode = new Register( $view );
+$register_shortcode->attach_hooks();
