@@ -31,25 +31,17 @@ class Register {
 
 			if ( $this->process_registration( $username, $email, $password, $password_confirm ) ) {
 
-				$payment = new Payment();
-				$payment->pay();
 
-				die();
-				// Create the user after successful validation.
+				if ( $this->create_user( $username, $password, $email ) ) {
 
-				wp_create_user( $username, $password, $email );
+					$payment = new Payment();
 
-				$creds = [
-					'user_login'    => $username,
-					'user_password' => $password,
-					'remember'      => true
-				];
+					$payment->pay();
 
-				$autologin_user = wp_signon( $creds, is_ssl() );
-
-				if ( $autologin_user ) {
-					wp_safe_redirect( get_home_url(), 302 );
 				}
+
+				return;
+
 			}
 
 		}
@@ -57,8 +49,24 @@ class Register {
 		return;
 	}
 
-	private function process_registration( $username, $email, $password, $password_confirm )
-	{
+	private function create_user( $username, $password, $email ) {
+
+		// Create the user after successful validation.
+		wp_create_user( $username, $password, $email );
+
+		$creds = [
+			'user_login'    => $username,
+			'user_password' => $password,
+			'remember'      => true
+		];
+
+		$autologin_user = wp_signon( $creds, is_ssl() );
+
+		return $autologin_user;
+
+	}
+
+	private function process_registration( $username, $email, $password, $password_confirm ) {
 
 		$errors = [];
 
@@ -66,7 +74,7 @@ class Register {
 			$errors['sw-username'] = esc_html__( 'Username is required', 'subway' );
 		}
 
-		if ( ! ctype_alnum ( $username ) ) {
+		if ( ! ctype_alnum( $username ) ) {
 			$errors['sw-username'] = esc_html__( 'Username field contains invalid characters', 'subway' );
 		}
 
