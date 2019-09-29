@@ -3,6 +3,7 @@
 namespace Subway\Post\Shortcodes;
 
 use Subway\Form\Form;
+use Subway\Payment\Payment;
 use Subway\View\View;
 
 class Register {
@@ -23,50 +24,20 @@ class Register {
 
 		if ( isset( $reg_action ) ) {
 
-			$name     = filter_input( INPUT_POST, 'sw-name', FILTER_SANITIZE_STRING );
-			$username = filter_input( INPUT_POST, 'sw-username', FILTER_SANITIZE_STRING );
-			$email    = filter_input( INPUT_POST, 'sw-email', FILTER_SANITIZE_EMAIL );
-			$password = filter_input( INPUT_POST, 'sw-password', FILTER_SANITIZE_STRING );
-			$password_confirm = filter_input( INPUT_POST, 'sw-password-corfirm', FILTER_SANITIZE_STRING );
+			$username         = filter_input( INPUT_POST, 'sw-username', FILTER_SANITIZE_STRING );
+			$email            = filter_input( INPUT_POST, 'sw-email', FILTER_SANITIZE_EMAIL );
+			$password         = filter_input( INPUT_POST, 'sw-password', FILTER_SANITIZE_STRING );
+			$password_confirm = filter_input( INPUT_POST, 'sw-password-confirm', FILTER_SANITIZE_STRING );
 
-			$errors = [];
+			if ( $this->process_registration( $username, $email, $password, $password_confirm ) ) {
 
-			if ( empty( $username ) ) {
-				$errors[] = esc_html__( 'Username is required', 'subway' );
-			}
+				$payment = new Payment();
+				$payment->pay();
 
-			if ( empty( $email ) ) {
-				$errors[] = esc_html__( 'Email is required', 'subway' );
-			}
+				die();
+				// Create the user after successful validation.
 
-			if ( empty( $password ) ) {
-				$errors[] = esc_html__( 'Password is required', 'subway' );
-			}
-
-			if ( $password !== $password_confirm ) {
-				$errors[] = esc_html__( 'Password does not match', 'subway' );
-			}
-
-			if ( ! empty ( $errors ) ) {
-
-				add_filter( 'subway_shortcode_register_errors', function () use ( $errors ) {
-					return $errors;
-				}, 10, 1 );
-
-				return;
-			}
-
-			$user_id = username_exists( $username );
-
-			if ( ! $user_id && email_exists( $email ) == false ) {
-
-				$user_id = wp_create_user( $username, $password, $email );
-
-				wp_update_user( [
-					'display_name' => $name,
-					'first_name'   => $name,
-					'nickname'     => $name
-				] );
+				wp_create_user( $username, $password, $email );
 
 				$creds = [
 					'user_login'    => $username,
@@ -84,6 +55,58 @@ class Register {
 		}
 
 		return;
+	}
+
+	private function process_registration( $username, $email, $password, $password_confirm )
+	{
+
+		$errors = [];
+
+		if ( empty( $username ) ) {
+			$errors['sw-username'] = esc_html__( 'Username is required', 'subway' );
+		}
+
+		if ( ! ctype_alnum ( $username ) ) {
+			$errors['sw-username'] = esc_html__( 'Username field contains invalid characters', 'subway' );
+		}
+
+		if ( empty( $email ) ) {
+			$errors['sw-email'] = esc_html__( 'Email is required', 'subway' );
+		}
+
+		if ( empty( $password ) ) {
+			$errors['sw-password'] = esc_html__( 'Password is required', 'subway' );
+		}
+
+		if ( $password !== $password_confirm ) {
+			$errors['sw-password-confirm'] = esc_html__( 'Password does not match', 'subway' );
+		}
+
+		if ( username_exists( $username ) ) {
+			$errors['sw-username'] = esc_html__( 'Username already exists', 'subway' );
+		}
+
+		if ( email_exists( $email ) ) {
+			$errors['sw-email'] = sprintf( esc_html__( "Existing account is already in used for the email %s",
+				'subway' ), $email );
+		}
+
+		if ( ! filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
+			$errors['sw-email'] = esc_html__( "Invalid email address format", 'subway' );
+		}
+
+		if ( ! empty ( $errors ) ) {
+
+			add_filter( 'subway_shortcode_register_errors', function () use ( $errors ) {
+				return $errors;
+			}, 10, 1 );
+
+			return false;
+
+		}
+
+		return true;
+
 	}
 
 	public function display_form() {

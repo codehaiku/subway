@@ -4,5 +4,8 @@
             "Subway\\": "src/"
         },
         "files"   : ["bootstrap.php"]
+    },
+    "require": {
+        "paypal/rest-api-sdk-php": "*"
     }
 }

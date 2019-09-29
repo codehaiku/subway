@@ -15,12 +15,30 @@ class ComposerStaticInit04a71eaab35a238419a67cb1ca0fda2e
         array (
             'Subway\\' => 7,
         ),
+        'P' => 
+        array (
+            'Psr\\Log\\' => 8,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
         'Subway\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
+        ),
+        'Psr\\Log\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
+        ),
+    );
+
+    public static $prefixesPsr0 = array (
+        'P' => 
+        array (
+            'PayPal' => 
+            array (
+                0 => __DIR__ . '/..' . '/paypal/rest-api-sdk-php/lib',
+            ),
         ),
     );
 
@@ -29,6 +47,7 @@ class ComposerStaticInit04a71eaab35a238419a67cb1ca0fda2e
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit04a71eaab35a238419a67cb1ca0fda2e::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit04a71eaab35a238419a67cb1ca0fda2e::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit04a71eaab35a238419a67cb1ca0fda2e::$prefixesPsr0;
 
         }, null, ClassLoader::class);
     }
