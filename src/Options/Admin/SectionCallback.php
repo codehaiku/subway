@@ -31,4 +31,10 @@ class SectionCallback{
 		echo '</p>';
 		return $this;
 	}
+
+	public function paypal() {
+		echo '<p class="sw-lead">';
+		esc_html_e('PayPal Payments Settings.', 'subway');
+		echo '</p>';
+	}
 }

@@ -19,11 +19,11 @@ class Payment {
 	}
 
 	public function pay() {
-
+		
 		$apiContext = new \PayPal\Rest\ApiContext(
 			new \PayPal\Auth\OAuthTokenCredential(
-				'AciSvB2plla180-h3nG6h4NGe-IZYmVREghoOKBYOo79cHW3unLT2xLAvD9Dur0InymirnhcKzEDuyoI',     // ClientID
-				'EG5QfZRgSKyzylpdDR0YdZg91XTdqZ8Qg1EOoaxuH4s1pAuxSI69WHT0cRYCqFvjQFpxzsfESR3AOoDi'      // ClientSecret
+				get_option('subway_paypal_client_id'),     // ClientID
+				get_option('subway_paypal_client_secret')      // ClientSecret
 			)
 		);
 
@@ -82,10 +82,10 @@ class Payment {
 		             ->setCancelUrl( $cancel_url );
 
 		$payment = new \PayPal\Api\Payment();
-		$payment->setIntent("sale")
-		        ->setPayer($payer)
-		        ->setRedirectUrls($redirectUrls)
-		        ->setTransactions(array($transaction));
+		$payment->setIntent( "sale" )
+		        ->setPayer( $payer )
+		        ->setRedirectUrls( $redirectUrls )
+		        ->setTransactions( array( $transaction ) );
 
 		$request = clone $payment;
 
@@ -99,7 +99,7 @@ class Payment {
 		}
 
 
-		header("location: " . $payment->getApprovalLink() );
+		header( "location: " . $payment->getApprovalLink() );
 
 		return $payment;
 

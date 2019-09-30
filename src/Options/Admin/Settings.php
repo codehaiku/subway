@@ -106,6 +106,12 @@ class Settings {
 			array( $section_callback, 'system_messages' ), 'subway-settings-section'
 		);
 
+		// PayPal section.
+		add_settings_section(
+			'subway-paypal-section', $this->get_icon( 'dashicons-email-alt2' ) . __( 'PayPal', 'subway' ),
+			array( $section_callback, 'paypal' ), 'subway-settings-section'
+		);
+
 		$settings_callback = new SettingsCallback( $view );
 
 		// Register the fields.
@@ -199,6 +205,22 @@ class Settings {
 				'callback' => array( $settings_callback, 'shortcode_login_form' ),
 				'section'  => 'subway-settings-section',
 				'group'    => 'subway-messages-section'
+			),
+			// PayPal Client ID.
+			array(
+				'id'       => 'subway_paypal_client_id',
+				'label'    => __( 'Client ID', 'subway' ),
+				'callback' => array( $settings_callback, 'paypal_client_id' ),
+				'section'  => 'subway-settings-section',
+				'group'    => 'subway-paypal-section'
+			),
+			// PayPal Client Secret.
+			array(
+				'id'       => 'subway_paypal_client_secret',
+				'label'    => __( 'Client Secret', 'subway' ),
+				'callback' => array( $settings_callback, 'paypal_client_secret' ),
+				'section'  => 'subway-settings-section',
+				'group'    => 'subway-paypal-section'
 			),
 		);
 

@@ -54,6 +54,14 @@ class SettingsCallback {
 	public function shortcode_login_form() {
 		$this->view->render( 'settings-shortcode-login-form', [] );
 	}
+
+	public function paypal_client_id() {
+		$this->view->render( 'settings-paypal-client-id', [] );
+	}
+
+	public function paypal_client_secret() {
+		$this->view->render( 'settings-paypal-client-secret', [] );
+	}
 }
 
 ?>

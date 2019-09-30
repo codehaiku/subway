@@ -75,7 +75,7 @@ p.sw-lead {
     font-size: 1.25em;
 }
 
-form#subway-settings-form p.submit {
+.disabled--form#subway-settings-form p.submit {
     position: fixed;
     border: 0;
     width: calc(100% - 200px);
@@ -93,8 +93,8 @@ form#subway-settings-form p.submit {
 }
 
 form#subway-settings-form p.submit > input {
-    padding: 10px 20px;
-    font-size: 1.5em;
+    padding: 7.5px 15px;
+    font-size: 1.2em;
     height: 48px;
 }
 
