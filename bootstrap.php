@@ -7,6 +7,7 @@ use Subway\Archives\Author;
 use Subway\Options\Admin\Settings;
 use Subway\Post\Shortcodes\Login;
 use Subway\Post\Shortcodes\Register;
+use Subway\Post\Shortcodes\UserAccount;
 use Subway\Widgets\Options as WidgetOptions;
 use Subway\Options\Options as PluginOptions;
 use Subway\Post\Post;
@@ -70,3 +71,7 @@ $login_shortcode->attach_hooks();
 // Load Register Shortcode
 $register_shortcode = new Register( $view );
 $register_shortcode->attach_hooks();
+
+// Load User Account Shortcode.
+$user_account = new UserAccount( $view );
+$user_account->attach_hooks();

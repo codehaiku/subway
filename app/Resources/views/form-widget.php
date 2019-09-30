@@ -77,21 +77,22 @@ if ( 'private' === $instance['subway-widget-access-type'] ) :
 						<label>
 							<?php
 
-							$widget_roles = array();
+                            $allowed_roles = array();
 
 							$checked = '';
 
-							if ( isset( $instance['subway-widget-access-roles'] ) ) {
-								$widget_roles = (array) $instance['subway-widget-access-roles'];
-							}
+							if ( ! empty( $instance['subway-widget-access-roles'] ) ) {
+							    $allowed_roles =  (array) $instance['subway-widget-access-roles'];
+                            }
 
-							if ( gettype( $widget_roles ) !== gettype( $instance['subway-widget-access-roles'] ) ) {
-							 	$checked = 'checked';
-							}
+                            if( ! array_key_exists( 'subway-widget-access-roles', $instance ) ) {
+                                $checked = 'checked';
+                            }
 
-							if ( in_array( $role_name, $widget_roles, true ) ) {
-								$checked = 'checked';
-							}
+                            if ( in_array( $role_name, $allowed_roles, true ) ) {
+                                $checked = 'checked';
+                            }
+
 							?>
 
 							<input <?php echo esc_attr( $checked ); ?> type="checkbox" 
@@ -107,13 +108,21 @@ if ( 'private' === $instance['subway-widget-access-type'] ) :
 			</dl>
 		</div>
 		<div class="subway-widget-access-type-message">
-			<h4>
-				<?php esc_html_e( 'No Access Message', 'subway' ); ?>
-			</h4>
-			<textarea name="<?php echo esc_attr( $widget->get_field_name( 'subway-widget-access-roles-message' ) );?> "
-                      class="widefat" rows="3"
-                      placeholder="<?php esc_attr_e( 'The message that will be displayed if user has no access', 'subway' ); ?>">
-                <?php echo wp_kses_post( $instance['subway-widget-access-roles-message'] ); ?></textarea>
+			<label>
+                <p>
+				<strong>
+					<?php esc_html_e( 'No Access Message', 'subway' ); ?>
+                </strong>
+                </p>
+            <?php $widget_message = ''; ?>
+			<?php if ( ! empty( $instance['subway-widget-access-roles-message'] ) ) { ?>
+				<?php $widget_message = $instance['subway-widget-access-roles-message']; ?>
+			<?php } ?>
+			    <textarea name="<?php echo esc_attr( $widget->get_field_name( 'subway-widget-access-roles-message' ) );?> "
+                      class="widefat"
+                      rows="3"
+                      placeholder="<?php esc_attr_e( 'The message that will be displayed if user has no access', 'subway' ); ?>"><?php echo wp_kses_post( $widget_message ); ?></textarea>
+            </label>
 			<p>
 				<?php esc_html_e( 'Limited HTML are allowed for security reasons', 'subway' ); ?>
 			</p>

@@ -95,7 +95,7 @@ class Options {
 
 	public function display_message( $settings, $r )
 	{
-		$args = array( 'settings' => $settings, $args => $r );
+		$args = array( 'settings' => $settings, 'args' => $r );
 		$this->view->render('form-widget-message', $args );
 	}
 

@@ -209,8 +209,7 @@ class Settings {
 				$field['label'],
 				$field['callback'],
 				$field['section'],
-				$field['group'],
-				$field['args']
+				$field['group']
 			);
 
 			register_setting( 'subway-settings-group', $field['id'] );
