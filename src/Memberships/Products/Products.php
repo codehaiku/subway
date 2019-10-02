@@ -39,8 +39,6 @@ class Products {
 
 		$results = $wpdb->get_results( $stmt, ARRAY_A );
 
-		$total = get_option( 'subway_products_count', 0 );
-
 		return $results;
 
 	}
@@ -57,6 +55,9 @@ class Products {
 		return $result;
 	}
 
+	public function get_product_checkout_url( $id ) {
+		return 'http://multisite.local/checkout?pid=' . $id;
+	}
 	public function add() {
 
 	}
@@ -89,13 +90,16 @@ class Products {
 
 		$data = array(
 			'name'        => $args['title'],
-			'description' => $args['description']
+			'description' => $args['description'],
+			'type' => $args['type'],
+			'amount' => $args['amount'],
+			'date_updated' => current_time( 'mysql' )
 		);
 
 		$table = $this->table;
 
 		$where        = array( 'id' => $args['id'] );
-		$format       = array( '%s', '%s' );
+		$format       = array( '%s', '%s', '%s', '%f', '%s' );
 		$where_format = array( '%d' );
 
 		return $wpdb->update( $table, $data, $where, $format, $where_format );

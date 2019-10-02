@@ -6,11 +6,11 @@
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
 
-jQuery(document).ready( function($) {
+jQuery(document).ready(function ($) {
 
     'use strict';
 
-    $('#publish-product').on('click', function(e) {
+    $('#publish-product').on('click', function (e) {
 
         e.preventDefault();
 
@@ -18,36 +18,38 @@ jQuery(document).ready( function($) {
 
         element.attr('disabled', 'disabled');
 
-        $.ajax( {
+        $.ajax({
             url: subway_api_settings.root + 'subway/v1/membership/new-product',
             method: 'POST',
-            beforeSend: function ( xhr ) {
-                xhr.setRequestHeader( 'X-WP-Nonce', subway_api_settings.nonce );
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('X-WP-Nonce', subway_api_settings.nonce);
             },
-            data:{
-                'title' : $('#input-title').val(),
-                'description' : $('#input-description').val(),
+            data: {
+                'title': $('#input-title').val(),
+                'description': $('#input-description').val(),
                 'type': $('#input-type').val(),
                 'amount': $('#input-amount').val(),
             }
-        } ).success( function ( response )
-        {
+        }).success(function (response) {
 
-            if ( response.is_error )
-            {
-                alert( response.message );
-            } else
-            {
-                alert( response.message );
-            }
+           if ( response.is_error ) {
 
-        } ).error( function( response, status, message )
-        {
+           } else {
+               /* window.location = subway_api_settings.admin_url
+                    + '?page=subway-membership&edit=yes&product='
+                    + response.data.product_id + '&_wpnonce='
+                    + response.data.nonce;*/
+                var edit_url = subway_api_settings.admin_url + response.data.edit_url;
 
-            console.log( message );
+               window.location = edit_url.replace(/&amp;/g, '&');
+           }
+
+        }).error(function (response, status, message) {
+
+            console.log(message);
 
 
-        }).done( function(){
+        }).done(function () {
             element.removeAttr('disabled');
         });
     });

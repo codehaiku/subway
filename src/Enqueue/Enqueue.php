@@ -20,6 +20,8 @@ class Enqueue {
 			'ajax_url' => admin_url('admin-ajax.php'),
 			'login_http_error' => esc_html__( 'An error occured while transmitting the data. Refresh the page and try again', 'subway' ), )
 		);
+
+		wp_enqueue_style('subway-general');
 	}
 
 	public function assets_admin_loaded()

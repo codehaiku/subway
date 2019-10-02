@@ -36,6 +36,55 @@
     margin: 1em 0;
 }
 
+ul.subway-membership-lists {
+    display: flex;
+    flex-wrap: wrap;
+}
+ul.subway-membership-lists li,
+ul.subway-membership-lists {
+    list-style: none;
+}
+ul.subway-membership-lists li {
+    width: 50%;
+    flex-grow: 1;
+}
+ul.subway-membership-lists li img {
+    max-width: 100%;
+}
+
+ul.subway-membership-lists li .subway-membership-list-wrap {
+    padding: 10px;
+}
+
+ul.subway-membership-lists li .subway-membership-list-wrap .details {
+    padding: 15px;
+}
+
+ul.subway-membership-lists li .subway-membership-list-wrap .details .product-title {
+    margin: 0;
+}
+
+ul.subway-membership-lists li .subway-membership-list-wrap .details .product-title a {
+    text-decoration: none;
+}
+
+ul.subway-membership-lists li .subway-membership-list-wrap .subway-membership-list-wrap-inner-wrap {
+    box-shadow: 0 0 10px 0px #e0e0e0;
+    border-radius: 4px;
+}
+.entry-content a.sw-button,
+a.sw-button {
+    text-decoration: none;
+    padding: 10px 20px;
+    display: block;
+    background: #02aee6;
+    color: #f5f5f5;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 3px;
+}
+
+
 .widget-subway-no-access-message p:last-child,
 .subway-restricted-area p:last-child {
     margin-bottom: 0;
@@ -87,14 +136,15 @@ display: block;
 .subway-login-form-message .success,
 .subway-login-form-message .error,
 .sw-form-errors .sw-error {
-    background: rgba(255, 0, 0, 0.0784313725490196);
+    background: rgba(255, 0, 0, 0.10);
     padding: 10px;
     color: rgba(255, 0, 0, 0.87);
     border-radius: 5px;
     margin: 20px 0;
     font-size: 1em;
     line-height: 1.5em;
-    border: 1px solid #ff000030;
+    border: 1px solid rgba(255, 0, 0, 0.20);
+    box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.10);
 }
 .sw-form-errors .sw-error {
     margin: 5px 0;

@@ -68,14 +68,36 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<textarea id="input-description" name="description" class="widefat" rows="5" placeholder="<?php echo esc_attr('Product description', 'subway'); ?>"><?php echo esc_html( $product->description ); ?></textarea>
 		</div>
 
-		<div>
-			<h3><label>Payment Type</label></h3>
-			<p>Select a payment type</p>
-			<select id="input-payment-type" name="payment_type">
-				<option>One Time Payment</option>
-				<option>Recurring</option>
-			</select>
-		</div>
+        <div>
+            <h3><label>Payment Type</label></h3>
+            <p>Select a payment type</p>
+
+            <?php
+            $options = [
+                    'free' => esc_html__('Free', 'subway'),
+                    'fixed' => esc_html__('Fixed', 'subway'),
+                    'recurring' => esc_html__('Recurring', 'subway'),
+                ];
+            ?>
+            <select name="type" id="input-type">
+                <?php foreach( $options as $value => $label ): ?>
+                    <?php if ( $product->type === $value ): ?>
+                        <?php $selected = 'selected'; ?>
+                    <?php else: ?>
+                        <?php $selected = ''; ?>
+                    <?php endif; ?>
+                    <option <?php echo esc_attr( $selected ); ?> value="<?php echo esc_attr( $value ); ?>">
+                        <?php echo esc_html( $label ); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
+        <div>
+            <h3><label>Price</label></h3>
+            <p>Enter the price of this product</p>
+            <input id="input-amount" name="amount" type="number" style="width: 6em;" size="3" placeholder="0.00" value="<?php echo esc_attr( $product->amount); ?>"/>
+        </div>
 
 		<hr/>
 

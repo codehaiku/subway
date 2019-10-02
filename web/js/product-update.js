@@ -28,6 +28,8 @@ jQuery(document).ready( function($) {
                 'id' : $('#input-id').val(),
                 'title' : $('#input-title').val(),
                 'description' : $('#input-description').val(),
+                'amount' : $('#input-amount').val(),
+                'type' : $('#input-type').val()
             }
         } ).success( function ( response )
         {

@@ -8,6 +8,7 @@ use Subway\Hooks\Hooks;
 use Subway\Migrate\InstallTables;
 use Subway\Options\Admin\Settings;
 use Subway\Post\Shortcodes\Login;
+use Subway\Post\Shortcodes\Memberships;
 use Subway\Post\Shortcodes\Register;
 use Subway\Post\Shortcodes\UserAccount;
 use Subway\Widgets\Options as WidgetOptions;
@@ -86,3 +87,7 @@ $register_shortcode->attach_hooks();
 // Load User Account Shortcode.
 $user_account = new UserAccount( $view );
 $user_account->attach_hooks();
+
+// Load Memberships Shortcode.
+$membership = new Memberships( $view );
+$membership->attach_hooks();

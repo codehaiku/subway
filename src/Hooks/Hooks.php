@@ -14,4 +14,5 @@ class Hooks {
 	public function listen() {
 		add_action('wp', array( $this, 'confirm_order' ) );
 	}
+
 }

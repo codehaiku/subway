@@ -88,7 +88,9 @@ class Products extends \WP_REST_Controller {
 			'name'        => $title,
 			'description' => $desc,
 			'type'        => $type,
-			'amount'      => $amount
+			'amount'      => $amount,
+			'date_created' => current_time( 'mysql' ),
+			'date_updated' => current_time( 'mysql' ),
 		);
 
 		if ( empty( $title ) ) {
@@ -100,15 +102,22 @@ class Products extends \WP_REST_Controller {
 			);
 		}
 
-		$format = array( '%s', '%s', '%s', '%f' );
+		$format = array( '%s', '%s', '%s', '%f', '%s', '%s' );
 
 		$inserted = $wpdb->insert( $table, $data, $format );
+		$product_id = $wpdb->insert_id;
 
 		if ( $inserted ) {
 			// Update the total membership count.
 			$current_total = get_option( 'subway_products_count', 0 );
 			update_option( 'subway_products_count', absint( $current_total ) + 1 );
 		}
+
+		$edit_url = wp_nonce_url(
+			sprintf( '?page=subway-membership&edit=%s&product=%s','yes', $product_id ),
+			sprintf( 'edit_product_%s', $product_id ),
+			'_wpnonce'
+		);
 
 		return new \WP_REST_Response(
 			array(
@@ -118,7 +127,9 @@ class Products extends \WP_REST_Controller {
 					'title'       => $title,
 					'description' => $desc,
 					'type' => $type,
-					'amount' => $amount
+					'amount' => $amount,
+					'product_id' => $product_id,
+					'edit_url' => $edit_url
 				)
 			), 200 );
 	}
@@ -130,7 +141,7 @@ class Products extends \WP_REST_Controller {
 	 *
 	 * @return \WP_REST_Response
 	 */
-	public function update_product( $request ) {
+	public function update_product( \WP_REST_Request $request ) {
 
 		$id = $request->get_param( 'id' );
 
@@ -138,9 +149,21 @@ class Products extends \WP_REST_Controller {
 
 		$desc = $request->get_param( 'description' );
 
+		$amount = $request->get_param( 'amount' );
+
+		$type = $request->get_param( 'type');
+
 		$membership = new \Subway\Memberships\Products\Products();
 
-		$membership->update( [ 'id' => $id, 'title' => $title, 'description' => $desc ] );
+		$membership->update(
+			[
+				'id' => $id,
+			    'title' => $title,
+			    'description' => $desc,
+				'amount' => $amount,
+				'type' => $type
+			]
+		);
 
 		return new \WP_REST_Response(
 			array(
@@ -200,7 +223,8 @@ class Products extends \WP_REST_Controller {
 
 		wp_localize_script( 'subway-admin-js', 'subway_api_settings', array(
 			'root'  => esc_url_raw( rest_url() ),
-			'nonce' => wp_create_nonce( 'wp_rest' )
+			'nonce' => wp_create_nonce( 'wp_rest' ),
+			'admin_url' => esc_url( get_admin_url() . 'admin.php' )
 		) );
 
 		return $this;
