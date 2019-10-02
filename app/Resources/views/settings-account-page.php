@@ -10,13 +10,12 @@ if ( ! empty( $account_page ) ) {
 	$account_page_object = get_post( $account_page );
 
 	if ( ! empty( $account_page_object ) && isset( $account_page_object->post_content ) ) {
-
-// Automatically prepend the login shortcode if no shortcode exists in the selected login page.
-		if ( ! has_shortcode( $register_page_object->post_content, 'subway_user_account' ) ) {
+	    
+		if ( ! has_shortcode( $account_page_object->post_content, 'subway_user_account' ) ) {
 
 			$new_post_object = array(
 				'ID'           => $account_page_object->ID,
-				'post_content' => '[subway_register] ' . $account_page_object->post_content,// Prepend Only.
+				'post_content' => '[subway_user_account] ' . $account_page_object->post_content,// Prepend Only.
 			);
 
 			wp_update_post( $account_page_object );

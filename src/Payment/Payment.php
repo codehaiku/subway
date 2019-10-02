@@ -20,11 +20,11 @@ class Payment {
 
 	function __construct( \wpdb $wpdb ) {
 
-		$confirmation_id = absint( get_option( 'subway_paypal_page_confirmation' ) );
+		$confirmation_id = absint( get_option( 'subway_options_account_page' ) );
 		$cancel_id       = absint( get_option( 'subway_paypal_page_cancel' ) );
 
-		$confirmation_url = add_query_arg( 'success', 'true', get_permalink( $confirmation_id ) );
-		$cancel_url       = add_query_arg( 'success', 'false', get_permalink( $cancel_id ) );
+		$confirmation_url =  get_permalink( $confirmation_id );
+		$cancel_url       =  get_permalink( $cancel_id );
 
 		$this->return_url = $confirmation_url;
 		$this->cancel_url = $cancel_url;
@@ -54,8 +54,8 @@ class Payment {
 		$currency = "USD";
 		$sku      = "sku_stupid23412";
 
-		$redirect_url = $this->return_url;
-		$cancel_url   = $this->cancel_url;
+		$redirect_url = add_query_arg( 'success', 'true', $this->return_url );
+		$cancel_url   = add_query_arg( 'success', 'fail', $this->cancel_url );
 
 		$invoice_number = uniqid();
 		$description    = "Payment for Subway Pro Plan";
@@ -123,34 +123,53 @@ class Payment {
 
 	public function confirm() {
 
-		if ( isset( $_GET['success'] ) && $_GET['success'] == 'true' ) {
+		if ( isset( $_GET['paymentId']) && isset( $_GET['success'] ) && $_GET['success'] == 'true' ) {
 
 			$payment_id = $_GET['paymentId'];
-			$payment    = \PayPal\Api\Payment::get( $payment_id, $this->api_context );
 
-			$this->wpdb->insert(
-				$this->wpdb->prefix . 'subway_memberships_orders',
-				array(
-					'product_id'      => 999,
-					'user_id'         => get_current_user_id(),
-					'status'          => $payment->getState(),
-					'amount'          => $payment->getTransactions()[0]->getAmount()->getTotal(),
-					'gateway'         => $this->gateway,
-					'gateway_details' => serialize( array() ),
-					'created'         => $payment->getCreateTime(),
-					'last_updated'    => current_time( 'mysql' )
-				),
-				array(
-					'%d', // Product ID.
-					'%d', // User ID.
-					'%s', // Status.
-					'%f', // Amount.
-					'%s', // Gateway.
-					'%s', // Serialized array(),
-					'%s', // Created.
-					'%s', // Last Updated.
-				)
-			);
+			try {
+
+				$payment = \PayPal\Api\Payment::get( $payment_id, $this->api_context );
+
+				$inserted = $this->wpdb->insert(
+
+					$this->wpdb->prefix . 'subway_memberships_orders',
+					array(
+						'product_id'      => 999,
+						'user_id'         => get_current_user_id(),
+						'status'          => $payment->getState(),
+						'amount'          => $payment->getTransactions()[0]->getAmount()->getTotal(),
+						'gateway'         => $this->gateway,
+						'gateway_details' => serialize( array() ),
+						'created'         => $payment->getCreateTime(),
+						'last_updated'    => current_time( 'mysql' )
+					),
+					array(
+						'%d', // Product ID.
+						'%d', // User ID.
+						'%s', // Status.
+						'%f', // Amount.
+						'%s', // Gateway.
+						'%s', // Serialized array(),
+						'%s', // Created.
+						'%s', // Last Updated.
+					)
+				);
+
+				if ( $inserted ) {
+					wp_safe_redirect(
+						add_query_arg('welcome', get_current_user_id(), $this->return_url ),
+						302
+					);
+				} else {
+					wp_safe_redirect(
+						add_query_arg('new_order', 'fail_to_add', $this->cancel_url ),
+						302
+					);
+				}
+			} catch ( \Exception $e ) {
+				// Log error here.
+			}
 		}
 	}
 
