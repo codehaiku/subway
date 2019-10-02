@@ -66,6 +66,7 @@ class Payment {
 		$payer->setPaymentMethod( "paypal" );
 
 		$item1 = new Item();
+
 		$item1->setName( $name )
 		      ->setCurrency( $currency )
 		      ->setQuantity( $quantity )
@@ -73,7 +74,9 @@ class Payment {
 		      ->setPrice( $price );
 
 		$itemList = new ItemList();
+
 		$itemList->setItems( array( $item1 ) );
+
 		$details = new Details();
 
 		$total = number_format( $subtotal + $tax, 2 );
@@ -82,6 +85,7 @@ class Payment {
 		        ->setSubtotal( $subtotal );
 
 		$amount = new Amount();
+
 		$amount->setCurrency( $currency )
 		       ->setTotal( $total )
 		       ->setDetails( $details );

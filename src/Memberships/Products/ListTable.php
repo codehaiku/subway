@@ -11,12 +11,16 @@ class ListTable extends \WP_List_Table {
 	function get_columns() {
 
 		$columns = array(
-			'cb'          => '<input type="checkbox" />',
-			'name'        => 'Product Name',
-			'description' => 'Description',
+			'cb'           => '<input type="checkbox" />',
+			'name'         => 'Product Name',
+			'description'  => 'Description',
+			'type'         => 'Type',
+			'amount'       => 'Amount',
+			'date_updated' => 'Last Updated',
 		);
 
 		return $columns;
+
 	}
 
 	function prepare_items() {
@@ -36,17 +40,21 @@ class ListTable extends \WP_List_Table {
 
 		$order = filter_input( INPUT_GET, 'order', FILTER_SANITIZE_SPECIAL_CHARS );
 
+		if ( empty ( $order ) ) {
+			$order = "DESC";
+		}
+
 		$offset = 0;
-		//Manually determine page query offset (offset + current page (minus one) x posts per page).
+
+		// Manually determine page query offset (offset + current page (minus one) x posts per page).
 		$page_offset = $offset + ( $current_page - 1 ) * $per_page;
 
 		$data = $memberships->get_products( array(
-			'orderby'   => 'name',
+			'orderby'   => 'date_updated',
 			'direction' => $order,
 			'offset'    => $page_offset,
 			'limit'     => $per_page
 		) );
-
 
 		$total_items = absint( get_option( 'subway_products_count' ) );
 
@@ -62,41 +70,44 @@ class ListTable extends \WP_List_Table {
 	}
 
 	function get_sortable_columns() {
+
 		$sortable_columns = array(
 			'name' => array( 'name', false ),
+			'date_created' => array( 'date_created', false ),
+			'date_updated' => array( 'date_updated', false ),
 		);
 
 		return $sortable_columns;
+
 	}
-
-	function usort_reorder( $a, $b ) {
-		// If no sort, default to title
-		$orderby = ( ! empty( $_GET['orderby'] ) ) ? $_GET['orderby'] : 'name';
-		// If no order, default to asc
-		$order = ( ! empty( $_GET['order'] ) ) ? $_GET['order'] : 'asc';
-		// Determine sort order
-		$result = strcmp( $a[ $orderby ], $b[ $orderby ] );
-
-		// Send final sort direction to usort
-		return ( $order === 'asc' ) ? $result : - $result;
-	}
-
 
 	function column_default( $item, $column_name ) {
+
+		$datetime_format = sprintf('%s %s',
+			get_option('date_format', 'F j, Y'),
+			get_option('time_format', 'g:i a')
+		);
+
 		switch ( $column_name ) {
-			case 'name':
-			case 'description':
-				return $item[ $column_name ];
+			case 'amount':
+				return number_format( $item[ $column_name ], 2 );
+				break;
+
+			case 'date_created':
+			case 'date_updated':
+				return date( $datetime_format, strtotime( $item[ $column_name ] ) );
+				break;
 			default:
-				return false;
+				return $item[ $column_name ];
 		}
+
 	}
 
 	function column_name( $item ) {
 
 		$trash_uri = add_query_arg( array(
 			'action' => 'listing_delete_action',
-			'id' => $item['id'],
+			'id'     => $item['id'],
 		), get_admin_url() . 'admin-post.php' );
 
 		$delete_url = wp_nonce_url(
@@ -122,15 +133,16 @@ class ListTable extends \WP_List_Table {
 	}
 
 	function get_bulk_actions() {
+
 		$actions = array(
 			'delete' => __( 'Delete', 'subway' )
 		);
 
 		return $actions;
+
 	}
 
 	function process_bulk_action( $membership ) {
-
 
 		if ( 'delete' === $this->current_action() ) {
 			check_admin_referer( 'bulk-' . $this->_args['plural'] );
@@ -142,6 +154,9 @@ class ListTable extends \WP_List_Table {
 				}
 			}
 		}
+
+		return $this;
+
 	}
 
 	function column_cb( $item ) {

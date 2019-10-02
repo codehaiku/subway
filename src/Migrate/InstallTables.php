@@ -52,9 +52,13 @@ class InstallTables {
 		$sql = "CREATE TABLE $table (
 						id mediumint(9) NOT NULL AUTO_INCREMENT,
 						name tinytext NOT NULL,
-						time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+						description text NULL,
+						amount double NOT NULL,
+						type tinytext NOT NULL,
+						date_created datetime DEFAULT CURRENT_TIMESTAMP,
+						date_updated datetime DEFAULT CURRENT_TIMESTAMP
 						PRIMARY KEY  (id)
-					) $this->collate;";
+				) $this->collate;";
 
 		dbDelta( $sql );
 
@@ -76,9 +80,12 @@ class InstallTables {
 						id mediumint(9) NOT NULL AUTO_INCREMENT,
 						name tinytext NOT NULL,
 						description text NULL,
-						time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+						amount double NOT NULL,
+						type tinytext NOT NULL,
+						date_created datetime DEFAULT CURRENT_TIMESTAMP,
+						date_updated datetime DEFAULT CURRENT_TIMESTAMP
 						PRIMARY KEY  (id)
-					) $this->collate;";
+				) $this->collate;";
 
 			dbDelta( $sql );
 

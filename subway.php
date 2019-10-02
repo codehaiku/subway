@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Subway | Memberships & Subscriptions
+ * Plugin Name: Subway Memberships & Subscriptions
  * Description: Lock your site content base on user roles and membership type. Easily charge for membership subscription via PayPal Subscriptions and More!
  * Version: 3.0
  * Author: Joseph G
@@ -30,7 +30,7 @@ global $wpdb;
 define( 'SUBWAY_VERSION', '3.0' );
 
 // Define Database Version.
-define( 'SUBWAY_DB_VERSION', '1.0.s2122121212' );
+define( 'SUBWAY_DB_VERSION', '1.0.2' );
 
 // Define Subway Directory Path.
 define( 'SUBWAY_DIR_PATH', trailingslashit( plugin_dir_path( __FILE__ ) ) );

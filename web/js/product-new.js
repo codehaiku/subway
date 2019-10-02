@@ -27,6 +27,8 @@ jQuery(document).ready( function($) {
             data:{
                 'title' : $('#input-title').val(),
                 'description' : $('#input-description').val(),
+                'type': $('#input-type').val(),
+                'amount': $('#input-amount').val(),
             }
         } ).success( function ( response )
         {

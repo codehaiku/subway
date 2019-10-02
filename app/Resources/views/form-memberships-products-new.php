@@ -26,10 +26,17 @@
         <div>
             <h3><label>Payment Type</label></h3>
             <p>Select a payment type</p>
-            <select id="input-payment-type" name="payment_type">
-                <option>One Time Payment</option>
-                <option>Recurring</option>
+            <select name="type" id="input-type">
+                <option value="free">Free</option>
+                <option value="fixed">Fixed</option>
+                <option value="recurring">Recurring</option>
             </select>
+        </div>
+
+        <div>
+            <h3><label>Price</label></h3>
+            <p>Enter the price of this product</p>
+            <input id="input-amount" name="amount" type="number" style="width: 6em;" size="3" placeholder="0.00"/>
         </div>
 
         <hr/>

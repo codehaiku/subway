@@ -6,7 +6,6 @@ namespace Subway\Api;
  * Class Products
  * @package Subway\Api
  */
-
 class Products extends \WP_REST_Controller {
 
 	public function register_routes() {
@@ -47,7 +46,7 @@ class Products extends \WP_REST_Controller {
 
 	}
 
-	public function delete_product( $request ) {
+	public function delete_product( \WP_REST_Request $request ) {
 
 		$id       = $request->get_param( 'id' );
 		$redirect = $request->get_param( 'redirect' );
@@ -71,17 +70,25 @@ class Products extends \WP_REST_Controller {
 	 *
 	 * @return \WP_REST_Response
 	 */
-	public function add_product( $request ) {
+	public function add_product( \WP_REST_Request $request ) {
 
 		global $wpdb;
 
 		$title = $request->get_param( 'title' );
-		$desc  = $request->get_param( 'description' );
+
+		$desc = $request->get_param( 'description' );
+
+		$amount = $request->get_param( 'amount' );
+
+		$type = $request->get_param( 'type' );
+
 		$table = $this->get_table_name();
 
 		$data = array(
 			'name'        => $title,
-			'description' => $desc
+			'description' => $desc,
+			'type'        => $type,
+			'amount'      => $amount
 		);
 
 		if ( empty( $title ) ) {
@@ -93,7 +100,7 @@ class Products extends \WP_REST_Controller {
 			);
 		}
 
-		$format = array( '%s', '%s' );
+		$format = array( '%s', '%s', '%s', '%f' );
 
 		$inserted = $wpdb->insert( $table, $data, $format );
 
@@ -109,7 +116,9 @@ class Products extends \WP_REST_Controller {
 				'message'  => 'Successfully added new product',
 				'data'     => array(
 					'title'       => $title,
-					'description' => $desc
+					'description' => $desc,
+					'type' => $type,
+					'amount' => $amount
 				)
 			), 200 );
 	}
@@ -166,7 +175,7 @@ class Products extends \WP_REST_Controller {
 
 		global $wpdb;
 
-		return $wpdb->prefix . 'memberships_products';
+		return $wpdb->prefix . 'subway_memberships_products';
 
 	}
 
@@ -227,8 +236,6 @@ class Products extends \WP_REST_Controller {
 			);
 
 		}
-
-		die;
 
 		return $this;
 
