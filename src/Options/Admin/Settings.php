@@ -222,6 +222,22 @@ class Settings {
 				'section'  => 'subway-settings-section',
 				'group'    => 'subway-paypal-section'
 			),
+			// PayPal Order Confirmation Page.
+			array(
+				'id'       => 'subway_paypal_page_confirmation',
+				'label'    => __( 'Order Confirmation Page', 'subway' ),
+				'callback' => array( $settings_callback, 'paypal_page_confirmation' ),
+				'section'  => 'subway-settings-section',
+				'group'    => 'subway-paypal-section'
+			),
+			// PayPal Cancel Order Page.
+			array(
+				'id'       => 'subway_paypal_page_cancel',
+				'label'    => __( 'Cancel Order Page', 'subway' ),
+				'callback' => array( $settings_callback, 'paypal_page_cancel' ),
+				'section'  => 'subway-settings-section',
+				'group'    => 'subway-paypal-section'
+			),
 		);
 
 		foreach ( $fields as $field ) {

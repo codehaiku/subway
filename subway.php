@@ -24,8 +24,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	return;
 }
 
+global $wpdb;
+
 // Define Subway Plugin Version.
 define( 'SUBWAY_VERSION', '3.0' );
+
+// Define Database Version.
+define( 'SUBWAY_DB_VERSION', '1.0.s2122121212' );
 
 // Define Subway Directory Path.
 define( 'SUBWAY_DIR_PATH', trailingslashit( plugin_dir_path( __FILE__ ) ) );

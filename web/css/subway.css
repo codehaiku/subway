@@ -110,14 +110,24 @@ display: block;
  * Forms
  */
 .sw-form { max-width: 600px; }
-.sw-form label { font-weight: normal; }
+.sw-form label { font-weight: normal; width: 100%; margin-bottom: 0;}
 .sw-block { display: block; }
-.sw-field-title { font-weight: bold; font-size: 1.2em;}
+.sw-field-title { font-weight: bold; font-size: 1.2em; margin-bottom: 7.5px;}
 .sw-field input[type=email],
 .sw-field input[type=password],
-.sw-field input[type=text] { display: block; width: 100%; max-width: 100%;margin: 5px 0; box-sizing: border-box; }
+.sw-field input[type=text] {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    margin: 7.5px 0;
+    padding: 5px 10px;
+    border: 1px solid #d6d6d6;
+    box-sizing: border-box;
+    border-radius: 3px;
+    box-shadow: 0 0 0 3px #eee;
+}
 .sw-field-howto {
-    font-style: italic;
+    font-size: 0.90em;
     opacity: 0.75;
 }
 .subway-form-row {

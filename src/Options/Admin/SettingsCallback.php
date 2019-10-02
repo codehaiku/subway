@@ -62,6 +62,13 @@ class SettingsCallback {
 	public function paypal_client_secret() {
 		$this->view->render( 'settings-paypal-client-secret', [] );
 	}
+
+	public function paypal_page_confirmation() {
+		$this->view->render( 'settings-paypal-page-confirmation', [] );
+	}
+	public function paypal_page_cancel() {
+		$this->view->render( 'settings-paypal-page-cancel', [] );
+	}
 }
 
 ?>

@@ -13,19 +13,35 @@ use PayPal\Api\Transaction;
 class Payment {
 
 	protected $gateway = "paypal";
+	protected $return_url = "";
+	protected $cancel_url = "";
+	protected $wpdb = '';
+	private $api_context = "";
 
-	function __construct() {
+	function __construct( \wpdb $wpdb ) {
+
+		$confirmation_id = absint( get_option( 'subway_paypal_page_confirmation' ) );
+		$cancel_id       = absint( get_option( 'subway_paypal_page_cancel' ) );
+
+		$confirmation_url = add_query_arg( 'success', 'true', get_permalink( $confirmation_id ) );
+		$cancel_url       = add_query_arg( 'success', 'false', get_permalink( $cancel_id ) );
+
+		$this->return_url = $confirmation_url;
+		$this->cancel_url = $cancel_url;
+
+		$this->api_context = new \PayPal\Rest\ApiContext(
+			new \PayPal\Auth\OAuthTokenCredential(
+				get_option( 'subway_paypal_client_id' ),     // Client ID.
+				get_option( 'subway_paypal_client_secret' )  // Client Secret.
+			)
+		);
+
+		$this->wpdb = $wpdb;
 
 	}
 
 	public function pay() {
-		
-		$apiContext = new \PayPal\Rest\ApiContext(
-			new \PayPal\Auth\OAuthTokenCredential(
-				get_option('subway_paypal_client_id'),     // ClientID
-				get_option('subway_paypal_client_secret')      // ClientSecret
-			)
-		);
+
 
 		$tax_rate = 12;
 		$price    = 89.99;
@@ -38,8 +54,8 @@ class Payment {
 		$currency = "USD";
 		$sku      = "sku_stupid23412";
 
-		$redirect_url = "http://multisite.local/nibble";
-		$cancel_url   = "http://multisite.local/nibble";
+		$redirect_url = $this->return_url;
+		$cancel_url   = $this->cancel_url;
 
 		$invoice_number = uniqid();
 		$description    = "Payment for Subway Pro Plan";
@@ -90,7 +106,7 @@ class Payment {
 		$request = clone $payment;
 
 		try {
-			$payment->create( $apiContext );
+			$payment->create( $this->api_context );
 		} catch ( Exception $ex ) {
 			echo '<pre>';
 			print_r( $ex );
@@ -107,6 +123,36 @@ class Payment {
 
 	public function confirm() {
 
+		if ( isset( $_GET['success'] ) && $_GET['success'] == 'true' ) {
+
+			$payment_id = $_GET['paymentId'];
+			$payment    = \PayPal\Api\Payment::get( $payment_id, $this->api_context );
+
+			$this->wpdb->insert(
+				$this->wpdb->prefix . 'subway_memberships_orders',
+				array(
+					'product_id'      => 999,
+					'user_id'         => get_current_user_id(),
+					'status'          => $payment->getState(),
+					'amount'          => $payment->getTransactions()[0]->getAmount()->getTotal(),
+					'gateway'         => $this->gateway,
+					'gateway_details' => serialize( array() ),
+					'created'         => $payment->getCreateTime(),
+					'last_updated'    => current_time( 'mysql' )
+				),
+				array(
+					'%d', // Product ID.
+					'%d', // User ID.
+					'%s', // Status.
+					'%f', // Amount.
+					'%s', // Gateway.
+					'%s', // Serialized array(),
+					'%s', // Created.
+					'%s', // Last Updated.
+				)
+			);
+		}
 	}
+
 
 }

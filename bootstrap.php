@@ -4,6 +4,8 @@ namespace Subway\Bootstrap;
 
 use Subway\Api\Products as ApiProducts;
 use Subway\Archives\Author;
+use Subway\Hooks\Hooks;
+use Subway\Migrate\InstallTables;
 use Subway\Options\Admin\Settings;
 use Subway\Post\Shortcodes\Login;
 use Subway\Post\Shortcodes\Register;
@@ -18,6 +20,16 @@ use Subway\User\User;
 use Subway\Enqueue\Enqueue;
 use Subway\Helpers\Helpers;
 use Subway\Taxonomy\Taxonomy;
+
+global $wpdb;
+
+// Install Tables.
+$migrate = new InstallTables( $wpdb, SUBWAY_DB_VERSION );
+$migrate->attach_hooks();
+
+// Hooks.
+$hooks = new Hooks();
+$hooks->listen();
 
 // Get our repositories.
 $user    = new User();
@@ -66,7 +78,6 @@ $api->attach_hooks();
 // Load Login Shortcode
 $login_shortcode = new Login( $view );
 $login_shortcode->attach_hooks();
-
 
 // Load Register Shortcode
 $register_shortcode = new Register( $view );

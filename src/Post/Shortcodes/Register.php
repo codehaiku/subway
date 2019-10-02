@@ -20,6 +20,8 @@ class Register {
 
 	public function register() {
 
+		global $wpdb;
+
 		$reg_action = filter_input( INPUT_POST, 'sw-action', FILTER_DEFAULT );
 
 		if ( isset( $reg_action ) ) {
@@ -34,7 +36,7 @@ class Register {
 
 				if ( $this->create_user( $username, $password, $email ) ) {
 
-					$payment = new Payment();
+					$payment = new Payment( $wpdb );
 
 					$payment->pay();
 
