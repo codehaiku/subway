@@ -36,6 +36,15 @@
     margin: 1em 0;
 }
 
+.entry-content tr.current-user-plan > td,
+tr.current-user-plan > td {
+    background: #ebffed;
+    border: 2px dashed #d4f3d7;
+    font-weight: bold;
+    font-size: larger;
+}
+
+
 .entry-content a.sw-button:visited,
 .entry-content a.sw-button,
 a.sw-button {

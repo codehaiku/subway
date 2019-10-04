@@ -50,6 +50,11 @@ class Payment {
 
 	}
 
+	/**
+	 * @param int $product_id
+	 *
+	 * @return bool|\PayPal\Api\Payment
+	 */
 	public function pay( $product_id = 0 ) {
 
 		if ( empty( $product_id ) ) {
@@ -166,6 +171,9 @@ class Payment {
 
 	}
 
+	/**
+	 * Confirms the payment made by the user.
+	 */
 	public function confirm() {
 
 		if ( isset( $_GET['paymentId'] ) && isset( $_GET['success'] ) && $_GET['success'] == 'true' ) {
@@ -176,11 +184,13 @@ class Payment {
 
 				$payment = \PayPal\Api\Payment::get( $payment_id, $this->api_context );
 
+				$product_id = $payment->getTransactions()[0]->getCustom();
+
 				$inserted = $this->wpdb->insert(
 
 					$this->wpdb->prefix . 'subway_memberships_orders',
 					array(
-						'product_id'      => $payment->getTransactions()[0]->getCustom(),
+						'product_id'      => $product_id,
 						'user_id'         => get_current_user_id(),
 						'status'          => $payment->getState(),
 						'amount'          => $payment->getTransactions()[0]->getAmount()->getTotal(),
@@ -202,11 +212,20 @@ class Payment {
 				);
 
 				if ( $inserted ) {
+
+					// Update the user meta.
+					update_user_meta( get_current_user_id(), 'subway_user_membership_product_id', $product_id );
+
+					// Redirect user to the right page.
 					wp_safe_redirect(
 						add_query_arg( 'welcome', get_current_user_id(), $this->return_url ),
 						302
 					);
+
+
 				} else {
+
+					// Redirect user to the right page.
 					wp_safe_redirect(
 						add_query_arg( 'new_order', 'fail_to_add', $this->cancel_url ),
 						302

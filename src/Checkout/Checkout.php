@@ -4,11 +4,12 @@ namespace Subway\Checkout;
 
 use Subway\Payment\Payment;
 
+
 class Checkout {
 
 	protected $wpdb;
 
-	public function __construct( $wpdb ) {
+	public function __construct( \wpdb $wpdb ) {
 
 		$this->wpdb = $wpdb;
 
@@ -39,6 +40,8 @@ class Checkout {
 	}
 
 	protected function define_hooks() {
+
 		add_action( 'wp', [ $this, 'pay' ] );
+
 	}
 }
