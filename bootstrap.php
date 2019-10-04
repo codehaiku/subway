@@ -7,6 +7,7 @@ use Subway\Archives\Author;
 use Subway\Hooks\Hooks;
 use Subway\Migrate\InstallTables;
 use Subway\Options\Admin\Settings;
+use Subway\Post\Shortcodes\Checkout;
 use Subway\Post\Shortcodes\Login;
 use Subway\Post\Shortcodes\Memberships;
 use Subway\Post\Shortcodes\Register;
@@ -91,3 +92,7 @@ $user_account->attach_hooks();
 // Load Memberships Shortcode.
 $membership = new Memberships( $view );
 $membership->attach_hooks();
+
+// Load Checkout Shortcode.
+$checkout = new Checkout( $view );
+$checkout->attach_hooks();

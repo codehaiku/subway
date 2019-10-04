@@ -9,6 +9,7 @@ use PayPal\Api\ItemList;
 use PayPal\Api\Payer;
 use PayPal\Api\RedirectUrls;
 use PayPal\Api\Transaction;
+use Subway\Memberships\Products\Products;
 
 class Payment {
 
@@ -40,17 +41,27 @@ class Payment {
 
 	}
 
-	public function pay() {
+	public function pay( $product_id = 0 ) {
 
+		if ( empty( $product_id ) ) {
+			return false;
+		}
+
+		$products = new Products();
+		$product = $products->get_product( $product_id );
+
+		if ( empty( $product ) ) {
+			return false;
+		}
 
 		$tax_rate = 12;
-		$price    = 89.99;
+		$price    = $product->amount;
 		$quantity = 1;
 
 		$tax      = $price * ( $tax_rate / 100 );
 		$subtotal = $price * $quantity;
 
-		$name     = "Subway Pro Plan";
+		$name     = $product->name;
 		$currency = "USD";
 		$sku      = "sku_stupid23412";
 

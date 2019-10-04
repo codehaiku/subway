@@ -53,11 +53,22 @@ class Products {
 		$result = $wpdb->get_row( $stmt, OBJECT );
 
 		return $result;
+
 	}
 
+
 	public function get_product_checkout_url( $id ) {
-		return 'http://multisite.local/checkout?pid=' . $id;
+
+		$checkout_url = add_query_arg( 'product_id', $id, 'http://multisite.local/checkout' );
+
+		if ( ! is_user_logged_in() ) {
+			$checkout_url = add_query_arg( 'product_id', $id, 'http://multisite.local/create-account' );
+		}
+
+		return apply_filters( 'get_product_checkout_url', $checkout_url );
+
 	}
+
 	public function add() {
 
 	}
@@ -80,8 +91,8 @@ class Products {
 
 		}
 
-
 		return $is_deleted;
+
 	}
 
 	public function update( $args = array() ) {
@@ -89,10 +100,10 @@ class Products {
 		global $wpdb;
 
 		$data = array(
-			'name'        => $args['title'],
-			'description' => $args['description'],
-			'type' => $args['type'],
-			'amount' => $args['amount'],
+			'name'         => $args['title'],
+			'description'  => $args['description'],
+			'type'         => $args['type'],
+			'amount'       => $args['amount'],
 			'date_updated' => current_time( 'mysql' )
 		);
 

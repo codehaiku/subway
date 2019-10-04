@@ -3,6 +3,7 @@
 namespace Subway\Post\Shortcodes;
 
 use Subway\Form\Form;
+use Subway\Memberships\Products\Products;
 use Subway\Payment\Payment;
 use Subway\View\View;
 
@@ -26,19 +27,26 @@ class Register {
 
 		if ( isset( $reg_action ) ) {
 
+			// User info.
 			$username         = filter_input( INPUT_POST, 'sw-username', FILTER_SANITIZE_STRING );
 			$email            = filter_input( INPUT_POST, 'sw-email', FILTER_SANITIZE_EMAIL );
 			$password         = filter_input( INPUT_POST, 'sw-password', FILTER_SANITIZE_STRING );
 			$password_confirm = filter_input( INPUT_POST, 'sw-password-confirm', FILTER_SANITIZE_STRING );
 
-			if ( $this->process_registration( $username, $email, $password, $password_confirm ) ) {
+			// Product.
+			$product_id = filter_input( INPUT_POST, 'sw-product-id', FILTER_SANITIZE_NUMBER_INT );
 
+			if ( empty ( $product_id ) ) {
+				return;
+			}
+
+			if ( $this->process_registration( $username, $email, $password, $password_confirm ) ) {
 
 				if ( $this->create_user( $username, $password, $email ) ) {
 
 					$payment = new Payment( $wpdb );
 
-					$payment->pay();
+					$payment->pay( $product_id );
 
 				}
 
@@ -51,23 +59,38 @@ class Register {
 		return;
 	}
 
+	/**
+	 * @param $username
+	 * @param $password
+	 * @param $email
+	 *
+	 * @return \WP_Error|\WP_User
+	 */
 	private function create_user( $username, $password, $email ) {
 
 		// Create the user after successful validation.
 		wp_create_user( $username, $password, $email );
 
-		$creds = [
+		$credentials = [
 			'user_login'    => $username,
 			'user_password' => $password,
 			'remember'      => true
 		];
 
-		$autologin_user = wp_signon( $creds, is_ssl() );
+		$login_user = wp_signon( $credentials, is_ssl() );
 
-		return $autologin_user;
+		return $login_user;
 
 	}
 
+	/**
+	 * @param $username
+	 * @param $email
+	 * @param $password
+	 * @param $password_confirm
+	 *
+	 * @return bool
+	 */
 	private function process_registration( $username, $email, $password, $password_confirm ) {
 
 		$errors = [];
@@ -120,9 +143,12 @@ class Register {
 	}
 
 	public function display_form() {
-		wp_enqueue_style( 'subway-general' );
 
-		return $this->view->render( 'shortcode-register', [], true );
+		$product_id = filter_input( INPUT_GET, 'product_id', FILTER_SANITIZE_NUMBER_INT );
+		$products   = new Products();
+		$product    = $products->get_product( $product_id );
+
+		return $this->view->render( 'shortcode-register', [ 'product' => $product ], true );
 	}
 
 	protected function define_hooks() {
