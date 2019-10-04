@@ -2,6 +2,7 @@
 
 namespace Subway\Post\Shortcodes;
 
+use Subway\Currency\Currency;
 use Subway\Memberships\Products\Products;
 use Subway\View\View;
 
@@ -10,7 +11,9 @@ class Checkout {
 	protected $view;
 
 	public function __construct( View $view ) {
+
 		$this->view = $view;
+
 	}
 
 	public function view() {
@@ -19,7 +22,17 @@ class Checkout {
 		$products   = new Products();
 		$product    = $products->get_product( $product_id );
 
-		return $this->view->render( 'shortcode-checkout', [ 'product' => $product ], true );
+		$currency = new Currency();
+
+		return $this->view->render( 'shortcode-checkout',
+			[
+				'view'     => $this->view,
+				'product'  => $product,
+				'currency' => $currency
+			],
+			true
+		);
+
 	}
 
 

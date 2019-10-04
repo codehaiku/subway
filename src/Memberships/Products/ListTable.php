@@ -2,6 +2,7 @@
 
 namespace Subway\Memberships\Products;
 
+use Subway\Currency\Currency;
 use Subway\Memberships\Products\Products;
 
 class ListTable extends \WP_List_Table {
@@ -13,7 +14,7 @@ class ListTable extends \WP_List_Table {
 		$columns = array(
 			'cb'           => '<input type="checkbox" />',
 			'name'         => 'Product Name',
-			'description'  => 'Description',
+			'sku'          => 'SKU',
 			'type'         => 'Type',
 			'amount'       => 'Amount',
 			'date_updated' => 'Last Updated',
@@ -88,9 +89,11 @@ class ListTable extends \WP_List_Table {
 			get_option('time_format', 'g:i a')
 		);
 
+		$currency = new Currency();
+
 		switch ( $column_name ) {
 			case 'amount':
-				return number_format( $item[ $column_name ], 2 );
+				return $currency->format( $item[ $column_name ], get_option('subway_currency', 'USD') );
 				break;
 
 			case 'date_created':
@@ -123,8 +126,8 @@ class ListTable extends \WP_List_Table {
 		);
 
 		$actions = array(
-			'edit'   => sprintf( '<a href="%s">Edit</a>', esc_url( $edit_url ) ),
-			'delete' => sprintf( '<a href="%s">Trash</a>', esc_url( $delete_url ) ),
+			'edit'   => sprintf( '<a href="%s">'.esc_html__('Edit','subway').'</a>', esc_url( $edit_url ) ),
+			'delete' => sprintf( '<a href="%s">'.esc_html__('Trash', 'subway').'</a>', esc_url( $delete_url ) ),
 		);
 
 		return sprintf( '%1$s %2$s', '<a href="#"><strong>' . $item['name'] . '</strong></a>',
@@ -145,14 +148,18 @@ class ListTable extends \WP_List_Table {
 	function process_bulk_action( $membership ) {
 
 		if ( 'delete' === $this->current_action() ) {
+
 			check_admin_referer( 'bulk-' . $this->_args['plural'] );
+
 			$product_ids = filter_input( INPUT_POST, 'product_ids',
 				FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+
 			if ( ! empty( $product_ids ) ) {
 				foreach ( $product_ids as $id ) {
 					$membership->delete( $id );
 				}
 			}
+
 		}
 
 		return $this;
@@ -160,9 +167,11 @@ class ListTable extends \WP_List_Table {
 	}
 
 	function column_cb( $item ) {
+
 		return sprintf(
 			'<input type="checkbox" name="product_ids[]" value="%s" />', $item['id']
 		);
+
 	}
 
 }

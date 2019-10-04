@@ -192,7 +192,7 @@ $product_id = filter_input( INPUT_GET, 'product_id', 519 );
 				<?php if ( ! empty ( $product ) ): ?>
 
                     <div class="subway-checkout-review-order-table">
-						<?php $this->render( 'checkout-table', [ 'product' => $product ] ); ?>
+						<?php $this->render( 'checkout-table', [ 'product' => $product, 'currency' => $currency ] ); ?>
                     </div><!--.subway-checkout-review-order-->
 
                           <!--Form row start-->

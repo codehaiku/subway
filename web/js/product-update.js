@@ -29,7 +29,8 @@ jQuery(document).ready( function($) {
                 'title' : $('#input-title').val(),
                 'description' : $('#input-description').val(),
                 'amount' : $('#input-amount').val(),
-                'type' : $('#input-type').val()
+                'type' : $('#input-type').val(),
+                'sku': $('#input-sku').val()
             }
         } ).success( function ( response )
         {

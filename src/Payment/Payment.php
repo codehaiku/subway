@@ -14,20 +14,29 @@ use Subway\Memberships\Products\Products;
 class Payment {
 
 	protected $gateway = "paypal";
+
 	protected $return_url = "";
+
 	protected $cancel_url = "";
+
 	protected $wpdb = '';
+
 	private $api_context = "";
+
+	private $quantity = 1;
 
 	function __construct( \wpdb $wpdb ) {
 
 		$confirmation_id = absint( get_option( 'subway_options_account_page' ) );
-		$cancel_id       = absint( get_option( 'subway_paypal_page_cancel' ) );
 
-		$confirmation_url =  get_permalink( $confirmation_id );
-		$cancel_url       =  get_permalink( $cancel_id );
+		$cancel_id = absint( get_option( 'subway_paypal_page_cancel' ) );
+
+		$confirmation_url = get_permalink( $confirmation_id );
+
+		$cancel_url = get_permalink( $cancel_id );
 
 		$this->return_url = $confirmation_url;
+
 		$this->cancel_url = $cancel_url;
 
 		$this->api_context = new \PayPal\Rest\ApiContext(
@@ -44,91 +53,111 @@ class Payment {
 	public function pay( $product_id = 0 ) {
 
 		if ( empty( $product_id ) ) {
+
 			return false;
+
 		}
 
 		$products = new Products();
+
 		$product = $products->get_product( $product_id );
 
 		if ( empty( $product ) ) {
+
 			return false;
+
 		}
 
+		// @TODO: Assign valid tax rate.
 		$tax_rate = 12;
-		$price    = $product->amount;
-		$quantity = 1;
 
-		$tax      = $price * ( $tax_rate / 100 );
-		$subtotal = $price * $quantity;
+		$price        = $product->amount;
+		$quantity     = $this->quantity;
 
-		$name     = $product->name;
-		$currency = "USD";
-		$sku      = "sku_stupid23412";
+		$tax          = $price * ( $tax_rate / 100 );
+		$subtotal     = $price * $quantity;
+
+		$name         = $product->name;
+		$currency     = get_option( 'subway_currency', 'USD' );
+
+		$sku          = $product->sku;
 
 		$redirect_url = add_query_arg( 'success', 'true', $this->return_url );
 		$cancel_url   = add_query_arg( 'success', 'fail', $this->cancel_url );
 
+		// @TODO: Assign valid invoice number.
 		$invoice_number = uniqid();
-		$description    = "Payment for Subway Pro Plan";
 
-		// -------
+		$description = sprintf( __( 'Payment for: %s', 'subway' ), $product->name );
 
-		$payer = new Payer();
-		$payer->setPaymentMethod( "paypal" );
 
-		$item1 = new Item();
+		try {
 
-		$item1->setName( $name )
-		      ->setCurrency( $currency )
-		      ->setQuantity( $quantity )
-		      ->setSku( $sku ) // Similar to `item_number` in Classic API
-		      ->setPrice( $price );
+			$payer = new Payer();
 
-		$itemList = new ItemList();
+			$payer->setPaymentMethod( "paypal" );
 
-		$itemList->setItems( array( $item1 ) );
+			$item1 = new Item();
 
-		$details = new Details();
+			$item1->setName( $name )
+			      ->setCurrency( $currency )
+			      ->setQuantity( $quantity )
+			      ->setSku( $sku ) // Similar to `item_number` in Classic API
+			      ->setPrice( $price );
 
-		$total = number_format( $subtotal + $tax, 2 );
+			$itemList = new ItemList();
 
-		$details->setTax( $tax )
-		        ->setSubtotal( $subtotal );
+			$itemList->setItems( array( $item1 ) );
 
-		$amount = new Amount();
+			$details = new Details();
 
-		$amount->setCurrency( $currency )
-		       ->setTotal( $total )
-		       ->setDetails( $details );
+			$total = number_format( $subtotal + $tax, 2 );
 
-		$transaction = new Transaction();
+			$details->setTax( $tax )
+			        ->setSubtotal( $subtotal );
 
-		$transaction->setAmount( $amount )
-		            ->setItemList( $itemList )
-		            ->setDescription( $description )
-		            ->setInvoiceNumber( $invoice_number );
+			$amount = new Amount();
 
-		$redirectUrls = new RedirectUrls();
-		$redirectUrls->setReturnUrl( $redirect_url )
-		             ->setCancelUrl( $cancel_url );
+			$amount->setCurrency( $currency )
+			       ->setTotal( $total )
+			       ->setDetails( $details );
 
-		$payment = new \PayPal\Api\Payment();
-		$payment->setIntent( "sale" )
-		        ->setPayer( $payer )
-		        ->setRedirectUrls( $redirectUrls )
-		        ->setTransactions( array( $transaction ) );
+			$transaction = new Transaction();
 
-		$request = clone $payment;
+			$transaction->setAmount( $amount )
+			            ->setItemList( $itemList )
+			            ->setDescription( $description )
+			            ->setInvoiceNumber( $invoice_number );
+
+			$redirectUrls = new RedirectUrls();
+			$redirectUrls->setReturnUrl( $redirect_url )
+			             ->setCancelUrl( $cancel_url );
+
+			$payment = new \PayPal\Api\Payment();
+
+			$payment->setIntent( "sale" )
+			        ->setPayer( $payer )
+			        ->setRedirectUrls( $redirectUrls )
+			        ->setTransactions( array( $transaction ) );
+
+
+		} catch ( \Exception $e ) {
+			//@Todo: Assign valid return url.
+			echo '<pre>';
+			echo $e->getMessage();
+			echo '</pre>';
+			die;
+		}
 
 		try {
 			$payment->create( $this->api_context );
-		} catch ( Exception $ex ) {
+		} catch ( \Exception $ex ) {
+			//@Todo: Assign valid return url.
 			echo '<pre>';
-			print_r( $ex );
+			echo $ex->getMessage();
 			echo '</pre>';
-			exit( 1 );
+			die;
 		}
-
 
 		header( "location: " . $payment->getApprovalLink() );
 
@@ -138,7 +167,7 @@ class Payment {
 
 	public function confirm() {
 
-		if ( isset( $_GET['paymentId']) && isset( $_GET['success'] ) && $_GET['success'] == 'true' ) {
+		if ( isset( $_GET['paymentId'] ) && isset( $_GET['success'] ) && $_GET['success'] == 'true' ) {
 
 			$payment_id = $_GET['paymentId'];
 
@@ -173,12 +202,12 @@ class Payment {
 
 				if ( $inserted ) {
 					wp_safe_redirect(
-						add_query_arg('welcome', get_current_user_id(), $this->return_url ),
+						add_query_arg( 'welcome', get_current_user_id(), $this->return_url ),
 						302
 					);
 				} else {
 					wp_safe_redirect(
-						add_query_arg('new_order', 'fail_to_add', $this->cancel_url ),
+						add_query_arg( 'new_order', 'fail_to_add', $this->cancel_url ),
 						302
 					);
 				}

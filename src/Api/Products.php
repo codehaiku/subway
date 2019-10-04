@@ -76,6 +76,8 @@ class Products extends \WP_REST_Controller {
 
 		$title = $request->get_param( 'title' );
 
+		$sku = $request->get_param( 'sku' );
+
 		$desc = $request->get_param( 'description' );
 
 		$amount = $request->get_param( 'amount' );
@@ -85,10 +87,11 @@ class Products extends \WP_REST_Controller {
 		$table = $this->get_table_name();
 
 		$data = array(
-			'name'        => $title,
-			'description' => $desc,
-			'type'        => $type,
-			'amount'      => $amount,
+			'name'         => $title,
+			'sku'          => $sku,
+			'description'  => $desc,
+			'type'         => $type,
+			'amount'       => $amount,
 			'date_created' => current_time( 'mysql' ),
 			'date_updated' => current_time( 'mysql' ),
 		);
@@ -102,9 +105,9 @@ class Products extends \WP_REST_Controller {
 			);
 		}
 
-		$format = array( '%s', '%s', '%s', '%f', '%s', '%s' );
+		$format = array( '%s', '%s', '%s', '%s', '%f', '%s', '%s' );
 
-		$inserted = $wpdb->insert( $table, $data, $format );
+		$inserted   = $wpdb->insert( $table, $data, $format );
 		$product_id = $wpdb->insert_id;
 
 		if ( $inserted ) {
@@ -114,7 +117,7 @@ class Products extends \WP_REST_Controller {
 		}
 
 		$edit_url = wp_nonce_url(
-			sprintf( '?page=subway-membership&edit=%s&product=%s','yes', $product_id ),
+			sprintf( '?page=subway-membership&edit=%s&product=%s', 'yes', $product_id ),
 			sprintf( 'edit_product_%s', $product_id ),
 			'_wpnonce'
 		);
@@ -125,11 +128,12 @@ class Products extends \WP_REST_Controller {
 				'message'  => 'Successfully added new product',
 				'data'     => array(
 					'title'       => $title,
+					'sku'         => $sku,
 					'description' => $desc,
-					'type' => $type,
-					'amount' => $amount,
-					'product_id' => $product_id,
-					'edit_url' => $edit_url
+					'type'        => $type,
+					'amount'      => $amount,
+					'product_id'  => $product_id,
+					'edit_url'    => $edit_url
 				)
 			), 200 );
 	}
@@ -151,17 +155,20 @@ class Products extends \WP_REST_Controller {
 
 		$amount = $request->get_param( 'amount' );
 
-		$type = $request->get_param( 'type');
+		$type = $request->get_param( 'type' );
+
+		$sku = $request->get_param( 'sku' );
 
 		$membership = new \Subway\Memberships\Products\Products();
 
 		$membership->update(
 			[
-				'id' => $id,
-			    'title' => $title,
-			    'description' => $desc,
-				'amount' => $amount,
-				'type' => $type
+				'id'          => $id,
+				'title'       => $title,
+				'description' => $desc,
+				'amount'      => $amount,
+				'type'        => $type,
+				'sku'         => $sku
 			]
 		);
 
@@ -222,8 +229,8 @@ class Products extends \WP_REST_Controller {
 			[ 'jquery', 'subway-admin-js' ] );
 
 		wp_localize_script( 'subway-admin-js', 'subway_api_settings', array(
-			'root'  => esc_url_raw( rest_url() ),
-			'nonce' => wp_create_nonce( 'wp_rest' ),
+			'root'      => esc_url_raw( rest_url() ),
+			'nonce'     => wp_create_nonce( 'wp_rest' ),
 			'admin_url' => esc_url( get_admin_url() . 'admin.php' )
 		) );
 

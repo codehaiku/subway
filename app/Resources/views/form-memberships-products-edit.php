@@ -52,24 +52,50 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div>
 
 			<h3>
-				<label><?php esc_html_e( 'Product Name', 'subway' ); ?></label>
+				<label for="input-title">
+                    <?php esc_html_e( 'Product Name', 'subway' ); ?>
+                </label>
 			</h3>
 
-			<p><?php esc_html_e('Enter the product name', 'subway'); ?></p>
+			<p><?php esc_html_e('Enter the new product name', 'subway'); ?></p>
 
 			<input value="<?php echo esc_attr( $product->name ); ?>"
 			       id="input-title" name="title" type="text" class="widefat"
 			       placeholder="<?php esc_attr_e('Add Name', 'subway'); ?>" />
 		</div>
 
+        <!-- Product SKU-->
+        <div>
+            <h3>
+                <label for="input-sku">
+					<?php esc_html_e( 'Product SKU', 'subway' ); ?>
+                </label>
+            </h3>
+            <p>
+				<?php esc_html_e('Give your membership product a new and unique SKU', 'subway'); ?>
+            </p>
+
+            <input value="<?php echo esc_attr( $product->sku ); ?>" id="input-sku" name="sku" type="text" class="widefat"
+                   placeholder="<?php esc_attr_e('(Stock Keeping Unit e.g. PROD001)', 'subway'); ?>" />
+        </div>
+        <!--/.Product SKU-->
+
 		<div>
-			<h3><label><?php esc_html_e('Product Description', 'subway'); ?></label></h3>
-			<p>Enter the product description</p>
+			<h3>
+                <label for="input-description">
+                    <?php esc_html_e('Product Description', 'subway'); ?>
+                </label>
+            </h3>
+			<p>
+                <?php esc_html_e('Enter the product description', 'subway'); ?>
+            </p>
 			<textarea id="input-description" name="description" class="widefat" rows="5" placeholder="<?php echo esc_attr('Product description', 'subway'); ?>"><?php echo esc_html( $product->description ); ?></textarea>
 		</div>
 
         <div>
-            <h3><label>Payment Type</label></h3>
+            <h3>
+                <label>Payment Type</label>
+            </h3>
             <p>Select a payment type</p>
 
             <?php

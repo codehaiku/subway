@@ -19,6 +19,7 @@ jQuery(document).ready(function ($) {
         element.attr('disabled', 'disabled');
 
         $.ajax({
+
             url: subway_api_settings.root + 'subway/v1/membership/new-product',
             method: 'POST',
             beforeSend: function (xhr) {
@@ -29,20 +30,19 @@ jQuery(document).ready(function ($) {
                 'description': $('#input-description').val(),
                 'type': $('#input-type').val(),
                 'amount': $('#input-amount').val(),
+                'sku': $('#input-sku').val()
             }
+
         }).success(function (response) {
 
-           if ( response.is_error ) {
+            if (response.is_error) {
 
-           } else {
-               /* window.location = subway_api_settings.admin_url
-                    + '?page=subway-membership&edit=yes&product='
-                    + response.data.product_id + '&_wpnonce='
-                    + response.data.nonce;*/
+            } else {
+
                 var edit_url = subway_api_settings.admin_url + response.data.edit_url;
 
-               window.location = edit_url.replace(/&amp;/g, '&');
-           }
+                window.location = edit_url.replace(/&amp;/g, '&');
+            }
 
         }).error(function (response, status, message) {
 

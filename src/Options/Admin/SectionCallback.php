@@ -3,6 +3,11 @@ namespace Subway\Options\Admin;
 
 class SectionCallback{
 
+	public function general() {
+
+		return $this;
+	}
+
 	public function pages() {
 		echo '<p class="sw-lead">';
 		esc_html_e('Select a page for each corresponding membership pages', 'subway');

@@ -2,6 +2,7 @@
 
 namespace Subway\Post\Shortcodes;
 
+use Subway\Currency\Currency;
 use Subway\Form\Form;
 use Subway\Memberships\Products\Products;
 use Subway\Payment\Payment;
@@ -12,11 +13,9 @@ class Register {
 	protected $view;
 
 	public function __construct( View $view ) {
-		$this->view = $view;
-	}
 
-	public function attach_hooks() {
-		$this->define_hooks();
+		$this->view = $view;
+
 	}
 
 	public function register() {
@@ -145,14 +144,34 @@ class Register {
 	public function display_form() {
 
 		$product_id = filter_input( INPUT_GET, 'product_id', FILTER_SANITIZE_NUMBER_INT );
-		$products   = new Products();
-		$product    = $products->get_product( $product_id );
 
-		return $this->view->render( 'shortcode-register', [ 'product' => $product ], true );
+		$products = new Products();
+
+		$product = $products->get_product( $product_id );
+
+		$currency = new Currency();
+
+		return $this->view->render( 'shortcode-register',
+			[
+				'product'  => $product,
+				'currency' => $currency
+			],
+			true
+		);
+
+	}
+
+	public function attach_hooks() {
+
+		$this->define_hooks();
+
 	}
 
 	protected function define_hooks() {
+
 		add_shortcode( 'subway_register', array( $this, 'display_form' ) );
+
 		add_action( 'wp', array( $this, 'register' ) );
+
 	}
 }

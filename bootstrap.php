@@ -77,6 +77,10 @@ $admin_settings->attach_hooks();
 $api = new ApiProducts();
 $api->attach_hooks();
 
+// Load Checkout.
+$checkout = new \Subway\Checkout\Checkout( $wpdb );
+$checkout->attach_hooks();
+
 // Load Login Shortcode
 $login_shortcode = new Login( $view );
 $login_shortcode->attach_hooks();

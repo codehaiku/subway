@@ -2,6 +2,7 @@
 
 namespace Subway\Options\Admin;
 
+use Subway\Currency\Currency;
 use Subway\View\View;
 
 class SettingsCallback {
@@ -10,6 +11,19 @@ class SettingsCallback {
 
 	public function __construct( View $view ) {
 		$this->view = $view;
+	}
+
+	public function currency() {
+
+		$currencies = Currency::get_supported_currencies();
+
+		$selected_currency = get_option('subway_currency', 'USD');
+
+		$this->view->render( 'settings-currency', [
+			'currencies' => $currencies,
+			'selected_currency' => $selected_currency
+		] );
+
 	}
 
 	public function login_page() {
@@ -27,6 +41,7 @@ class SettingsCallback {
 	public function user_account() {
 		$this->view->render( 'settings-account-page', [] );
 	}
+
 	public function author_archives() {
 		$this->view->render( 'settings-author-archives', [] );
 	}
@@ -66,6 +81,7 @@ class SettingsCallback {
 	public function paypal_page_confirmation() {
 		$this->view->render( 'settings-paypal-page-confirmation', [] );
 	}
+
 	public function paypal_page_cancel() {
 		$this->view->render( 'settings-paypal-page-cancel', [] );
 	}

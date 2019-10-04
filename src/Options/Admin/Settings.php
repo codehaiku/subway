@@ -84,6 +84,12 @@ class Settings {
 
 		// Register our settings section.
 		add_settings_section(
+			'subway-general-section', $this->get_icon( 'dashicons-admin-generic' ) . __( 'General', 'subway' ),
+			array( $section_callback, 'general' ), 'subway-settings-section'
+		);
+
+		// Register our settings section.
+		add_settings_section(
 			'subway-page-visibility-section', $this->get_icon( 'dashicons-text-page' ) . __( 'Pages', 'subway' ),
 			array( $section_callback, 'pages' ), 'subway-settings-section'
 		);
@@ -116,6 +122,15 @@ class Settings {
 
 		// Register the fields.
 		$fields = array(
+			// Currency Page Settings.
+			array(
+				'id'       => 'subway_currency',
+				'label'    => __( 'Currency', 'subway' ),
+				'callback' => array( $settings_callback, 'currency' ),
+				'section'  => 'subway-settings-section',
+				'group'    => 'subway-general-section',
+			),
+
 			// Login page settings.
 			array(
 				'id'       => 'subway_login_page',

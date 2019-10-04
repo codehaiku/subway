@@ -32,9 +32,10 @@ class Products {
 		$args = wp_parse_args( $args, $defaults );
 
 		$orderby   = $args['orderby'];
+
 		$direction = strtoupper( $args['direction'] );
 
-		$stmt = $wpdb->prepare( "SELECT id, name, description, type, amount, date_created, date_updated FROM $this->table ORDER BY $orderby $direction LIMIT %d, %d",
+		$stmt = $wpdb->prepare( "SELECT id, name, sku, description, type, amount, date_created, date_updated FROM $this->table ORDER BY $orderby $direction LIMIT %d, %d",
 			array( $args['offset'], $args['limit'] ) );
 
 		$results = $wpdb->get_results( $stmt, ARRAY_A );
@@ -53,19 +54,6 @@ class Products {
 		$result = $wpdb->get_row( $stmt, OBJECT );
 
 		return $result;
-
-	}
-
-
-	public function get_product_checkout_url( $id ) {
-
-		$checkout_url = add_query_arg( 'product_id', $id, 'http://multisite.local/checkout' );
-
-		if ( ! is_user_logged_in() ) {
-			$checkout_url = add_query_arg( 'product_id', $id, 'http://multisite.local/create-account' );
-		}
-
-		return apply_filters( 'get_product_checkout_url', $checkout_url );
 
 	}
 
@@ -104,17 +92,32 @@ class Products {
 			'description'  => $args['description'],
 			'type'         => $args['type'],
 			'amount'       => $args['amount'],
+			'sku'          => $args['sku'],
 			'date_updated' => current_time( 'mysql' )
 		);
 
 		$table = $this->table;
 
 		$where        = array( 'id' => $args['id'] );
-		$format       = array( '%s', '%s', '%s', '%f', '%s' );
+		$format       = array( '%s', '%s', '%s', '%f', '%s', '%s' );
 		$where_format = array( '%d' );
 
 		return $wpdb->update( $table, $data, $where, $format, $where_format );
 
 	}
+
+
+	public function get_product_checkout_url( $id ) {
+
+		$checkout_url = add_query_arg( 'product_id', $id, 'http://multisite.local/checkout' );
+
+		if ( ! is_user_logged_in() ) {
+			$checkout_url = add_query_arg( 'product_id', $id, 'http://multisite.local/create-account' );
+		}
+
+		return apply_filters( 'get_product_checkout_url', $checkout_url );
+
+	}
+
 
 }
