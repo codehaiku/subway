@@ -125,6 +125,7 @@ class Payment {
 			$transaction = new Transaction();
 
 			$transaction->setAmount( $amount )
+			            ->setCustom( $product->id )
 			            ->setItemList( $itemList )
 			            ->setDescription( $description )
 			            ->setInvoiceNumber( $invoice_number );
@@ -179,7 +180,7 @@ class Payment {
 
 					$this->wpdb->prefix . 'subway_memberships_orders',
 					array(
-						'product_id'      => 999,
+						'product_id'      => $payment->getTransactions()[0]->getCustom(),
 						'user_id'         => get_current_user_id(),
 						'status'          => $payment->getState(),
 						'amount'          => $payment->getTransactions()[0]->getAmount()->getTotal(),

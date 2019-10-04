@@ -29,6 +29,7 @@ class Checkout {
 		}
 
 		return $this;
+
 	}
 
 	public function attach_hooks() {
