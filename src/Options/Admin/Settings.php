@@ -25,6 +25,7 @@ class Settings {
 			apply_filters( 'subway-memberships-admin-menu-position', 2 )
 		);
 
+
 		// Add 'dashboard' sub menu page.
 		add_submenu_page(
 			'subway-membership',
@@ -33,6 +34,16 @@ class Settings {
 			'manage_options',
 			'subway-membership',
 			array( $this, 'membership_products' )
+		);
+
+		// Add Orders Sub Menu Page.
+		add_submenu_page(
+			'subway-membership',
+			esc_html__( 'Memberships: Orders', 'subway' ),
+			esc_html__( 'Orders', 'subway' ),
+			'manage_options',
+			'subway-membership-orders',
+			array( $this, 'orders' )
 		);
 
 		// Add 'general' sub menu page.
@@ -45,12 +56,17 @@ class Settings {
 			array( $this, 'general' )
 		);
 
+
+
+
 		return;
 
 	}
 
 	public function general() {
+
 		$view = new View();
+
 		$view->render( 'form-admin-general-settings', [] );
 
 		return $this;
@@ -59,9 +75,22 @@ class Settings {
 	public function membership_products() {
 
 		$view = new View();
+
 		$view->render(
 			'form-membership-products',
 			[ 'view' => $view, 'products' => new Products() ]
+		);
+
+		return $this;
+	}
+
+	public function orders() {
+
+		$view = new View();
+
+		$view->render(
+			'form-memberships-orders',
+			[ 'view' => $view, 'orders' => [] ]
 		);
 
 		return $this;
@@ -307,6 +336,28 @@ class Settings {
 
 	}
 
+	public function membership_orders_screen_options() {
+
+		global $SubwayListTableOrders;
+
+		$option = 'per_page';
+
+		$args = array(
+			'label'   => esc_html__( 'Orders', 'subway' ),
+			'default' => 10,
+			'option'  => 'orders_per_page'
+		);
+
+		add_screen_option( $option, $args );
+
+		if ( ! class_exists( 'WP_List_Table' ) ) {
+			require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
+		}
+
+		$SubwayListTableOrders = new \Subway\Memberships\Orders\ListTable();
+
+	}
+
 	public function assets( $hook ) {
 
 		wp_register_script( 'subway-settings-script', SUBWAY_JS_URL . 'settings.js' );
@@ -314,6 +365,7 @@ class Settings {
 		wp_register_style( 'subway-settings-style', SUBWAY_CSS_URL . 'settings.css' );
 
 		if ( in_array( $hook, [ 'memberships_page_subway-membership-general' ] ) ) {
+
 			// Enqueues the script only on the Subway Settings page.
 			wp_enqueue_script( 'subway-settings-script' );
 
@@ -341,5 +393,8 @@ class Settings {
 
 		add_action( 'load-toplevel_page_subway-membership', array( $this, 'membership_screen_options' ) );
 
+		add_action( 'load-memberships_page_subway-membership-orders', array( $this, 'membership_orders_screen_options' ) );
+
 	}
 }
+
