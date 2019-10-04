@@ -7,6 +7,7 @@ use PayPal\Api\Details;
 use PayPal\Api\Item;
 use PayPal\Api\ItemList;
 use PayPal\Api\Payer;
+use PayPal\Api\PaymentExecution;
 use PayPal\Api\RedirectUrls;
 use PayPal\Api\Transaction;
 use Subway\Memberships\Products\Products;
@@ -178,9 +179,17 @@ class Payment {
 
 		if ( isset( $_GET['paymentId'] ) && isset( $_GET['success'] ) && $_GET['success'] == 'true' ) {
 
+			$paymentId = $_GET['paymentId'];
+			$payment = \PayPal\Api\Payment::get($paymentId, $this->api_context);
+
+			$execution = new PaymentExecution();
+			$execution->setPayerId($_GET['PayerID']);
+
 			$payment_id = $_GET['paymentId'];
 
 			try {
+
+				$result = $payment->execute($execution, $this->api_context);
 
 				$payment = \PayPal\Api\Payment::get( $payment_id, $this->api_context );
 

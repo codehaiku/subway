@@ -12,15 +12,11 @@ class ListTable extends \WP_List_Table {
 	function get_columns() {
 
 		$columns = array(
-			'cb'           => '<input type="checkbox" />',
-			'created'      => 'Created',
-			'status'       => 'Status',
-			'amount'       => 'Amount',
-			'user_id'      => 'User ID',
-			'product_id'   => 'Product ID',
-			'gateway'      => 'Gateway',
-			'last_updated' => 'Last Updated',
-
+			'cb'      => '<input type="checkbox" />',
+			'created' => 'Created',
+			'amount'  => 'Amount',
+			'user_id' => 'User',
+			'name'    => 'Product',
 		);
 
 		return $columns;
@@ -80,8 +76,10 @@ class ListTable extends \WP_List_Table {
 
 		$sortable_columns = array(
 			'name'         => array( 'name', false ),
-			'date_created' => array( 'created', false ),
-			'date_updated' => array( 'last_updated', false ),
+			'user_id'      => array( 'user', false ),
+			'amount'       => array( 'amount', false ),
+			'created'      => array( 'created', false ),
+			'last_updated' => array( 'last_updated', false ),
 		);
 
 		return $sortable_columns;
@@ -98,12 +96,67 @@ class ListTable extends \WP_List_Table {
 		$currency = new Currency();
 
 		switch ( $column_name ) {
+
 			case 'amount':
-				return $currency->format( $item[ $column_name ], get_option( 'subway_currency', 'USD' ) );
+
+				$src           = 'https://www.paypalobjects.com/webstatic/mktg/logo-center/PP_Acceptance_Marks_for_LogoCenter_76x48.png';
+				$amount_column = '<img style="vertical-align: middle;" width="32" alt="PayPal Logo" src="' . esc_url( $src ) . '" />';
+				$amount        = $currency->format( $item[ $column_name ], get_option( 'subway_currency', 'USD' ) );
+				$amount_column = $amount_column . '&nbsp;' . $amount;
+
+				return apply_filters( 'subway_orders_list_table_amount', $amount_column );
+
 				break;
 
-			case 'date_created':
-			case 'date_updated':
+			case 'user_id':
+
+				$user_id = $item[ $column_name ];
+
+				$user = get_userdata( $user_id );
+
+				$user_name = $user->display_name;
+
+				$user_edit_link = add_query_arg( 'user_id', $user_id, admin_url( 'wp-admin/user-edit.php' ) );
+
+				$user_link = sprintf( '<a href="%s" title="%s">%s</a>', $user_edit_link, $user_name, $user_name );
+
+				$user_avatar = get_avatar( $user_id, 32 );
+
+				$user_column = sprintf( '<div style="float: left; margin-right: 10px;">%s</div> %s',
+					$user_avatar,
+					$user_link
+				);
+
+				return apply_filters( 'subway_orders_list_table_user', $user_column );
+
+				break;
+
+			case 'name':
+
+				$product_id = $item['product_id'];
+
+				$product_edit_link = add_query_arg( [
+					'page'    => 'subway-membership',
+					'edit'    => 'yes',
+					'product' => $product_id
+				],
+					admin_url( 'wp-admin/user-edit.php' )
+				);
+
+				$product_edit_link = wp_nonce_url( $product_edit_link, sprintf( 'edit_product_%s', $product_id ), '_wpnonce' );
+
+				$product_column = sprintf(
+					"<a href='%s' title='%s'>%s</a>",
+					$product_edit_link,
+					$item[ $column_name ],
+					$item[ $column_name ]
+				);
+
+				return apply_filters( 'subway_orders_list_table_product', $product_column );;
+
+				break;
+			case 'created':
+			case 'last_updated':
 				return date( $datetime_format, strtotime( $item[ $column_name ] ) );
 				break;
 			default:
@@ -112,7 +165,12 @@ class ListTable extends \WP_List_Table {
 
 	}
 
-	function column_name( $item ) {
+	function column_created( $item ) {
+
+		$datetime_format = sprintf( '%s %s',
+			get_option( 'date_format', 'F j, Y' ),
+			get_option( 'time_format', 'g:i a' )
+		);
 
 		$trash_uri = add_query_arg( array(
 			'action' => 'listing_delete_action',
@@ -136,7 +194,7 @@ class ListTable extends \WP_List_Table {
 			'delete' => sprintf( '<a href="%s">' . esc_html__( 'Trash', 'subway' ) . '</a>', esc_url( $delete_url ) ),
 		);
 
-		return sprintf( '%1$s %2$s', '<a href="#"><strong>' . $item['name'] . '</strong></a>',
+		return sprintf( '%1$s %2$s', '<a href="#"><strong>' . date( $datetime_format, strtotime( $item['created'] ) ) . '</strong></a>',
 			$this->row_actions( $actions ) );
 
 	}
