@@ -96,7 +96,6 @@ class Payment {
 
 		$description = sprintf( __( 'Payment for: %s', 'subway' ), $product->name );
 
-
 		try {
 
 			$payer = new Payer();
@@ -117,7 +116,7 @@ class Payment {
 
 			$details = new Details();
 
-			$total = number_format( $subtotal + $tax, 2 );
+			$total = $subtotal + $tax;
 
 			$details->setTax( $tax )
 			        ->setSubtotal( $subtotal );
@@ -157,10 +156,14 @@ class Payment {
 		}
 
 		try {
+
 			$payment->create( $this->api_context );
+
 		} catch ( \Exception $ex ) {
 			//@Todo: Assign valid return url.
 			echo '<pre>';
+			echo $total;
+
 				echo $ex->getMessage();
 			echo '</pre>';
 			die;
