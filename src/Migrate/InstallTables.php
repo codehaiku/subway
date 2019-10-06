@@ -35,7 +35,7 @@ class InstallTables {
 				created datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
 				last_updated datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
 				PRIMARY KEY (id)
-			) $this->collate;";
+			) AUTO_INCREMENT = 1000 $this->collate;";
 
 		dbDelta( $sql );
 

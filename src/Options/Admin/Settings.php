@@ -57,8 +57,6 @@ class Settings {
 		);
 
 
-
-
 		return;
 
 	}
@@ -377,6 +375,12 @@ class Settings {
 
 	}
 
+	public function set_screen_option( $status, $option, $value ) {
+
+		return $value;
+
+	}
+
 	public function attach_hooks() {
 
 		$this->define_hooks();
@@ -393,8 +397,12 @@ class Settings {
 
 		add_action( 'load-toplevel_page_subway-membership', array( $this, 'membership_screen_options' ) );
 
-		add_action( 'load-memberships_page_subway-membership-orders', array( $this, 'membership_orders_screen_options' ) );
+		add_action( 'load-memberships_page_subway-membership-orders', array(
+			$this,
+			'membership_orders_screen_options'
+		) );
 
+		add_filter( 'set-screen-option', array( $this, 'set_screen_option' ), 10, 3 );
 	}
 }
 

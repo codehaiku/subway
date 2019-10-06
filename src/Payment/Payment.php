@@ -151,7 +151,7 @@ class Payment {
 		} catch ( \Exception $e ) {
 			//@Todo: Assign valid return url.
 			echo '<pre>';
-			echo $e->getMessage();
+				echo $e->getMessage();
 			echo '</pre>';
 			die;
 		}
@@ -161,7 +161,7 @@ class Payment {
 		} catch ( \Exception $ex ) {
 			//@Todo: Assign valid return url.
 			echo '<pre>';
-			echo $ex->getMessage();
+				echo $ex->getMessage();
 			echo '</pre>';
 			die;
 		}

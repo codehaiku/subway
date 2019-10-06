@@ -12,11 +12,13 @@ class ListTable extends \WP_List_Table {
 	function get_columns() {
 
 		$columns = array(
-			'cb'      => '<input type="checkbox" />',
-			'created' => 'Created',
-			'amount'  => 'Amount',
-			'user_id' => 'User',
-			'name'    => 'Product',
+			'cb'            => '<input type="checkbox" />',
+			'order_created' => 'Created',
+			'name'          => 'Product',
+			'order_id'      => 'Order ID',
+			'order_amount'  => 'Amount',
+			'order_user_id' => 'Customer',
+
 		);
 
 		return $columns;
@@ -37,13 +39,19 @@ class ListTable extends \WP_List_Table {
 		$sortable              = $this->get_sortable_columns();
 		$this->_column_headers = $this->get_column_info();
 
-		$per_page     = $this->get_items_per_page( 'products_per_page', 5 );
+		$per_page     = $this->get_items_per_page( 'orders_per_page', 5 );
 		$current_page = $this->get_pagenum();
 
-		$order = filter_input( INPUT_GET, 'order', FILTER_SANITIZE_SPECIAL_CHARS );
+		$order   = filter_input( INPUT_GET, 'order', FILTER_SANITIZE_SPECIAL_CHARS );
+
+		$orderby = filter_input( INPUT_GET, 'orderby', FILTER_SANITIZE_SPECIAL_CHARS );
+
+		if ( empty( $orderby ) ) {
+			$orderby = 'order_created';
+		}
 
 		if ( empty ( $order ) ) {
-			$order = "DESC";
+			$order = "desc";
 		}
 
 		$offset = 0;
@@ -51,11 +59,12 @@ class ListTable extends \WP_List_Table {
 		// Manually determine page query offset (offset + current page (minus one) x posts per page).
 		$page_offset = $offset + ( $current_page - 1 ) * $per_page;
 
+
 		$data = $orders->get_orders( array(
-			'orderby'   => 'date_updated',
-			'direction' => $order,
-			'offset'    => $page_offset,
-			'limit'     => $per_page
+			'orderby' => $orderby,
+			'order'   => $order,
+			'offset'  => $page_offset,
+			'limit'   => $per_page
 		) );
 
 		//@Todo: Update total order count.
@@ -75,11 +84,10 @@ class ListTable extends \WP_List_Table {
 	function get_sortable_columns() {
 
 		$sortable_columns = array(
-			'name'         => array( 'name', false ),
-			'user_id'      => array( 'user', false ),
-			'amount'       => array( 'amount', false ),
-			'created'      => array( 'created', false ),
-			'last_updated' => array( 'last_updated', false ),
+			'order_created' => array( 'order_created', false ),
+			'order_id'       => array( 'order_id', false ),
+			'order_amount'        => array( 'order_amount', false ),
+			'name'  => array( 'name', false ),
 		);
 
 		return $sortable_columns;
@@ -97,7 +105,7 @@ class ListTable extends \WP_List_Table {
 
 		switch ( $column_name ) {
 
-			case 'amount':
+			case 'order_amount':
 
 				$src           = 'https://www.paypalobjects.com/webstatic/mktg/logo-center/PP_Acceptance_Marks_for_LogoCenter_76x48.png';
 				$amount_column = '<img style="vertical-align: middle;" width="32" alt="PayPal Logo" src="' . esc_url( $src ) . '" />';
@@ -108,7 +116,7 @@ class ListTable extends \WP_List_Table {
 
 				break;
 
-			case 'user_id':
+			case 'order_user_id':
 
 				$user_id = $item[ $column_name ];
 
@@ -155,8 +163,8 @@ class ListTable extends \WP_List_Table {
 				return apply_filters( 'subway_orders_list_table_product', $product_column );;
 
 				break;
-			case 'created':
-			case 'last_updated':
+			case 'order_created':
+			case 'order_last_updated':
 				return date( $datetime_format, strtotime( $item[ $column_name ] ) );
 				break;
 			default:
@@ -165,27 +173,26 @@ class ListTable extends \WP_List_Table {
 
 	}
 
-	function column_created( $item ) {
+	function column_order_created( $item ) {
 
-		$datetime_format = sprintf( '%s %s',
-			get_option( 'date_format', 'F j, Y' ),
-			get_option( 'time_format', 'g:i a' )
+		$datetime_format = sprintf( '%s',
+			get_option( 'date_format', 'F j, Y' )
 		);
 
 		$trash_uri = add_query_arg( array(
 			'action' => 'listing_delete_action',
-			'id'     => $item['id'],
+			'id'     => $item['order_id'],
 		), get_admin_url() . 'admin-post.php' );
 
 		$delete_url = wp_nonce_url(
 			$trash_uri,
-			sprintf( 'trash_order_%s', $item['id'] ),
+			sprintf( 'trash_order_%s', $item['order_id'] ),
 			'_wpnonce'
 		);
 
 		$edit_url = wp_nonce_url(
-			sprintf( '?page=%s&edit=%s&order=%s', $_REQUEST['page'], 'yes', $item['id'] ),
-			sprintf( 'edit_order_%s', $item['id'] ),
+			sprintf( '?page=%s&edit=%s&order=%s', $_REQUEST['page'], 'yes', $item['order_id'] ),
+			sprintf( 'edit_order_%s', $item['order_id'] ),
 			'_wpnonce'
 		);
 
@@ -194,7 +201,7 @@ class ListTable extends \WP_List_Table {
 			'delete' => sprintf( '<a href="%s">' . esc_html__( 'Trash', 'subway' ) . '</a>', esc_url( $delete_url ) ),
 		);
 
-		return sprintf( '%1$s %2$s', '<a href="#"><strong>' . date( $datetime_format, strtotime( $item['created'] ) ) . '</strong></a>',
+		return sprintf( '%1$s %2$s', '<a href="#"><strong>' . date( $datetime_format, strtotime( $item['order_created'] ) ) . '</strong></a>',
 			$this->row_actions( $actions ) );
 
 	}
@@ -233,7 +240,7 @@ class ListTable extends \WP_List_Table {
 	function column_cb( $item ) {
 
 		return sprintf(
-			'<input type="checkbox" name="order_ids[]" value="%s" />', $item['id']
+			'<input type="checkbox" name="order_ids[]" value="%s" />', $item['order_id']
 		);
 
 	}
