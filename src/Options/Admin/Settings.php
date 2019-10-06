@@ -40,7 +40,7 @@ class Settings {
 		add_submenu_page(
 			'subway-membership',
 			esc_html__( 'Memberships: Orders', 'subway' ),
-			esc_html__( 'Orders', 'subway' ),
+			esc_html__( 'All Orders', 'subway' ),
 			'manage_options',
 			'subway-membership-orders',
 			array( $this, 'orders' )
@@ -54,6 +54,27 @@ class Settings {
 			'manage_options',
 			'subway-membership-general',
 			array( $this, 'general' )
+		);
+
+		// Add Tools sub menu page.
+		add_submenu_page(
+			'subway-membership',
+			esc_html__( 'Memberships: Tools', 'subway' ),
+			esc_html__( 'Tools', 'subway' ),
+			'manage_options',
+			'subway-membership-tools',
+			array( $this, 'tools' )
+		);
+
+
+		// Add License Key menu page.
+		add_submenu_page(
+			'subway-membership',
+			esc_html__( 'Memberships: License Key', 'subway' ),
+			esc_html__( 'Upgrade', 'subway' ),
+			'manage_options',
+			'subway-membership-license',
+			array( $this, 'license_key' )
 		);
 
 
@@ -91,6 +112,24 @@ class Settings {
 			[ 'view' => $view, 'orders' => [] ]
 		);
 
+		return $this;
+	}
+
+	public function tools() {
+
+		$view = new View();
+
+		$view->render(
+			'form-memberships-tools',
+			[ 'view' => $view, 'orders' => [] ]
+		);
+
+		return $this;
+
+	}
+
+	public function license_key() {
+		echo "<h2>Enter your license key</h2>";
 		return $this;
 	}
 

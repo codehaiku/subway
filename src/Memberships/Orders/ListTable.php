@@ -42,7 +42,7 @@ class ListTable extends \WP_List_Table {
 		$per_page     = $this->get_items_per_page( 'orders_per_page', 5 );
 		$current_page = $this->get_pagenum();
 
-		$order   = filter_input( INPUT_GET, 'order', FILTER_SANITIZE_SPECIAL_CHARS );
+		$order = filter_input( INPUT_GET, 'order', FILTER_SANITIZE_SPECIAL_CHARS );
 
 		$orderby = filter_input( INPUT_GET, 'orderby', FILTER_SANITIZE_SPECIAL_CHARS );
 
@@ -68,7 +68,7 @@ class ListTable extends \WP_List_Table {
 		) );
 
 		//@Todo: Update total order count.
-		$total_items = 100;
+		$total_items = absint( get_option('subway_count_orders', 0) );
 
 		$this->set_pagination_args( array(
 			'total_items' => $total_items, // We have to calculate the total number of items.
@@ -85,9 +85,9 @@ class ListTable extends \WP_List_Table {
 
 		$sortable_columns = array(
 			'order_created' => array( 'order_created', false ),
-			'order_id'       => array( 'order_id', false ),
-			'order_amount'        => array( 'order_amount', false ),
-			'name'  => array( 'name', false ),
+			'order_id'      => array( 'order_id', false ),
+			'order_amount'  => array( 'order_amount', false ),
+			'name'          => array( 'name', false ),
 		);
 
 		return $sortable_columns;

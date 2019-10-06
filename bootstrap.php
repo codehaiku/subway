@@ -12,6 +12,7 @@ use Subway\Post\Shortcodes\Login;
 use Subway\Post\Shortcodes\Memberships;
 use Subway\Post\Shortcodes\Register;
 use Subway\Post\Shortcodes\UserAccount;
+use Subway\Tools\Repair;
 use Subway\Widgets\Options as WidgetOptions;
 use Subway\Options\Options as PluginOptions;
 use Subway\Post\Post;
@@ -100,3 +101,11 @@ $membership->attach_hooks();
 // Load Checkout Shortcode.
 $checkout = new Checkout( $view );
 $checkout->attach_hooks();
+
+// Load Membership Tools
+add_action('admin_init', function() {
+	global $wpdb;
+	$checkout = new Repair( $wpdb );
+	$checkout->attach_hooks();
+});
+

@@ -25,7 +25,8 @@ class Orders {
 		$defaults = [
 			'orderby' => 'order_created',
 			'order' => 'desc',
-			'limit' => 10
+			'limit' => 10,
+			'offset' => 0,
 		];
 
 		$args = wp_parse_args( $args, $defaults );
@@ -54,10 +55,12 @@ class Orders {
 				WHERE {$this->table}.product_id = {$product_table}.id
 				AND {$this->table}.id > %d
 				ORDER BY {$args['orderby']} {$args['order']}
-				LIMIT {$args['limit']}
+				LIMIT %d, %d
 				"
 				,
-			0
+			0,
+				$args['offset'],
+				$args['limit']
 			);
 
 		$result = $this->wpdb->get_results( $stmt, ARRAY_A );

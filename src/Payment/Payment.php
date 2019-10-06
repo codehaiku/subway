@@ -195,7 +195,7 @@ class Payment {
 
 				$product_id = $payment->getTransactions()[0]->getCustom();
 
-				$inserted = $this->wpdb->insert(
+				$added_order = $this->wpdb->insert(
 
 					$this->wpdb->prefix . 'subway_memberships_orders',
 					array(
@@ -220,10 +220,14 @@ class Payment {
 					)
 				);
 
-				if ( $inserted ) {
+				if ( $added_order ) {
 
 					// Update the user meta.
 					update_user_meta( get_current_user_id(), 'subway_user_membership_product_id', $product_id );
+
+					// Update orders count.
+					$count_orders = absint( get_option( 'subway_count_orders', 0) );
+					update_option( 'subway_count_orders', $count_orders += 1 );
 
 					// Redirect user to the right page.
 					wp_safe_redirect(
