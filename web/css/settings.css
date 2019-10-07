@@ -6,6 +6,13 @@
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
 
+.subway-flag {
+    line-height: 1;
+    text-decoration: none;
+    font-size: smaller;
+    margin: 10px 10px;
+    display: block;
+}
 .subway-tooltip {
     max-width: 600px;
 }
@@ -96,5 +103,68 @@ form#subway-settings-form p.submit > input {
     padding: 7.5px 15px;
     font-size: 1.2em;
     height: 48px;
+}
+
+div.earnings-box {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+div.earnings-box-column {
+    flex-basis: 32%;
+    text-align: center;
+    margin: 1%;
+    background: #fbfbfb;
+    padding: 19px;
+    color: #32373b;
+    border-radius: 4px;
+    box-shadow: 0px 0px 20px -5px #eee;
+    box-sizing: border-box;
+}
+
+div.earnings-box-column:first-child{
+    margin-left: 0;
+}
+div.earnings-box-column:last-child{
+    margin-right: 0;
+}
+div.earnings-box-column.one-third {
+    flex-basis: 66%;
+}
+div.earnings-box-column.one-fourth {
+    flex-basis: 31.9%
+}
+div.earnings-box-column p {
+    font-size: 14px;
+    max-width: 220px;
+    margin: 0 auto;
+}
+div.earnings-box-column .amount {
+    font-weight: bold;
+    font-size: 3em;
+    font-family: monospace, monospace;
+    margin: 1em 0 0.5em 0;
+    display: block;
+    letter-spacing: -1px;
+}
+
+div.earnings-box-column .amount.month-total {
+    color: #0073aa;
+}
+
+div.earnings-box-column .amount.tax-total {
+    color: #8a8686;
+}
+
+div.earnings-box-column .amount.lifetime-total {
+    color: #00a762;
+}
+div.earning-statistics,
+div.earnings-chart {
+   text-align: left;
+}
+div.earnings-table{
+    flex-basis: 100%;
+    margin-top: 1.5em;
 }
 

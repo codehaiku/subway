@@ -11,8 +11,7 @@ class Settings {
 
 	public function menu() {
 
-		// Require Stylesheet.
-		wp_enqueue_script( 'subway-settings-style' );
+
 
 		// Add top-level menu "Membership".
 		add_menu_page(
@@ -25,12 +24,11 @@ class Settings {
 			apply_filters( 'subway-memberships-admin-menu-position', 2 )
 		);
 
-
 		// Add 'dashboard' sub menu page.
 		add_submenu_page(
 			'subway-membership',
-			esc_html__( 'Memberships: Products', 'subway' ),
-			esc_html__( 'Products', 'subway' ),
+			esc_html__( 'Memberships: Plans', 'subway' ),
+			esc_html__( 'All Plans', 'subway' ),
 			'manage_options',
 			'subway-membership',
 			array( $this, 'membership_products' )
@@ -40,10 +38,20 @@ class Settings {
 		add_submenu_page(
 			'subway-membership',
 			esc_html__( 'Memberships: Orders', 'subway' ),
-			esc_html__( 'All Orders', 'subway' ),
+			esc_html__( 'Statements', 'subway' ),
 			'manage_options',
 			'subway-membership-orders',
 			array( $this, 'orders' )
+		);
+
+		// Add License Key menu page.
+		add_submenu_page(
+			'subway-membership',
+			esc_html__( 'Memberships: Earnings', 'subway' ),
+			esc_html__( 'Earnings', 'subway' ),
+			'manage_options',
+			'subway-membership-earnings',
+			array( $this, 'earnings' )
 		);
 
 		// Add 'general' sub menu page.
@@ -65,6 +73,7 @@ class Settings {
 			'subway-membership-tools',
 			array( $this, 'tools' )
 		);
+
 
 
 		// Add License Key menu page.
@@ -113,6 +122,20 @@ class Settings {
 		);
 
 		return $this;
+	}
+
+
+	public function earnings() {
+
+		$view = new View();
+
+		$view->render(
+			'form-memberships-earnings',
+			[ 'view' => $view, 'orders' => [] ]
+		);
+
+		return $this;
+
 	}
 
 	public function tools() {
@@ -401,7 +424,12 @@ class Settings {
 
 		wp_register_style( 'subway-settings-style', SUBWAY_CSS_URL . 'settings.css' );
 
-		if ( in_array( $hook, [ 'memberships_page_subway-membership-general' ] ) ) {
+		$styled_settings_pages = [
+			'memberships_page_subway-membership-general',
+			'memberships_page_subway-membership-earnings',
+		];
+
+		if ( in_array( $hook, $styled_settings_pages ) ) {
 
 			// Enqueues the script only on the Subway Settings page.
 			wp_enqueue_script( 'subway-settings-script' );
