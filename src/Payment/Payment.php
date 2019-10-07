@@ -162,8 +162,6 @@ class Payment {
 		} catch ( \Exception $ex ) {
 			//@Todo: Assign valid return url.
 			echo '<pre>';
-			echo $total;
-
 				echo $ex->getMessage();
 			echo '</pre>';
 			die;

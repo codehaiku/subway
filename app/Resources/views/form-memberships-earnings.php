@@ -112,18 +112,33 @@
 
 
                 <h3>Your last sale was:</h3>
-                7 Hours Ago
-                <h3>Average Sales/Day</h3>
-                $73.96
-                <h3>Top Grossing Plan</h3>
+                <?php $last_sale = $earnings->get_last_sale(); ?>
+                <?php
+                  echo sprintf(esc_html__('%s %s ago', 'subway'),
+                        $currency->format($last_sale->amount, 'USD'),
+                        human_time_diff(strtotime( $last_sale->created, strtotime('now')))
+                    );
+                ?>
+                <h3>Average Sales/Day (<small><?php echo date('F'); ?></small>)</h3>
+                <?php $av_total = $earnings->get_monthly( date('F') ); ?>
+                <?php $av_day_today = date('j'); ?>
+                <?php echo $currency->format( $av_total / $av_day_today, 'USD'); ?>
+
+                <h3>Top Grossing Membership Plan</h3>
                 Subway Pro
             </div>
         </div>
     </div>
 
+	<?php $retval = $earnings->get_current_month_daily_sales(); ?>
+	<?php $daily_sales = $retval['daily_sales']; ?>
+	<?php $rv_total_amount = $retval['total_amount']; ?>
+	<?php $rv_total_sales = $retval['total_sales']; ?>
+
+
     <div class="earnings-box">
         <div class="earnings-table">
-            <table class="widefat">
+            <table class="widefat striped fixed">
                 <thead>
                 <tr>
                     <td>Date</td>
@@ -132,49 +147,26 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>October 1, 2019</td>
-                    <td>1</td>
-                    <td>$89.99</td>
-                </tr>
-                <tr>
-                    <td>October 2, 2019</td>
-                    <td>4</td>
-                    <td>$<?php echo 89.99 * 4; ?></td>
-                </tr>
-                <tr>
-                    <td>October 3, 2019</td>
-                    <td>5</td>
-                    <td>$<?php echo 89.99 * 5; ?></td>
-                </tr>
-                <tr>
-                    <td>October 4, 2019</td>
-                    <td>2</td>
-                    <td>$<?php echo 89.99 * 2; ?></td>
-                </tr>
-                <tr>
-                    <td>October 5, 2019</td>
-                    <td>3</td>
-                    <td>$<?php echo 89.99 * 3; ?></td>
-                </tr>
-                <tr>
-                    <td>October 6, 2019</td>
-                    <td>0</td>
-                    <td>$<?php echo 89.99 * 0; ?>.00</td>
-                </tr>
-                <tr>
-                    <td>October 7, 2019</td>
-                    <td>7</td>
-                    <td>$<?php echo 89.99 * 7; ?></td>
-                </tr>
+				<?php if ( ! empty( $daily_sales ) ): ?>
 
+					<?php foreach ( $daily_sales as $daily_sale ): ?>
+                        <tr>
+                            <td><?php echo sprintf( '%s, %s', $daily_sale->day_week, $daily_sale->day_created ); ?></td>
+                            <td><?php echo absint( $daily_sale->sales_count ); ?></td>
+                            <td><?php echo $currency->format( $daily_sale->amount, 'USD' ); ?> </td>
+                        </tr>
+					<?php endforeach; ?>
 
+				<?php endif; ?>
                 </tbody>
                 <tfoot>
                 <tr>
                     <th>Total</th>
-                    <th>23</th>
-                    <th>$12312</th>
+                    <th><?php echo absint( $rv_total_sales ); ?></th>
+                    <th>
+						<?php echo $currency->format( $rv_total_amount, 'USD' ); ?>
+                    </th>
+
                 </tr>
                 </tfoot>
             </table>
