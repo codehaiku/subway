@@ -2,6 +2,8 @@
 
 namespace Subway\Options\Admin;
 
+use Subway\Currency\Currency;
+use Subway\Earnings\Earnings;
 use Subway\Memberships\Products\ListTable;
 use Subway\Memberships\Products\Products;
 use Subway\View\View;
@@ -127,11 +129,15 @@ class Settings {
 
 	public function earnings() {
 
+		global $wpdb;
+
 		$view = new View();
+
+		$earnings = new Earnings( $wpdb );
 
 		$view->render(
 			'form-memberships-earnings',
-			[ 'view' => $view, 'orders' => [] ]
+			[ 'view' => $view, 'orders' => [], 'earnings' => $earnings, 'currency' => new Currency( $wpdb ) ]
 		);
 
 		return $this;
