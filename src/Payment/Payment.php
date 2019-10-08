@@ -77,16 +77,16 @@ class Payment {
 		// @TODO: Assign valid tax rate.
 		$tax_rate = 12;
 
-		$price        = $product->amount;
-		$quantity     = $this->quantity;
+		$price    = $product->amount;
+		$quantity = $this->quantity;
 
-		$tax          = $price * ( $tax_rate / 100 );
-		$subtotal     = $price * $quantity;
+		$tax      = $price * ( $tax_rate / 100 );
+		$subtotal = $price * $quantity;
 
-		$name         = $product->name;
-		$currency     = get_option( 'subway_currency', 'USD' );
+		$name     = $product->name;
+		$currency = get_option( 'subway_currency', 'USD' );
 
-		$sku          = $product->sku;
+		$sku = $product->sku;
 
 		$redirect_url = add_query_arg( 'success', 'true', $this->return_url );
 		$cancel_url   = add_query_arg( 'success', 'fail', $this->cancel_url );
@@ -150,7 +150,7 @@ class Payment {
 		} catch ( \Exception $e ) {
 			//@Todo: Assign valid return url.
 			echo '<pre>';
-				echo $e->getMessage();
+			echo $e->getMessage();
 			echo '</pre>';
 			die;
 		}
@@ -162,7 +162,7 @@ class Payment {
 		} catch ( \Exception $ex ) {
 			//@Todo: Assign valid return url.
 			echo '<pre>';
-				echo $ex->getMessage();
+			echo $ex->getMessage();
 			echo '</pre>';
 			die;
 		}
@@ -181,16 +181,16 @@ class Payment {
 		if ( isset( $_GET['paymentId'] ) && isset( $_GET['success'] ) && $_GET['success'] == 'true' ) {
 
 			$paymentId = $_GET['paymentId'];
-			$payment = \PayPal\Api\Payment::get($paymentId, $this->api_context);
+			$payment   = \PayPal\Api\Payment::get( $paymentId, $this->api_context );
 
 			$execution = new PaymentExecution();
-			$execution->setPayerId($_GET['PayerID']);
+			$execution->setPayerId( $_GET['PayerID'] );
 
 			$payment_id = $_GET['paymentId'];
 
 			try {
 
-				$result = $payment->execute($execution, $this->api_context);
+				$result = $payment->execute( $execution, $this->api_context );
 
 				$payment = \PayPal\Api\Payment::get( $payment_id, $this->api_context );
 
@@ -227,8 +227,31 @@ class Payment {
 					update_user_meta( get_current_user_id(), 'subway_user_membership_product_id', $product_id );
 
 					// Update orders count.
-					$count_orders = absint( get_option( 'subway_count_orders', 0) );
+					$count_orders = absint( get_option( 'subway_count_orders', 0 ) );
 					update_option( 'subway_count_orders', $count_orders += 1 );
+
+					// Update order details.
+					$payer = $payment->getPayer()->getPayerInfo();
+
+					$order_details = [
+						'order_id' => $added_order,
+						'gateway_name' => 'PAYPAL',
+						'gateway_customer_name' => $payer->getFirstName(),
+						'gateway_customer_lastname' => $payer->getLastName(),
+						'gateway_customer_email' => $payer->getEmail(),
+						'gateway_customer_address_line_1' => $payer->getBillingAddress()->getLine1(),
+						'gateway_customer_address_line_2' => $payer->getBillingAddress()->getLine2(),
+						'gateway_customer_postal_code' => $payer->getBillingAddress()->getPostalCode(),
+						'gateway_customer_city' => $payer->getBillingAddress()->getCity(),
+						'gateway_customer_country' => $payer->getBillingAddress()->getCountryCode(),
+						'gateway_customer_state' => $payer->getBillingAddress()->getState(),
+						'gateway_customer_phone_number' => $payer->getPhone(),
+						'gateway_transaction_created' => $payment->getCreateTime()
+					];
+
+					echo '<pre>';
+					print_r( $order_details );
+					echo '</pre>';
 
 					// Redirect user to the right page.
 					wp_safe_redirect(

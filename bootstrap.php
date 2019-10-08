@@ -108,4 +108,3 @@ add_action('admin_init', function() {
 	$checkout = new Repair( $wpdb );
 	$checkout->attach_hooks();
 });
-

@@ -85,7 +85,7 @@
         <div class="earnings-box-column one-fourth">
             <div class="earning-statistics">
                 <h1 style="margin-top: 0;">Fun Statistics</h1>
- 
+
                 <h3>Sales</h3>
                 <ul class="fun-facts">
                     <li class="fun-facts-24-hours">

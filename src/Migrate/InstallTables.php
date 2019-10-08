@@ -55,6 +55,7 @@ class InstallTables {
 		$sql = "CREATE TABLE $table(
 				id mediumint(9) NOT NULL AUTO_INCREMENT,
 				order_id mediumint(9) NOT NULL,
+				gateway_name varchar(100) NOT NULL,
 				gateway_customer_name varchar(100) NOT NULL,
 				gateway_customer_lastname varchar(100) NOT NULL,
 				gateway_customer_email varchar(100) NOT NULL,
@@ -63,6 +64,7 @@ class InstallTables {
 				gateway_customer_postal_code varchar(100) NOT NULL,
 				gateway_customer_city varchar(100) NOT NULL,
 				gateway_customer_country varchar(100) NOT NULL,
+				gateway_customer_state varchar(100) NOT NULL,
 				gateway_customer_phone_number varchar(100) NOT NULL,
 				gateway_transaction_created datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
 				PRIMARY KEY (id)
