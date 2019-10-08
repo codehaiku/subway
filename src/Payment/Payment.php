@@ -10,6 +10,7 @@ use PayPal\Api\Payer;
 use PayPal\Api\PaymentExecution;
 use PayPal\Api\RedirectUrls;
 use PayPal\Api\Transaction;
+use Subway\Memberships\Orders\Details as OrderDetails;
 use Subway\Memberships\Products\Products;
 
 class Payment {
@@ -228,37 +229,51 @@ class Payment {
 
 					// Update orders count.
 					$count_orders = absint( get_option( 'subway_count_orders', 0 ) );
+
 					update_option( 'subway_count_orders', $count_orders += 1 );
 
 					// Update order details.
 					$payer = $payment->getPayer()->getPayerInfo();
 
-					$order_details = [
-						'order_id' => $added_order,
-						'gateway_name' => 'PAYPAL',
-						'gateway_customer_name' => $payer->getFirstName(),
-						'gateway_customer_lastname' => $payer->getLastName(),
-						'gateway_customer_email' => $payer->getEmail(),
-						'gateway_customer_address_line_1' => $payer->getBillingAddress()->getLine1(),
-						'gateway_customer_address_line_2' => $payer->getBillingAddress()->getLine2(),
-						'gateway_customer_postal_code' => $payer->getBillingAddress()->getPostalCode(),
-						'gateway_customer_city' => $payer->getBillingAddress()->getCity(),
-						'gateway_customer_country' => $payer->getBillingAddress()->getCountryCode(),
-						'gateway_customer_state' => $payer->getBillingAddress()->getState(),
-						'gateway_customer_phone_number' => $payer->getPhone(),
-						'gateway_transaction_created' => $payment->getCreateTime()
+					$billing_address = $payment->getPayer()->getPayerInfo()->getBillingAddress();
+
+					// Use the shipping address if the billing is empty.
+					if ( empty( $billing_address ) ) {
+
+						$billing_address = $payment->getTransactions()[0]->getItemList()->getShippingAddress();
+
+					}
+
+					$order_details_args = [
+						'order_id'                        => $added_order,
+						'gateway_name'                    => 'PAYPAL',
+						'gateway_customer_name'           => $payer->getFirstName(),
+						'gateway_customer_lastname'       => $payer->getLastName(),
+						'gateway_customer_email'          => $payer->getEmail(),
+						'gateway_customer_address_line_1' => $billing_address->getLine1(),
+						'gateway_customer_address_line_2' => $billing_address->getLine2(),
+						'gateway_customer_postal_code'    => $billing_address->getPostalCode(),
+						'gateway_customer_city'           => $billing_address->getCity(),
+						'gateway_customer_country'        => $billing_address->getCountryCode(),
+						'gateway_customer_state'          => $billing_address->getState(),
+						'gateway_customer_phone_number'   => $payer->getPhone(),
+						'gateway_transaction_created'     => $payment->getCreateTime()
 					];
 
-					echo '<pre>';
-					print_r( $order_details );
-					echo '</pre>';
+					$order_details = new OrderDetails( $this->wpdb );
 
-					// Redirect user to the right page.
-					wp_safe_redirect(
-						add_query_arg( 'welcome', get_current_user_id(), $this->return_url ),
-						302
-					);
+					$ordered = $order_details->add( $order_details_args );
 
+					if ( true === $ordered ) {
+						// Redirect user to the right page.
+						wp_safe_redirect(
+							add_query_arg( 'welcome', get_current_user_id(), $this->return_url ),
+							302
+						);
+					} else {
+						echo $ordered->last_error;
+						die;
+					}
 
 				} else {
 

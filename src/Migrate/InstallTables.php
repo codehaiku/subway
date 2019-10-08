@@ -35,8 +35,8 @@ class InstallTables {
 				currency varchar(50) NOT NULL,
 				gateway varchar(100) NOT NULL,
 				ip_address varchar(100) NOT NULL,
-				created datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
-				last_updated datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+				created datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+				last_updated datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 				PRIMARY KEY (id)
 			) AUTO_INCREMENT = 1000 $this->collate;";
 
@@ -60,13 +60,13 @@ class InstallTables {
 				gateway_customer_lastname varchar(100) NOT NULL,
 				gateway_customer_email varchar(100) NOT NULL,
 				gateway_customer_address_line_1 varchar(255) NOT NULL,
-				gateway_customer_address_line_2 varchar(255) NOT NULL,
-				gateway_customer_postal_code varchar(100) NOT NULL,
-				gateway_customer_city varchar(100) NOT NULL,
+				gateway_customer_address_line_2 varchar(255) DEFAULT NULL,
+				gateway_customer_postal_code varchar(100) DEFAULT NULL,
+				gateway_customer_city varchar(100) DEFAULT NULL,
 				gateway_customer_country varchar(100) NOT NULL,
-				gateway_customer_state varchar(100) NOT NULL,
-				gateway_customer_phone_number varchar(100) NOT NULL,
-				gateway_transaction_created datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+				gateway_customer_state varchar(100) DEFAULT NULL,
+				gateway_customer_phone_number varchar(100) DEFAULT NULL,
+				gateway_transaction_created datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 				PRIMARY KEY (id)
 			) $this->collate;";
 

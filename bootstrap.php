@@ -5,6 +5,7 @@ namespace Subway\Bootstrap;
 use Subway\Api\Products as ApiProducts;
 use Subway\Archives\Author;
 use Subway\Hooks\Hooks;
+use Subway\Memberships\Orders\Details;
 use Subway\Migrate\InstallTables;
 use Subway\Options\Admin\Settings;
 use Subway\Post\Shortcodes\Checkout;
@@ -103,8 +104,8 @@ $checkout = new Checkout( $view );
 $checkout->attach_hooks();
 
 // Load Membership Tools
-add_action('admin_init', function() {
+add_action( 'admin_init', function () {
 	global $wpdb;
 	$checkout = new Repair( $wpdb );
 	$checkout->attach_hooks();
-});
+} );
