@@ -216,6 +216,7 @@ class Payment {
 						'invoice_number' => $payment->getTransactions()[0]->getInvoiceNumber(),
 						'status'         => $payment->getState(),
 						'amount'         => $payment->getTransactions()[0]->getAmount()->getTotal(),
+						'currency'       => $payment->getTransactions()[0]->getAmount()->getCurrency(),
 						'gateway'        => $this->gateway,
 						'ip_address'     => Helpers::get_ip_address(),
 						'created'        => $payment->getCreateTime(),
@@ -227,6 +228,7 @@ class Payment {
 						'%s', // Invoice No.
 						'%s', // Status.
 						'%f', // Amount.
+						'%s', // Currency.
 						'%s', // Gateway.
 						'%s', // Ip Address.
 						'%s', // Created.
