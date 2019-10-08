@@ -169,12 +169,11 @@ div.earnings-table{
 }
 
 ul.fun-facts {
-    font-size: 18px;
     line-height: 1.5em;
 }
 
 ul.fun-facts .fun-facts-24-hours {
     color: #0073aa;
-    font-size: 24px;
+    font-weight: bold;
 }
 
