@@ -13,6 +13,15 @@ class Details extends Orders {
 		$this->table = $this->wpdb->prefix . 'subway_memberships_orders_details';
 	}
 
+	public function get( $order_id = 0 ) {
+
+		$stmt = $this->wpdb->prepare("SELECT * FROM $this->table WHERE order_id = %d", $order_id);
+
+		$details = $this->wpdb->get_row( $stmt,OBJECT );
+
+		return $details;
+	}
+
 	public function add( $args = [] ) {
 
 		$defaults = [
@@ -45,7 +54,17 @@ class Details extends Orders {
 		} else {
 
 			return true;
- 
+
 		}
 	}
+
+	public function update() {
+
+	}
+
+	public function delete() {
+
+	}
+
+
 }
