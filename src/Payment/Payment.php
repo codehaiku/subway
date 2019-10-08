@@ -222,6 +222,8 @@ class Payment {
 					)
 				);
 
+				$last_order_id = $this->wpdb->insert_id;
+
 				if ( $added_order ) {
 
 					// Update the user meta.
@@ -245,7 +247,7 @@ class Payment {
 					}
 
 					$order_details_args = [
-						'order_id'                        => $added_order,
+						'order_id'                        => $last_order_id,
 						'gateway_name'                    => 'PAYPAL',
 						'gateway_customer_name'           => $payer->getFirstName(),
 						'gateway_customer_lastname'       => $payer->getLastName(),

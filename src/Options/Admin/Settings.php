@@ -4,6 +4,7 @@ namespace Subway\Options\Admin;
 
 use Subway\Currency\Currency;
 use Subway\Earnings\Earnings;
+use Subway\Memberships\Orders\Details;
 use Subway\Memberships\Products\ListTable;
 use Subway\Memberships\Products\Products;
 use Subway\View\View;
@@ -12,7 +13,6 @@ class Settings {
 
 
 	public function menu() {
-
 
 
 		// Add top-level menu "Membership".
@@ -77,7 +77,6 @@ class Settings {
 		);
 
 
-
 		// Add License Key menu page.
 		add_submenu_page(
 			'subway-membership',
@@ -116,12 +115,29 @@ class Settings {
 
 	public function orders() {
 
-		$view = new View();
+		global $wpdb;
 
-		$view->render(
-			'form-memberships-orders',
-			[ 'view' => $view, 'orders' => [] ]
-		);
+		$view          = new View();
+		$order_details = new Details( $wpdb );
+
+		$edit          = filter_input( 1, 'edit', 516 );
+		$order_id      = filter_input( 1, 'order', FILTER_SANITIZE_NUMBER_INT );
+		$excluded_fields = ['gateway_name','id', 'order_id', 'gateway_transaction_created'];
+
+		if ( ! empty ( $edit ) ) {
+			$view->render(
+				'form-memberships-orders-edit', [
+					'order_id'      => $order_id,
+					'order_details' => $order_details,
+					'excluded_fields' => apply_filters('subway\settings.orders.excluded_fields', $excluded_fields )
+				]
+			);
+		} else {
+			$view->render(
+				'form-memberships-orders',
+				[ 'view' => $view, 'orders' => [] ]
+			);
+		}
 
 		return $this;
 	}
@@ -159,6 +175,7 @@ class Settings {
 
 	public function license_key() {
 		echo "<h2>Enter your license key</h2>";
+
 		return $this;
 	}
 
