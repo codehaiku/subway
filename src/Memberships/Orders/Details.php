@@ -45,7 +45,7 @@ class Details extends Orders {
 		} else {
 
 			return true;
-
+ 
 		}
 	}
 }
