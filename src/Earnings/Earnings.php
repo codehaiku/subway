@@ -137,7 +137,7 @@ class Earnings {
 
 	public function get_last_sale() {
 
-		$stmt = $this->wpdb->prepare( "SELECT id, amount, created FROM $this->orders_table
+		$stmt = $this->wpdb->prepare( "SELECT id, amount, created, gateway FROM $this->orders_table
 			ORDER BY id DESC LIMIT %d", 1 );
 
 		return $this->wpdb->get_row( $stmt, OBJECT );
