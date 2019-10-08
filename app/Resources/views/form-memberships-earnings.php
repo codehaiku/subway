@@ -85,7 +85,7 @@
         </div>
         <div class="earnings-box-column one-fourth">
             <div class="earning-statistics">
-                <h1 style="margin-top: 0;">Fun Statistics</h1>
+                <h1 style="margin-top: 0;">Sales Statistics</h1>
 
                 <h3>Sales</h3>
                 <ul class="fun-facts">
@@ -113,21 +113,24 @@
                 </ul>
 
 
-                <h3>Your last sale was:</h3>
+                <h3>
+                    <?php esc_html_e('Recent Transaction', 'subway'); ?>
+                </h3>
 				<?php $last_sale = $earnings->get_last_sale(); ?>
                 <?php if ( empty( $last_sale ) ): ?>
                     <?php esc_html_e('No recent sales recorded', 'subway'); ?>
                 <?php else: ?>
 	                <?php
                         echo sprintf(
-                                esc_html__( '%s %s ago', 'subway' ),
+                                esc_html__( '%s %s ago via %s', 'subway' ),
                                 $currency->format( $last_sale->amount, 'USD' ),
-                                human_time_diff( strtotime( $last_sale->created, strtotime( 'now' ) ) )
+                                human_time_diff( strtotime( $last_sale->created, strtotime( 'now' ) ) ),
+	                            $last_sale->gateway
                         );
 	                ?>
                 <?php endif; ?>
 
-                <h3>Average Sales/Day (<small><?php echo date( 'F' ); ?></small>)</h3>
+                <h3>Average Daily Sales</h3>
 
 				<?php $av_monthly = $earnings->get_monthly( date( 'F' ) ); ?>
 				<?php $av_day_today = date( 'j' ); ?>
@@ -135,7 +138,7 @@
 
 				<?php echo $currency->format( $av_earnings, 'USD' ); ?>
 
-                <h3>Sales forecast</h3>
+                <h3>Estimated Sales this Month</h3>
 
 				<?php echo $currency->format( $av_earnings * date( 't' ), 'USD' ); ?>
 
