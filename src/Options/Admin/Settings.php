@@ -5,6 +5,7 @@ namespace Subway\Options\Admin;
 use Subway\Currency\Currency;
 use Subway\Earnings\Earnings;
 use Subway\Memberships\Orders\Details;
+use Subway\Memberships\Orders\Orders;
 use Subway\Memberships\Products\ListTable;
 use Subway\Memberships\Products\Products;
 use Subway\View\View;
@@ -118,18 +119,22 @@ class Settings {
 		global $wpdb;
 
 		$view          = new View();
+		$order         = new Orders( $wpdb );
 		$order_details = new Details( $wpdb );
 
-		$edit          = filter_input( 1, 'edit', 516 );
-		$order_id      = filter_input( 1, 'order', FILTER_SANITIZE_NUMBER_INT );
-		$excluded_fields = ['gateway_name','id', 'order_id', 'gateway_transaction_created'];
+		$edit            = filter_input( 1, 'edit', 516 );
+		$order_id        = filter_input( 1, 'order', FILTER_SANITIZE_NUMBER_INT );
+		$excluded_fields = [ 'gateway_name', 'id', 'order_id', 'gateway_transaction_created' ];
+
+		$order_info = $order->get_order( $order_id );
 
 		if ( ! empty ( $edit ) ) {
 			$view->render(
 				'form-memberships-orders-edit', [
-					'order_id'      => $order_id,
-					'order_details' => $order_details,
-					'excluded_fields' => apply_filters('subway\settings.orders.excluded_fields', $excluded_fields )
+					'order'           => $order_info,
+					'order_id'        => $order_id,
+					'order_details'   => $order_details,
+					'excluded_fields' => apply_filters( 'subway\settings.orders.excluded_fields', $excluded_fields )
 				]
 			);
 		} else {

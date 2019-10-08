@@ -46,8 +46,3 @@ define( 'SUBWAY_JS_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'web/js
 
 // Require our autoloader.
 require_once SUBWAY_DIR_PATH . 'vendor' . '/autoload.php';
-
-
-add_action('after-form-memberships-orders-edit-field', function(){
-	echo '<tr><td>asd</td><td>asdasd</td></tr>';
-});

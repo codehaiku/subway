@@ -10,6 +10,7 @@ use PayPal\Api\Payer;
 use PayPal\Api\PaymentExecution;
 use PayPal\Api\RedirectUrls;
 use PayPal\Api\Transaction;
+use Subway\Helpers\Helpers;
 use Subway\Memberships\Orders\Details as OrderDetails;
 use Subway\Memberships\Products\Products;
 
@@ -92,9 +93,18 @@ class Payment {
 		$redirect_url = add_query_arg( 'success', 'true', $this->return_url );
 		$cancel_url   = add_query_arg( 'success', 'fail', $this->cancel_url );
 
-		// @TODO: Assign valid invoice number.
-		$invoice_number = uniqid();
+		// Generate Invoice Number.
+		$prefix = apply_filters(
+			'subway\payment.pay.invoice_number_prefix',
+			get_option( 'subway_invoice_prefix', 'WPBXM' )
+		);
 
+		$user_id        = get_current_user_id();
+		$combination    = date( 'y' ) . date( 'd' ) . date( 'H' ) . date( 'i' ) . date( 's' );
+		$invoice        = sprintf( '%s-%s-%s', $prefix, $user_id, $combination );
+		$invoice_number = apply_filters( 'subway\payment.pay.invoice_number', $invoice );
+
+		// Add description.
 		$description = sprintf( __( 'Payment for: %s', 'subway' ), $product->name );
 
 		try {
@@ -201,22 +211,24 @@ class Payment {
 
 					$this->wpdb->prefix . 'subway_memberships_orders',
 					array(
-						'product_id'      => $product_id,
-						'user_id'         => get_current_user_id(),
-						'status'          => $payment->getState(),
-						'amount'          => $payment->getTransactions()[0]->getAmount()->getTotal(),
-						'gateway'         => $this->gateway,
-						'gateway_details' => serialize( array() ),
-						'created'         => $payment->getCreateTime(),
-						'last_updated'    => current_time( 'mysql' )
+						'product_id'     => $product_id,
+						'user_id'        => get_current_user_id(),
+						'invoice_number' => $payment->getTransactions()[0]->getInvoiceNumber(),
+						'status'         => $payment->getState(),
+						'amount'         => $payment->getTransactions()[0]->getAmount()->getTotal(),
+						'gateway'        => $this->gateway,
+						'ip_address'     => Helpers::get_ip_address(),
+						'created'        => $payment->getCreateTime(),
+						'last_updated'   => current_time( 'mysql' )
 					),
 					array(
 						'%d', // Product ID.
 						'%d', // User ID.
+						'%s', // Invoice No.
 						'%s', // Status.
 						'%f', // Amount.
 						'%s', // Gateway.
-						'%s', // Serialized array(),
+						'%s', // Ip Address.
 						'%s', // Created.
 						'%s', // Last Updated.
 					)
@@ -273,8 +285,10 @@ class Payment {
 							302
 						);
 					} else {
-						echo $ordered->last_error;
-						die;
+						wp_safe_redirect(
+							add_query_arg( 'new_order', 'fail_to_add_details', $this->cancel_url ),
+							302
+						);
 					}
 
 				} else {

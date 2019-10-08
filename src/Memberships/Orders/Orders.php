@@ -24,16 +24,16 @@ class Orders {
 
 		$defaults = [
 			'orderby' => 'order_created',
-			'order' => 'desc',
-			'limit' => 10,
-			'offset' => 0,
+			'order'   => 'desc',
+			'limit'   => 10,
+			'offset'  => 0,
 		];
 
 		$args = wp_parse_args( $args, $defaults );
 
 		$product_table = $this->product_table;
 
-		$fields        = implode( ',',
+		$fields = implode( ',',
 			[
 				$this->table . '.id as order_id',
 				$this->table . '.product_id as order_product_id',
@@ -57,11 +57,11 @@ class Orders {
 				ORDER BY {$args['orderby']} {$args['order']}
 				LIMIT %d, %d
 				"
-				,
+			,
 			0,
-				$args['offset'],
-				$args['limit']
-			);
+			$args['offset'],
+			$args['limit']
+		);
 
 		$result = $this->wpdb->get_results( $stmt, ARRAY_A );
 
@@ -69,9 +69,11 @@ class Orders {
 
 	}
 
-	public function get_order() {
+	public function get_order( $order_id = 0 ) {
 
-		return [];
+		$stmt = $this->wpdb->prepare( "SELECT * FROM $this->table WHERE id = %d", $order_id );
+
+		return $this->wpdb->get_row( $stmt, OBJECT );
 
 	}
 }

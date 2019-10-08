@@ -108,6 +108,18 @@ class Earnings {
 		for ( $i = 1; $i <= $curr_month_no_days; $i ++ ) {
 			$days[ $i ] = 0.00;
 		}
+
+		// Bail out if no record is found.
+		if ( empty( $rows ) ) {
+
+			return apply_filters( 'subway\earnings.get_current_month_daily_sales', [
+				'total_amount' => 0,
+				'total_sales'  => 0,
+				'daily_sales'  => 0
+			] );
+
+		}
+
 		// Assign each earning to the index of corresponding day.
 		foreach ( $rows as $row ):
 			$days_week[ $row->day_created ] = $row;
@@ -125,8 +137,8 @@ class Earnings {
 
 	public function get_last_sale() {
 
-		$stmt = $this->wpdb->prepare("SELECT id, amount, created FROM $this->orders_table
-			ORDER BY id DESC LIMIT %d", 1);
+		$stmt = $this->wpdb->prepare( "SELECT id, amount, created FROM $this->orders_table
+			ORDER BY id DESC LIMIT %d", 1 );
 
 		return $this->wpdb->get_row( $stmt, OBJECT );
 

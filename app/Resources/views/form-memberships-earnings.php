@@ -48,6 +48,7 @@
                     <form>
                         <select>
                             <option>This Week</option>
+                            <option>Today</option>
                             <option>January</option>
                             <option>February</option>
                             <option>March</option>
@@ -114,13 +115,20 @@
 
                 <h3>Your last sale was:</h3>
 				<?php $last_sale = $earnings->get_last_sale(); ?>
-				<?php
-				echo sprintf( esc_html__( '%s %s ago', 'subway' ),
-					$currency->format( $last_sale->amount, 'USD' ),
-					human_time_diff( strtotime( $last_sale->created, strtotime( 'now' ) ) )
-				);
-				?>
+                <?php if ( empty( $last_sale ) ): ?>
+                    <?php esc_html_e('No recent sales recorded', 'subway'); ?>
+                <?php else: ?>
+	                <?php
+                        echo sprintf(
+                                esc_html__( '%s %s ago', 'subway' ),
+                                $currency->format( $last_sale->amount, 'USD' ),
+                                human_time_diff( strtotime( $last_sale->created, strtotime( 'now' ) ) )
+                        );
+	                ?>
+                <?php endif; ?>
+
                 <h3>Average Sales/Day (<small><?php echo date( 'F' ); ?></small>)</h3>
+
 				<?php $av_monthly = $earnings->get_monthly( date( 'F' ) ); ?>
 				<?php $av_day_today = date( 'j' ); ?>
 				<?php $av_earnings = $av_monthly / $av_day_today; ?>
