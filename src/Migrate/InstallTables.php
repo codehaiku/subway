@@ -30,8 +30,11 @@ class InstallTables {
 				user_id mediumint(9) NOT NULL,
 				status varchar(100) NOT NULL,
 				amount double NOT NULL,
+				tax_rate double NOT NULL,
+				customer_vat_number varchar(100) NOT NULL,
+				currency varchar(50) NOT NULL,
 				gateway varchar(100) NOT NULL,
-				gateway_details text NOT NULL,
+				ip_address varchar(100) NOT NULL,
 				created datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
 				last_updated datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
 				PRIMARY KEY (id)
@@ -39,7 +42,35 @@ class InstallTables {
 
 		dbDelta( $sql );
 
-		add_option( "subway_memberships_orders_version", $this->db_version );
+		update_option( "subway_memberships_orders_version", $this->db_version );
+
+		return $this;
+
+	}
+
+	protected function membership_orders_details_install() {
+
+		$table = $this->wpdb->prefix . 'subway_memberships_orders_details';
+
+		$sql = "CREATE TABLE $table(
+				id mediumint(9) NOT NULL AUTO_INCREMENT,
+				order_id mediumint(9) NOT NULL,
+				gateway_customer_name varchar(100) NOT NULL,
+				gateway_customer_lastname varchar(100) NOT NULL,
+				gateway_customer_email varchar(100) NOT NULL,
+				gateway_customer_address_line_1 varchar(255) NOT NULL,
+				gateway_customer_address_line_2 varchar(255) NOT NULL,
+				gateway_customer_postal_code varchar(100) NOT NULL,
+				gateway_customer_city varchar(100) NOT NULL,
+				gateway_customer_country varchar(100) NOT NULL,
+				gateway_customer_phone_number varchar(100) NOT NULL,
+				gateway_transaction_created datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+				PRIMARY KEY (id)
+			) $this->collate;";
+
+		dbDelta( $sql );
+
+		update_option( "subway_memberships_orders_details_version", $this->db_version );
 
 		return $this;
 
@@ -63,7 +94,7 @@ class InstallTables {
 
 		dbDelta( $sql );
 
-		add_option( "subway_memberships_products_version", $this->db_version );
+		update_option( "subway_memberships_products_version", $this->db_version );
 
 		return $this;
 
@@ -105,6 +136,7 @@ class InstallTables {
 
 		$this->membership_products_install();
 		$this->membership_orders_install();
+		$this->membership_orders_details_install();
 
 		return $this;
 	}

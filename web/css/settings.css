@@ -134,7 +134,7 @@ div.earnings-box-column.one-third {
 div.earnings-box-column.one-fourth {
     flex-basis: 31.9%
 }
-div.earnings-box-column p {
+div.earnings-box-column p.box-lead {
     font-size: 14px;
     max-width: 220px;
     margin: 0 auto;
@@ -171,6 +171,10 @@ div.earnings-table{
 ul.fun-facts {
     font-size: 18px;
     line-height: 1.5em;
+}
+
+ul.fun-facts .fun-facts-24-hours {
     color: #0073aa;
+    font-size: 24px;
 }
 

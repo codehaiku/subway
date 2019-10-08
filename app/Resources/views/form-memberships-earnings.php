@@ -11,7 +11,7 @@
 
         <div class="earnings-box-column">
 
-            <p>
+            <p class="box-lead">
 				<?php echo sprintf( esc_html__( 'Total earnings this month including taxes (%s):', 'subway' ), 'October' ); ?>
             </p>
 
@@ -22,7 +22,7 @@
         </div>
 
         <div class="earnings-box-column">
-            <p>
+            <p class="box-lead">
 				<?php echo sprintf( esc_html__( 'Sales Tax this month (%s) based on fixed percentage (%s):', 'subway' ), 'October', '3%' ); ?>
             </p>
             <span class="amount tax-total">
@@ -31,7 +31,7 @@
         </div>
 
         <div class="earnings-box-column">
-            <p>
+            <p class="box-lead">
 				<?php esc_html_e( 'Overall Total Earnings Made:', 'subway' ); ?>
             </p>
             <br/>
@@ -88,44 +88,49 @@
 
                 <h3>Sales</h3>
                 <ul class="fun-facts">
-                    <li>
-						<?php echo $currency->format( $earnings->get_last_n_days( 30 ), 'USD' ); ?>
+                    <li class="fun-facts-24-hours">
+		                <?php echo $currency->format( $earnings->get_last_n_days( 1 ), 'USD' ); ?>
                         <small>
-                            <em>in the last 30 days</em>
+                            <em>Today</em>
                         </small>
                     </li>
+
                     <li>
 						<?php echo $currency->format( $earnings->get_last_n_days( 7 ), 'USD' ); ?>
                         <small>
                             <em>in the last 7 days</em>
                         </small>
                     </li>
-
                     <li>
-						<?php echo $currency->format( $earnings->get_last_n_days( 1 ), 'USD' ); ?>
+		                <?php echo $currency->format( $earnings->get_last_n_days( 30 ), 'USD' ); ?>
                         <small>
-                            <em>in the last 24 hours</em>
+                            <em>in the last 30 days</em>
                         </small>
                     </li>
+
 
                 </ul>
 
 
                 <h3>Your last sale was:</h3>
-                <?php $last_sale = $earnings->get_last_sale(); ?>
-                <?php
-                  echo sprintf(esc_html__('%s %s ago', 'subway'),
-                        $currency->format($last_sale->amount, 'USD'),
-                        human_time_diff(strtotime( $last_sale->created, strtotime('now')))
-                    );
-                ?>
-                <h3>Average Sales/Day (<small><?php echo date('F'); ?></small>)</h3>
-                <?php $av_total = $earnings->get_monthly( date('F') ); ?>
-                <?php $av_day_today = date('j'); ?>
-                <?php echo $currency->format( $av_total / $av_day_today, 'USD'); ?>
+				<?php $last_sale = $earnings->get_last_sale(); ?>
+				<?php
+				echo sprintf( esc_html__( '%s %s ago', 'subway' ),
+					$currency->format( $last_sale->amount, 'USD' ),
+					human_time_diff( strtotime( $last_sale->created, strtotime( 'now' ) ) )
+				);
+				?>
+                <h3>Average Sales/Day (<small><?php echo date( 'F' ); ?></small>)</h3>
+				<?php $av_monthly = $earnings->get_monthly( date( 'F' ) ); ?>
+				<?php $av_day_today = date( 'j' ); ?>
+				<?php $av_earnings = $av_monthly / $av_day_today; ?>
 
-                <h3>Top Grossing Membership Plan</h3>
-                Subway Pro
+				<?php echo $currency->format( $av_earnings, 'USD' ); ?>
+
+                <h3>Sales forecast</h3>
+
+				<?php echo $currency->format( $av_earnings * date( 't' ), 'USD' ); ?>
+
             </div>
         </div>
     </div>
