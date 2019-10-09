@@ -84,16 +84,17 @@ class InstallTables {
 		$table = $this->wpdb->prefix . "subway_memberships_products";
 
 		$sql = "CREATE TABLE $table (
-						id mediumint(9) NOT NULL AUTO_INCREMENT,
-						name tinytext NOT NULL,
-						sku tinytext NOT NULL,
-						description text NULL,
-						amount double NOT NULL,
-						type tinytext NOT NULL,
-						date_created datetime DEFAULT CURRENT_TIMESTAMP,
-						date_updated datetime DEFAULT CURRENT_TIMESTAMP
-						PRIMARY KEY  (id)
-				) $this->collate;";
+				id mediumint(9) NOT NULL AUTO_INCREMENT,
+				name tinytext NOT NULL,
+				sku tinytext NOT NULL,
+				description text NULL,
+				amount double NOT NULL,
+				status varchar(100) DEFAULT 'draft',
+				type tinytext NOT NULL,
+				date_created datetime DEFAULT CURRENT_TIMESTAMP,
+				date_updated datetime DEFAULT CURRENT_TIMESTAMP
+				PRIMARY KEY  (id)
+			) $this->collate;";
 
 		dbDelta( $sql );
 
@@ -117,6 +118,7 @@ class InstallTables {
 						sku tinytext NOT NULL,
 						description text NULL,
 						amount double NOT NULL,
+						status varchar(100) DEFAULT 'draft',
 						type tinytext NOT NULL,
 						date_created datetime DEFAULT CURRENT_TIMESTAMP,
 						date_updated datetime DEFAULT CURRENT_TIMESTAMP
