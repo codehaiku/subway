@@ -24,11 +24,23 @@ class Helpers {
 		$this->view = $view;
 	}
 
+	public static function debug( $mixed, $dump = false ) {
+
+		echo '<pre>';
+		if ( $dump ) {
+			var_dump( $mixed );
+		} else {
+			print_r( $mixed );
+		}
+		echo '</pre>';
+
+	}
+
 	/**
 	 * @param $args
 	 */
 	public function display_roles_checkbox( $args ) {
-		$post_id = get_the_id();
+		$post_id  = get_the_id();
 		$defaults = array( 'name' => '', 'option_name' => '' );
 		$this->view->render(
 			'helper-roles-checkbox', [ 'args' => $args ]
@@ -63,6 +75,7 @@ class Helpers {
 				}
 			}
 		}
+
 		// Return localhost.
 		return '::1';
 	}
