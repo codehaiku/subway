@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 
-<?php $id = filter_input( INPUT_GET, 'product', FILTER_VALIDATE_INT); ?>
+<?php $id = filter_input( INPUT_GET, 'product', FILTER_VALIDATE_INT ); ?>
 
 <?php $product = $membership->get_product( $id ); ?>
 
@@ -27,11 +27,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<?php $error = new WP_Error( 'broke', __( "Error: Product not found", "subway" ) ); ?>
 
-	<h3>
+    <h3>
 
 		<?php echo $error->get_error_message(); ?>
 
-	</h3>
+    </h3>
 
 	<?php return; ?>
 
@@ -39,30 +39,30 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <div id="subway-edit-product-form">
 
-	<?php wp_enqueue_script( 'subway-membership-update-js' ); ?>
+    <form autocomplete="off" method="POST" action="<?php echo admin_url( 'admin-post.php' ); ?>">
 
-	<form autocomplete="off" method="POST" action="">
+        <div>
+			<?php wp_nonce_field( 'subway_product_edit_action', 'subway_product_edit_action' ); ?>
+            <input type="hidden" name="action" value="subway_product_edit_action"/>
+            <input type="hidden" name="page" value="subway-membership"/>
+            <input type="hidden" name="new" value="yes"/>
+            <input type="hidden" id="input-id" name="product_id" value="<?php echo esc_attr( $product->id ); ?>"/>
+        </div>
 
-		<div>
-			<input type="hidden" name="page" value="subway-membership">
-			<input type="hidden" name="new" value="yes">
-			<input type="hidden" id="input-id" name="product_id" value="<?php echo esc_attr( $product->id ); ?>">
-		</div>
+        <div>
 
-		<div>
-
-			<h3>
-				<label for="input-title">
-                    <?php esc_html_e( 'Product Name', 'subway' ); ?>
+            <h3>
+                <label for="input-title">
+					<?php esc_html_e( 'Product Name', 'subway' ); ?>
                 </label>
-			</h3>
+            </h3>
 
-			<p><?php esc_html_e('Enter the new product name', 'subway'); ?></p>
+            <p><?php esc_html_e( 'Enter the new product name', 'subway' ); ?></p>
 
-			<input value="<?php echo esc_attr( $product->name ); ?>"
-			       id="input-title" name="title" type="text" class="widefat"
-			       placeholder="<?php esc_attr_e('Add Name', 'subway'); ?>" />
-		</div>
+            <input required value="<?php echo esc_attr( $product->name ); ?>"
+                   id="input-title" name="title" type="text" class="widefat"
+                   placeholder="<?php esc_attr_e( 'Add Name', 'subway' ); ?>"/>
+        </div>
 
         <!-- Product SKU-->
         <div>
@@ -72,64 +72,98 @@ if ( ! defined( 'ABSPATH' ) ) {
                 </label>
             </h3>
             <p>
-				<?php esc_html_e('Give your membership product a new and unique SKU', 'subway'); ?>
+				<?php esc_html_e( 'Give your membership product a new and unique SKU', 'subway' ); ?>
             </p>
 
-            <input value="<?php echo esc_attr( $product->sku ); ?>" id="input-sku" name="sku" type="text" class="widefat"
-                   placeholder="<?php esc_attr_e('(Stock Keeping Unit e.g. PROD001)', 'subway'); ?>" />
+            <input value="<?php echo esc_attr( $product->sku ); ?>" id="input-sku" name="sku"
+                   required
+                   type="text"
+                   class="widefat"
+                   placeholder="<?php esc_attr_e( '(Stock Keeping Unit e.g. PROD001)', 'subway' ); ?>"/>
         </div>
         <!--/.Product SKU-->
 
-		<div>
-			<h3>
+        <div>
+            <h3>
                 <label for="input-description">
-                    <?php esc_html_e('Product Description', 'subway'); ?>
+					<?php esc_html_e( 'Product Description', 'subway' ); ?>
                 </label>
             </h3>
-			<p>
-                <?php esc_html_e('Enter the product description', 'subway'); ?>
+            <p>
+				<?php esc_html_e( 'Enter the product description', 'subway' ); ?>
             </p>
-			<textarea id="input-description" name="description" class="widefat" rows="5" placeholder="<?php echo esc_attr('Product description', 'subway'); ?>"><?php echo esc_html( $product->description ); ?></textarea>
-		</div>
+            <textarea required id="input-description" name="description" class="widefat" rows="5"
+                      placeholder="<?php echo esc_attr( 'Product description', 'subway' ); ?>"><?php echo esc_html( $product->description ); ?></textarea>
+        </div>
 
         <div>
             <h3>
                 <label>Payment Type</label>
             </h3>
             <p>Select a payment type</p>
-
-            <?php
-            $options = [
-                    'free' => esc_html__('Free', 'subway'),
-                    'fixed' => esc_html__('Fixed', 'subway'),
-                    'recurring' => esc_html__('Recurring', 'subway'),
-                ];
-            ?>
-            <select name="type" id="input-type">
-                <?php foreach( $options as $value => $label ): ?>
-                    <?php if ( $product->type === $value ): ?>
-                        <?php $selected = 'selected'; ?>
-                    <?php else: ?>
-                        <?php $selected = ''; ?>
-                    <?php endif; ?>
+			<?php
+			$options = [
+				'free'      => esc_html__( 'Free', 'subway' ),
+				'fixed'     => esc_html__( 'Fixed', 'subway' ),
+				'recurring' => esc_html__( 'Recurring', 'subway' ),
+			];
+			?>
+            <select required name="type" id="input-type">
+				<?php foreach ( $options as $value => $label ): ?>
+					<?php if ( $product->type === $value ): ?>
+						<?php $selected = 'selected'; ?>
+					<?php else: ?>
+						<?php $selected = ''; ?>
+					<?php endif; ?>
                     <option <?php echo esc_attr( $selected ); ?> value="<?php echo esc_attr( $value ); ?>">
-                        <?php echo esc_html( $label ); ?>
+						<?php echo esc_html( $label ); ?>
                     </option>
-                <?php endforeach; ?>
+				<?php endforeach; ?>
+            </select>
+        </div>
+
+        <div>
+            <h3>
+                <label for="input-description">
+					<?php esc_html_e( 'Product Status', 'subway' ); ?>
+                </label>
+            </h3>
+            <p>
+				<?php esc_html_e( 'Select the status of this membership plan. Change the value of this field \'Published\' to make this
+                membership available to everyone.', 'subway' ); ?>
+            </p>
+			<?php
+			$statuses = [
+				'draft'     => esc_html__( 'Draft', 'subway' ),
+				'published' => esc_html__( 'Published', 'subway' ),
+			];
+			?>
+
+            <select required name="status">
+				<?php foreach ( $statuses as $key => $val ): ?>
+					<?php $selected = ''; ?>
+					<?php if ( $key === $product->status ): ?>
+						<?php $selected = 'selected'; ?>
+					<?php endif; ?>
+                    <option <?php echo esc_attr( $selected ); ?> value="<?php echo esc_attr( $key ); ?>">
+						<?php echo esc_html( $val ); ?>
+                    </option>
+				<?php endforeach; ?>
             </select>
         </div>
 
         <div>
             <h3><label>Price</label></h3>
             <p>Enter the price of this product</p>
-            <input id="input-amount" name="amount" type="number" style="width: 6em;" size="3" placeholder="0.00" value="<?php echo esc_attr( $product->amount); ?>"/>
+            <input required id="input-amount" name="amount" type="number" style="width: 6em;" size="3" placeholder="0.00"
+                   value="<?php echo esc_attr( $product->amount ); ?>"/>
         </div>
 
-		<hr/>
+        <hr/>
 
-		<div>
-			<input id="update-product" type="submit" class="button button-primary button-large" value="Update" />
-		</div>
+        <div>
+            <input required id="update-product" type="submit" class="button button-primary button-large" value="Update"/>
+        </div>
 
-	</form>
+    </form>
 </div><!--#subway-edit-product-form-->
