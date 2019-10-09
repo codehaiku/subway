@@ -32,7 +32,9 @@
     <div class="wrap">
 
         <h1 class="wp-heading-inline">
+
 			<?php esc_html_e( 'Edit Product', 'subway' ); ?>
+
         </h1>
 
         <hr class="wp-header-end">
@@ -45,28 +47,42 @@
 
     <div class="wrap">
 
-        <h1 class="wp-heading-inline"><?php esc_html_e( 'Products', 'subway' ); ?></h1>
+        <h1 class="wp-heading-inline"><?php esc_html_e( 'Membership Plans', 'subway' ); ?></h1>
 
         <a href="?page=subway-membership&new=yes"
+
            class="page-title-action"><?php esc_html_e( 'Add New', 'subway' ); ?></a>
 
         <hr class="wp-header-end">
 
+		<?php $SubwayListTableMembership->views(); ?>
+
 		<?php $SubwayListTableMembership->prepare_items(); ?>
 
-        <form method="post">
-            <input type="hidden" name="page" value="my_list_test"/>
+        <form method="GET">
+
+            <input type="hidden" name="page" value="subway-membership" />
+
 			<?php $SubwayListTableMembership->search_box( 'search', 'search_id' ); ?>
+
         </form>
 
 		<?php if ( $is_deleted ): ?>
+
             <div class="notice notice-success is-dismissible">
-                <p><?php esc_html_e( 'Successfully moved to trash', 'subway' ); ?></p>
+
+                <p>
+					<?php esc_html_e( 'Successfully moved to trash', 'subway' ); ?>
+                </p>
+
             </div>
+
 		<?php endif; ?>
 
         <form id="subway-products-list-table-form" method="post">
+
 			<?php $SubwayListTableMembership->display(); ?>
+
         </form>
 
     </div>
