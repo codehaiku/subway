@@ -32,12 +32,10 @@
     <div class="wrap">
 
         <h1 class="wp-heading-inline">
-
-			<?php esc_html_e( 'Edit Product', 'subway' ); ?>
-
+			<?php printf( esc_html__( 'Configure Membership Plan: #%d', 'subway' ), $_GET['product'] ); ?>
         </h1>
 
-        <hr class="wp-header-end">
+        <hr/>
 
 		<?php $view->render( 'form-memberships-products-edit', [ 'membership' => $products ] ); ?>
 
