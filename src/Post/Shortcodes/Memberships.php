@@ -22,7 +22,7 @@ class Memberships {
 		$product  = new Products();
 		$currency = new Currency();
 
-		$products = $product->get_products( [] );
+		$products = $product->get_products( ['status' => 'published'] );
 
 		return $this->view->render( 'shortcode-memberships', [
 			'products' => $products,
