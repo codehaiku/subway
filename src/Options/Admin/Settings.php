@@ -12,12 +12,10 @@ use Subway\View\View;
 
 class Settings {
 
-
 	public function menu() {
 
-
 		// Add top-level menu "Membership".
-		add_menu_page(
+		$hook = add_menu_page(
 			esc_html__( 'Memberships Settings', 'subway' ),
 			esc_html__( 'Memberships', 'subway' ),
 			'manage_options',
@@ -100,18 +98,20 @@ class Settings {
 		$view->render( 'form-admin-general-settings', [] );
 
 		return $this;
+
 	}
 
 	public function membership_products() {
 
 		$view = new View();
-
+		wp_enqueue_script( 'subway-product-update-js' );
 		$view->render(
 			'form-membership-products',
 			[ 'view' => $view, 'products' => new Products() ]
 		);
 
 		return $this;
+
 	}
 
 	public function orders() {
@@ -179,6 +179,7 @@ class Settings {
 	}
 
 	public function license_key() {
+
 		echo "<h2>Enter your license key</h2>";
 
 		return $this;
@@ -455,6 +456,7 @@ class Settings {
 		$styled_settings_pages = [
 			'memberships_page_subway-membership-general',
 			'memberships_page_subway-membership-earnings',
+			'toplevel_page_subway-membership'
 		];
 
 		if ( in_array( $hook, $styled_settings_pages ) ) {
