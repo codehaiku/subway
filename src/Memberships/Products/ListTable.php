@@ -173,13 +173,13 @@ class ListTable extends \WP_List_Table {
 		);
 
 		$edit_url = wp_nonce_url(
-			sprintf( '?page=%s&edit=%s&product=%s', $_REQUEST['page'], 'yes', $item['id'] ),
+			sprintf( '?page=%s&edit=%s&product=%s&section=product-information', $_REQUEST['page'], 'yes', $item['id'] ),
 			sprintf( 'edit_product_%s', $item['id'] ),
 			'_wpnonce'
 		);
 
 		$actions = array(
-			'edit'   => sprintf( '<a href="%s">' . esc_html__( 'Edit', 'subway' ) . '</a>', esc_url( $edit_url ) ),
+			'edit'   => sprintf( '<a href="%s">' . esc_html__( 'Configure Plan', 'subway' ) . '</a>', esc_url( $edit_url ) ),
 			'delete' => sprintf( '<a href="%s">' . esc_html__( 'Trash', 'subway' ) . '</a>', esc_url( $delete_url ) ),
 		);
 
