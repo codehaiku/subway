@@ -87,26 +87,20 @@
             <div class="earning-statistics">
                 <h1 style="margin-top: 0;">Sales Statistics</h1>
 
-                <h3>Sales</h3>
+
                 <ul class="fun-facts">
                     <li class="fun-facts-24-hours">
 		                <?php echo $currency->format( $earnings->get_last_n_days( 1 ), 'USD' ); ?>
-                        <small>
-                            <em>Today</em>
-                        </small>
+                        Today
                     </li>
 
                     <li>
 						<?php echo $currency->format( $earnings->get_last_n_days( 7 ), 'USD' ); ?>
-                        <small>
-                            <em>in the last 7 days</em>
-                        </small>
+                        in the last 7 days
                     </li>
                     <li>
 		                <?php echo $currency->format( $earnings->get_last_n_days( 30 ), 'USD' ); ?>
-                        <small>
-                            <em>in the last 30 days</em>
-                        </small>
+                        in the last 30 days
                     </li>
 
 
