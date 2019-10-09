@@ -31,7 +31,13 @@ class Enqueue {
 			plugins_url('subway/web/js/general.js', SUBWAY_DIR_PATH), 
 				array('jquery'), false, false );
 
+		wp_register_script( 'subway-product-add-js',
+			SUBWAY_JS_URL . 'product-new.js',
+			[ 'jquery', 'subway-admin-js' ] );
 
+		wp_register_script( 'subway-product-update-js',
+			SUBWAY_JS_URL . '/product-update.js',
+			[ 'jquery', 'subway-admin-js' ] );
 	}
 
 	public function attach_hooks() 
