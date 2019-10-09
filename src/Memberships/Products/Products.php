@@ -2,6 +2,8 @@
 
 namespace Subway\Memberships\Products;
 
+use mysql_xdevapi\Exception;
+
 /**
  * Class Products
  * @package Subway\Memberships\Products
@@ -26,19 +28,38 @@ class Products {
 			'limit'     => 60,
 			'offset'    => 0,
 			'orderby'   => 'id',
-			'direction' => 'DESC'
+			'direction' => 'DESC',
+			'status'    => '',
+			'name_like' => ''
 		);
 
 		$args = wp_parse_args( $args, $defaults );
 
-		$orderby   = $args['orderby'];
+		$orderby = $args['orderby'];
+
+		if ( ! in_array( $args['status'], [ 'draft', 'published', 'trashed' ] ) ) {
+			$args['status'] = "'draft', 'published'";
+		} else {
+			$args['status'] = '\'' . $args['status'] . '\'';
+		}
+
+		$search_query = $wpdb->prepare( "AND name like '%%%s%%' ", $args['name_like'] );
+
+		if ( empty( $args['name_like'] ) ) {
+			$search_query = '';
+		}
 
 		$direction = strtoupper( $args['direction'] );
 
-		$stmt = $wpdb->prepare( "SELECT id, name, sku, description, type, amount, date_created, date_updated FROM $this->table ORDER BY $orderby $direction LIMIT %d, %d",
+		$stmt = $wpdb->prepare( "SELECT status, id, name, sku, description, type, amount, date_created, date_updated 
+			FROM $this->table 
+			WHERE status IN (" . $args['status'] . ")
+			$search_query 
+			ORDER BY $orderby $direction LIMIT %d, %d",
 			array( $args['offset'], $args['limit'] ) );
 
 		$results = $wpdb->get_results( $stmt, ARRAY_A );
+
 
 		return $results;
 
@@ -83,6 +104,12 @@ class Products {
 
 	}
 
+	/**
+	 * @param array $args
+	 *
+	 * @return false|int
+	 * @throws \Exception
+	 */
 	public function update( $args = array() ) {
 
 		global $wpdb;
@@ -93,8 +120,15 @@ class Products {
 			'type'         => $args['type'],
 			'amount'       => $args['amount'],
 			'sku'          => $args['sku'],
+			'status'       => $args['status'],
 			'date_updated' => current_time( 'mysql' )
 		);
+
+		foreach ( $data as $key => $value ) {
+			if ( empty ( $value ) ) {
+				throw new \Exception( 'ERROR: All Fields Are Required. ' );
+			}
+		}
 
 		$table = $this->table;
 
@@ -105,7 +139,6 @@ class Products {
 		return $wpdb->update( $table, $data, $where, $format, $where_format );
 
 	}
-
 
 	public function get_product_checkout_url( $id ) {
 
