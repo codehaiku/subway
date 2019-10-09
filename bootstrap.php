@@ -6,6 +6,8 @@ use Subway\Api\Products as ApiProducts;
 use Subway\Archives\Author;
 use Subway\Hooks\Hooks;
 use Subway\Memberships\Orders\Details;
+use Subway\Memberships\Orders\Orders;
+use Subway\Memberships\Products\Controller;
 use Subway\Migrate\InstallTables;
 use Subway\Options\Admin\Settings;
 use Subway\Post\Shortcodes\Checkout;
@@ -103,9 +105,14 @@ $membership->attach_hooks();
 $checkout = new Checkout( $view );
 $checkout->attach_hooks();
 
-// Load Membership Tools
-add_action( 'admin_init', function () {
-	global $wpdb;
-	$checkout = new Repair( $wpdb );
-	$checkout->attach_hooks();
-} );
+// Load Membership Tools.
+$checkout = new Repair( $wpdb );
+$checkout->attach_hooks();
+
+// Load Orders Actions
+$order = new Orders( $wpdb );
+$order->attach_hooks();
+
+// Load Products Actions.
+$products_controller = new Controller();
+$products_controller->attach_hooks();
