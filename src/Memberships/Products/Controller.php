@@ -10,15 +10,17 @@ class Controller extends Products {
 
 		check_admin_referer( 'subway_product_edit_action', 'subway_product_edit_action' );
 
-		$id     = filter_input( 0, 'product_id', 519 );
-		$title  = filter_input( 0, 'title', 513 );
-		$desc   = filter_input( 0, 'description', 513 );
-		$amount = filter_input( 0, 'amount', 513 );
-		$type   = filter_input( 0, 'type', 513 );
-		$sku    = filter_input( 0, 'sku', 513 );
-		$status = filter_input( 0, 'status', 513 );
+		$id      = filter_input( 0, 'product_id', 519 );
+		$title   = filter_input( 0, 'title', 513 );
+		$desc    = filter_input( 0, 'description', 513 );
+		$amount  = filter_input( 0, 'amount', 513 );
+		$type    = filter_input( 0, 'type', 513 );
+		$sku     = filter_input( 0, 'sku', 513 );
+		$status  = filter_input( 0, 'status', 513 );
+		$section = filter_input( 0, 'active-section', 513 );
 
 		$referrer = filter_input( INPUT_SERVER, 'HTTP_REFERER', 518 );
+		$referrer = add_query_arg('section', $section, $referrer);
 
 		try {
 
