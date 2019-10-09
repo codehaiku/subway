@@ -159,10 +159,12 @@ div.earnings-box-column .amount.tax-total {
 div.earnings-box-column .amount.lifetime-total {
     color: #00a762;
 }
+
 div.earning-statistics,
 div.earnings-chart {
    text-align: left;
 }
+
 div.earnings-table{
     flex-basis: 100%;
     margin-top: 1.5em;
@@ -176,4 +178,105 @@ ul.fun-facts .fun-facts-24-hours {
     color: #0073aa;
     font-weight: bold;
 }
+div.subway-card {
+    padding: 20px;
+    background: #fff;
+    box-shadow: 1px 1px 4px #c3c3c3;
+    border-radius: 0 3px 3px 3px;
+    margin: 20px 0;
+}
+div.subway-card select,
+div.subway-card textarea,
+div.subway-card input[type=number],
+div.subway-card input[type=text] {
+    padding: 10px;
+    background: #f5f5f5;
+    font-size: 16px;
+}
+div.subway-card input[type=number]:active,
+div.subway-card select:active,
+div.subway-card textarea:active,
+div.subway-card input[type=text]:active {
+    background: #fff;
+}
+div.subway-card input[type=number]:focus,
+div.subway-card select:focus,
+div.subway-card textarea:focus,
+div.subway-card input[type=text]:focus {
+    background: #f5f5f5;
+}
+div.subway-card textarea {
+    font-size: 16px;
+}
+div.subway-card input[type=number],
+div.subway-card select {
+    height: 45px;
+    min-width: 200px;
+}
+div.subway-card input[type=number] {
+    min-width: 90px;
+}
+div.subway-form-row {
+    margin: 0 0 25px 0;
+}
+div.subway-form-row .field-help {
+    font-size: 14px;
+    opacity: 0.75;
+}
+div.subway-form-row .currency-amount{
+    display: inline-block;
+    padding: 20px 20px;
+    border: 1px solid #ddd;
+    background: #ececec;
+    margin-right: -5px;
+    line-height: 3px;
+    box-sizing: border-box;
+    top: -2px;
+    position: relative;
+}
+div.subway-form-row:hover .field-help {
+    opacity: 1;
+}
+div.subway-form-row:first-child {
+    margin-top: 0;
+}
+div.subway-form-row h3.field-title {
+    margin: 0;
+}
 
+div.subway-form-row:hover h3.field-title {
+    color: #007cba;
+}
+.subway-product-section {
+    display: none;
+}
+.subway-product-section.active {
+    display: block;
+}
+ul#product-tabs {
+    display: inline-block;
+    margin: 30px 0 -9px 0;
+    padding: 0;
+}
+ul#product-tabs li {
+    display: inline-block;
+   float: left;
+}
+
+ul#product-tabs li a {
+    padding: 20px;
+    background: #f3f3f3;
+    text-decoration: none;
+    border: 1px solid #e6e6e6;
+    margin-left: -1px;
+    color: #444;
+    font-size: 18px;
+}
+
+ul#product-tabs li a.active {
+    font-weight: bold;
+    background: #fff;
+}
+ul#product-tabs li a:focus {
+    box-shadow: none;
+}
