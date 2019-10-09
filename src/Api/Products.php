@@ -220,13 +220,7 @@ class Products extends \WP_REST_Controller {
 			SUBWAY_JS_URL . 'admin.js',
 			[ 'jquery' ] );
 
-		wp_register_script( 'subway-membership-add-js',
-			SUBWAY_JS_URL . 'product-new.js',
-			[ 'jquery', 'subway-admin-js' ] );
 
-		wp_register_script( 'subway-membership-update-js',
-			SUBWAY_JS_URL . '/product-update.js',
-			[ 'jquery', 'subway-admin-js' ] );
 
 		wp_localize_script( 'subway-admin-js', 'subway_api_settings', array(
 			'root'      => esc_url_raw( rest_url() ),
