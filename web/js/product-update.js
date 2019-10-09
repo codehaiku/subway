@@ -1,56 +1,52 @@
-/*
- * Copyright (c) 2019. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
- * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
- * Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna.
- * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
- * Vestibulum commodo. Ut rhoncus gravida arcu.
- */
+function subway_replaced_url_param(name) {
+    const [head, tail] = location.href.split('?');
+    return head + '?' + tail.replace(new RegExp(`&${name}=[^&]*|${name}=[^&]*&`), '');
+}
 
-jQuery(document).ready( function($) {
+jQuery(document).ready(function ($) {
 
     'use strict';
+    var target = location.hash;
+    var __target = target;
 
-    $('#update-product').on('click', function(e) {
+    if (__target) {
+        $('a[data-section-target=' + __target.replace('#', '') + ']').addClass('active');
+    }
+
+    $(target).addClass('active');
+
+
+    $('#product-tabs > li > a').on('click', function (e) {
+
+        var target = $(this).attr('data-section-target');
+
+        var targetSection = '#' + target;
 
         e.preventDefault();
 
-        var element = $(this);
+        // Remove classes.
+        $('#product-tabs > li > a').removeClass('active');
 
-        element.attr('disabled', 'disabled');
+        $('a[data-section-target=' + target + ']').addClass('active');
 
-        $.ajax( {
-            url: subway_api_settings.root + 'subway/v1/membership/update-product',
-            method: 'POST',
-            beforeSend: function ( xhr ) {
-                xhr.setRequestHeader( 'X-WP-Nonce', subway_api_settings.nonce );
-            },
-            data:{
-                'id' : $('#input-id').val(),
-                'title' : $('#input-title').val(),
-                'description' : $('#input-description').val(),
-                'amount' : $('#input-amount').val(),
-                'type' : $('#input-type').val(),
-                'sku': $('#input-sku').val()
-            }
-        } ).success( function ( response )
-        {
+        $('.subway-product-section').removeClass('active');
 
-            if ( response.is_error )
-            {
-                alert( response.message );
-            } else
-            {
-                alert( response.message );
-            }
+        $('input[name=active-section]').val(target);
 
-        } ).error( function( response, status, message )
-        {
+        $(targetSection).addClass('active');
 
-            console.log( message );
+        var url = subway_replaced_url_param('section');
 
+        history.pushState('', '', 'url');
+        history.replaceState('', '', url);
 
-        }).done( function(){
-            element.removeAttr('disabled');
-        });
+        location.hash = target;
+
+        if (location.hash) {
+            setTimeout(function () {
+                window.scrollTo(0, 0);
+            }, 5);
+        }
+
     });
 });
