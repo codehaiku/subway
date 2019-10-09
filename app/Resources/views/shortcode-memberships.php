@@ -4,7 +4,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $current_plan = get_user_meta( get_current_user_id(), 'subway_user_membership_product_id', true );
-
 ?>
 
 <div id="subway-memberships">
