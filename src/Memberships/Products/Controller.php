@@ -2,6 +2,7 @@
 
 namespace Subway\Memberships\Products;
 
+use Subway\FlashMessage\FlashMessage;
 use Subway\Helpers\Helpers;
 
 class Controller extends Products {
@@ -20,7 +21,9 @@ class Controller extends Products {
 		$section = filter_input( 0, 'active-section', 513 );
 
 		$referrer = filter_input( INPUT_SERVER, 'HTTP_REFERER', 518 );
-		$referrer = add_query_arg('section', $section, $referrer);
+		$referrer = add_query_arg( 'section', $section, $referrer );
+
+		$flash = new FlashMessage( get_current_user_id(), 'product-edit-submit-messages' );
 
 		try {
 
@@ -34,6 +37,9 @@ class Controller extends Products {
 				'status'      => $status
 			] );
 
+			do_action( 'subway_product_edit_saved' );
+
+			$flash->add( [ 'type' => 'success', 'message' => __('Membership Plan has been successfully updated.', 'subway') ] );
 
 			wp_safe_redirect( $referrer );
 
@@ -41,15 +47,22 @@ class Controller extends Products {
 
 		} catch ( \Exception $e ) {
 
-			wp_die(
-				$e->getMessage() .
-				sprintf(
-					'<a href="%1$s" title="%s">%2$s</a>',
-					esc_url( $referrer ),
-					esc_html__( 'Go Back', 'subway' )
-				),
+			try {
 
-			);
+				$flash->add( [ 'type' => 'error', 'message' => $e->getMessage() ] );
+
+			} catch ( \Exception $e ) {
+				wp_die(
+					$e->getMessage() .
+					sprintf(
+						'<a href="%1$s" title="%s">%2$s</a>',
+						esc_url( $referrer ),
+						esc_html__( 'Go Back', 'subway' )
+					),
+				);
+			}
+
+			wp_safe_redirect( $referrer );
 
 		}
 
