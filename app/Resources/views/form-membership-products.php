@@ -37,7 +37,10 @@
 
         <hr/>
 
-		<?php $view->render( 'form-memberships-products-edit', [ 'membership' => $products ] ); ?>
+		<?php $view->render( 'form-memberships-products-edit', [
+		        'membership' => $products,
+                'flash_messages' => $flash_message->get()
+        ] ); ?>
 
     </div>
 
