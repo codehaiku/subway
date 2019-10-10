@@ -126,7 +126,8 @@ class Products {
 
 		foreach ( $data as $key => $value ) {
 			if ( empty ( $value ) ) {
-				throw new \Exception( 'ERROR: All Fields Are Required. ' );
+				$message = sprintf('All Fields are Required: Field %s is empty.', ucwords( $key ) );
+				throw new \Exception( $message );
 			}
 		}
 
