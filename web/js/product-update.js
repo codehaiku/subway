@@ -1,4 +1,4 @@
-function subway_replaced_url_param(name) {
+function __subway_replaced_url_param(name) {
     const [head, tail] = location.href.split('?');
     return head + '?' + tail.replace(new RegExp(`&${name}=[^&]*|${name}=[^&]*&`), '');
 }
@@ -10,11 +10,10 @@ jQuery(document).ready(function ($) {
     var __target = target;
 
     if (__target) {
-        $('a[data-section-target=' + __target.replace('#', '') + ']').addClass('active');
+        $('a[data-section-target=' + __target.replace('#section-', '') + ']').addClass('active');
     }
 
-    $(target).addClass('active');
-
+    $(target.replace('section-', '')).addClass('active');
 
     $('#product-tabs > li > a').on('click', function (e) {
 
@@ -35,18 +34,17 @@ jQuery(document).ready(function ($) {
 
         $(targetSection).addClass('active');
 
-        var url = subway_replaced_url_param('section');
+        var url = __subway_replaced_url_param('section');
 
         history.pushState('', '', 'url');
         history.replaceState('', '', url);
 
-        location.hash = target;
+        location.hash = 'section-'+target;
 
-        if (location.hash) {
-            setTimeout(function () {
-                window.scrollTo(0, 0);
-            }, 5);
-        }
+        $('#update-product').attr('disabled', 'disabled');
+        setTimeout(function(){
+            $('#update-product').removeAttr('disabled');
+        }, 500);
 
     });
 });
