@@ -233,6 +233,7 @@ div.subway-form-row .currency-amount{
     margin-right: -5px;
     line-height: 3px;
     box-sizing: border-box;
+    border-radius: 3px 0 0 3px;
     top: -1px;
     position: relative;
 }
@@ -251,6 +252,9 @@ div.subway-form-row:hover h3.field-title {
 }
 div.subway-form-row .field-group {
     position: relative;
+}
+div.subway-form-row .field-group #input-amount {
+    border-radius: 0 3px 3px 0;
 }
 
 .subway-product-section {
@@ -290,3 +294,4 @@ ul#product-tabs li a .dashicons {
 ul#product-tabs li a:focus {
     box-shadow: none;
 }
+
