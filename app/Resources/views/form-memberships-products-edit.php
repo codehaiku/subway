@@ -33,9 +33,12 @@ if ( ! defined( 'ABSPATH' ) ) {
     <form autocomplete="off" method="POST" action="<?php echo admin_url( 'admin-post.php' ); ?>">
 
         <ul id="product-tabs">
-            <li><a class="<?php echo $section == 'product-information'? 'active': ''; ?>"data-section-target="product-information" href="#">Product Information</a></li>
-            <li><a class="<?php echo $section == 'product-pricing'? 'active': ''; ?>"data-section-target="product-pricing" href="#">Pricing</a></li>
-            <li><a class="<?php echo $section == 'product-email'? 'active': ''; ?>" data-section-target="product-email" href="#">Emails</a></li>
+            <li><a class="<?php echo $section == 'product-information'? 'active': ''; ?>"data-section-target="product-information" href="#">
+                    <span class="dashicons dashicons-info"></span>Product Information</a></li>
+            <li><a class="<?php echo $section == 'product-pricing'? 'active': ''; ?>"data-section-target="product-pricing" href="#">
+                    <span class="dashicons dashicons-tag"></span>Pricing</a></li>
+            <li><a class="<?php echo $section == 'product-email'? 'active': ''; ?>" data-section-target="product-email" href="#">
+                    <span class="dashicons dashicons-email"></span>Emails</a></li>
         </ul>
 
         <input type="hidden" name="active-section" value="<?php echo ! empty( $section ) ? $section: 'product-information'?>" />
@@ -89,13 +92,16 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <p class="field-help">
 			        <?php esc_html_e('Enter the new price for this Membership Plan', 'subway'); ?>
                 </p>
-                <span class="currency-amount">
+                <div class="field-group">
+                    <span class="currency-amount">
                     <?php echo get_option('subway_currency', 'USD'); ?>
                 </span>
-                <input required id="input-amount" name="amount" type="number" style="width: 6em;" size="3"
-                       placeholder="0.00"
-                       step="0.01"
-                       value="<?php echo esc_attr( $product->amount ); ?>"/>
+                    <input required id="input-amount" name="amount" type="number" style="width: 6em;" size="3"
+                           placeholder="0.00"
+                           step="0.01"
+                           value="<?php echo esc_attr( $product->amount ); ?>"/>
+                </div>
+
             </div>
             <!--/.Product Price-->
         </div>
