@@ -14,6 +14,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 <?php $id = filter_input( INPUT_GET, 'product', FILTER_VALIDATE_INT ); ?>
 <?php $section = filter_input(1, 'section', 516); ?>
 
+
+<?php foreach( $flash_messages as $flash_message ): ?>
+    <div class="notice notice-<?php echo esc_attr( $flash_message['type'] ); ?> is-dismissible">
+        <p>
+		    <?php echo esc_html( $flash_message['message'] ); ?>
+        </p>
+    </div>
+<?php endforeach; ?>
+
 <?php $product = $membership->get_product( $id ); ?>
 
 <?php if ( empty( $product ) ): ?>
@@ -39,15 +48,16 @@ if ( ! defined( 'ABSPATH' ) ) {
                     <span class="dashicons dashicons-tag"></span>Pricing</a></li>
             <li><a class="<?php echo $section == 'product-email'? 'active': ''; ?>" data-section-target="product-email" href="#">
                     <span class="dashicons dashicons-email"></span>Emails</a></li>
+            <?php do_action('subway_product_edit_list_tabs'); ?>
         </ul>
 
         <input type="hidden" name="active-section" value="<?php echo ! empty( $section ) ? $section: 'product-information'?>" />
 
-        <div class="subway-card subway-product-section <?php echo $section == 'product-email'? 'active': ''; ?>" id="product-email">
+        <div class="subway-card subway-product-section <?php echo $section == 'product-email' ? 'active': ''; ?>" id="product-email">
             Emails
         </div>
 
-        <div class="subway-card subway-product-section <?php echo $section == 'product-pricing'? 'active': ''; ?>" id="product-pricing">
+        <div class="subway-card subway-product-section <?php echo $section == 'product-pricing' ? 'active': ''; ?>" id="product-pricing">
             <!-- Payment Type -->
             <div class="subway-form-row">
                 <h3 class="field-title">
@@ -65,7 +75,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			        'recurring' => esc_html__( 'Recurring (Subscription Payment)', 'subway' ),
 		        ];
 		        ?>
-                <select required name="type" id="input-type">
+                <select autofocus  name="type" id="input-type">
 			        <?php foreach ( $options as $value => $label ): ?>
 				        <?php if ( $product->type === $value ): ?>
 					        <?php $selected = 'selected'; ?>
@@ -79,8 +89,6 @@ if ( ! defined( 'ABSPATH' ) ) {
                 </select>
             </div>
             <!--/.Payment Type-->
-
-
 
             <!--Product Price-->
             <div class="subway-form-row">
@@ -96,7 +104,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                     <span class="currency-amount">
                     <?php echo get_option('subway_currency', 'USD'); ?>
                 </span>
-                    <input required id="input-amount" name="amount" type="number" style="width: 6em;" size="3"
+                    <input  id="input-amount" name="amount" type="number" style="width: 6em;" size="3"
                            placeholder="0.00"
                            step="0.01"
                            value="<?php echo esc_attr( $product->amount ); ?>"/>
@@ -106,7 +114,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             <!--/.Product Price-->
         </div>
 
-        <div class="subway-card subway-product-section <?php echo $section == 'product-information'? 'active': ''; ?>" id="product-information">
+        <div class="subway-card subway-product-section <?php echo $section == 'product-information'  ? 'active': ''; ?>" id="product-information">
 
             <!--hidden fields-->
 			<?php wp_nonce_field( 'subway_product_edit_action', 'subway_product_edit_action' ); ?>
@@ -126,7 +134,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
                 <p class="field-help"><?php esc_html_e( 'Enter the new name of this plan.', 'subway' ); ?></p>
 
-                <input required value="<?php echo esc_attr( $product->name ); ?>"
+                <input autofocus  value="<?php echo esc_attr( $product->name ); ?>"
                        id="input-title" name="title" type="text" class="widefat"
                        placeholder="<?php esc_attr_e( 'Add Name', 'subway' ); ?>"/>
             </div>
@@ -143,8 +151,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<?php esc_html_e( 'Give this membership plan a new and a unique SKU.', 'subway' ); ?>
                 </p>
 
-                <input value="<?php echo esc_attr( $product->sku ); ?>" id="input-sku" name="sku"
-                       required
+                <input autofocus value="<?php echo esc_attr( $product->sku ); ?>" id="input-sku" name="sku"
+                       
                        type="text"
                        class="widefat"
                        placeholder="<?php esc_attr_e( '(Stock Keeping Unit e.g. PROD001)', 'subway' ); ?>"/>
@@ -161,7 +169,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <p class="field-help">
 			        <?php esc_html_e( 'Update this membership plan description.', 'subway' ); ?>
                 </p>
-                <textarea required id="input-description" name="description" class="widefat" rows="5"
+                <textarea  id="input-description" name="description" class="widefat" rows="5"
                           placeholder="<?php echo esc_attr( 'Product description', 'subway' ); ?>"><?php echo esc_html( $product->description ); ?></textarea>
             </div>
             <!--/.Product Description-->
@@ -184,7 +192,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		        ];
 		        ?>
 
-                <select required name="status">
+                <select  name="status">
 			        <?php foreach ( $statuses as $key => $val ): ?>
 				        <?php $selected = ''; ?>
 				        <?php if ( $key === $product->status ): ?>
@@ -200,10 +208,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
         </div>
 
+	    <?php do_action('subway_product_edit_section'); ?>
+
         <hr/>
 
         <div class="subway-card">
-            <input required id="update-product" type="submit" class="button button-primary button-large"
+            <input  id="update-product" type="submit" class="button button-primary button-large"
                    value="<?php esc_attr_e('Update Membership Plan', 'subway'); ?>"/>
         </div>
 
