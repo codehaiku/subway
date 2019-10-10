@@ -4,6 +4,7 @@ namespace Subway\Options\Admin;
 
 use Subway\Currency\Currency;
 use Subway\Earnings\Earnings;
+use Subway\FlashMessage\FlashMessage;
 use Subway\Memberships\Orders\Details;
 use Subway\Memberships\Orders\Orders;
 use Subway\Memberships\Products\ListTable;
@@ -104,10 +105,14 @@ class Settings {
 	public function membership_products() {
 
 		$view = new View();
+
+		$flash = new FlashMessage(get_current_user_id(), 'product-edit-submit-messages');
+
 		wp_enqueue_script( 'subway-product-update-js' );
+
 		$view->render(
 			'form-membership-products',
-			[ 'view' => $view, 'products' => new Products() ]
+			[ 'view' => $view, 'products' => new Products(), 'flash_message' => $flash ]
 		);
 
 		return $this;
