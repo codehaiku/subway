@@ -106,13 +106,15 @@ class Settings {
 
 		$view = new View();
 
-		$flash = new FlashMessage(get_current_user_id(), 'product-edit-submit-messages');
+		$flash = new FlashMessage( get_current_user_id(), 'product-edit-submit-messages' );
+
+		$flash_add = new FlashMessage( get_current_user_id(), 'product-add-submit-messages' );
 
 		wp_enqueue_script( 'subway-product-update-js' );
 
 		$view->render(
 			'form-membership-products',
-			[ 'view' => $view, 'products' => new Products(), 'flash_message' => $flash ]
+			[ 'view' => $view, 'products' => new Products(), 'flash_message' => $flash, 'flash_message_add' => $flash_add ]
 		);
 
 		return $this;
