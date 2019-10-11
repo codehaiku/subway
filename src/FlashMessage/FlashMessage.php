@@ -8,9 +8,15 @@ class FlashMessage {
 
 	protected $unique_key = '';
 
+	/**
+	 * FlashMessage constructor.
+	 *
+	 * @param $user_id
+	 * @param $unique_key
+	 */
 	public function __construct( $user_id, $unique_key ) {
 
-		$this->user_id    = $user_id;
+		$this->user_id = $user_id;
 
 		$this->unique_key = $unique_key;
 
@@ -28,15 +34,19 @@ class FlashMessage {
 
 		if ( empty ( $this->user_id ) || empty ( $this->unique_key ) ) {
 
-			throw new \Exception( 'Error: user id and unique key must not be empty' );
+			wp_die( __( 'Error: user id and unique key must not be empty', 'subway' ) );
 
 		}
 
 		update_user_meta( $this->user_id, $this->unique_key, $messages );
 
 		return $this;
+
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function get() {
 
 		$message = get_user_meta( $this->user_id, $this->unique_key );
