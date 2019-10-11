@@ -13,6 +13,7 @@
     margin: 10px 10px;
     display: block;
 }
+
 .subway-tooltip {
     max-width: 600px;
 }
@@ -122,23 +123,28 @@ div.earnings-box-column {
     box-sizing: border-box;
 }
 
-div.earnings-box-column:first-child{
+div.earnings-box-column:first-child {
     margin-left: 0;
 }
-div.earnings-box-column:last-child{
+
+div.earnings-box-column:last-child {
     margin-right: 0;
 }
+
 div.earnings-box-column.one-third {
     flex-basis: 66%;
 }
+
 div.earnings-box-column.one-fourth {
     flex-basis: 31.9%
 }
+
 div.earnings-box-column p.box-lead {
     font-size: 14px;
     max-width: 220px;
     margin: 0 auto;
 }
+
 div.earnings-box-column .amount {
     font-weight: bold;
     font-size: 3em;
@@ -162,10 +168,10 @@ div.earnings-box-column .amount.lifetime-total {
 
 div.earning-statistics,
 div.earnings-chart {
-   text-align: left;
+    text-align: left;
 }
 
-div.earnings-table{
+div.earnings-table {
     flex-basis: 100%;
     margin-top: 1.5em;
 }
@@ -178,13 +184,15 @@ ul.fun-facts .fun-facts-24-hours {
     color: #0073aa;
     font-weight: bold;
 }
+
 div.subway-card {
     padding: 20px;
-    background: #fff9f2;
+    background: #fff;
     box-shadow: 1px 1px 4px #c3c3c3;
     border-radius: 0 3px 3px 3px;
     margin: 20px 0;
 }
+
 div.subway-card select,
 div.subway-card textarea,
 div.subway-card input[type=number],
@@ -194,12 +202,14 @@ div.subway-card input[type=text] {
     font-size: 16px;
     border-radius: 6px;
 }
+
 div.subway-card input[type=number]:active,
 div.subway-card select:active,
 div.subway-card textarea:active,
 div.subway-card input[type=text]:active {
     background: #fff;
 }
+
 div.subway-card input[type=number]:focus,
 div.subway-card select:focus,
 div.subway-card textarea:focus,
@@ -207,42 +217,38 @@ div.subway-card input[type=text]:focus {
     background: #fff;
     box-shadow: none;
 }
+
 div.subway-card textarea {
     font-size: 16px;
 }
+
 div.subway-card input[type=number],
 div.subway-card select {
     height: 45px;
     min-width: 200px;
 }
+
 div.subway-card input[type=number] {
     min-width: 90px;
 }
+
 div.subway-form-row {
     margin: 0 0 25px 0;
 }
+
 div.subway-form-row .field-help {
     font-size: 14px;
     opacity: 0.75;
 }
-div.subway-form-row .currency-amount{
-    display: inline-block;
-    padding: 20px 20px;
-    border: 1px solid #ddd;
-    background: #ececec;
-    margin-right: -5px;
-    line-height: 3px;
-    box-sizing: border-box;
-    border-radius: 3px 0 0 3px;
-    top: -1px;
-    position: relative;
-}
+
 div.subway-form-row:hover .field-help {
     opacity: 1;
 }
+
 div.subway-form-row:first-child {
     margin-top: 0;
 }
+
 div.subway-form-row h3.field-title {
     margin: 0;
 }
@@ -250,27 +256,53 @@ div.subway-form-row h3.field-title {
 div.subway-form-row:hover h3.field-title {
     color: #007cba;
 }
+
 div.subway-form-row .field-group {
     position: relative;
+    display: inline-table;
+    background: #eee;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, .07);
 }
+
+div.subway-form-row .currency-amount {
+    display: table-cell;
+    padding: 15px 20px;
+    font-size: 18px;
+    border: none;
+    background: #32373b;
+    color: #fff;
+    line-height: 1em;
+    box-sizing: border-box;
+    position: relative;
+
+
+}
+
 div.subway-form-row .field-group #input-amount {
-    border-radius: 0 3px 3px 0;
+    border: 0 none;
+    box-shadow: none;
+    background: none;
+    position: relative;
+    display: table-cell;
 }
 
 .subway-product-section {
     display: none;
 }
+
 .subway-product-section.active {
     display: block;
 }
+
 ul#product-tabs {
     display: inline-block;
     margin: 30px 0 -9px 0;
     padding: 0;
 }
+
 ul#product-tabs li {
     display: inline-block;
-   float: left;
+    float: left;
 }
 
 ul#product-tabs li a {
@@ -288,10 +320,36 @@ ul#product-tabs li a.active {
     background: #fff;
     color: #0073aa;
 }
+
 ul#product-tabs li a .dashicons {
     margin: 1px 5px 0 0;
 }
+
 ul#product-tabs li a:focus {
     box-shadow: none;
+}
+
+
+.subway-card .lead {
+    font-size: 18px;
+}
+
+.subway-card .mg-top-zero {
+    margin-top: 0;
+}
+
+#product-information-add {
+    max-width: 640px;
+}
+
+.subway-card .validation-errors {
+    background: #ffcfcf;
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #ea4343;
+    font-weight: bold;
+    border-radius: 6px;
+    border: 1px solid #fda6a6;
+    box-shadow: 0 0 0 3px #ffecec;
 }
 
