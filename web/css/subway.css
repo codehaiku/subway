@@ -1,21 +1,198 @@
 /*Preloader*/
-@-ms-keyframes subway-ripple{0%,100%{opacity:0}0%{width:0;height:0;margin:0}33%{width:44%;height:44%;margin:-22% 0 0 -22%;opacity:1}100%{width:88%;height:88%;margin:-44% 0 0 -44%}}@-moz-keyframes subway-ripple{0%{width:0;height:0;opacity:0;margin:0}33%{width:44%;height:44%;margin:-22% 0 0 -22%;opacity:1}100%{width:88%;height:88%;margin:-44% 0 0 -44%;opacity:0}}@-webkit-keyframes subway-ripple{0%{width:0;height:0;opacity:0;margin:0}33%{width:44%;height:44%;margin:-22% 0 0 -22%;opacity:1}100%{width:88%;height:88%;margin:-44% 0 0 -44%;opacity:0}}@-o-keyframes subway-ripple{0%{width:0;height:0;opacity:0;margin:0}33%{width:44%;height:44%;margin:-22% 0 0 -22%;opacity:1}100%{width:88%;height:88%;margin:-44% 0 0 -44%;opacity:0}}@keyframes subway-ripple{0%{width:0;height:0;opacity:0;margin:0}33%{width:44%;height:44%;margin:-22% 0 0 -22%;opacity:1}100%{width:88%;height:88%;margin:-44% 0 0 -44%;opacity:0}}.subway-ripple-css{background:0 0;width:200px;height:200px;position:absolute;top:-103px;left:-75px}.subway-ripple-css div{position:absolute;top:50%;left:50%;margin:0;width:0;height:0;opacity:0;border-radius:50%;border-width:12px;border-style:solid;-ms-animation:subway-ripple 2s ease-out infinite;-moz-animation:subway-ripple 2s ease-out infinite;-webkit-animation:subway-ripple 2s ease-out infinite;-o-animation:subway-ripple 2s ease-out infinite;animation:subway-ripple 2s ease-out infinite}.subway-ripple-css div:nth-of-type(1){border-color:#4a4a4a}.subway-ripple-css div:nth-of-type(2){border-color:#191919;-ms-animation-delay:1s;-moz-animation-delay:1s;-webkit-animation-delay:1s;-o-animation-delay:1s;animation-delay:1s}
+@-ms-keyframes subway-ripple {
+    0%, 100% {
+        opacity: 0
+    }
+    0% {
+        width: 0;
+        height: 0;
+        margin: 0
+    }
+    33% {
+        width: 44%;
+        height: 44%;
+        margin: -22% 0 0 -22%;
+        opacity: 1
+    }
+    100% {
+        width: 88%;
+        height: 88%;
+        margin: -44% 0 0 -44%
+    }
+}
+
+@-moz-keyframes subway-ripple {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 0;
+        margin: 0
+    }
+    33% {
+        width: 44%;
+        height: 44%;
+        margin: -22% 0 0 -22%;
+        opacity: 1
+    }
+    100% {
+        width: 88%;
+        height: 88%;
+        margin: -44% 0 0 -44%;
+        opacity: 0
+    }
+}
+
+@-webkit-keyframes subway-ripple {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 0;
+        margin: 0
+    }
+    33% {
+        width: 44%;
+        height: 44%;
+        margin: -22% 0 0 -22%;
+        opacity: 1
+    }
+    100% {
+        width: 88%;
+        height: 88%;
+        margin: -44% 0 0 -44%;
+        opacity: 0
+    }
+}
+
+@-o-keyframes subway-ripple {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 0;
+        margin: 0
+    }
+    33% {
+        width: 44%;
+        height: 44%;
+        margin: -22% 0 0 -22%;
+        opacity: 1
+    }
+    100% {
+        width: 88%;
+        height: 88%;
+        margin: -44% 0 0 -44%;
+        opacity: 0
+    }
+}
+
+@keyframes subway-ripple {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 0;
+        margin: 0
+    }
+    33% {
+        width: 44%;
+        height: 44%;
+        margin: -22% 0 0 -22%;
+        opacity: 1
+    }
+    100% {
+        width: 88%;
+        height: 88%;
+        margin: -44% 0 0 -44%;
+        opacity: 0
+    }
+}
+
+.subway-ripple-css {
+    background: 0 0;
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    top: -103px;
+    left: -75px
+}
+
+.subway-ripple-css div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: 0;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    border-radius: 50%;
+    border-width: 12px;
+    border-style: solid;
+    -ms-animation: subway-ripple 2s ease-out infinite;
+    -moz-animation: subway-ripple 2s ease-out infinite;
+    -webkit-animation: subway-ripple 2s ease-out infinite;
+    -o-animation: subway-ripple 2s ease-out infinite;
+    animation: subway-ripple 2s ease-out infinite
+}
+
+.subway-ripple-css div:nth-of-type(1) {
+    border-color: #4a4a4a
+}
+
+.subway-ripple-css div:nth-of-type(2) {
+    border-color: #191919;
+    -ms-animation-delay: 1s;
+    -moz-animation-delay: 1s;
+    -webkit-animation-delay: 1s;
+    -o-animation-delay: 1s;
+    animation-delay: 1s
+}
+
 /*Preloader End*/
 
-#subway-settings-form .description { max-width: 700px; }
-#subway_preloader { display: inline-block; position: relative; }
-.subway-login-form__form .login-submit { position: relative; clear: both; }
-.login-remember { float: left; width: 50%; }
-.login-remember label { margin: 0; }
-.subway-login-lost-password { float: right; width: 50%; text-align: right;}
-.subway-login-form { max-width: 500px; }
-.gglcptch_recaptcha { width: 303px; display: block; margin: 0 auto 30px;}
+#subway-settings-form .description {
+    max-width: 700px;
+}
+
+#subway_preloader {
+    display: inline-block;
+    position: relative;
+}
+
+.subway-login-form__form .login-submit {
+    position: relative;
+    clear: both;
+}
+
+.login-remember {
+    float: left;
+    width: 50%;
+}
+
+.login-remember label {
+    margin: 0;
+}
+
+.subway-login-lost-password {
+    float: right;
+    width: 50%;
+    text-align: right;
+}
+
+.subway-login-form {
+    max-width: 500px;
+}
+
+.gglcptch_recaptcha {
+    width: 303px;
+    display: block;
+    margin: 0 auto 30px;
+}
+
 .subway-login-sucessfull {
     color: #673AB7;
     display: block;
 }
+
 .subway-role-not-allowed {
-	display: block;
+    display: block;
     padding: 10px 15px;
     background: #da4709;
     color: #fff;
@@ -23,12 +200,13 @@
     border-radius: 6px;
     box-shadow: 0px 1px 4px #aba3a3;
 }
+
 .subway-role-not-allowed p {
-	margin: 0;
+    margin: 0;
 }
 
 .widget-subway-no-access-message,
-.subway-restricted-area{
+.subway-restricted-area {
     background: #eee;
     border: 1px solid #ddd;
     color: #555;
@@ -45,18 +223,41 @@ tr.current-user-plan > td {
 }
 
 
-.entry-content a.sw-button:visited,
-.entry-content a.sw-button,
-a.sw-button {
-    text-decoration: none;
-    padding: 10px 20px;
-    display: inline-block;
-    background: #02aee6;
-    color: #f5f5f5;
-    font-weight: bold;
-    text-align: center;
+
+
+/*Buttons*/
+
+
+.entry-content .sw-button:visited,
+.entry-content .sw-button,
+.sw-button {
+    box-shadow: inset 0px 1px 0px 0px #54a3f7;
+    background: linear-gradient(to bottom, #007dc1 5%, #0061a7 100%);
+    background-color: #007dc1;
     border-radius: 3px;
+    border: 1px solid #124d77;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 13px;
+    padding: 6px 24px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #154682;
 }
+
+.sw-button:hover {
+    background: linear-gradient(to bottom, #0061a7 5%, #007dc1 100%);
+    background-color: #0061a7;
+}
+
+.sw-button:active {
+    position: relative;
+    top: 1px;
+}
+
+
+/*Buttons End*/
 
 
 .widget-subway-no-access-message p:last-child,
@@ -65,7 +266,7 @@ a.sw-button {
 }
 
 .subway-login-form__form #wp-submit {
-    background: rgb(17,39,43);
+    background: rgb(17, 39, 43);
     background: linear-gradient(0deg, rgb(14, 133, 228) 0%, rgb(0, 118, 212) 35%, rgb(84, 168, 234) 100%);
     border: 1px solid #455fec;
     color: #906c6c;
@@ -77,7 +278,10 @@ a.sw-button {
     color: #fff;
     margin: 0;
 }
-.login-submit { margin: 0; } 
+
+.login-submit {
+    margin: 0;
+}
 
 .subway-login-form-form {
     overflow: hidden;
@@ -89,17 +293,19 @@ a.sw-button {
 }
 
 .subway-login-form-form #user_login,
-.subway-login-form-form #user_pass{
+.subway-login-form-form #user_pass {
     width: 100%;
 }
+
 .subway-login-form__actions {
-display: block;
+    display: block;
     margin: -20px -20px 20px -20px;
     background: #eaeaea;
     padding: 20px;
     border-bottom: 1px solid #ccc;
     box-shadow: inset 0px -10px 25px -30px #676767;
 }
+
 .subway-login-form__actions h3 {
     margin: 0;
     font-weight: bold;
@@ -120,6 +326,7 @@ display: block;
     border: 1px solid rgba(255, 0, 0, 0.20);
     box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.10);
 }
+
 .sw-form-errors .sw-error {
     margin: 5px 0;
 }
@@ -134,9 +341,22 @@ display: block;
  * Forms
  */
 
-.sw-form label { font-weight: normal; width: 100%; margin-bottom: 0;}
-.sw-block { display: block; }
-.sw-field-title { font-weight: bold; font-size: 1.2em; margin-bottom: 7.5px;}
+.sw-form label {
+    font-weight: normal;
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.sw-block {
+    display: block;
+}
+
+.sw-field-title {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-bottom: 7.5px;
+}
+
 .sw-field input[type=email],
 .sw-field input[type=password],
 .sw-field input[type=text] {
@@ -145,10 +365,12 @@ display: block;
     max-width: 100%;
     margin: 7.5px 0;
 }
+
 .sw-field-howto {
     font-size: 0.90em;
     opacity: 0.75;
 }
+
 .subway-form-row {
     margin: 1.5em 0;
 }
@@ -173,7 +395,7 @@ display: block;
 }
 
 
-.subway-flex-wrap{
+.subway-flex-wrap {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
