@@ -12,16 +12,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 
 <?php $id = filter_input( INPUT_GET, 'product', FILTER_VALIDATE_INT ); ?>
+
 <?php $section = filter_input(1, 'section', 516); ?>
-
-
-<?php foreach( $flash_messages as $flash_message ): ?>
-    <div class="notice notice-<?php echo esc_attr( $flash_message['type'] ); ?> is-dismissible">
-        <p>
-		    <?php echo esc_html( $flash_message['message'] ); ?>
-        </p>
-    </div>
-<?php endforeach; ?>
 
 <?php $product = $membership->get_product( $id ); ?>
 
@@ -37,9 +29,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <?php endif; ?>
 
+<?php foreach( $flash_messages as $flash_message ): ?>
+
+    <div class="notice notice-<?php echo esc_attr( $flash_message['type'] ); ?> is-dismissible">
+
+        <p>
+			<?php echo esc_html( $flash_message['message'] ); ?>
+        </p>
+
+    </div>
+
+<?php endforeach; ?>
+
 <div id="subway-edit-product-form">
 
     <form autocomplete="off" method="POST" action="<?php echo admin_url( 'admin-post.php' ); ?>">
+
+        <!--hidden fields-->
+	    <?php wp_nonce_field( 'subway_product_edit_action', 'subway_product_edit_action' ); ?>
+        <input type="hidden" name="action" value="subway_product_edit_action"/>
+        <input type="hidden" name="page" value="subway-membership"/>
+        <input type="hidden" name="new" value="yes"/>
+        <input type="hidden" id="input-id" name="product_id" value="<?php echo esc_attr( $product->id ); ?>"/>
 
         <ul id="product-tabs">
             <li><a class="<?php echo $section == 'product-information'? 'active': ''; ?>"data-section-target="product-information" href="#">
@@ -54,7 +65,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         <input type="hidden" name="active-section" value="<?php echo ! empty( $section ) ? $section: 'product-information'?>" />
 
         <div class="subway-card subway-product-section <?php echo $section == 'product-email' ? 'active': ''; ?>" id="product-email">
-            Emails
+           do_action('subway_products_edit_email_section');
         </div>
 
         <div class="subway-card subway-product-section <?php echo $section == 'product-pricing' ? 'active': ''; ?>" id="product-pricing">
@@ -115,13 +126,6 @@ if ( ! defined( 'ABSPATH' ) ) {
         </div>
 
         <div class="subway-card subway-product-section <?php echo $section == 'product-information'  ? 'active': ''; ?>" id="product-information">
-
-            <!--hidden fields-->
-			<?php wp_nonce_field( 'subway_product_edit_action', 'subway_product_edit_action' ); ?>
-            <input type="hidden" name="action" value="subway_product_edit_action"/>
-            <input type="hidden" name="page" value="subway-membership"/>
-            <input type="hidden" name="new" value="yes"/>
-            <input type="hidden" id="input-id" name="product_id" value="<?php echo esc_attr( $product->id ); ?>"/>
 
             <!--Product Name-->
             <div class="subway-form-row">
