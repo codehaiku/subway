@@ -78,7 +78,35 @@ class Products {
 
 	}
 
-	public function add() {
+	public function add( $args = array() ) {
+
+		global $wpdb;
+
+		$defaults = [
+			'name' => '',
+			'description' => '',
+			'amount' => 0.00,
+			'type' => 'free',
+			'sku'=> '',
+			'status' => 'draft',
+			'date_created' => current_time('mysql'),
+			'date_updated' => current_time('mysql')
+		];
+
+		$r = wp_parse_args( $args, $defaults );
+
+		// check if sku exists.
+		$product = $wpdb->insert(
+			$this->table,
+			$r,
+			'',
+			);
+
+		if ( ! $product ) {
+			return $wpdb->last_error;
+		}
+
+		return $wpdb->insert_id;
 
 	}
 
@@ -126,7 +154,7 @@ class Products {
 
 		foreach ( $data as $key => $value ) {
 			if ( empty ( $value ) ) {
-				$message = sprintf('All Fields are Required: Field %s is empty.', ucwords( $key ) );
+				$message = sprintf('All fields are required. The field %s must not be empty.', ucwords( $key ) );
 				throw new \Exception( $message );
 			}
 		}
