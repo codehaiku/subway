@@ -18,12 +18,14 @@
     <div class="wrap">
 
         <h1 class="wp-heading-inline">
-			<?php esc_html_e( 'Add New Product', 'subway' ); ?>
+			<?php esc_html_e( 'Create New Membership Plan', 'subway' ); ?>
         </h1>
 
         <hr class="wp-header-end">
 
-		<?php $view->render( 'form-memberships-products-new', [] ); ?>
+		<?php $view->render( 'form-memberships-products-new', [
+			'flash_message_add' => $flash_message_add
+		] ); ?>
 
     </div>
 
@@ -38,9 +40,9 @@
         <hr/>
 
 		<?php $view->render( 'form-memberships-products-edit', [
-		        'membership' => $products,
-                'flash_messages' => $flash_message->get()
-        ] ); ?>
+			'membership'     => $products,
+			'flash_messages' => $flash_message->get()
+		] ); ?>
 
     </div>
 
@@ -62,7 +64,7 @@
 
         <form method="GET">
 
-            <input type="hidden" name="page" value="subway-membership" />
+            <input type="hidden" name="page" value="subway-membership"/>
 
 			<?php $SubwayListTableMembership->search_box( 'search', 'search_id' ); ?>
 
