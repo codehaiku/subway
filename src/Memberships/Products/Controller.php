@@ -23,7 +23,7 @@ class Controller extends Products {
 		$validator->validation_rules( array(
 			'title'       => 'required|alpha_space|max_len,200',
 			'description' => 'required',
-			'sku'         => 'required|alpha_numeric|max_len,100',
+			'sku'         => 'required|alpha_dash|max_len,100',
 		) );
 
 		$validated = $validator->run( $_POST );
@@ -47,6 +47,8 @@ class Controller extends Products {
 		}
 
 		try {
+
+
 			$product_id = $this->add( [
 				'name'        => $title,
 				'description' => $desc,
@@ -102,6 +104,44 @@ class Controller extends Products {
 
 		$flash = new FlashMessage( get_current_user_id(), 'product-edit-submit-messages' );
 
+		// Validate.
+		$validator = new GUMP();
+
+		$rules = [
+			'title'       => 'required|alpha_space|max_len,200',
+			'description' => 'required',
+			'sku'         => 'required|alpha_dash|max_len,100',
+			'amount'      => 'required|float|min_numeric,0.1'
+		];
+
+		// Disable validation on amount if the price is free. :)
+		if ( 'free' === $type ) {
+			unset( $rules['amount'] );
+		}
+
+		$validator->validation_rules( $rules );
+
+		$validated = $validator->run( $_POST );
+
+		if ( false === $validated ) {
+
+			$flash->add( [
+				'validation' => $validator->get_errors_array(),
+				'form_data'  => [
+					'title'       => $title,
+					'description' => $desc,
+					'sku'         => $sku,
+					'amount'      => $amount,
+					'type'        => $type
+				]
+			] );
+
+			wp_safe_redirect( $referrer, 302 );
+
+			exit;
+
+		}
+
 		try {
 
 			$updated = $this->update( [
@@ -132,6 +172,7 @@ class Controller extends Products {
 				$flash->add( [ 'type' => 'error', 'message' => $e->getMessage() ] );
 
 			} catch ( \Exception $e ) {
+
 				wp_die(
 					$e->getMessage() .
 					sprintf(
@@ -140,6 +181,7 @@ class Controller extends Products {
 						esc_html__( 'Go Back', 'subway' )
 					),
 				);
+
 			}
 
 			wp_safe_redirect( $referrer );
