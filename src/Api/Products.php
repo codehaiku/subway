@@ -55,7 +55,7 @@ class Products extends \WP_REST_Controller {
 		check_admin_referer();
 
 		if ( 'yes' === $redirect ) {
-			$url = add_query_arg( 'page', 'subway-membership', get_admin_url() );
+			$url = esc_url( add_query_arg( 'page', 'subway-membership', get_admin_url() ) );
 			wp_safe_redirect( esc_url( $url ), 302 );
 		}
 
@@ -250,10 +250,10 @@ class Products extends \WP_REST_Controller {
 
 		if ( $is_deleted ) {
 
-			$http_referrer = add_query_arg(
+			$http_referrer = esc_url( add_query_arg(
 				[ 'page' => 'subway-membership' ],
 				get_admin_url() . 'admin.php'
-			);
+			) );
 
 			wp_safe_redirect(
 				esc_url( $http_referrer ),
