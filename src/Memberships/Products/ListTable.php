@@ -17,7 +17,7 @@ class ListTable extends \WP_List_Table {
 			'sku'          => 'SKU',
 			'type'         => 'Type',
 			'amount'       => 'Amount',
-            'date_updated' => 'Last Update'
+			'date_updated' => 'Last Update'
 		);
 
 		return $columns;
@@ -39,7 +39,7 @@ class ListTable extends \WP_List_Table {
 		$views = array(
 			'all'       => __( 'All', 'subway' ),
 			'published' => __( 'Published', 'subway' ),
-			'draft'    => __( 'Drafts', 'subway' ),
+			'draft'     => __( 'Drafts', 'subway' ),
 			'trashed'   => __( 'Trash', 'subway' ),
 		);
 
@@ -100,14 +100,14 @@ class ListTable extends \WP_List_Table {
 			'offset'    => $page_offset,
 			'limit'     => $per_page,
 			'name_like' => $search_value,
-            'status'    => $status
+			'status'    => $status
 		) );
 
 		$total_items = absint( get_option( 'subway_products_count' ) );
 
 		if ( ! empty( $search_value ) ) {
-		    $total_items = count( $data );
-        }
+			$total_items = count( $data );
+		}
 
 		$this->set_pagination_args( array(
 			'total_items' => $total_items, // We have to calculate the total number of items.
@@ -136,7 +136,7 @@ class ListTable extends \WP_List_Table {
 
 		$datetime_format = sprintf( "%s \n\t %s",
 			'M d, Y',
-            get_option( 'time_format', 'g:i a' )
+			get_option( 'time_format', 'g:i a' )
 		);
 
 		$currency = new Currency();
@@ -151,8 +151,8 @@ class ListTable extends \WP_List_Table {
 				return date( $datetime_format, strtotime( $item[ $column_name ] ) );
 				break;
 			case 'type':
-			    return ucwords($item[$column_name]);
-			    break;
+				return ucwords( $item[ $column_name ] );
+				break;
 			default:
 				return $item[ $column_name ];
 		}
@@ -161,10 +161,10 @@ class ListTable extends \WP_List_Table {
 
 	function column_name( $item ) {
 
-		$trash_uri = add_query_arg( array(
+		$trash_uri = esc_url_raw( add_query_arg( array(
 			'action' => 'listing_delete_action',
 			'id'     => $item['id'],
-		), get_admin_url() . 'admin-post.php' );
+		), get_admin_url() . 'admin-post.php' ) );
 
 		$delete_url = wp_nonce_url(
 			$trash_uri,
@@ -184,10 +184,10 @@ class ListTable extends \WP_List_Table {
 		);
 
 
-		$product_name = sprintf('<strong><a href="%1$s" title="%2$s">%2$s</a></strong>', $edit_url, $item['name']);
+		$product_name = sprintf( '<strong><a href="%1$s" title="%2$s">%2$s</a></strong>', $edit_url, $item['name'] );
 
 		if ( 'draft' === $item['status'] ):
-		    $product_name .= '&nbsp; &mdash; ' . esc_html__('Draft', 'subway') . '';
+			$product_name .= '&nbsp; &mdash; ' . esc_html__( 'Draft', 'subway' ) . '';
 		endif;
 
 		$product_name .= $this->row_actions( $actions );
