@@ -59,14 +59,14 @@ class Controller extends Products {
 
 		}
 
-		$redirect_url = add_query_arg(
+		$redirect_url = esc_url_raw( add_query_arg(
 			[
 				'page'    => 'subway-membership',
 				'edit'    => 'yes',
 				'product' => $product_id
 			],
 			admin_url( 'admin.php?section=product-pricing' )
-		);
+		) );
 
 		$redirect_url = $redirect_url . '#section-product-pricing';
 
@@ -98,8 +98,7 @@ class Controller extends Products {
 		$status  = filter_input( 0, 'status', 513 );
 		$section = filter_input( 0, 'active-section', 513 );
 
-		$referrer = filter_input( INPUT_SERVER, 'HTTP_REFERER', 518 );
-		$referrer = add_query_arg( 'section', $section, $referrer );
+		$referrer = esc_url_raw( add_query_arg( 'section', $section, wp_get_referer() ) );
 
 		$flash = new FlashMessage( get_current_user_id(), 'product-edit-submit-messages' );
 
@@ -122,7 +121,7 @@ class Controller extends Products {
 				'message' => __( 'Membership Plan has been successfully updated.', 'subway' )
 			] );
 
-			wp_safe_redirect( $referrer );
+			wp_safe_redirect( $referrer, 302 );
 
 			die();
 
