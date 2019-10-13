@@ -11,48 +11,80 @@ $current_plan = get_user_meta( get_current_user_id(), 'subway_user_membership_pr
         <table class="subway-membership-lists">
             <thead>
             <tr>
-                <th colspan="3">Membership Plans</th>
+                <th colspan="3">
+					<?php esc_html_e( 'Membership Plans', 'subway' ); ?>
+                </th>
             </tr>
             <tr>
-                <th>Name</th>
-                <th colspan="2">Price</th>
+                <th>
+					<?php esc_html_e( 'Name', 'subway' ); ?>
+                </th>
+                <th colspan="2">
+					<?php esc_html_e( 'Price', 'subway' ); ?>
+                </th>
             </tr>
             </thead>
             <tbody>
+
 			<?php foreach ( $products as $list_product ): ?>
-				<?php if ( $list_product['id'] === $current_plan ): ?>
+
+				<?php if ( $list_product->get_id() === $current_plan ): ?>
+
                     <tr class="current-user-plan">
+
 				<?php else: ?>
+
                     <tr>
+
 				<?php endif; ?>
 
-                <td><?php echo esc_html( $list_product['name'] ); ?></td>
-                <td>
-					<?php echo $currency->format( $list_product['amount'], get_option( 'subway_currency', 'USD' ) ); ?>
-                </td>
-                <td style="text-align: right;">
+                        <!-- Name -->
+                        <td>
+                            <?php echo esc_html( $list_product->get_name() ); ?>
+                        </td>
+                        <!-- Name End -->
 
-					<?php if ( $list_product['id'] === $current_plan ): ?>
-                        <span class="current-plan-btn">
-	                            <?php esc_html_e( 'Current Plan', 'subway' ); ?>
+                        <!-- Price -->
+                        <td>
+                            <?php echo esc_html( $list_product->get_displayed_price() ); ?>
+                        </td>
+                        <!-- Price End -->
+
+                        <td style="text-align: right;">
+
+                            <?php if ( $list_product->get_id() === $current_plan ): ?>
+
+                                <span class="current-plan-btn">
+                                   <?php esc_html_e( 'Current Plan', 'subway' ); ?>
                                 </span>
-					<?php else: ?>
-                        <a class="sw-button"
-                           href="<?php echo esc_url( $product->get_product_checkout_url( $list_product['id'] ) ); ?>">
-							<?php esc_html_e( 'Select Membership', 'subway' ); ?>
-                        </a>
-					<?php endif; ?>
 
-                </td>
-                </tr>
+                            <?php else: ?>
+
+                                <a class="sw-button"
+                                   href="<?php echo esc_url( $product->get_product_checkout_url( $list_product->get_id() ) ); ?>">
+                                    <?php esc_html_e( 'Select Membership', 'subway' ); ?>
+                                </a>
+
+                            <?php endif; ?>
+
+                        </td>
+                    </tr>
+
 			<?php endforeach; ?>
+
             </tbody>
+
         </table>
 	<?php else: ?>
+
         <div class="sw-form-errors">
+
             <p class="sw-error">
 				<?php esc_html_e( 'There are no memberships product available at the moment.', 'subway' ); ?>
             </p>
+
         </div>
+
 	<?php endif; ?>
+
 </div>
