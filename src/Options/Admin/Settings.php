@@ -466,6 +466,8 @@ class Settings {
 			'toplevel_page_subway-membership'
 		];
 
+
+
 		if ( in_array( $hook, $styled_settings_pages ) ) {
 
 			// Enqueues the script only on the Subway Settings page.
