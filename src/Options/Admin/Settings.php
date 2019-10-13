@@ -256,6 +256,24 @@ class Settings {
 				'group'    => 'subway-general-section',
 			),
 
+			// Tax Rate.
+			array(
+				'id'       => 'subway_tax_rate',
+				'label'    => __( 'Tax Rate', 'subway' ),
+				'callback' => array( $settings_callback, 'tax_rate' ),
+				'section'  => 'subway-settings-section',
+				'group'    => 'subway-general-section',
+			),
+
+			// Add Tax Rate on Listing Price.
+			array(
+				'id'       => 'subway_display_tax',
+				'label'    => __( 'Display Tax', 'subway' ),
+				'callback' => array( $settings_callback, 'display_tax' ),
+				'section'  => 'subway-settings-section',
+				'group'    => 'subway-general-section',
+			),
+
 			// Login page settings.
 			array(
 				'id'       => 'subway_login_page',
@@ -465,8 +483,6 @@ class Settings {
 			'memberships_page_subway-membership-earnings',
 			'toplevel_page_subway-membership'
 		];
-
-
 
 		if ( in_array( $hook, $styled_settings_pages ) ) {
 
