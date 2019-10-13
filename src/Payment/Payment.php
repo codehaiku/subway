@@ -90,8 +90,8 @@ class Payment {
 
 		$sku = $product->sku;
 
-		$redirect_url = add_query_arg( 'success', 'true', $this->return_url );
-		$cancel_url   = add_query_arg( 'success', 'fail', $this->cancel_url );
+		$redirect_url = esc_url( add_query_arg( 'success', 'true', $this->return_url ) );
+		$cancel_url   = esc_url( add_query_arg( 'success', 'fail', $this->cancel_url ) );
 
 		// Generate Invoice Number.
 		$prefix = apply_filters(
@@ -283,23 +283,23 @@ class Payment {
 					if ( true === $ordered ) {
 						// Redirect user to the right page.
 						wp_safe_redirect(
-							add_query_arg( 'welcome', get_current_user_id(), $this->return_url ),
-							302
-						);
+							esc_url( add_query_arg( 'welcome', get_current_user_id(), $this->return_url ),
+								302
+							) );
 					} else {
 						wp_safe_redirect(
-							add_query_arg( 'new_order', 'fail_to_add_details', $this->cancel_url ),
-							302
-						);
+							esc_url( add_query_arg( 'new_order', 'fail_to_add_details', $this->cancel_url ),
+								302
+							) );
 					}
 
 				} else {
 
 					// Redirect user to the right page.
 					wp_safe_redirect(
-						add_query_arg( 'new_order', 'fail_to_add', $this->cancel_url ),
-						302
-					);
+						esc_url( add_query_arg( 'new_order', 'fail_to_add', $this->cancel_url ),
+							302
+						) );
 				}
 			} catch ( \Exception $e ) {
 				// Log error here.
