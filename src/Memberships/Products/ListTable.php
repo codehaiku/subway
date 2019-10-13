@@ -94,7 +94,7 @@ class ListTable extends \WP_List_Table {
 		// Manually determine page query offset (offset + current page (minus one) x posts per page).
 		$page_offset = $offset + ( $current_page - 1 ) * $per_page;
 
-		$data = $memberships->get_products( array(
+		$data = $memberships->get_wp_list_table_products( array(
 			'orderby'   => 'date_updated',
 			'direction' => $order,
 			'offset'    => $page_offset,
