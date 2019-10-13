@@ -28,7 +28,6 @@ class FlashMessage {
 	 * @param array $messages
 	 *
 	 * @return $this
-	 * @throws \Exception
 	 */
 	public function add( $messages = [] ) {
 
