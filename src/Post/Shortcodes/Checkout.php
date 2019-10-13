@@ -19,8 +19,11 @@ class Checkout {
 	public function view() {
 
 		$product_id = filter_input( INPUT_GET, 'product_id', FILTER_SANITIZE_NUMBER_INT );
-		$products   = new Products();
-		$product    = $products->get_product( $product_id );
+
+		$products = new Products();
+		$products->set_display_tax( true );
+
+		$product = $products->get_product( $product_id );
 
 		$currency = new Currency();
 
