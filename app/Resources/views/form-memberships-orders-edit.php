@@ -1,3 +1,4 @@
+
 <div class="wrap">
 
     <h1 class="wp-heading-inline">
@@ -52,8 +53,12 @@
                     </tr>
 
                     <tr>
+	                    <?php
+	                    $products = new \Subway\Memberships\Products\Products();
+	                    $product = $products->get_product( $order->product_id );
+	                    ?>
                         <td>Product/Plan ID</td>
-                        <td><?php echo esc_html( $order->product_id ); ?></td>
+                        <td><?php echo esc_html( $product->get_name() ); ?></td>
                     </tr>
                     <tr>
                         <td>Customer ID</td>
@@ -61,11 +66,19 @@
                     </tr>
                     <tr>
                         <td>Amount</td>
-                        <td><?php echo esc_html( $order->amount ); ?></td>
+                        <td><?php echo esc_html( $product->get_real_amount() ); ?></td>
+                    </tr>
+                    <tr>
+                        <td>Displayed Amount</td>
+                        <td><?php echo esc_html( $product->get_displayed_price_without_tax() ); ?></td>
                     </tr>
                     <tr>
                         <td>Tax Rate</td>
-                        <td><?php echo esc_html( $order->tax_rate ); ?></td>
+                        <td><?php echo esc_html( $product->get_tax_rate() ); ?>%</td>
+                    </tr>
+                    <tr>
+                        <td>Displayed Total Amount</td>
+                        <td><?php echo esc_html( $product->get_displayed_price() ); ?></td>
                     </tr>
                     <tr>
                         <td>Currency</td>
