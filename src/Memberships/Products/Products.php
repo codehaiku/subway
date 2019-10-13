@@ -171,10 +171,10 @@ class Products {
 
 	public function get_product_checkout_url( $id ) {
 
-		$checkout_url = add_query_arg( 'product_id', $id, 'http://multisite.local/checkout' );
+		$checkout_url = esc_url( add_query_arg( 'product_id', $id, 'http://multisite.local/checkout' ) );
 
 		if ( ! is_user_logged_in() ) {
-			$checkout_url = add_query_arg( 'product_id', $id, 'http://multisite.local/create-account' );
+			$checkout_url = esc_url( add_query_arg( 'product_id', $id, 'http://multisite.local/create-account' ) );
 		}
 
 		return apply_filters( 'get_product_checkout_url', $checkout_url );
