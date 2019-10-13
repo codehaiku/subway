@@ -29,32 +29,50 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <?php endif; ?>
 
-<?php foreach ( $flash_messages as $flash_message ): ?>
+<?php $messages = empty( $flash_messages ) ? [] : end( $flash_messages ); ?>
 
-    <div class="notice notice-<?php echo esc_attr( $flash_message['type'] ); ?> is-dismissible">
+<?php $form_data = array( 'title' => '', 'description' => '', 'sku' => '', 'type' => '', 'amount' => 0.00 ); ?>
+
+<?php if ( isset( $messages['form_data'] ) ): ?>
+
+	<?php $form_data = $messages['form_data']; ?>
+
+	<?php $errors = $messages['validation']; ?>
+
+<?php endif; ?>
+
+<?php if ( isset( $flash_messages[0]['type'] ) ): ?>
+
+    <div class="notice notice-<?php echo esc_attr( $flash_messages[0]['type'] ); ?> is-dismissible">
 
         <p>
-			<?php echo esc_html( $flash_message['message'] ); ?>
+			<?php echo esc_html( $flash_messages[0]['message'] ); ?>
         </p>
 
     </div>
 
-<?php endforeach; ?>
+<?php endif; ?>
 
 <div id="subway-edit-product-form">
 
     <form autocomplete="off" method="POST" action="<?php echo admin_url( 'admin-post.php' ); ?>">
 
         <div class="subway-flex-wrap">
+
             <div class="subway-flex-column subway-flex-column-70">
 
                 <!--hidden fields-->
 				<?php wp_nonce_field( 'subway_product_edit_action', 'subway_product_edit_action' ); ?>
-                <input type="hidden" name="action" value="subway_product_edit_action"/>
-                <input type="hidden" name="page" value="subway-membership"/>
-                <input type="hidden" name="new" value="yes"/>
-                <input type="hidden" id="input-id" name="product_id" value="<?php echo esc_attr( $product->id ); ?>"/>
 
+                <input type="hidden" name="action" value="subway_product_edit_action"/>
+
+                <input type="hidden" name="page" value="subway-membership"/>
+
+                <input type="hidden" name="new" value="yes"/>
+
+                <input type="hidden" id="input-id" name="product_id" value="<?php echo esc_attr( $product->get_id() ); ?>"/>
+
+                <!--Product Tabs-->
                 <ul id="product-tabs">
                     <li><a class="<?php echo $section == 'product-information' ? 'active' : ''; ?>"
                            data-section-target="product-information" href="#">
@@ -67,16 +85,19 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <span class="dashicons dashicons-email"></span>Emails</a></li>
 					<?php do_action( 'subway_product_edit_list_tabs' ); ?>
                 </ul>
-
+                <!--/.Product Tabs-->
 
                 <input type="hidden" name="active-section"
                        value="<?php echo ! empty( $section ) ? $section : 'product-information' ?>"/>
 
+                <!--Section Email-->
                 <div class="subway-card subway-product-section <?php echo $section == 'product-email' ? 'active' : ''; ?>"
                      id="product-email">
                     do_action('subway_products_edit_email_section');
                 </div>
+                <!--/.Section Email-->
 
+                <!--Section Pricing-->
                 <div class="subway-card subway-product-section <?php echo $section == 'product-pricing' ? 'active' : ''; ?>"
                      id="product-pricing">
 
@@ -97,9 +118,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 							'recurring' => esc_html__( 'Recurring (Subscription Payment)', 'subway' ),
 						];
 						?>
+
+                        <?php if ( isset( $form_data['type'] ) && ! empty( $form_data['type'] ) ): ?>
+
+	                        <?php $product->set_type( $form_data['type'] ); ?>
+
+                        <?php endif; ?>
+
                         <select name="type" id="billing-type">
+
 							<?php foreach ( $options as $value => $label ): ?>
-								<?php if ( $product->type === $value ): ?>
+								<?php if ( $product->get_type() === $value ): ?>
 									<?php $selected = 'selected'; ?>
 								<?php else: ?>
 									<?php $selected = ''; ?>
@@ -129,9 +158,16 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <input autofocus id="input-amount" name="amount" type="number" style="width: 6em;" size="3"
                                    placeholder="0.00"
                                    step="0.01"
-                                   value="<?php echo esc_attr( $product->amount ); ?>"/>
+                                   value="<?php echo esc_attr( $product->get_real_amount() ); ?>"/>
+
                         </div>
+	                    <?php if ( isset( $errors['amount'] ) ): ?>
+                            <p class="validation-errors">
+			                    <?php echo $errors['amount']; ?>
+                            </p>
+	                    <?php endif; ?>
                     </div>
+
                     <!--/.Product Price-->
 
                     <!--Billing Cycle-->
@@ -192,21 +228,21 @@ if ( ! defined( 'ABSPATH' ) ) {
                     <div class="subway-form-row" id="free-trial">
                         <h3 class="field-title">
                             <label for="input-free-trial-checkbox">
-                                <input type="checkbox" name="free-trial" id="input-free-trial-checkbox" />
-				                <?php esc_html_e( 'Offer Trial Period', 'subway' ); ?>
+                                <input type="checkbox" name="free-trial" id="input-free-trial-checkbox"/>
+								<?php esc_html_e( 'Offer Trial Period', 'subway' ); ?>
 
                             </label>
                         </h3>
                         <div id="trial-period-details">
                             <p class="field-help">
-                                <?php esc_html_e( 'Define the trial period', 'subway' ); ?>
+								<?php esc_html_e( 'Define the trial period', 'subway' ); ?>
                             </p>
                             <div class="field-bundle subway-flex-wrap">
                                 <div class="subway-flex-column">
                                     <select id="trial-billing-cycle-number" name="trial-billing-cycle-number">
-                                        <?php for ( $i = 1; $i <= 52; $i ++ ) { ?>
+										<?php for ( $i = 1; $i <= 52; $i ++ ) { ?>
                                             <option><?php echo esc_html( $i ); ?></option>
-                                        <?php } ?>
+										<?php } ?>
                                     </select>
                                 </div>
                                 <div class="subway-flex-column">
@@ -219,14 +255,15 @@ if ( ! defined( 'ABSPATH' ) ) {
                                 </div>
                             </div>
                             <p class="field-help">
-                                <?php esc_html_e( 'Amount to bill for the trial period.', 'subway' ); ?>
+								<?php esc_html_e( 'Amount to bill for the trial period. Enter 0.00 for free trials.', 'subway' ); ?>
                             </p>
                             <div class="field-group">
                                 <span class="currency-amount">
                                     <?php echo get_option( 'subway_currency', 'USD' ); ?>
                                 </span>
 
-                                <input autofocus="" id="input-amount" name="amount" type="number" style="width: 6em;" size="3" placeholder="0.00" step="0.01" value="10">
+                                <input autofocus="" id="input-trial-amount" name="trial_amount" type="number" style="width: 6em;"
+                                       size="3" placeholder="0.00" step="0.01" value="10">
                             </div>
                         </div><!--#trial-period-details-->
                     </div>
@@ -234,7 +271,9 @@ if ( ! defined( 'ABSPATH' ) ) {
                     <!--/.Trial Period-->
 
                 </div>
+                <!--/.Section Email-->
 
+                <!--Section Product Information-->
                 <div class="subway-card subway-product-section <?php echo $section == 'product-information' ? 'active' : ''; ?>"
                      id="product-information">
 
@@ -249,9 +288,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 
                         <p class="field-help"><?php esc_html_e( 'Enter the new name of this plan.', 'subway' ); ?></p>
 
-                        <input autofocus value="<?php echo esc_attr( $product->name ); ?>"
+                        <input autofocus value="<?php echo esc_attr( $product->get_name() ); ?>"
                                id="input-title" name="title" type="text" class="widefat"
                                placeholder="<?php esc_attr_e( 'Add Name', 'subway' ); ?>"/>
+
+						<?php if ( isset( $errors['title'] ) ): ?>
+                            <p class="validation-errors">
+								<?php echo $errors['title']; ?>
+                            </p>
+						<?php endif; ?>
                     </div>
                     <!--/Product Name-->
 
@@ -266,11 +311,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<?php esc_html_e( 'Give this membership plan a new and a unique SKU.', 'subway' ); ?>
                         </p>
 
-                        <input autofocus value="<?php echo esc_attr( $product->sku ); ?>" id="input-sku" name="sku"
-
-                               type="text"
-                               class="widefat"
+                        <input autofocus value="<?php echo esc_attr( $product->get_sku() ); ?>" id="input-sku" name="sku"
+                               type="text" class="widefat"
                                placeholder="<?php esc_attr_e( '(Stock Keeping Unit e.g. PROD001)', 'subway' ); ?>"/>
+						<?php if ( isset( $errors['sku'] ) ): ?>
+                            <p class="validation-errors">
+								<?php echo $errors['sku']; ?>
+                            </p>
+						<?php endif; ?>
                     </div>
                     <!--/.Product SKU-->
 
@@ -285,15 +333,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<?php esc_html_e( 'Update this membership plan description.', 'subway' ); ?>
                         </p>
                         <textarea id="input-description" name="description" class="widefat" rows="5"
-                                  placeholder="<?php echo esc_attr( 'Product description', 'subway' ); ?>"><?php echo esc_html( $product->description ); ?></textarea>
+                                  placeholder="<?php echo esc_attr( 'Product description', 'subway' ); ?>"><?php echo esc_html( $product->get_description() ); ?></textarea>
+						<?php if ( isset( $errors['description'] ) ): ?>
+                            <p class="validation-errors">
+								<?php echo $errors['description']; ?>
+                            </p>
+						<?php endif; ?>
                     </div>
                     <!--/.Product Description-->
-
 
                 </div>
 
 				<?php do_action( 'subway_product_edit_section' ); ?>
+
             </div>
+            <!--/.Section Product Information-->
+
+            <!--Product Status-->
             <div class="subway-flex-column subway-flex-column-30">
                 <div class="subway-flex-inner-wrap" style="margin-top:3.3em">
                     <div class="subway-card">
@@ -318,7 +374,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <select name="status">
 								<?php foreach ( $statuses as $key => $val ): ?>
 									<?php $selected = ''; ?>
-									<?php if ( $key === $product->status ): ?>
+									<?php if ( $key === $product->get_status() ): ?>
 										<?php $selected = 'selected'; ?>
 									<?php endif; ?>
                                     <option <?php echo esc_attr( $selected ); ?>
@@ -347,8 +403,9 @@ if ( ! defined( 'ABSPATH' ) ) {
                                         class="button button-primary button-small">
 									<?php esc_html_e( 'Copy Link', 'subway' ); ?>
                                 </button>
-                                <a href="<?php echo esc_url( $checkout_url ); ?>" target="_blank" class="button button-secondary button-small" href="">
-                                    <?php esc_html_e('Visit Link', 'subway'); ?>
+                                <a href="<?php echo esc_url( $checkout_url ); ?>" target="_blank"
+                                   class="button button-secondary button-small" href="">
+									<?php esc_html_e( 'Visit Link', 'subway' ); ?>
                                 </a>
                             </p>
                         </div>
@@ -358,15 +415,18 @@ if ( ! defined( 'ABSPATH' ) ) {
                     </div>
                 </div>
             </div>
+            <!--/.Product Status-->
         </div>
 
 
         <hr/>
-
+        <!--Submit Button-->
         <div class="subway-card">
             <input id="update-product" type="submit" class="button button-primary button-large"
                    value="<?php esc_attr_e( 'Update Membership Plan', 'subway' ); ?>"/>
         </div>
-
+        <!--/.Submit Button-->
     </form>
 </div><!--#subway-edit-product-form-->
+
+
