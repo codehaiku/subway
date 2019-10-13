@@ -17,13 +17,23 @@ class SettingsCallback {
 
 		$currencies = Currency::get_supported_currencies();
 
-		$selected_currency = get_option('subway_currency', 'USD');
+		$selected_currency = get_option( 'subway_currency', 'USD' );
 
 		$this->view->render( 'settings-currency', [
-			'currencies' => $currencies,
+			'currencies'        => $currencies,
 			'selected_currency' => $selected_currency
 		] );
 
+	}
+
+	public function tax_rate() {
+		$tax_rate = get_option( 'subway_tax_rate', 0.00 );
+		$this->view->render( 'settings-tax-rate', [ 'tax_rate' => $tax_rate ] );
+	}
+
+	public function display_tax() {
+		$subway_display_tax = get_option( 'subway_display_tax', '1' );
+		$this->view->render( 'settings-tax-display', [ 'subway_display_tax' => $subway_display_tax ] );
 	}
 
 	public function login_page() {
