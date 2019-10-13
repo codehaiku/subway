@@ -76,21 +76,24 @@ class Payment {
 
 		}
 
-		// @TODO: Assign valid tax rate.
-		$tax_rate = 12;
+		$tax_rate = $product->get_tax_rate();
 
-		$price    = $product->amount;
+		$price    = $product->get_real_amount();
+
 		$quantity = $this->quantity;
 
 		$tax      = $price * ( $tax_rate / 100 );
+
 		$subtotal = $price * $quantity;
 
-		$name     = $product->name;
+		$name     = $product->get_name();
+
 		$currency = get_option( 'subway_currency', 'USD' );
 
-		$sku = $product->sku;
+		$sku = $product->get_sku();
 
 		$redirect_url = esc_url( add_query_arg( 'success', 'true', $this->return_url ) );
+
 		$cancel_url   = esc_url( add_query_arg( 'success', 'fail', $this->cancel_url ) );
 
 		// Generate Invoice Number.
@@ -105,7 +108,7 @@ class Payment {
 		$invoice_number = apply_filters( 'subway\payment.pay.invoice_number', $invoice );
 
 		// Add description.
-		$description = sprintf( __( 'Payment for: %s', 'subway' ), $product->name );
+		$description = sprintf( __( 'Payment for: %s', 'subway' ), $product->get_name() );
 
 		try {
 
@@ -141,7 +144,7 @@ class Payment {
 			$transaction = new Transaction();
 
 			$transaction->setAmount( $amount )
-			            ->setCustom( $product->id )
+			            ->setCustom( $product->get_id() )
 			            ->setItemList( $itemList )
 			            ->setDescription( $description )
 			            ->setInvoiceNumber( $invoice_number );
