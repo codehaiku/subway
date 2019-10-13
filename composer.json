@@ -6,6 +6,6 @@
         "files"   : ["bootstrap.php"]
     },
     "require": {
-        "paypal/rest-api-sdk-php": "*"
+        "paypal/rest-api-sdk-php": "^1.14"
     }
 }
