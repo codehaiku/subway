@@ -195,24 +195,30 @@ div.subway-card {
 
 div.subway-card select,
 div.subway-card textarea,
+div.subway-card input[type=url],
 div.subway-card input[type=number],
 div.subway-card input[type=text] {
     padding: 10px;
     background: #f5f5f5;
     font-size: 16px;
     border-radius: 6px;
+    width: 100%;
 }
 
-div.subway-card input[type=number]:active,
+
 div.subway-card select:active,
 div.subway-card textarea:active,
+div.subway-card input[type=url]:active,
+div.subway-card input[type=number]:active,
 div.subway-card input[type=text]:active {
     background: #fff;
 }
 
-div.subway-card input[type=number]:focus,
+
 div.subway-card select:focus,
 div.subway-card textarea:focus,
+div.subway-card input[type=url]:focus,
+div.subway-card input[type=number]:focus,
 div.subway-card input[type=text]:focus {
     background: #fff;
     box-shadow: none;
@@ -225,7 +231,6 @@ div.subway-card textarea {
 div.subway-card input[type=number],
 div.subway-card select {
     height: 45px;
-    min-width: 200px;
 }
 
 div.subway-card input[type=number] {
@@ -342,6 +347,20 @@ ul#product-tabs li a:focus {
     max-width: 640px;
 }
 
+#trial-billing-cycle-number,
+#billing-cycle-number {
+    width: 45px;
+}
+#trial-billing-cycle-period,
+#billing-cycle-period {
+    width: 85px;
+}
+
+#trial-billing-cycle-period, #trial-billing-cycle-number, #billing-cycle-number, #billing-cycle-period {
+    height: 35px;
+    text-align: center;
+}
+
 .subway-card .validation-errors {
     background: #ffcfcf;
     padding: 10px 20px;
@@ -352,4 +371,66 @@ ul#product-tabs li a:focus {
     border: 1px solid #fda6a6;
     box-shadow: 0 0 0 3px #ffecec;
 }
+
+.subway-flex-wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.subway-flex-inner-wrap {
+    padding: 10px 15px;
+}
+
+.subway-flex-column-10 {
+    flex-basis: 10%;
+}
+
+.subway-flex-column-20 {
+    flex-basis: 20%;
+}
+
+.subway-flex-column-30 {
+    flex-basis: 30%;
+}
+
+.subway-flex-column-40 {
+    flex-basis: 40%;
+}
+
+.subway-flex-column-50 {
+    flex-basis: 50%;
+}
+
+.subway-flex-column-60 {
+    flex-basis: 60%;
+}
+
+.subway-flex-column-70 {
+    flex-basis: 70%;
+}
+
+.subway-flex-column-80 {
+    flex-basis: 80%;
+}
+
+.subway-flex-column-90 {
+    flex-basis: 90%;
+}
+
+.subway-flex-column-100 {
+    flex-basis: 100%;
+}
+
+#checkout-link-section {
+    text-align: center;
+    border: 1px solid #0073aa;
+    background: rgba(0, 115, 170, 0.10);
+    padding: 20px;
+    margin-bottom: 0;
+}
+#trial-period-details,
+#billing-cycle, #billing-limit {
+    display: none;
+}
+
 
