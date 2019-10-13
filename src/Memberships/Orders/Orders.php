@@ -164,7 +164,7 @@ class Orders {
 			$uri_params['type'] = 'fail';
 		}
 
-		$return_url = add_query_arg( $uri_params, admin_url( 'admin.php' ) );
+		$return_url = esc_url_raw( add_query_arg( $uri_params, admin_url( 'admin.php' ) ) );
 
 		wp_safe_redirect( $return_url, 302 );
 
