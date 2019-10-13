@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c44053762671f5e67f14e0d2c9f01b33",
+    "content-hash": "6f9e7effd1b3e55ac0c2f764818d701a",
     "packages": [
         {
             "name": "paypal/rest-api-sdk-php",
