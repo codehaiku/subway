@@ -3,6 +3,7 @@
 namespace Subway\Memberships\Products;
 
 use mysql_xdevapi\Exception;
+use Subway\Currency\Currency;
 
 /**
  * Class Products
@@ -12,13 +13,292 @@ class Products {
 
 	var $table = '';
 
+	protected $id = '';
+	protected $name = '';
+	protected $sku = '';
+	protected $status = '';
+	protected $description = '';
+	protected $amount = 0.00;
+	protected $real_amount = 0.00;
+	protected $type = '';
+	protected $date_created = '';
+	protected $date_updated = '';
+	protected $tax_rate = '';
+	protected $display_tax = true;
+
+
 	public function __construct() {
 
 		global $wpdb;
 
 		$this->table = $wpdb->prefix . 'subway_memberships_products';
 
+		$this->tax_rate = get_option( 'subway_tax_rate', 0.00 );
+
 	}
+
+	/**
+	 * @return bool
+	 */
+	public function is_display_tax() {
+		return $this->display_tax;
+	}
+
+	/**
+	 * @param bool $display_tax
+	 *
+	 * @return Products
+	 */
+	public function set_display_tax( $display_tax ) {
+		$this->display_tax = $display_tax;
+
+		return $this;
+	}
+
+
+	/**
+	 * @return float
+	 */
+	public function get_real_amount() {
+		return $this->real_amount;
+	}
+
+	/**
+	 * @param float $real_amount
+	 *
+	 * @return Products
+	 */
+	public function set_real_amount( $real_amount ) {
+		$this->real_amount = $real_amount;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_id() {
+		return $this->id;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_tax_rate() {
+		return $this->tax_rate;
+	}
+
+
+	/**
+	 * @param string $id
+	 *
+	 * @return Products
+	 */
+	public function set_id( $id ) {
+		$this->id = $id;
+
+		return $this;
+	}
+
+
+	/**
+	 * @return string
+	 */
+	public function get_name() {
+		return $this->name;
+	}
+
+	/**
+	 * @param string $name
+	 *
+	 * @return Products
+	 */
+	public function set_name( $name ) {
+		$this->name = $name;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_sku() {
+		return $this->sku;
+	}
+
+	/**
+	 * @param string $sku
+	 *
+	 * @return Products
+	 */
+	public function set_sku( $sku ) {
+		$this->sku = $sku;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_status() {
+		return $this->status;
+	}
+
+	/**
+	 * @param string $status
+	 *
+	 * @return Products
+	 */
+	public function set_status( $status ) {
+		$this->status = $status;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_description() {
+		return $this->description;
+	}
+
+	/**
+	 * @param string $description
+	 *
+	 * @return Products
+	 */
+	public function set_description( $description ) {
+		$this->description = $description;
+
+		return $this;
+	}
+
+	/**
+	 * @return float
+	 */
+	public function get_amount() {
+
+		$tax = $this->get_tax_rate();
+
+		$tax_displayed = true;
+
+		// Allow to specify whether to display the tax or not.
+		if ( ! $this->is_display_tax() ) {
+			$tax_displayed = false;
+		}
+
+		$item_cost = $this->amount;
+
+		$amount = $item_cost;
+
+		if ( $tax_displayed ) {
+
+			$sales_tax = $tax / 100;
+
+			$sales_tax = $item_cost * $sales_tax;
+
+			$amount = $item_cost + $sales_tax;
+
+		}
+
+		return apply_filters( 'subway_product_get_amount', $amount );
+
+	}
+
+	/**
+	 * @return mixed|void
+	 */
+	public function get_displayed_price() {
+
+		$currency = new Currency();
+
+		$displayed_price = $this->get_amount();
+
+		$formatted_amount = $currency->format( $displayed_price, get_option( 'subway_currency' ) );
+
+		return apply_filters( 'subway_product_get_displayed_price', $formatted_amount );
+
+	}
+
+	public function get_displayed_price_without_tax() {
+
+		$currency = new Currency();
+
+		$displayed_price = $this->get_real_amount();
+
+		$formatted_amount = $currency->format( $displayed_price, get_option( 'subway_currency' ) );
+
+		return apply_filters( 'subway_product_get_displayed_price_with_out_tax', $formatted_amount );
+	}
+
+	/**
+	 * @param float $amount
+	 *
+	 * @return Products
+	 */
+	public function set_amount( $amount ) {
+
+		$this->amount = $amount;
+
+		$this->set_real_amount( $this->amount );
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_type() {
+		return $this->type;
+	}
+
+	/**
+	 * @param string $type
+	 *
+	 * @return Products
+	 */
+	public function set_type( $type ) {
+		$this->type = $type;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_date_created() {
+		return $this->date_created;
+	}
+
+	/**
+	 * @param string $date_created
+	 *
+	 * @return Products
+	 */
+	public function set_date_created( $date_created ) {
+		$this->date_created = $date_created;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_date_updated() {
+		return $this->date_updated;
+	}
+
+	/**
+	 * @param string $date_updated
+	 *
+	 * @return Products
+	 */
+	public function set_date_updated( $date_updated ) {
+		$this->date_updated = $date_updated;
+
+		return $this;
+	}
+
 
 	public function get_products( $args ) {
 
@@ -58,11 +338,72 @@ class Products {
 			ORDER BY $orderby $direction LIMIT %d, %d",
 			array( $args['offset'], $args['limit'] ) );
 
-		$results = $wpdb->get_results( $stmt, ARRAY_A );
+		$results = $wpdb->get_results( $stmt, OBJECT );
 
+		$products = [];
 
-		return $results;
+		$tax_displayed = absint( get_option( 'subway_display_tax', 1 ) );
 
+		foreach ( $results as $result ) {
+
+			$p = new Products();
+
+			// Disable tax when administrator disable from option.
+			if ( 0 === $tax_displayed ) {
+				$p->set_display_tax( false );
+			}
+
+			$p->set_id( $result->id );
+			$p->set_name( $result->name );
+			$p->set_amount( $result->amount );
+			$p->set_sku( $result->sku );
+			$p->set_description( $result->description );
+			$p->set_status( $result->status );
+			$p->set_type( $result->type );
+			$p->set_date_created( $result->date_created );
+			$p->set_date_updated( $result->date_updated );
+
+			$products[] = $p;
+
+		}
+
+		return $products;
+
+	}
+
+	/**
+	 * This method returns the product in array format.
+	 * Useful for displaying products in WordPress' list table format.
+	 *
+	 * @param $args
+	 *
+	 * @return array
+	 */
+	public function get_wp_list_table_products( $args ) {
+
+		$products = $this->get_products( $args );
+
+		$product_collections = [];
+
+		if ( ! empty( $products ) ) {
+
+			foreach ( $products as $product ) {
+				$p                     = [];
+				$p['id']               = $product->get_id();
+				$p['name']             = $product->get_name();
+				$p['sku']              = $product->get_sku();
+				$p['amount']           = $product->get_amount();
+				$p['description']      = $product->get_description();
+				$p['type']             = $product->get_type();
+				$p['status']           = $product->get_status();
+				$p['date_created']     = $product->get_date_created();
+				$p['date_updated']     = $product->get_date_updated();
+				$product_collections[] = $p;
+			}
+
+		}
+
+		return $product_collections;
 	}
 
 
@@ -74,7 +415,27 @@ class Products {
 
 		$result = $wpdb->get_row( $stmt, OBJECT );
 
-		return $result;
+		if ( ! empty ( $result ) ) {
+
+			$product = new Products();
+
+			$product->set_id( $result->id );
+			$product->set_name( $result->name );
+			$product->set_amount( $result->amount );
+			$product->set_sku( $result->sku );
+			$product->set_description( $result->description );
+			$product->set_status( $result->status );
+			$product->set_type( $result->type );
+			$product->set_date_created( $result->date_created );
+			$product->set_date_updated( $result->date_updated );
+
+		} else {
+
+			$product = false;
+
+		}
+
+		return $product;
 
 	}
 
@@ -83,14 +444,14 @@ class Products {
 		global $wpdb;
 
 		$defaults = [
-			'name' => '',
-			'description' => '',
-			'amount' => 0.00,
-			'type' => 'free',
-			'sku'=> '',
-			'status' => 'draft',
-			'date_created' => current_time('mysql'),
-			'date_updated' => current_time('mysql')
+			'name'         => '',
+			'description'  => '',
+			'amount'       => 0.00,
+			'type'         => 'free',
+			'sku'          => '',
+			'status'       => 'draft',
+			'date_created' => current_time( 'mysql' ),
+			'date_updated' => current_time( 'mysql' )
 		];
 
 		$r = wp_parse_args( $args, $defaults );
@@ -152,20 +513,19 @@ class Products {
 			'date_updated' => current_time( 'mysql' )
 		);
 
-		foreach ( $data as $key => $value ) {
-			if ( empty ( $value ) ) {
-				$message = sprintf('All fields are required. The field %s must not be empty.', ucwords( $key ) );
-				throw new \Exception( $message );
-			}
-		}
-
 		$table = $this->table;
 
 		$where        = array( 'id' => $args['id'] );
 		$format       = array( '%s', '%s', '%s', '%f', '%s', '%s' );
 		$where_format = array( '%d' );
 
-		return $wpdb->update( $table, $data, $where, $format, $where_format );
+		$updated = $wpdb->update( $table, $data, $where, $format, $where_format );
+
+		if ( false === $updated ) {
+			return false;
+		}
+
+		return true;
 
 	}
 
