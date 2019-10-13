@@ -92,15 +92,19 @@ jQuery(document).ready(function ($) {
 
             $('#billing-cycle, #billing-limit').css('display', 'block');
             $('#billing-amount').css('display', 'block');
+            $('#free-trial').css('display', 'block');
 
         } else if ('fixed' === billing_type) {
 
             $('#billing-cycle, #billing-limit').css('display', 'none');
             $('#billing-amount').css('display', 'block');
+            $('#free-trial').css('display', 'block');
 
         } else if ('free' === billing_type) {
 
             $('#billing-amount').css('display', 'none');
+            $('#billing-cycle, #billing-limit').css('display', 'none');
+            $('#free-trial').css('display', 'none');
 
         }
 
