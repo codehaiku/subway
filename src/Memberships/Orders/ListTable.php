@@ -124,7 +124,7 @@ class ListTable extends \WP_List_Table {
 
 				$user_name = $user->display_name;
 
-				$user_edit_link = add_query_arg( 'user_id', $user_id, admin_url( 'wp-admin/user-edit.php' ) );
+				$user_edit_link = esc_url( add_query_arg( 'user_id', $user_id, admin_url( 'wp-admin/user-edit.php' ) ) );
 
 				$user_link = sprintf( '<a href="%s" title="%s">%s</a>', $user_edit_link, $user_name, $user_name );
 
@@ -143,13 +143,13 @@ class ListTable extends \WP_List_Table {
 
 				$product_id = $item['product_id'];
 
-				$product_edit_link = add_query_arg( [
+				$product_edit_link = esc_url( add_query_arg( [
 					'page'    => 'subway-membership',
 					'edit'    => 'yes',
 					'product' => $product_id
 				],
 					admin_url( 'wp-admin/user-edit.php' )
-				);
+				) );
 
 				$product_edit_link = wp_nonce_url( $product_edit_link, sprintf( 'edit_product_%s', $product_id ), '_wpnonce' );
 
@@ -179,10 +179,10 @@ class ListTable extends \WP_List_Table {
 			get_option( 'date_format', 'F j, Y' )
 		);
 
-		$trash_uri = add_query_arg( array(
+		$trash_uri = esc_url( add_query_arg( array(
 			'action' => 'listing_delete_action',
 			'id'     => $item['order_id'],
-		), get_admin_url() . 'admin-post.php' );
+		), get_admin_url() . 'admin-post.php' ) );
 
 		$delete_url = wp_nonce_url(
 			$trash_uri,
