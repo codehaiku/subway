@@ -38,13 +38,13 @@ class Repair {
 
 		// Redirect back.
 		wp_safe_redirect(
-			add_query_arg( [
+			esc_url( add_query_arg( [
 				'page'     => 'subway-membership-tools',
 				'repaired' => 'products_count'
 			],
 				admin_url( 'admin.php' ) ),
-			302
-		);
+				302
+			) );
 
 		return $this;
 
@@ -66,13 +66,13 @@ class Repair {
 
 		// Redirect back.
 		wp_safe_redirect(
-			add_query_arg( [
+			esc_url( add_query_arg( [
 				'page'     => 'subway-membership-tools',
 				'repaired' => 'orders_count'
 			],
 				admin_url( 'admin.php' ) ),
-			302
-		);
+				302
+			) );
 
 		return $this;
 
