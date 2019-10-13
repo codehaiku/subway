@@ -1,6 +1,6 @@
 <?php
 $product_id = filter_input( INPUT_GET, 'product_id', 519 );
-$user = wp_get_current_user();
+$user       = wp_get_current_user();
 ?>
 <div id="subway-checkout-wrap">
 
@@ -31,7 +31,7 @@ $user = wp_get_current_user();
                             <td>Name</td>
                             <td>
 								<?php echo get_avatar( get_current_user_id(), 40 ); ?><br/>
-                                <?php echo esc_html( $user->display_name ); ?>
+								<?php echo esc_html( $user->display_name ); ?>
                                 <br/>
                                 <a href="<?php echo esc_url( wp_logout_url() ); ?>">
                                     (Not You?) Logout
@@ -41,7 +41,7 @@ $user = wp_get_current_user();
                         <tr>
                             <td>Email Address</td>
                             <td>
-	                            <?php echo esc_html( $user->user_email ); ?>
+								<?php echo esc_html( $user->user_email ); ?>
                                 <br/>
                                 <a href="http://multisite.local/my-account/">(Update Email Address) </a>
                             </td>
@@ -67,22 +67,6 @@ $user = wp_get_current_user();
 				<?php $view->render( 'checkout-table', [ 'product' => $product, 'currency' => $currency ] ); ?>
 
             </div><!--.subway-checkout-review-order-->
-
-
-            <div class="subway-checkout-place-order">
-                <button type="submit" class="sw-button subway-checkout-place-order-button">
-					<?php esc_html_e( 'Place Order', 'subway' ); ?>
-                </button>
-            </div><!--.subway-checkout-place-order-->
-
-            <div class="subway-checkout-gateway-banner">
-
-                <p>
-                    You will be redirected to PayPal website to complete the payment.<br/>
-                    <img width="200" src="https://www.paypalobjects.com/webstatic/mktg/logo/AM_mc_vs_dc_ae.jpg"/>
-                </p>
-
-            </div><!--.subway-checkout-gateway-banner-->
 
         </form>
 
