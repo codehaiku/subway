@@ -34,8 +34,8 @@ class Options {
 
 		}
 
-		return add_query_arg( apply_filters( 'subway_redirected_url',
-			array( '_redirected' => 'redirected' ) ), $login_url );
+		return esc_url( add_query_arg( apply_filters( 'subway_redirected_url',
+			array( '_redirected' => 'redirected' ) ), $login_url ) );
 	}
 
 }
