@@ -503,6 +503,7 @@ tr.current-user-plan > td {
     border-left: 1px solid #eee;
     border-right: 1px solid #eee;
 }
+
 .checkout-container:before{
     content: " ";
     background-image: linear-gradient(129deg, #98CD8D 25%, #F6F0CF 25%, #F6F0CF 50%, #98CD8D 50%, #98CD8D 75%, #F6F0CF 75%, #F6F0CF 100%);
@@ -512,9 +513,11 @@ tr.current-user-plan > td {
     margin: -20px -20px 0 -20px;
 }
 
-ul.subway-user-account-actions {
+.entry-content ul.subway-user-account-actions {
     text-align: right;
+    margin: 0;
 }
+
 ul.subway-user-account-actions li {
     list-style: none;
 }

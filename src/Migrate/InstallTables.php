@@ -20,6 +20,27 @@ class InstallTables {
 
 	}
 
+	protected function membership_users_install() {
+
+		$table = $this->wpdb->prefix . 'subway_memberships_users';
+
+		$sql = "CREATE TABLE $table(
+				id mediumint(9) NOT NULL AUTO_INCREMENT,
+				user_id mediumint(9) NOT NULL,
+				prod_id varchar(100) NOT NULL,
+				status ENUM ('pending','active','suspended') NOT NULL,
+				last_active NOT NULL DEFAULT CURRENT_TIMESTAMP,
+				PRIMARY KEY (id)
+			) $this->collate;";
+
+		dbDelta( $sql );
+
+		update_option( "subway_memberships_users_version", $this->db_version );
+
+		return $this;
+
+	}
+
 	protected function membership_orders_install() {
 
 		$table = $this->wpdb->prefix . 'subway_memberships_orders';

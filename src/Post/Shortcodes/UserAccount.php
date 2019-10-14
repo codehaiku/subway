@@ -3,6 +3,7 @@
 namespace Subway\Post\Shortcodes;
 
 use Subway\Options\Options;
+use Subway\User\User;
 use Subway\View\View;
 
 class UserAccount {
@@ -16,7 +17,8 @@ class UserAccount {
 	public function display() {
 		wp_enqueue_style('subway-general');
 		return $this->view->render( 'shortcode-user-account', [
-			'options' => new Options()
+			'options' => new Options(),
+			'user' => new User()
 		], true );
 	}
 

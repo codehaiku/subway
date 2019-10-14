@@ -59,4 +59,12 @@ class User {
 
 		return true;
 	}
+
+	/**
+	 * Lists all the user's subscription.
+	 * @return array
+	 */
+	public function get_subscriptions() {
+		return array();
+	}
 }

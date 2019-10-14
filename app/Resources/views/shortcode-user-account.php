@@ -64,10 +64,18 @@
             <h3>Membership & Billing</h3>
             <div class="subway-flex-wrap">
                 <div class="subway-flex-column-50">
-                    <img width="50" src="https://www.paypalobjects.com/webstatic/mktg/logo-center/PP_Acceptance_Marks_for_LogoCenter_76x48.png" />
-                    emailuseinpayment@gmail.com
+                    <div class="subway-flex-wrap">
+                        <div class="subway-flex-column-10">
+                            <img width="50" src="https://www.paypalobjects.com/webstatic/mktg/logo-center/PP_Acceptance_Marks_for_LogoCenter_76x48.png" />
+                        </div>
+                        <div class="subway-flex-column-80">
+                            emailuseinpayment@gmail.com
+                        </div>
+                    </div>
+
+
                 </div>
-                <div class="subway-flex-column-50 ">
+                <div class="subway-flex-column-50">
                     <ul class="subway-user-account-actions">
                         <li><a href="#">Update Payment</a></li>
                         <li><a href="#">Billing Details</a></li>
@@ -80,9 +88,19 @@
             <h3>Plan Details</h3>
             <div class="subway-flex-wrap">
                 <div class="subway-flex-column-50">
-                    <strong>
-                        Subway Memberships Pro
-                    </strong>
+                    <?php $subscriptions = $user->get_subscriptions(); ?>
+                    <?php if ( ! empty( $subscriptions ) ): ?>
+	                    <ul>
+                            <li>
+                                <?php echo $subscriptions->get_name(); ?>
+                            </li>
+                        </ul>
+                    <?php else: ?>
+                        <p>
+		                    <?php esc_html_e('You do not have an active subscriptions yet.', 'subway'); ?>
+                        </p>
+                    <?php endif ;?>
+
                 </div>
                 <div class="subway-flex-column-50 ">
                     <ul class="subway-user-account-actions">
