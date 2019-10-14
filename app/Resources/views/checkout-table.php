@@ -86,6 +86,10 @@
         <!-- Gateway Badge-->
         <div class="checkout-container">
             <div class="subway-checkout-place-order">
+                <p>
+	                <?php esc_html_e( 'This membership plan is free.', 'subway' ); ?><br/>
+	                <?php esc_html_e( ' Click the button below to proceed.', 'subway' ); ?>
+                </p>
                 <button type="submit" class="sw-button subway-checkout-place-order-button">
 					<?php esc_html_e( 'Free Membership', 'subway' ); ?>
                 </button>
