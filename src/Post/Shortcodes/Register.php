@@ -5,6 +5,7 @@ namespace Subway\Post\Shortcodes;
 use Subway\Currency\Currency;
 use Subway\Form\Form;
 use Subway\Memberships\Products\Products;
+use Subway\Options\Options;
 use Subway\Payment\Payment;
 use Subway\View\View;
 
@@ -32,8 +33,12 @@ class Register {
 			$password         = filter_input( INPUT_POST, 'sw-password', FILTER_SANITIZE_STRING );
 			$password_confirm = filter_input( INPUT_POST, 'sw-password-confirm', FILTER_SANITIZE_STRING );
 
-			// Product.
+			// Request Product Id.
 			$product_id = filter_input( INPUT_POST, 'sw-product-id', FILTER_SANITIZE_NUMBER_INT );
+
+			$products = new Products();
+
+			$product = $products->get_product( $product_id );
 
 			if ( empty ( $product_id ) ) {
 				return;
@@ -43,9 +48,20 @@ class Register {
 
 				if ( $this->create_user( $username, $password, $email ) ) {
 
-					$payment = new Payment( $wpdb );
+					// Disable payment for free products.
+					if ( 'free' !== $product->get_type() ) {
 
-					$payment->pay( $product_id );
+						$payment = new Payment( $wpdb );
+
+						$payment->pay( $product_id );
+
+					} else {
+
+						$options = new Options();
+
+						wp_safe_redirect( $options->get_accounts_page_url(), 302 );
+
+					}
 
 				}
 
