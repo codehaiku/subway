@@ -301,9 +301,9 @@ class Settings {
 			),
 			// Redirect page for logged-in users.
 			array(
-				'id'       => 'subway_logged_in_user_no_access_page',
+				'id'       => 'subway_options_membership_page',
 				'label'    => __( 'Memberships', 'subway' ),
-				'callback' => array( $settings_callback, 'login_user_no_access_page' ),
+				'callback' => array( $settings_callback, 'membership_page' ),
 				'section'  => 'subway-settings-section',
 				'group'    => 'subway-page-visibility-section'
 			),
