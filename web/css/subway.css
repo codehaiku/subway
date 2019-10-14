@@ -444,12 +444,11 @@ tr.current-user-plan > td {
 .subway-flex-wrap .subway-flex-column-90 {flex-basis: 90%}
 .subway-flex-wrap .subway-flex-column-100 {flex-basis: 100%}
 
-
-
 .subway-checkout-user-info-table,
 .subway-checkout-review-order,
 .subway-membership-lists {
     margin: 1em 0;
+
 }
 
 .subway-checkout-user-info-table thead,
@@ -487,11 +486,21 @@ tr.current-user-plan > td {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed', GradientType=0 );
     font-size: 16px;
 }
+.subway-checkout-user-info-table,
+.subway-checkout-review-order,
+.subway-membership-lists
+{
+    border-bottom: 1px solid #ddd;
+}
 
 .checkout-container {
     text-align: center;
     background: #fff;
     padding: 20px 20px;
+    box-shadow: 0px 0px 20px -5px #d5d5d5;
+    border-bottom: 1px solid #eee;
+    border-left: 1px solid #eee;
+    border-right: 1px solid #eee;
 }
 .checkout-container:before{
     content: " ";
