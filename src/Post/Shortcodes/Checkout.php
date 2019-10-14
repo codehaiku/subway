@@ -4,6 +4,7 @@ namespace Subway\Post\Shortcodes;
 
 use Subway\Currency\Currency;
 use Subway\Memberships\Products\Products;
+use Subway\Options\Options;
 use Subway\View\View;
 
 class Checkout {
@@ -26,12 +27,14 @@ class Checkout {
 		$product = $products->get_product( $product_id );
 
 		$currency = new Currency();
+		$options  = new Options();
 
 		return $this->view->render( 'shortcode-checkout',
 			[
 				'view'     => $this->view,
 				'product'  => $product,
-				'currency' => $currency
+				'currency' => $currency,
+				'options'  => $options
 			],
 			true
 		);
