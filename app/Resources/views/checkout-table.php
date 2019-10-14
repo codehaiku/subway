@@ -1,5 +1,5 @@
 <?php if ( 'free' !== $product->get_type() ): ?>
-    <table>
+    <table class="subway-checkout-review-order">
         <thead>
         <tr>
             <th colspan="2">

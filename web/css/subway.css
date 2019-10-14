@@ -510,3 +510,10 @@ tr.current-user-plan > td {
     display: block;
     margin: -20px -20px 0 -20px;
 }
+
+ul.subway-user-account-actions {
+    text-align: right;
+}
+ul.subway-user-account-actions li {
+    list-style: none;
+}

@@ -26,21 +26,20 @@
     <div id="sw-shortcode-user-account-wrap-inner">
         <div>
 			<?php $c_user = wp_get_current_user(); ?>
-
         </div>
 
         <div>
             <h3>My Profile</h3>
             <div class="subway-flex-wrap">
 
-                <div class="subway-flex-column-80">
+                <div class="subway-flex-column-50">
                     <div class="subway-flex-wrap">
-                        <div class="subway-flex-column-10">
+                        <div class="subway-flex-column-20">
                             <div style="margin: 10px 0 0 0;">
 	                        <?php echo get_avatar( $c_user->ID, 32 ); ?>
                             </div>
                         </div>
-                        <div class="subway-flex-column-90">
+                        <div class="subway-flex-column-80">
                             <p>
 		                        <?php echo esc_html( $c_user->display_name ); ?>
                                 <br/>
@@ -51,10 +50,10 @@
 
 
                 </div>
-                <div class="subway-flex-column-20">
-                    <ul class="alignright">
-                        <li><a href="#">Settings</a></li>
-                        <li><a href="#">Log out</a></li>
+                <div class="subway-flex-column-50">
+                    <ul class="subway-user-account-actions">
+                        <li><a href="<?php echo esc_url( get_edit_user_link( get_current_user_id() ) ); ?>">Update Personal Info</a></li>
+                        <li><a href="<?php echo esc_url( wp_logout_url() ); ?>">Sign out of my account</a></li>
                     </ul>
                 </div>
             </div>
@@ -69,8 +68,8 @@
                     emailuseinpayment@gmail.com
                 </div>
                 <div class="subway-flex-column-50 ">
-                    <ul class="alignright">
-                        <li><a href="#">Update Payment Info</a></li>
+                    <ul class="subway-user-account-actions">
+                        <li><a href="#">Update Payment</a></li>
                         <li><a href="#">Billing Details</a></li>
                     </ul>
                 </div>
@@ -86,8 +85,8 @@
                     </strong>
                 </div>
                 <div class="subway-flex-column-50 ">
-                    <ul class="alignright">
-                        <li><a href="#">Change Plan</a></li>
+                    <ul class="subway-user-account-actions">
+                        <li><a href="<?php echo esc_url( $options->get_membership_page_url() ); ?>">Change Membership Plan</a></li>
                         <li><a href="#">Cancel Membership</a></li>
                     </ul>
                 </div>
