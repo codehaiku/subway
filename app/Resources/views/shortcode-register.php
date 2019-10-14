@@ -63,15 +63,15 @@ $product_id = filter_input( INPUT_GET, 'product_id', 519 );
                         </span>
                     </label>
                 </div>
-		        <?php if ( isset( $errors['sw-username'] ) ): ?>
+				<?php if ( isset( $errors['sw-username'] ) ): ?>
                     <div class="sw-form-errors">
                         <p class="sw-error">
-					        <?php echo esc_html( $errors['sw-username'] ); ?>
+							<?php echo esc_html( $errors['sw-username'] ); ?>
                         </p>
                     </div><!--.sw-form-errors-->
-		        <?php endif; ?>
+				<?php endif; ?>
                 <div class="sw-field-inner-row sw-field-howto">
-			        <?php esc_html_e( 'Alphanumeric characters are allowed no special characters allowed.', 'subway' ); ?>
+					<?php esc_html_e( 'Alphanumeric characters are allowed no special characters allowed.', 'subway' ); ?>
                 </div>
             </div>
             <!--Form row end-->
@@ -87,11 +87,11 @@ $product_id = filter_input( INPUT_GET, 'product_id', 519 );
 
                         <span class="sw-block sw-field">
                             <input autocomplete="off"
-                                placeholder="<?php esc_attr_e( 'Example: john_doe99@website.org', 'subway' ); ?>"
-                                type="email"
-                                required
-                                name="sw-email"
-                                value="<?php echo isset( $_POST['sw-email'] ) ? esc_attr( $_POST['sw-email'] ) : 'user-emai' . uniqid() . '@yahoo.com'; ?>"
+                                   placeholder="<?php esc_attr_e( 'Example: john_doe99@website.org', 'subway' ); ?>"
+                                   type="email"
+                                   required
+                                   name="sw-email"
+                                   value="<?php echo isset( $_POST['sw-email'] ) ? esc_attr( $_POST['sw-email'] ) : 'user-emai' . uniqid() . '@yahoo.com'; ?>"
                             />
                         </span>
                     </label>
@@ -152,30 +152,30 @@ $product_id = filter_input( INPUT_GET, 'product_id', 519 );
             <div class="subway-form-row">
                 <div class="sw-field-inner-row">
                     <label>
-	            <span class="sw-block sw-field-title">
-                    <?php esc_html_e( 'Confirm Password ', 'subway' ); ?>
-                </span>
-                        <span class="sw-block sw-field-sub-title">
-	                <?php esc_html_e( 'Please re-type the password below', 'subway' ); ?>
-                </span>
+                        <span class="sw-block sw-field-title">
+                            <?php esc_html_e( 'Confirm Password ', 'subway' ); ?>
+                        </span>
+                                <span class="sw-block sw-field-sub-title">
+                            <?php esc_html_e( 'Please re-type the password below', 'subway' ); ?>
+                        </span>
                         <span class="sw-block sw-field">
-                    <input autocomplete="off"
-                           placeholder="<?php esc_attr_e( '****', 'subway' ); ?>"
-                           type="password"
-                           name="sw-password-confirm"
-                           required
-                           value="a123"
-                    />
-                </span>
+                            <input autocomplete="off"
+                                   placeholder="<?php esc_attr_e( '****', 'subway' ); ?>"
+                                   type="password"
+                                   name="sw-password-confirm"
+                                   required
+                                   value="a123"
+                            />
+                        </span>
                     </label>
                 </div>
-		        <?php if ( isset( $errors['sw-password-confirm'] ) ): ?>
+				<?php if ( isset( $errors['sw-password-confirm'] ) ): ?>
                     <div class="sw-form-errors">
                         <p class="sw-error">
-					        <?php echo esc_html( $errors['sw-password-confirm'] ); ?>
+							<?php echo esc_html( $errors['sw-password-confirm'] ); ?>
                         </p>
                     </div><!--.sw-form-errors-->
-		        <?php endif; ?>
+				<?php endif; ?>
             </div>
             <!--Form row end-->
 			<?php do_action( 'subway_shortcode_register_before_submit' ); ?>
@@ -195,33 +195,7 @@ $product_id = filter_input( INPUT_GET, 'product_id', 519 );
 						<?php $this->render( 'checkout-table', [ 'product' => $product, 'currency' => $currency ] ); ?>
                     </div><!--.subway-checkout-review-order-->
 
-                          <!--Form row start-->
-                    <div class="subway-form-row">
-                        <div class="sw-field-inner-row">
-                            <p style="margin-top: 25px;">
-                                <label>
-                                    <input checked type="checkbox" required/>
-                                    <small>Agree to our license terms and refund policy</small>
-                                </label>
-                            </p>
-                        </div>
-                    </div>
-                    <!--Form row end-->
-
-                    <div class="subway-checkout-place-order">
-                        <button type="submit" class="sw-button subway-checkout-place-order-button">
-							<?php esc_html_e( 'Place Order', 'subway' ); ?>
-                        </button>
-                    </div>
-
-                    <div class="subway-checkout-gateway-banner">
-                        <p>
-							<?php esc_html_e( 'You will be redirected to PayPal website to complete the payment.', 'subway' ); ?>
-                            <br/>
-                            <img width="200"
-                                 src="https://www.paypalobjects.com/webstatic/mktg/logo/AM_mc_vs_dc_ae.jpg"/>
-                        </p>
-                    </div>
+                    <!--Form row start-->
 
 				<?php else: ?>
 
@@ -232,7 +206,7 @@ $product_id = filter_input( INPUT_GET, 'product_id', 519 );
                         </p>
                         <p>
                             <a href="#" class="sw-button">
-                                See Membership Plans
+                                <?php esc_html_e('Select Membership Plan','subway'); ?>
                             </a>
                         </p>
 
