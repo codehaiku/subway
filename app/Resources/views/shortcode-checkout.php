@@ -23,35 +23,57 @@ $user       = wp_get_current_user();
                     <table class="subway-checkout-user-info-table">
                         <thead>
                         <tr>
-                            <th colspan="2">You are logged-in as</th>
+                            <th colspan="2">
+								<?php esc_html_e( 'Personal Information', 'subway' ); ?>
+                            </th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <td>Name</td>
                             <td>
-								<?php echo get_avatar( get_current_user_id(), 40 ); ?><br/>
-								<?php echo esc_html( $user->display_name ); ?>
+								<?php esc_html_e( 'Name', 'subway' ); ?>
+                            </td>
+                            <td>
+                                <div class="subway-flex-wrap">
+                                    <div class="subway-flex-column-20">
+										<?php echo get_avatar( get_current_user_id(), 40 ); ?><br/>
+                                    </div>
+                                    <div class="subway-flex-column-80">
+
+										<?php echo esc_html( $user->display_name ); ?>
+                                        <br/>
+                                        <a title="<?php esc_attr_e( '(Not You?) Logout', 'subway' ); ?>"
+                                           href="<?php echo esc_url( wp_logout_url() ); ?>">
+											<?php esc_html_e( '(Not You?) Logout', 'subway' ); ?>
+                                        </a>
+
+                                    </div>
+                                </div>
+
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+								<?php esc_html_e( 'Email Address', 'subway' ); ?>
+                            </td>
+                            <td>
+								<?php echo esc_html( $user->user_email ); ?>
                                 <br/>
-                                <a href="<?php echo esc_url( wp_logout_url() ); ?>">
-                                    (Not You?) Logout
+                                <a href="<?php echo esc_url( add_query_arg( 'edit', 'profile', $options->get_accounts_page_url() ) ); ?>"
+                                   title="<?php esc_attr_e( 'Update Email Address', 'subway' ); ?>">
+									<?php esc_html_e( 'Update Email Address', 'subway' ); ?>
                                 </a>
                             </td>
                         </tr>
                         <tr>
-                            <td>Email Address</td>
                             <td>
-								<?php echo esc_html( $user->user_email ); ?>
-                                <br/>
-                                <a href="http://multisite.local/my-account/">(Update Email Address) </a>
+                                <?php esc_html_e('Current Membership Plan', 'subway'); ?>
                             </td>
-                        </tr>
-                        <tr>
-                            <td>Current Membership Plan</td>
                             <td>
                                 <strong>
-                                    <a href="#">
-                                        Subway Pro
+                                    <a title="<?php echo esc_attr( $product->get_name() ); ?>" href="<?php echo esc_url( $product->get_product_url() ); ?>">
+                                        <?php echo esc_html( $product->get_name() ); ?>
                                     </a>
                                 </strong>
                             </td>
@@ -64,7 +86,7 @@ $user       = wp_get_current_user();
 
             <div class="subway-checkout-review-order">
 
-				<?php $view->render( 'checkout-table', [ 'product' => $product, 'currency' => $currency ] ); ?>
+				<?php $view->render( 'checkout-table', [ 'product' => $product, 'currency' => $currency, 'options' => $options ] ); ?>
 
             </div><!--.subway-checkout-review-order-->
 
