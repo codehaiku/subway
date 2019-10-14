@@ -541,5 +541,9 @@ class Products {
 
 	}
 
+	public function get_product_url() {
+		return '#';
+	}
+
 
 }
