@@ -70,7 +70,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
                 <input type="hidden" name="new" value="yes"/>
 
-                <input type="hidden" id="input-id" name="product_id" value="<?php echo esc_attr( $product->get_id() ); ?>"/>
+                <input type="hidden" id="input-id" name="product_id"
+                       value="<?php echo esc_attr( $product->get_id() ); ?>"/>
 
                 <!--Product Tabs-->
                 <ul id="product-tabs">
@@ -119,11 +120,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 						];
 						?>
 
-                        <?php if ( isset( $form_data['type'] ) && ! empty( $form_data['type'] ) ): ?>
+						<?php if ( isset( $form_data['type'] ) && ! empty( $form_data['type'] ) ): ?>
 
-	                        <?php $product->set_type( $form_data['type'] ); ?>
+							<?php $product->set_type( $form_data['type'] ); ?>
 
-                        <?php endif; ?>
+						<?php endif; ?>
 
                         <select name="type" id="billing-type">
 
@@ -161,11 +162,11 @@ if ( ! defined( 'ABSPATH' ) ) {
                                    value="<?php echo esc_attr( $product->get_real_amount() ); ?>"/>
 
                         </div>
-	                    <?php if ( isset( $errors['amount'] ) ): ?>
+						<?php if ( isset( $errors['amount'] ) ): ?>
                             <p class="validation-errors">
-			                    <?php echo $errors['amount']; ?>
+								<?php echo $errors['amount']; ?>
                             </p>
-	                    <?php endif; ?>
+						<?php endif; ?>
                     </div>
 
                     <!--/.Product Price-->
@@ -262,7 +263,8 @@ if ( ! defined( 'ABSPATH' ) ) {
                                     <?php echo get_option( 'subway_currency', 'USD' ); ?>
                                 </span>
 
-                                <input autofocus="" id="input-trial-amount" name="trial_amount" type="number" style="width: 6em;"
+                                <input autofocus="" id="input-trial-amount" name="trial_amount" type="number"
+                                       style="width: 6em;"
                                        size="3" placeholder="0.00" step="0.01" value="10">
                             </div>
                         </div><!--#trial-period-details-->
@@ -311,7 +313,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<?php esc_html_e( 'Give this membership plan a new and a unique SKU.', 'subway' ); ?>
                         </p>
 
-                        <input autofocus value="<?php echo esc_attr( $product->get_sku() ); ?>" id="input-sku" name="sku"
+                        <input autofocus value="<?php echo esc_attr( $product->get_sku() ); ?>" id="input-sku"
+                               name="sku"
                                type="text" class="widefat"
                                placeholder="<?php esc_attr_e( '(Stock Keeping Unit e.g. PROD001)', 'subway' ); ?>"/>
 						<?php if ( isset( $errors['sku'] ) ): ?>
