@@ -84,7 +84,7 @@ $user       = wp_get_current_user();
                 </div>
             </div><!--.subway-checkout-user-info-->
 
-            <div class="subway-checkout-review-order">
+            <div class="subway-checkout-review-order-wrap">
 
 				<?php $view->render( 'checkout-table', [ 'product' => $product, 'currency' => $currency, 'options' => $options ] ); ?>
 
