@@ -471,9 +471,9 @@ tr.current-user-plan > td {
     font-size: 14px;
 }
 
-.subway-checkout-user-info-table th,
-.subway-checkout-review-order th,
-.subway-membership-lists th {
+.entry-content .subway-checkout-user-info-table th,
+.entry-content .subway-checkout-review-order th,
+.entry-content .subway-membership-lists th {
     background: #f0f0f0;
     border-color: #ddd;
     background: rgba(255,255,255,1);
@@ -485,6 +485,7 @@ tr.current-user-plan > td {
     background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed', GradientType=0 );
     font-size: 16px;
+    color: #333;
 }
 .subway-checkout-user-info-table,
 .subway-checkout-review-order,
