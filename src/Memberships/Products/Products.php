@@ -216,6 +216,10 @@ class Products {
 
 		$formatted_amount = $currency->format( $displayed_price, get_option( 'subway_currency' ) );
 
+		if ( 'free' === $this->get_type() ) {
+			$formatted_amount = esc_html__('Free','subway');
+		}
+
 		return apply_filters( 'subway_product_get_displayed_price', $formatted_amount );
 
 	}
@@ -227,6 +231,10 @@ class Products {
 		$displayed_price = $this->get_real_amount();
 
 		$formatted_amount = $currency->format( $displayed_price, get_option( 'subway_currency' ) );
+
+		if ( 'free' === $this->get_type() ) {
+			$formatted_amount = esc_html__('Free','subway');
+		}
 
 		return apply_filters( 'subway_product_get_displayed_price_with_out_tax', $formatted_amount );
 	}
