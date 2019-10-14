@@ -26,76 +26,73 @@
     <div id="sw-shortcode-user-account-wrap-inner">
         <div>
 			<?php $c_user = wp_get_current_user(); ?>
-            <h3>
-				<?php echo sprintf( __( 'Welcome! %s', 'subway' ), $c_user->user_nicename ); ?>
-            </h3>
-            <hr/>
+
         </div>
 
         <div>
-            <h4>My Profile</h4>
-            <div>
-                <dl>
-                    <dt>
-                        <p>
-							<?php echo get_avatar( $c_user->ID, 48 ); ?>
-                        </p>
+            <h3>My Profile</h3>
+            <div class="subway-flex-wrap">
 
-                        <p>
-							<?php echo esc_html( $c_user->display_name ); ?><br/>
-							<?php echo esc_html( $c_user->user_email ); ?>
-                        </p>
+                <div class="subway-flex-column-80">
+                    <div class="subway-flex-wrap">
+                        <div class="subway-flex-column-10">
+                            <div style="margin: 10px 0 0 0;">
+	                        <?php echo get_avatar( $c_user->ID, 32 ); ?>
+                            </div>
+                        </div>
+                        <div class="subway-flex-column-90">
+                            <p>
+		                        <?php echo esc_html( $c_user->display_name ); ?>
+                                <br/>
+		                        <?php echo esc_html( $c_user->user_email ); ?>
+                            </p>
+                        </div>
+                    </div>
 
-                    </dt>
 
-                    <dd>
-                        <ul>
-                            <li><a href="#">Settings</a></li>
-                            <li><a href="#">Log out</a></li>
-                        </ul>
-                    </dd>
-                </dl>
+                </div>
+                <div class="subway-flex-column-20">
+                    <ul class="alignright">
+                        <li><a href="#">Settings</a></li>
+                        <li><a href="#">Log out</a></li>
+                    </ul>
+                </div>
             </div>
+
         </div>
 
         <div>
-            <h4>Membership & Billing</h4>
-
-            <div>
-                <dl>
-                    <dt><?php echo esc_html( $c_user->user_email ); ?></dt>
-                    <dd></dd>
-                </dl>
+            <h3>Membership & Billing</h3>
+            <div class="subway-flex-wrap">
+                <div class="subway-flex-column-50">
+                    <img width="50" src="https://www.paypalobjects.com/webstatic/mktg/logo-center/PP_Acceptance_Marks_for_LogoCenter_76x48.png" />
+                    emailuseinpayment@gmail.com
+                </div>
+                <div class="subway-flex-column-50 ">
+                    <ul class="alignright">
+                        <li><a href="#">Update Payment Info</a></li>
+                        <li><a href="#">Billing Details</a></li>
+                    </ul>
+                </div>
             </div>
-            <div>
-                <dl>
-                    <dt>
-                        <img width="80" src="https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-100px.png"/>
-                        emailuseinpayment@gmail.com
-                    </dt>
-                    <dd>
-                        <ul>
-                            <li><a href="#">Update Payment Info</a></li>
-                            <li><a href="#">Billing Details</a></li>
-                        </ul>
-                    </dd>
-                </dl>
 
-            </div>
         </div>
         <div>
-            <h4>Plan Details</h4>
-            <div>
-                <dl>
-                    <dt>Subway Memberships Pro</dt>
-                    <dd>
-                        <ul>
-                            <li><a href="#">Change Plan</a></li>
-                            <li><a href="#">Cancel Membership</a></li>
-                        </ul>
-                    </dd>
-                </dl>
+            <h3>Plan Details</h3>
+            <div class="subway-flex-wrap">
+                <div class="subway-flex-column-50">
+                    <strong>
+                        Subway Memberships Pro
+                    </strong>
+                </div>
+                <div class="subway-flex-column-50 ">
+                    <ul class="alignright">
+                        <li><a href="#">Change Plan</a></li>
+                        <li><a href="#">Cancel Membership</a></li>
+                    </ul>
+                </div>
             </div>
+
         </div>
 
 
