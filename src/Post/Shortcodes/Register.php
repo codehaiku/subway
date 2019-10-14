@@ -170,7 +170,8 @@ class Register {
 		return $this->view->render( 'shortcode-register',
 			[
 				'product'  => $product,
-				'currency' => $currency
+				'currency' => $currency,
+				'options'  => new Options()
 			],
 			true
 		);
