@@ -40,8 +40,8 @@ class SettingsCallback {
 		$this->view->render( 'settings-login-page', [] );
 	}
 
-	public function login_user_no_access_page() {
-		$this->view->render( 'settings-login-user-no-access-page', [] );
+	public function membership_page() {
+		$this->view->render( 'settings-membership-page', [] );
 	}
 
 	public function register_page() {
