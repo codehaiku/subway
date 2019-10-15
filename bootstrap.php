@@ -113,6 +113,10 @@ $checkout->attach_hooks();
 $order = new Orders( $wpdb );
 $order->attach_hooks();
 
-// Load Products Actions.
+// Load Products Controller.
 $products_controller = new Controller();
 $products_controller->attach_hooks();
+
+// Load User Controller.
+$user_controller = new \Subway\User\Controller();
+$user_controller->attach_hooks();
