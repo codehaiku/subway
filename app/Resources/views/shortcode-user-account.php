@@ -111,7 +111,7 @@
                                             <br/>
 											<?php echo esc_html( $subscription->get_displayed_price_without_tax() ); ?>
                                             &mdash;
-                                            <?php echo esc_html( $subscription->get_type() ); ?>
+											<?php echo esc_html( $subscription->get_type() ); ?>
                                         </p>
                                     </td>
                                     <td>
@@ -127,14 +127,21 @@
                         <p>
 							<?php esc_html_e( 'You do not have an active subscriptions.', 'subway' ); ?>
                         </p>
-					<?php endif; ?>
 
-                </div>
+                            <p>
+                                <a href="<?php echo esc_url( $options->get_membership_page_url() ); ?>" title="<?php esc_attr_e( 'Select Memberships', 'subway' ); ?>" class="sw-button">
+								<?php esc_html_e( 'Select Memberships', 'subway' ); ?>
+                                </a>
+                            </p>
+
+					<?php endif; ?>
 
             </div>
 
         </div>
 
-
     </div>
+
+
+</div>
 </div>
