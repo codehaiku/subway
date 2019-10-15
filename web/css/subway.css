@@ -345,6 +345,7 @@ tr.current-user-plan > td {
 .subway-comment-closed,
 .subway-login-form-message .success,
 .subway-login-form-message .error,
+.sw-form-success .sw-success,
 .sw-form-errors .sw-error {
     background: rgba(255, 0, 0, 0.10);
     padding: 10px;
@@ -359,6 +360,13 @@ tr.current-user-plan > td {
 
 .sw-form-errors .sw-error {
     margin: 5px 0;
+}
+
+.sw-form-success .sw-success {
+    border-color: #bde6bd;
+    color: #024502;
+    background: #e6ffe7;
+    box-shadow: 0 0 0 3px #e2ffe0;
 }
 
 .subway-login-form-message .success {
