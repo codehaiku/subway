@@ -85,29 +85,45 @@
 
         </div>
         <div>
-            <h3>Plan Details</h3>
+            <h3>Membership Plans</h3>
             <div class="subway-flex-wrap">
-                <div class="subway-flex-column-50">
-                    <?php $subscriptions = $user->get_subscriptions(); ?>
+                <div class="subway-flex-column-100">
+                    <?php $subscriptions = $user->get_subscriptions( get_current_user_id() ); ?>
                     <?php if ( ! empty( $subscriptions ) ): ?>
-	                    <ul>
-                            <li>
-                                <?php echo $subscriptions->get_name(); ?>
-                            </li>
-                        </ul>
+	                    <table class="subway-membership-lists subway-mg-top-zero">
+                            <thead>
+                            <tr>
+                                <th><?php esc_html_e('Plan Name', 'subway'); ?></th>
+                                <th><?php esc_html_e('Billing', 'subway'); ?></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php foreach( $subscriptions as $subscription ): ?>
+                            <tr>
+                                <td>
+                                    <a href="<?php echo esc_url( $subscription->get_product_url() ); ?>" title=" <?php echo esc_attr( $subscription->get_name() ); ?>">
+                                        <strong>
+	                                        <?php echo esc_html( $subscription->get_name() ); ?>
+                                        </strong>
+                                    </a>
+                                </td>
+                                <td>
+                                    $89.00 (Per Month)
+                                    <br> Last Payment: October 1, 2019 - $89.00
+                                    <br> Next Payment: November 1, 2019 - $89.00
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
                     <?php else: ?>
                         <p>
-		                    <?php esc_html_e('You do not have an active subscriptions yet.', 'subway'); ?>
+		                    <?php esc_html_e('You do not have an active subscriptions.', 'subway'); ?>
                         </p>
                     <?php endif ;?>
 
                 </div>
-                <div class="subway-flex-column-50 ">
-                    <ul class="subway-user-account-actions">
-                        <li><a href="<?php echo esc_url( $options->get_membership_page_url() ); ?>">Change Membership Plan</a></li>
-                        <li><a href="#">Cancel Membership</a></li>
-                    </ul>
-                </div>
+
             </div>
 
         </div>
