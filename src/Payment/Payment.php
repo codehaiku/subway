@@ -13,6 +13,7 @@ use PayPal\Api\Transaction;
 use Subway\Helpers\Helpers;
 use Subway\Memberships\Orders\Details as OrderDetails;
 use Subway\Memberships\Products\Products;
+use Subway\User\Plans;
 
 class Payment {
 
@@ -78,15 +79,15 @@ class Payment {
 
 		$tax_rate = $product->get_tax_rate();
 
-		$price    = $product->get_real_amount();
+		$price = $product->get_real_amount();
 
 		$quantity = $this->quantity;
 
-		$tax      = $price * ( $tax_rate / 100 );
+		$tax = $price * ( $tax_rate / 100 );
 
 		$subtotal = $price * $quantity;
 
-		$name     = $product->get_name();
+		$name = $product->get_name();
 
 		$currency = get_option( 'subway_currency', 'USD' );
 
@@ -94,7 +95,7 @@ class Payment {
 
 		$redirect_url = esc_url( add_query_arg( 'success', 'true', $this->return_url ) );
 
-		$cancel_url   = esc_url( add_query_arg( 'success', 'fail', $this->cancel_url ) );
+		$cancel_url = esc_url( add_query_arg( 'success', 'fail', $this->cancel_url ) );
 
 		// Generate Invoice Number.
 		$prefix = apply_filters(
@@ -281,7 +282,22 @@ class Payment {
 
 					$order_details = new OrderDetails( $this->wpdb );
 
+					// Create new order detail.
 					$ordered = $order_details->add( $order_details_args );
+
+					// Create new user plan.
+					$user_plans = new Plans( $this->wpdb );
+
+					$user_plan_added = $user_plans->add( [
+						'user_id'      => get_current_user_id(),
+						'prod_id'      => $product_id,
+						'status'       => 'completed',
+						'trial_status' => 'none'
+					] );
+
+					if ( ! is_numeric( $user_plan_added ) ) {
+						$this->error_redirect_url( $this->cancel_url );
+					}
 
 					if ( true === $ordered ) {
 						// Redirect user to the right page.
@@ -290,10 +306,7 @@ class Payment {
 								302
 							) );
 					} else {
-						wp_safe_redirect(
-							esc_url( add_query_arg( 'new_order', 'fail_to_add_details', $this->cancel_url ),
-								302
-							) );
+						$this->error_redirect_url( $this->cancel_url );
 					}
 
 				} else {
@@ -308,6 +321,16 @@ class Payment {
 				// Log error here.
 			}
 		}
+	}
+
+	private function error_redirect_url( $url ) {
+
+		wp_safe_redirect(
+			esc_url( add_query_arg( 'new_order', 'fail_to_add_details', $url ),
+				302
+			) );
+
+		exit;
 	}
 
 
