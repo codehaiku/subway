@@ -64,7 +64,14 @@ class User {
 	 * Lists all the user's subscription.
 	 * @return array
 	 */
-	public function get_subscriptions() {
-		return array();
+	public function get_subscriptions( $user_id ) {
+
+		global $wpdb;
+
+		$plans = new Plans( $wpdb );
+
+		$user_plans = $plans->get_user_plans( $user_id );
+
+		return $user_plans;
 	}
 }
