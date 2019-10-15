@@ -2,6 +2,7 @@
 
 namespace Subway\Post\Shortcodes;
 
+use Subway\FlashMessage\FlashMessage;
 use Subway\Options\Options;
 use Subway\User\User;
 use Subway\View\View;
@@ -15,11 +16,31 @@ class UserAccount {
 	}
 
 	public function display() {
-		wp_enqueue_style('subway-general');
-		return $this->view->render( 'shortcode-user-account', [
+
+		wp_enqueue_style( 'subway-general' );
+
+		$current_page = filter_input( 1, 'account-page', 516 );
+
+		$args = [
 			'options' => new Options(),
-			'user' => new User()
-		], true );
+			'user'    => new User(),
+			'wp_user' => wp_get_current_user()
+		];
+
+		switch ( $current_page ):
+			case 'update-personal-information':
+				$flash           = new FlashMessage( get_current_user_id(), 'subway-user-edit-profile' );
+				$template        = 'shortcode-user-account-edit';
+				$args['message'] = $flash->get();
+				break;
+			default:
+				$template = 'shortcode-user-account';
+
+		endswitch;
+
+
+		return $this->view->render( $template, $args, true );
+
 	}
 
 	public function attach_hooks() {
