@@ -105,6 +105,10 @@
     }
 }
 
+.entry-content .subway-mg-top-zero,
+.subway-mg-top-zero {
+    margin-top: 0;
+}
 .subway-ripple-css {
     background: 0 0;
     width: 200px;
@@ -115,10 +119,15 @@
 }
 
 .subway-alert {
-    background: #fff;
+    background: #f9f9f9;
     padding: 15px 20px;
+    border: 1px solid;
     border-left: 5px solid;
+    margin: 20px 0;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
 }
+
 .subway-alert p:last-child {
     margin-bottom: 0;
 }
