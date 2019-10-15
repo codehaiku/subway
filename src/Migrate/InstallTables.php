@@ -20,22 +20,71 @@ class InstallTables {
 
 	}
 
-	protected function membership_users_install() {
+	public function install_tables() {
 
-		$table = $this->wpdb->prefix . 'subway_memberships_users';
+		$this->membership_products_install();
+		$this->membership_orders_install();
+		$this->membership_orders_details_install();
+		$this->membership_users_install();
+		$this->membership_users_billing_agreements_install();
+
+		return $this;
+	}
+
+	public function update_tables() {
+
+		$this->membership_products_update();
+
+		return $this;
+	}
+
+	protected function membership_users_billing_agreements_install() {
+
+		$table = $this->wpdb->prefix . 'subway_memberships_users_billing_agreements';
 
 		$sql = "CREATE TABLE $table(
 				id mediumint(9) NOT NULL AUTO_INCREMENT,
 				user_id mediumint(9) NOT NULL,
-				prod_id varchar(100) NOT NULL,
-				status ENUM ('pending','active','suspended') NOT NULL,
-				last_active NOT NULL DEFAULT CURRENT_TIMESTAMP,
+				prod_id mediumint(9) NOT NULL,
+				status varchar(100) NOT NULL,
+				billing_amount mediumint(9) NOT NULL,
+				type varchar(100) NOT NULL,
+				cycle_frequency mediumint(9) NOT NULL,
+				cycle_time_period varchar(100) NOT NULL,
+				cycle_limit mediumint(9) NOT NULL,
+				gateway_agreement_id varchar(100) NOT NULL,
+				updated datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+				created datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
 				PRIMARY KEY (id)
 			) $this->collate;";
 
 		dbDelta( $sql );
 
-		update_option( "subway_memberships_users_version", $this->db_version );
+		update_option( "subway_memberships_users_billing_agreements_version", $this->db_version );
+
+		return $this;
+
+	}
+
+	protected function membership_users_install() {
+
+		$table = $this->wpdb->prefix . 'subway_memberships_users_plans';
+
+		$sql = "CREATE TABLE $table(
+				id mediumint(9) NOT NULL AUTO_INCREMENT,
+				user_id mediumint(9) NOT NULL,
+				prod_id mediumint(9) NOT NULL,
+				status varchar(100) NOT NULL,
+				trial_status varchar(100) NOT NULL,
+				notes text NOT NULL,
+				updated datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+				created datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+				PRIMARY KEY (id)
+			) $this->collate;";
+
+		dbDelta( $sql );
+
+		update_option( "subway_memberships_users_plans_version", $this->db_version );
 
 		return $this;
 
@@ -156,22 +205,6 @@ class InstallTables {
 
 		return $this;
 
-	}
-
-	public function install_tables() {
-
-		$this->membership_products_install();
-		$this->membership_orders_install();
-		$this->membership_orders_details_install();
-
-		return $this;
-	}
-
-	public function update_tables() {
-
-		$this->membership_products_update();
-
-		return $this;
 	}
 
 	public function attach_hooks() {
