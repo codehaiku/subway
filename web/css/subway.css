@@ -538,3 +538,126 @@ tr.current-user-plan > td {
 ul.subway-user-account-actions li {
     list-style: none;
 }
+
+/**
+ * Invoice
+ */
+.subway-user-invoice {
+    padding: 2em 3em;
+    border: 1px solid #333;
+    border-top: 5px solid #444;
+
+}
+.subway-user-invoice table,
+.subway-user-invoice {
+    font-size: 0.87em;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.subway-user-invoice ul {
+    padding: 0;
+    margin: 0;
+}
+.subway-user-invoice ul li {
+    list-style: none;
+    line-height: 1.25em;
+}
+#subway-invoice-info-header,
+.entry-content .subway-invoice-merchant-name,
+.subway-invoice-merchant-name {
+    margin: 0 0 15px 0;
+}
+.entry-content ul.subway-invoice-list-details,
+ul.subway-invoice-list-details {
+    margin: 0;
+}
+#subway-invoice-info {
+    text-align: right;
+}
+
+#subway-invoice-customer-name {
+    margin: 0;
+    font-size: 1.25em;
+    font-weight: normal;
+}
+
+#subway-invoice-customer-heading {
+    opacity: 0.5;
+    font-weight: normal;
+    margin: 20px 0 10px 0;
+}
+#subway-invoice-payment-status {
+    border: 1px solid #98cd8d;
+    margin: 0 0 0 5em;
+    text-align: center;
+}
+
+#subway-invoice-payment-status
+#subway-invoice-payment-status-date {
+    font-size: 14px;
+    font-weight: normal;
+    margin: 0;
+}
+
+#subway-invoice-payment-status
+#subway-invoice-payment-status-amount {
+    font-size: 28px;
+    font-weight: normal;
+    margin: 0;
+}
+
+#subway-invoice-payment-status > h3 {
+    margin: 0;
+    background: #98cd8d;
+    color: #093500;
+    font-size: 16px;
+    padding: 10px 15px;
+}
+
+#subway-invoice-payment-status > h4 {
+    font-size: 16px;
+    padding: 10px 15px;
+}
+.entry-content table.subway-membership-lists,
+table.subway-membership-lists,
+.entry-content .subway-user-invoice table#subway-invoice-numbers tbody,
+.subway-user-invoice table#subway-invoice-numbers tbody,
+.entry-content .subway-user-invoice table#subway-invoice-numbers,
+.subway-user-invoice table#subway-invoice-numbers {
+    margin: 20px 0 0 0;
+    border: 0 none;
+    box-shadow: none;
+}
+.entry-content table.subway-membership-lists,
+table.subway-membership-lists {
+    margin-top: 40px;
+}
+.subway-user-invoice table.subway-membership-lists th{
+    background: #555;
+    color: #fff;
+    border: 0;
+    font-size: 1em;
+    font-weight: normal;
+}
+#subway-invoice-numbers,
+.subway-user-invoice table.subway-membership-lists th:last-child {
+    text-align: right;
+}
+.subway-user-invoice table#subway-invoice-numbers tr,
+.subway-user-invoice table#subway-invoice-numbers td {
+    border: 0 none;
+    background: none;
+}
+.subway-user-invoice table#subway-invoice-numbers td,
+.subway-user-invoice table.subway-membership-lists td{
+    font-size: 14px;
+    padding: 10px;
+}
+.subway-user-invoice table#subway-invoice-numbers {
+    margin-top: 20px;
+}
+.subway-user-invoice table#subway-invoice-numbers td {
+    padding: 2.5px 10px;
+}
+/**
+ * Invoice End
+ */
