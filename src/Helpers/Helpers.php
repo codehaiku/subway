@@ -36,6 +36,14 @@ class Helpers {
 
 	}
 
+	public static function get_db() {
+
+		global $wpdb;
+
+		return $wpdb;
+
+	}
+
 	/**
 	 * @param $args
 	 */
