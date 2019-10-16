@@ -30,9 +30,7 @@
         </div>
 
         <div>
-            <a href="<?php echo esc_url( $options->get_accounts_page_url() ); ?>" class="sw-button">
-				<?php esc_html_e( '&larr; Go Back to Account Dashboard', 'subway' ); ?>
-            </a>
+
             <h3>
 				<?php esc_html_e( 'Edit Personal Profile', 'subway' ); ?>
             </h3>
@@ -163,10 +161,17 @@
 
 
                         <!-- Save Button -->
-                        <button class="sw-button" type="submit">
-							<?php esc_html_e( 'Save Profile', 'subway' ); ?>
-                        </button>
+                        <p>
+                            <button class="sw-button" type="submit">
+								<?php esc_html_e( 'Save Profile', 'subway' ); ?>
+                            </button>
+                        </p>
                         <!-- Save Button End -->
+                        <p>
+                            <a href="<?php echo esc_url( $options->get_accounts_page_url() ); ?>" class="sw-button-link">
+								<?php esc_html_e( '&larr; Go back to Account Dashboard', 'subway' ); ?>
+                            </a>
+                        </p>
                     </form>
                 </div>
             </div>
