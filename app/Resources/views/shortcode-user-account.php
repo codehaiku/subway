@@ -22,10 +22,13 @@
 <?php endif; ?>
 
 <div id="sw-shortcode-user-account-wrap">
+
     <div id="sw-shortcode-user-account-wrap-inner">
+
         <div>
 			<?php $c_user = wp_get_current_user(); ?>
         </div>
+
         <div>
             <h3>My Profile</h3>
             <div class="subway-flex-wrap">
@@ -50,40 +53,24 @@
                 </div>
                 <div class="subway-flex-column-50">
                     <ul class="subway-user-account-actions">
-                        <li><a href="<?php echo esc_url( get_edit_user_link( get_current_user_id() ) ); ?>">Update
-                                Personal Info</a></li>
-                        <li><a href="<?php echo esc_url( wp_logout_url() ); ?>">Sign out of my account</a></li>
+                        <li>
+                            <a title="<?php esc_attr_e( 'Update Personal Info', 'subway' ); ?>"
+                               href="<?php echo esc_url( get_edit_user_link( get_current_user_id() ) ); ?>">
+								<?php esc_html_e( 'Update Personal Info', 'subway' ); ?>
+                            </a>
+                        </li>
+                        <li>
+                            <a title="<?php esc_attr_e( 'Change E-mail Address', 'subway' ); ?>"
+                               href="<?php echo esc_url( add_query_arg( 'account-page', 'update-email-address', $options->get_accounts_page_url() ) ); ?>">
+								<?php esc_html_e( 'Change E-mail Address', 'subway' ); ?>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
 
         </div>
 
-        <div>
-            <h3>Membership & Billing</h3>
-            <div class="subway-flex-wrap">
-                <div class="subway-flex-column-50">
-                    <div class="subway-flex-wrap">
-                        <div class="subway-flex-column-10">
-                            <img width="50"
-                                 src="https://www.paypalobjects.com/webstatic/mktg/logo-center/PP_Acceptance_Marks_for_LogoCenter_76x48.png"/>
-                        </div>
-                        <div class="subway-flex-column-80">
-                            emailuseinpayment@gmail.com
-                        </div>
-                    </div>
-
-
-                </div>
-                <div class="subway-flex-column-50">
-                    <ul class="subway-user-account-actions">
-                        <li><a href="#">Update Payment</a></li>
-                        <li><a href="#">Billing Details</a></li>
-                    </ul>
-                </div>
-            </div>
-
-        </div>
         <div>
             <h3>Membership Plans</h3>
             <div class="subway-flex-wrap">
@@ -94,7 +81,8 @@
                             <thead>
                             <tr>
                                 <th><?php esc_html_e( 'Plan Name', 'subway' ); ?></th>
-                                <th><?php esc_html_e( 'Billing', 'subway' ); ?></th>
+                                <th><?php esc_html_e( 'Status', 'subway' ); ?></th>
+                                <th><?php esc_html_e( 'Next Billing', 'subway' ); ?></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -115,6 +103,9 @@
                                         </p>
                                     </td>
                                     <td>
+										<?php esc_html_e( 'Active', 'subway' ); ?>
+                                    </td>
+                                    <td>
                                         <p>
                                             October 1, 2019
                                         </p>
@@ -128,20 +119,84 @@
 							<?php esc_html_e( 'You do not have an active subscriptions.', 'subway' ); ?>
                         </p>
 
-                            <p>
-                                <a href="<?php echo esc_url( $options->get_membership_page_url() ); ?>" title="<?php esc_attr_e( 'Select Memberships', 'subway' ); ?>" class="sw-button">
+                        <p>
+                            <a href="<?php echo esc_url( $options->get_membership_page_url() ); ?>"
+                               title="<?php esc_attr_e( 'Select Memberships', 'subway' ); ?>" class="sw-button">
 								<?php esc_html_e( 'Select Memberships', 'subway' ); ?>
-                                </a>
-                            </p>
+                            </a>
+                        </p>
 
 					<?php endif; ?>
+
+                </div>
+
 
             </div>
 
         </div>
 
+        <div>
+            <h3>My Invoices</h3>
+            <div class="subway-flex-wrap">
+                <div class="subway-flex-column-100">
+                    <table class="subway-membership-lists subway-mg-top-zero">
+                        <thead>
+                        <tr>
+                            <th><?php esc_html_e( 'Date', 'subway' ); ?></th>
+                            <th><?php esc_html_e( 'Plan', 'subway' ); ?></th>
+                            <th><?php esc_html_e( 'Invoice Number', 'subway' ); ?></th>
+                            <th><?php esc_html_e( 'Total Amount', 'subway' ); ?></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+						<?php if ( ! empty( $invoices ) ): ?>
+							<?php foreach ( $invoices as $invoice ): ?>
+                                <tr>
+									<?php $product = $product->get_product( $invoice->product_id ); ?>
+                                    <td><?php echo esc_html( $invoice->created ); ?></td>
+                                    <td>
+                                        <a href="<?php echo esc_url( $product->get_product_url() ); ?>"
+                                           title="<?php echo esc_attr( $product->get_name() ); ?>">
+											<?php echo esc_html( $product->get_name() ); ?>
+                                        </a>
+                                    </td>
+                                    <td>
+										<?php
+										$invoice_url = add_query_arg( [
+											'account-page' => 'invoice',
+											'invoice_id'   => $invoice->id
+										], $options->get_accounts_page_url() );
+										?>
+                                        <a href="<?php echo esc_url( $invoice_url ); ?>"
+                                           title="<?php echo esc_html( $invoice->invoice_number ); ?></td>">
+										<?php echo esc_html( $invoice->invoice_number ); ?></td>
+                                    </a>
+
+                                    <td><?php echo esc_html( $invoice->amount ); ?></td>
+                                </tr>
+							<?php endforeach; ?>
+						<?php else: ?>
+                            <tr>
+                                <td colspan="4">
+									<?php esc_html_e( 'There are no invoices found.', 'subway' ); ?>
+                                </td>
+                            </tr>
+						<?php endif; ?>
+
+                        </tbody>
+                        <tfoot></tfoot>
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+        <h6>
+            <a title="<?php esc_attr_e( 'Sign out of my account', 'subway' ); ?>"
+               href="<?php echo esc_url( wp_logout_url() ); ?>">
+				<?php esc_html_e( 'Sign out of my account', 'subway' ); ?>
+            </a>
+        </h6>
+
     </div>
-
-
-</div>
 </div>
