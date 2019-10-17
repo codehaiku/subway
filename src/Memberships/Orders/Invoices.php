@@ -109,4 +109,5 @@ class Invoices {
 
 		return $invoices;
 	}
+	
 }

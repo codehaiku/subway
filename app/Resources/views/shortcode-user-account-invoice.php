@@ -1,3 +1,7 @@
+
+<?php $order = $invoice['order']; ?>
+<?php $details = $invoice['details']; ?>
+
 <?php if ( ! is_user_logged_in() ): ?>
     <div class="subway-login-form-message">
         <p class="error">
@@ -34,10 +38,11 @@
         <div id="subway-invoice-info" class="subway-flex-column-50">
             <!--Invoice Merchant-->
             <h3 id="subway-invoice-info-header">Invoice</h3>
+
             <ul class="subway-invoice-list-details">
-                <li>Invoice #</li>
-                <li>Billed On</li>
-                <li>Due On</li>
+                <li><?php echo sprintf( __('Invoice ID: %s', 'subway'), $order->invoice_number ); ?></li>
+                <li><?php echo sprintf( __('Billed On: %s', 'subway'), $order->created ); ?></li>
+                <li><?php echo sprintf( __('Due On: %s', 'subway'), $order->created ); ?></li>
             </ul>
             <!--Invoice Merchant End-->
         </div>
