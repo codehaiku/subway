@@ -92,6 +92,8 @@ class Settings {
 
 	}
 
+
+
 	public function general() {
 
 		$view = new View();
@@ -207,13 +209,19 @@ class Settings {
 
 		$section_callback = new SectionCallback();
 
+		// Register Seller Profile Information.
+		add_settings_section(
+			'subway-seller-profile-section', $this->get_icon( 'dashicons-admin-users' ) . __( 'Seller Profile', 'subway' ),
+			array( $section_callback, 'seller_profile' ), 'subway-settings-section'
+		);
+
 		// Register our settings section.
 		add_settings_section(
 			'subway-general-section', $this->get_icon( 'dashicons-admin-generic' ) . __( 'General', 'subway' ),
 			array( $section_callback, 'general' ), 'subway-settings-section'
 		);
 
-		// Register our settings section.
+		// Register Pages Section.
 		add_settings_section(
 			'subway-page-visibility-section', $this->get_icon( 'dashicons-text-page' ) . __( 'Pages', 'subway' ),
 			array( $section_callback, 'pages' ), 'subway-settings-section'
@@ -247,6 +255,88 @@ class Settings {
 
 		// Register the fields.
 		$fields = array(
+
+			// Seller Name Settings.
+			array(
+				'id'       => 'subway_seller_name',
+				'label'    => __( 'Business Name', 'subway' ),
+				'callback' => array( $settings_callback, 'seller_name' ),
+				'section'  => 'subway-settings-section',
+				'group'    => 'subway-seller-profile-section',
+			),
+
+			// Seller Address Line1 Settings.
+			array(
+				'id'       => 'subway_seller_address_line1',
+				'label'    => __( 'Business Address Line 1', 'subway' ),
+				'callback' => array( $settings_callback, 'seller_address_line1' ),
+				'section'  => 'subway-settings-section',
+				'group'    => 'subway-seller-profile-section',
+			),
+
+			// Seller Address Line2 Settings.
+			array(
+				'id'       => 'subway_seller_address_line2',
+				'label'    => __( 'Business Address Line 1', 'subway' ),
+				'callback' => array( $settings_callback, 'seller_address_line2' ),
+				'section'  => 'subway-settings-section',
+				'group'    => 'subway-seller-profile-section',
+			),
+
+			// Seller City Settings.
+			array(
+				'id'       => 'subway_seller_city',
+				'label'    => __( 'City', 'subway' ),
+				'callback' => array( $settings_callback, 'seller_city' ),
+				'section'  => 'subway-settings-section',
+				'group'    => 'subway-seller-profile-section',
+			),
+
+			// Seller Postal Code Settings.
+			array(
+				'id'       => 'subway_seller_postal_code',
+				'label'    => __( 'Postal Code', 'subway' ),
+				'callback' => array( $settings_callback, 'seller_postal_code' ),
+				'section'  => 'subway-settings-section',
+				'group'    => 'subway-seller-profile-section',
+			),
+
+			// Seller Country Settings.
+			array(
+				'id'       => 'subway_seller_country',
+				'label'    => __( 'Country', 'subway' ),
+				'callback' => array( $settings_callback, 'seller_country' ),
+				'section'  => 'subway-settings-section',
+				'group'    => 'subway-seller-profile-section',
+			),
+
+			// Seller Registration Number Settings.
+			array(
+				'id'       => 'subway_seller_registration_number',
+				'label'    => __( 'Registration Number', 'subway' ),
+				'callback' => array( $settings_callback, 'seller_registration_number' ),
+				'section'  => 'subway-settings-section',
+				'group'    => 'subway-seller-profile-section',
+			),
+
+			// Seller Vat Number Settings.
+			array(
+				'id'       => 'subway_seller_vat',
+				'label'    => __( 'Vat Number/ID', 'subway' ),
+				'callback' => array( $settings_callback, 'seller_vat' ),
+				'section'  => 'subway-settings-section',
+				'group'    => 'subway-seller-profile-section',
+			),
+
+			// Seller Email Settings.
+			array(
+				'id'       => 'subway_seller_email',
+				'label'    => __( 'Business Email', 'subway' ),
+				'callback' => array( $settings_callback, 'seller_email' ),
+				'section'  => 'subway-settings-section',
+				'group'    => 'subway-seller-profile-section',
+			),
+
 			// Currency Page Settings.
 			array(
 				'id'       => 'subway_currency',

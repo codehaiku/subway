@@ -10,7 +10,63 @@ class SettingsCallback {
 	protected $view;
 
 	public function __construct( View $view ) {
+
 		$this->view = $view;
+
+	}
+
+	public function seller_name() {
+
+		$this->view->render( 'settings-seller-name', []);
+
+	}
+
+	public function seller_address_line1() {
+
+		$this->view->render( 'settings-seller-address-line1', []);
+
+	}
+
+	public function seller_address_line2() {
+
+		$this->view->render( 'settings-seller-address-line2', []);
+
+	}
+
+	public function seller_city() {
+
+		$this->view->render( 'settings-seller-city', []);
+
+	}
+
+	public function seller_postal_code() {
+
+		$this->view->render( 'settings-postal-code', []);
+
+	}
+
+	public function seller_country() {
+
+		$this->view->render( 'settings-seller-country', []);
+
+	}
+
+	public function seller_email() {
+
+		$this->view->render( 'settings-seller-email', []);
+
+	}
+
+	public function seller_vat() {
+
+		$this->view->render( 'settings-seller-vat', []);
+
+	}
+
+	public function seller_registration_number() {
+
+		$this->view->render( 'settings-registration-number', []);
+
 	}
 
 	public function currency() {

@@ -35,6 +35,7 @@ class User {
 	}
 
 	public function is_subscribed( $post_id ) {
+
 		if ( current_user_can( 'manage_plugins' ) ) {
 			return true;
 		}
@@ -49,6 +50,7 @@ class User {
 
 		// Check the subscribe type of the current post type.
 		if ( 'private' === $access_type ) {
+
 			$user_role = $this->get_role( get_current_user_id() );
 
 			// If the user role matches checked subscription role.
@@ -58,6 +60,7 @@ class User {
 		}
 
 		return true;
+
 	}
 
 	/**

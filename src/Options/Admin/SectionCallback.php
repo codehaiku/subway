@@ -8,6 +8,14 @@ class SectionCallback{
 		return $this;
 	}
 
+	public function seller_profile() {
+		echo '<p class="sw-lead">';
+		esc_html_e('Tell your customers about your business info. This info will appear on emails, invoices, and/or receipts.', 'subway');
+		echo '</p>';
+
+		return $this;
+	}
+
 	public function pages() {
 		echo '<p class="sw-lead">';
 		esc_html_e('Select a page for each corresponding membership pages', 'subway');
