@@ -4,7 +4,7 @@ namespace Subway\Post\Shortcodes;
 
 use Subway\Currency\Currency;
 use Subway\Form\Form;
-use Subway\Memberships\Products\Products;
+use Subway\Memberships\Plan\Plan;
 use Subway\Options\Options;
 use Subway\Payment\Payment;
 use Subway\View\View;
@@ -36,9 +36,9 @@ class Register {
 			// Request Product Id.
 			$product_id = filter_input( INPUT_POST, 'sw-product-id', FILTER_SANITIZE_NUMBER_INT );
 
-			$products = new Products();
+			$products = new Plan();
 
-			$product = $products->get_product( $product_id );
+			$product = $products->get_plan( $product_id );
 
 			if ( empty ( $product_id ) ) {
 				return;
@@ -161,9 +161,9 @@ class Register {
 
 		$product_id = filter_input( INPUT_GET, 'product_id', FILTER_SANITIZE_NUMBER_INT );
 
-		$products = new Products();
+		$products = new Plan();
 
-		$product = $products->get_product( $product_id );
+		$product = $products->get_plan( $product_id );
 
 		$currency = new Currency();
 
