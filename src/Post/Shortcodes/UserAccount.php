@@ -5,7 +5,7 @@ namespace Subway\Post\Shortcodes;
 use Subway\FlashMessage\FlashMessage;
 use Subway\Helpers\Helpers;
 use Subway\Memberships\Orders\Invoices;
-use Subway\Memberships\Products\Products;
+use Subway\Memberships\Plan\Plan;
 use Subway\Options\Options;
 use Subway\User\User;
 use Subway\View\View;
@@ -78,7 +78,7 @@ class UserAccount {
 
 				$args['invoices'] = $invoices->get_user_invoices();
 
-				$args['product'] = new Products();
+				$args['product'] = new Plan();
 
 		endswitch;
 
