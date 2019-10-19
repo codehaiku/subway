@@ -22,10 +22,10 @@ class InstallTables {
 
 	public function install_tables() {
 
-		$this->membership_products_install();
+		$this->membership_products_plans_install();
 		$this->membership_orders_install();
 		$this->membership_orders_details_install();
-		$this->membership_users_install();
+		$this->membership_users_plans_install();
 		$this->membership_users_billing_agreements_install();
 
 		return $this;
@@ -33,9 +33,68 @@ class InstallTables {
 
 	public function update_tables() {
 
-		$this->membership_products_update();
+		$this->membership_products_plans_update();
 
 		return $this;
+	}
+
+	protected function membership_products_plans_install() {
+
+		$table = $this->wpdb->prefix . "subway_memberships_products_plans";
+
+		$sql = "CREATE TABLE $table (
+				id mediumint(9) NOT NULL AUTO_INCREMENT,
+				name tinytext NOT NULL,
+				sku tinytext NOT NULL,
+				description text NULL,
+				amount double NOT NULL,
+				status varchar(100) DEFAULT 'draft',
+				type tinytext NOT NULL,
+				date_created datetime DEFAULT CURRENT_TIMESTAMP,
+				date_updated datetime DEFAULT CURRENT_TIMESTAMP,
+				PRIMARY KEY  (id)
+			) $this->collate;";
+
+
+		dbDelta( $sql );
+
+		update_option( "subway_memberships_products_plans_version", $this->db_version );
+
+		return $this;
+
+	}
+
+	protected function membership_products_plans_update() {
+
+		$table_version = get_option( "subway_memberships_products_plans_version" );
+
+		$table = $this->wpdb->prefix . "subway_memberships_products_plans";
+
+		if ( $table_version !== $this->db_version ) {
+
+			$sql = "CREATE TABLE $table (
+						id mediumint(9) NOT NULL AUTO_INCREMENT,
+						name tinytext NOT NULL,
+						sku tinytext NOT NULL,
+						description text NULL,
+						amount double NOT NULL,
+						status varchar(100) DEFAULT 'draft',
+						type tinytext NOT NULL,
+						date_created datetime DEFAULT CURRENT_TIMESTAMP,
+						date_updated datetime DEFAULT CURRENT_TIMESTAMP
+						PRIMARY KEY  (id)
+				) $this->collate;";
+
+			dbDelta( $sql );
+
+			update_option( "subway_memberships_products_plans_version", $this->db_version );
+
+			return $this;
+
+		}
+
+		return $this;
+
 	}
 
 	protected function membership_users_billing_agreements_install() {
@@ -66,7 +125,7 @@ class InstallTables {
 
 	}
 
-	protected function membership_users_install() {
+	protected function membership_users_plans_install() {
 
 		$table = $this->wpdb->prefix . 'subway_memberships_users_plans';
 
@@ -149,61 +208,11 @@ class InstallTables {
 
 	}
 
-	protected function membership_products_install() {
+	protected function define_hooks() {
 
-		$table = $this->wpdb->prefix . "subway_memberships_products";
+		register_activation_hook( SUBWAY_DIR_PATH . 'subway.php', array( $this, 'install_tables' ) );
 
-		$sql = "CREATE TABLE $table (
-				id mediumint(9) NOT NULL AUTO_INCREMENT,
-				name tinytext NOT NULL,
-				sku tinytext NOT NULL,
-				description text NULL,
-				amount double NOT NULL,
-				status varchar(100) DEFAULT 'draft',
-				type tinytext NOT NULL,
-				date_created datetime DEFAULT CURRENT_TIMESTAMP,
-				date_updated datetime DEFAULT CURRENT_TIMESTAMP
-				PRIMARY KEY  (id)
-			) $this->collate;";
-
-		dbDelta( $sql );
-
-		update_option( "subway_memberships_products_version", $this->db_version );
-
-		return $this;
-
-	}
-
-	protected function membership_products_update() {
-
-		$table_version = get_option( "subway_memberships_products_version" );
-
-		$table = $this->wpdb->prefix . "subway_memberships_products";
-
-		if ( $table_version !== $this->db_version ) {
-
-			$sql = "CREATE TABLE $table (
-						id mediumint(9) NOT NULL AUTO_INCREMENT,
-						name tinytext NOT NULL,
-						sku tinytext NOT NULL,
-						description text NULL,
-						amount double NOT NULL,
-						status varchar(100) DEFAULT 'draft',
-						type tinytext NOT NULL,
-						date_created datetime DEFAULT CURRENT_TIMESTAMP,
-						date_updated datetime DEFAULT CURRENT_TIMESTAMP
-						PRIMARY KEY  (id)
-				) $this->collate;";
-
-			dbDelta( $sql );
-
-			update_option( "subway_memberships_products_version", $this->db_version );
-
-			return $this;
-
-		}
-
-		return $this;
+		add_action( 'plugins_loaded', array( $this, 'update_tables' ) );
 
 	}
 
@@ -213,12 +222,4 @@ class InstallTables {
 		return $this;
 	}
 
-	protected function define_hooks() {
-
-		register_activation_hook( SUBWAY_DIR_PATH . 'subway.php', array( $this, 'install_tables' ) );
-
-		add_action( 'plugins_loaded', array( $this, 'update_tables' ) );
-
-
-	}
 }
