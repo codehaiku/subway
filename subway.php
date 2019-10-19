@@ -47,14 +47,17 @@ define( 'SUBWAY_JS_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'web/js
 // Require our autoloader.
 require_once SUBWAY_DIR_PATH . 'vendor' . '/autoload.php';
 
-
 // -- Playing Grounds -->
 $product = new \Subway\Memberships\Product\Product();
 
-$product->set_id( 10 );
+// Update a product with id 10;
+$product->set_id( 12 );
+$product->set_name('12 Months');
+$product->set_description('of The Year');
+$product->set_tax_rate(12);
+$product->set_tax_displayed(true);
+$updated = $product->update();
 
-$product = $product->get();
-
-if ( $product ) {
-	print_r( $product->get_name() );
+if ( $updated ) {
+	echo 'Product has been successfully updated.';
 }

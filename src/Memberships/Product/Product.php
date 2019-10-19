@@ -199,7 +199,9 @@ class Product {
 			'name'          => '',
 			'description'   => '',
 			'tax_rate'      => 0,
-			'tax_displayed' => false
+			'tax_displayed' => false,
+			'date_updated'  => current_time( 'mysql' ),
+			'date_created'  => current_time( 'mysql' )
 		];
 
 		$data = wp_parse_args( [
@@ -227,6 +229,47 @@ class Product {
 	}
 
 	public function update() {
+
+		$db = Helpers::get_db();
+
+		$defaults = [
+			'name'          => '',
+			'description'   => '',
+			'tax_rate'      => 0,
+			'tax_displayed' => false,
+			'date_updated'  => current_time( 'mysql' ),
+		];
+
+		$data = wp_parse_args( [
+			'name'          => $this->get_name(),
+			'description'   => $this->get_description(),
+			'tax_rate'      => $this->get_tax_rate(),
+			'tax_displayed' => $this->is_tax_displayed()
+		], $defaults );
+
+		$where = [
+			'id' => $this->get_id()
+		];
+
+		$format = [
+			'%s',
+			'%s',
+			'%f',
+			'%d'
+		];
+
+		$where_format = [ '%d' ];
+
+		$updated = $db->update(
+			$this->table, $data, $where, $format, $where_format
+		);
+
+		if ( $updated ) {
+			return true;
+		}
+
+		return $db->last_error;
+
 	}
 
 	public function trash() {
