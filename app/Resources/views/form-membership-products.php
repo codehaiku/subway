@@ -1,6 +1,6 @@
 <?php
 /**
- * Products Table Template
+ * Plan Table Template
  */
 
 ?>
@@ -18,7 +18,7 @@
     <div class="wrap">
 
         <h1 class="wp-heading-inline">
-			<?php esc_html_e( 'Create New Membership Plan', 'subway' ); ?>
+			<?php esc_html_e( 'Create New Memberships Plan', 'subway' ); ?>
         </h1>
 
         <hr class="wp-header-end">
@@ -34,7 +34,7 @@
     <div class="wrap">
 
         <h1 class="wp-heading-inline">
-			<?php printf( esc_html__( 'Configure Membership Plan: #%d', 'subway' ), $_GET['product'] ); ?>
+			<?php printf( esc_html__( 'Configure Memberships Plan: #%d', 'subway' ), $_GET['product'] ); ?>
         </h1>
 
         <hr/>
@@ -50,7 +50,7 @@
 
     <div class="wrap">
 
-        <h1 class="wp-heading-inline"><?php esc_html_e( 'Membership Plans', 'subway' ); ?></h1>
+        <h1 class="wp-heading-inline"><?php esc_html_e( 'Memberships Plans', 'subway' ); ?></h1>
 
         <a href="?page=subway-membership&new=yes"
 
