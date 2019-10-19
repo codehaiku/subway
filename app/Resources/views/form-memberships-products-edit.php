@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <?php $section = filter_input( 1, 'section', 516 ); ?>
 
-<?php $product = $membership->get_product( $id ); ?>
+<?php $product = $membership->get_plan( $id ); ?>
 
 <?php if ( empty( $product ) ): ?>
 
@@ -150,7 +150,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                             </label>
                         </h3>
                         <p class="field-help">
-							<?php esc_html_e( 'Enter the new price for this Membership Plan', 'subway' ); ?>
+							<?php esc_html_e( 'Enter the new price for this Memberships Plan', 'subway' ); ?>
                         </p>
                         <div class="field-group">
                             <span class="currency-amount">
@@ -284,7 +284,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
                         <h3 class="field-title">
                             <label for="input-title">
-								<?php esc_html_e( 'Membership Plan Name', 'subway' ); ?>
+								<?php esc_html_e( 'Memberships Plan Name', 'subway' ); ?>
                             </label>
                         </h3>
 
@@ -360,7 +360,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                         <div class="subway-form-row">
                             <h3 class="field-title">
                                 <label for="input-description">
-									<?php esc_html_e( 'Membership Plan Status', 'subway' ); ?>
+									<?php esc_html_e( 'Memberships Plan Status', 'subway' ); ?>
                                 </label>
                             </h3>
                             <p class="field-help">
@@ -398,7 +398,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <p class="field-help">
 								<?php esc_html_e( 'Use the url below to share this membership plan anywhere.', 'subway' ); ?>
                             </p>
-							<?php $checkout_url = $membership->get_product_checkout_url( $id ); ?>
+							<?php $checkout_url = $membership->get_plan_checkout_url( $id ); ?>
                             <input readonly value="<?php echo esc_url( $checkout_url ); ?>" id="input-checkout-link"
                                    type="url" value="input-checkout-link"/>
                             <p>
@@ -426,7 +426,7 @@ if ( ! defined( 'ABSPATH' ) ) {
         <!--Submit Button-->
         <div class="subway-card">
             <input id="update-product" type="submit" class="button button-primary button-large"
-                   value="<?php esc_attr_e( 'Update Membership Plan', 'subway' ); ?>"/>
+                   value="<?php esc_attr_e( 'Update Memberships Plan', 'subway' ); ?>"/>
         </div>
         <!--/.Submit Button-->
     </form>
