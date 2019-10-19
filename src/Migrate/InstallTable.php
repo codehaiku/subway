@@ -2,7 +2,7 @@
 
 namespace Subway\Migrate;
 
-class InstallTables {
+class InstallTable {
 
 	protected $wpdb;
 	protected $db_version;
@@ -22,6 +22,8 @@ class InstallTables {
 
 	public function install_tables() {
 
+		// Install products table.
+		$this->membership_products_install();
 		$this->membership_products_plans_install();
 		$this->membership_orders_install();
 		$this->membership_orders_details_install();
@@ -36,6 +38,27 @@ class InstallTables {
 		$this->membership_products_plans_update();
 
 		return $this;
+	}
+
+	protected function membership_products_install() {
+
+		$table = $this->wpdb->prefix . "subway_memberships_products";
+
+		$sql = "CREATE TABLE $table (
+				id mediumint(9) NOT NULL AUTO_INCREMENT,
+				name varchar(255) NOT NULL,
+				description text NULL,
+				tax_rate double NOT NULL,
+				tax_displayed tinyint(1) NOT NULL,
+				date_created datetime DEFAULT CURRENT_TIMESTAMP,
+				date_updated datetime DEFAULT CURRENT_TIMESTAMP,
+				PRIMARY KEY  (id)
+			) $this->collate;";
+
+
+		dbDelta( $sql );
+
+		update_option( "subway_memberships_products_plans_version", $this->db_version );
 	}
 
 	protected function membership_products_plans_install() {

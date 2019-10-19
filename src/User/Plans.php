@@ -16,6 +16,7 @@ class Plans {
 	protected $created;
 
 	protected $wpdb;
+
 	protected $table;
 
 

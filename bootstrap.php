@@ -8,7 +8,7 @@ use Subway\Hooks\Hooks;
 use Subway\Memberships\Orders\Details;
 use Subway\Memberships\Orders\Orders;
 use Subway\Memberships\Plan\Controller;
-use Subway\Migrate\InstallTables;
+use Subway\Migrate\InstallTable;
 use Subway\Options\Admin\Settings;
 use Subway\Post\Shortcodes\Checkout;
 use Subway\Post\Shortcodes\Login;
@@ -30,7 +30,7 @@ use Subway\Taxonomy\Taxonomy;
 global $wpdb;
 
 // Install Tables.
-$migrate = new InstallTables( $wpdb, SUBWAY_DB_VERSION );
+$migrate = new InstallTable( $wpdb, SUBWAY_DB_VERSION );
 $migrate->attach_hooks();
 
 // Hooks.

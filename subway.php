@@ -46,3 +46,15 @@ define( 'SUBWAY_JS_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'web/js
 
 // Require our autoloader.
 require_once SUBWAY_DIR_PATH . 'vendor' . '/autoload.php';
+
+
+// -- Playing Grounds -->
+$product = new \Subway\Memberships\Product\Product();
+
+$product->set_id( 10 );
+
+$product = $product->get();
+
+if ( $product ) {
+	print_r( $product->get_name() );
+}
