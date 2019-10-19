@@ -3,7 +3,7 @@
 namespace Subway\Post\Shortcodes;
 
 use Subway\Currency\Currency;
-use Subway\Memberships\Products\Products;
+use Subway\Memberships\Plan\Plan;
 use Subway\View\View;
 
 class Memberships {
@@ -19,10 +19,10 @@ class Memberships {
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'stylesheet' ) );
 
-		$product  = new Products();
+		$product  = new Plan();
 		$currency = new Currency();
 
-		$products = $product->get_products( ['status' => 'published'] );
+		$products = $product->get_plans( [ 'status' => 'published'] );
 
 		return $this->view->render( 'shortcode-memberships', [
 			'products' => $products,
