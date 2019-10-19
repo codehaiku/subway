@@ -90,7 +90,7 @@
                                 <tr>
                                     <td>
                                         <p>
-                                            <a href="<?php echo esc_url( $subscription->get_product_url() ); ?>"
+                                            <a href="<?php echo esc_url( $subscription->get_plan_url() ); ?>"
                                                title=" <?php echo esc_attr( $subscription->get_name() ); ?>">
                                                 <strong>
 													<?php echo esc_html( $subscription->get_name() ); ?>
@@ -152,10 +152,10 @@
 						<?php if ( ! empty( $invoices ) ): ?>
 							<?php foreach ( $invoices as $invoice ): ?>
                                 <tr>
-									<?php $product = $product->get_product( $invoice->product_id ); ?>
+									<?php $product = $product->get_plan( $invoice->product_id ); ?>
                                     <td><?php echo esc_html( $invoice->created ); ?></td>
                                     <td>
-                                        <a href="<?php echo esc_url( $product->get_product_url() ); ?>"
+                                        <a href="<?php echo esc_url( $product->get_plan_url() ); ?>"
                                            title="<?php echo esc_attr( $product->get_name() ); ?>">
 											<?php echo esc_html( $product->get_name() ); ?>
                                         </a>
