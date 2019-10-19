@@ -658,6 +658,13 @@ table.subway-membership-lists {
 .subway-user-invoice table#subway-invoice-numbers td {
     padding: 2.5px 10px;
 }
+#subway-invoice-row-subtotal {
+    text-align: right;
+}
+#subway-invoice-customer-actions {
+    padding: 1em;
+    text-align: center;
+}
 /**
  * Invoice End
  */

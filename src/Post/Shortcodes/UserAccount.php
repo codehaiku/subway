@@ -63,10 +63,10 @@ class UserAccount {
 				$invoices->set_user( get_current_user_id() );
 				$invoices->set_id( $id );
 
-				$invoice = $invoices->get_user_invoice();
+				$invoice         = $invoices->get_user_invoice();
 				$args['invoice'] = $invoice;
 
-				$template = 'shortcode-user-account-invoice';
+				$template     = 'shortcode-user-account-invoice';
 
 				break;
 

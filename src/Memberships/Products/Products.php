@@ -217,7 +217,7 @@ class Products {
 		$formatted_amount = $currency->format( $displayed_price, get_option( 'subway_currency' ) );
 
 		if ( 'free' === $this->get_type() ) {
-			$formatted_amount = esc_html__('Free','subway');
+			$formatted_amount = esc_html__( 'Free', 'subway' );
 		}
 
 		return apply_filters( 'subway_product_get_displayed_price', $formatted_amount );
@@ -233,10 +233,37 @@ class Products {
 		$formatted_amount = $currency->format( $displayed_price, get_option( 'subway_currency' ) );
 
 		if ( 'free' === $this->get_type() ) {
-			$formatted_amount = esc_html__('Free','subway');
+			$formatted_amount = esc_html__( 'Free', 'subway' );
 		}
 
 		return apply_filters( 'subway_product_get_displayed_price_with_out_tax', $formatted_amount );
+	}
+
+	public function get_taxed_price() {
+
+		$currency = new Currency();
+
+		$tax_rate    = 1 + ( $this->get_tax_rate() / 100 );
+		$taxed_price = $this->amount * $tax_rate;
+
+		$amount = $currency->format( $taxed_price, get_option( 'subway_currency', 'USD ' ) );
+
+		return apply_filters( 'subway_product_get_amount', $amount );
+
+	}
+
+	public function get_tax_amount() {
+
+		$currency = new Currency();
+
+		$tax_rate    = $this->get_tax_rate() / 100;
+
+		$taxed_price = $this->amount * $tax_rate;
+
+		$tax_amount = $currency->format( $taxed_price, get_option( 'subway_currency', 'USD ' ) );
+
+		return apply_filters( 'subway_product_get_tax_amount', $tax_amount );
+
 	}
 
 	/**
@@ -306,6 +333,7 @@ class Products {
 
 		return $this;
 	}
+
 
 
 	public function get_products( $args ) {

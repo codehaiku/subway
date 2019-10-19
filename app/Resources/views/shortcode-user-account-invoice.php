@@ -1,4 +1,3 @@
-
 <?php $order = $invoice['order']; ?>
 <?php $details = $invoice['details']; ?>
 
@@ -20,18 +19,25 @@
 <?php endif; ?>
 
 <!--Start Invoice-->
-<div class="subway-user-invoice">
+<div id="subway-user-invoice" class="subway-user-invoice">
+
     <div class="subway-flex-wrap">
         <div class="subway-flex-column-50">
             <!--Invoice Merchant-->
-            <h3 class="subway-invoice-merchant-name">Envato Elements Pty Ltd</h3>
+            <h3 class="subway-invoice-merchant-name">
+				<?php echo esc_html( get_option( 'subway_seller_name', '' ) ); ?>
+            </h3>
             <ul class="subway-invoice-list-details">
-                <li>Collins Street West</li>
-                <li>Melbourne, Victoria 8007</li>
-                <li>Australia</li>
-                <li>Email: help.elements@envato.com</li>
-                <li>VAT #: EU826463953</li>
-                <li>Registration #: 87 613 824 258</li>
+                <li><?php echo esc_html( get_option( 'subway_seller_address_line1', '' ) ); ?></li>
+                <li><?php echo esc_html( get_option( 'subway_seller_address_line2', '' ) ); ?></li>
+                <li>
+					<?php echo esc_html( get_option( 'subway_seller_city', '' ) ); ?>&nbsp;
+					<?php echo esc_html( get_option( 'subway_seller_postal_code', '' ) ); ?>
+                </li>
+                <li><?php echo esc_html( get_option( 'subway_seller_country', '' ) ); ?></li>
+                <li>Email: <?php echo esc_html( get_option( 'subway_seller_email', '' ) ); ?></li>
+                <li>VAT #: <?php echo esc_html( get_option( 'subway_seller_vat', '' ) ); ?></li>
+                <li>Registration #: <?php echo esc_html( get_option( 'subway_seller_registration_number', '' ) ); ?>
             </ul>
             <!--Invoice Merchant End-->
         </div>
@@ -40,9 +46,9 @@
             <h3 id="subway-invoice-info-header">Invoice</h3>
 
             <ul class="subway-invoice-list-details">
-                <li><?php echo sprintf( __('Invoice ID: %s', 'subway'), $order->invoice_number ); ?></li>
-                <li><?php echo sprintf( __('Billed On: %s', 'subway'), $order->created ); ?></li>
-                <li><?php echo sprintf( __('Due On: %s', 'subway'), $order->created ); ?></li>
+                <li><?php echo esc_html( sprintf( __( 'Invoice ID: %s', 'subway' ), $order->invoice_number ) ); ?></li>
+                <li><?php echo esc_html( sprintf( __( 'Billed On: %s', 'subway' ), $order->created ) ); ?></li>
+                <li><?php echo esc_html( sprintf( __( 'Due On: %s', 'subway' ), $order->created ) ); ?></li>
             </ul>
             <!--Invoice Merchant End-->
         </div>
@@ -51,20 +57,51 @@
         <div id="subway-invoice-customer" class="subway-flex-column-50">
             <!--Invoice Merchant-->
             <h4 id="subway-invoice-customer-heading">Bill To</h4>
+
             <ul class="subway-invoice-list-details">
-                <li><h4 id="subway-invoice-customer-name">Joseph Gabito</h4></li>
-                <li>3rd Road #4 Jupiter Street, Puentebella Subdivision</li>
-                <li>Bacolod City, Negros Occidental 6100</li>
-                <li>Philippines</li>
+                <li>
+                    <h4 id="subway-invoice-customer-name">
+						<?php echo esc_html( $details->gateway_customer_name ); ?>
+						<?php echo esc_html( $details->gateway_customer_lastname ); ?>
+                    </h4>
+					<?php echo esc_html( $details->gateway_customer_email ); ?>
+                </li>
+                <li>
+					<?php echo esc_html( $details->gateway_customer_address_line_1 ); ?>
+                </li>
+                <li>
+					<?php echo esc_html( $details->gateway_customer_address_line_2 ); ?>
+                </li>
+                <li>
+					<?php echo esc_html( $details->gateway_customer_city ); ?>
+					<?php if ( ! empty( $details->gateway_customer_postal_code ) ): ?>
+                        , <?php echo esc_html( $details->gateway_customer_postal_code ); ?>
+					<?php endif; ?>
+                </li>
+                <li>
+					<?php echo esc_html( $details->gateway_customer_state ); ?>
+					<?php if ( ! empty( $details->gateway_customer_country ) ): ?>
+                        , <?php echo esc_html( $details->gateway_customer_country ); ?>
+					<?php endif; ?>
+                </li>
             </ul>
             <!--Invoice Merchant End-->
         </div>
+
+		<?php
+		$products = new \Subway\Memberships\Products\Products();
+		$plan     = $products->get_product( $invoice['order']->product_id );
+		?>
         <div class="subway-flex-column-50">
             <!--Invoice Merchant-->
             <div id="subway-invoice-payment-status">
                 <h3>Paid</h3>
-                <h4 id="subway-invoice-payment-status-date">Aug 23, 2019</h4>
-                <h4 id="subway-invoice-payment-status-amount">$19.00</h4>
+                <h4 id="subway-invoice-payment-status-date">
+					<?php echo esc_html( $plan->get_date_created() ); ?>
+                </h4>
+                <h4 id="subway-invoice-payment-status-amount">
+					<?php echo esc_html( $plan->get_taxed_price() ); ?>
+                </h4>
             </div>
             <!--Invoice Merchant End-->
         </div>
@@ -77,17 +114,21 @@
                 <tr>
                     <th>Description</th>
                     <th></th>
-                    <th>Qty</th>
                     <th>Price</th>
                     <th>Sub Total</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td colspan="2">Membership - Elements $19</td>
-                    <td>1</td>
-                    <td>$19.00</td>
-                    <td>$19.00</td>
+                    <td colspan="2">
+						<?php echo esc_html( $plan->get_name() ); ?>
+                    </td>
+                    <td>
+						<?php echo esc_html( $plan->get_displayed_price_without_tax() ); ?>
+                    </td>
+                    <td id="subway-invoice-row-subtotal">
+						<?php echo esc_html( $plan->get_displayed_price_without_tax() ); ?>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -101,23 +142,26 @@
             <table id="subway-invoice-numbers">
                 <tr>
                     <td>Subtotal</td>
-                    <td>$19.00</td>
+                    <td><?php echo esc_html( $plan->get_displayed_price_without_tax() ); ?></td>
                 </tr>
                 <tr>
-                    <td>Tax (10%)</td>
-                    <td>$2.00</td>
+                    <td>Tax (<?php echo esc_html( $plan->get_tax_rate() ); ?>%)</td>
+                    <td><?php echo esc_html( $plan->get_tax_amount() ); ?></td>
                 </tr>
                 <tr>
                     <td>Total</td>
-                    <td>$21.00</td>
+                    <td><?php echo esc_html( $plan->get_taxed_price() ); ?></td>
                 </tr>
                 <tr>
                     <td>Paid</td>
-                    <td>($21.00)</td>
+                    <td>(<?php echo esc_html( $plan->get_taxed_price() ); ?>)</td>
                 </tr>
                 <tr>
                     <td>Amount Due</td>
-                    <td>$0.00</td>
+                    <td>
+						<?php echo esc_html( $order->currency ); ?>
+                        0.00
+                    </td>
                 </tr>
             </table>
         </div>
@@ -126,13 +170,53 @@
     <div class="subway-flex-wrap">
         <div class="subway-flex-column-100">
             <h5>Payments</h5>
-            Aug 23, 2019 $19.00 Payment from PayPal
+			<?php echo $order->created ?>
+			<?php echo $plan->get_displayed_price_without_tax() ?>
+            Payment from
+			<?php $order->gateway; ?>
+
             <h5>Notes</h5>
             <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id vehicula ex, at fringilla felis. Donec
-                pellentesque, nulla at ultricies dictum, tortor velit dapibus nisl, id dapibus nibh turpis vitae augue.
-                Interdum et malesuada fames ac ante ipsum primis in faucibus.
+                @todo.
             </p>
         </div>
     </div>
 </div>
+<div id="subway-invoice-customer-actions">
+    <p>
+        <a class="sw-button" href="#" id="subway-invoice-button-print" title="<?php esc_attr_e( 'Print Invoice', 'subway' ); ?>">
+			<?php esc_html_e( 'Print Invoice', 'subway' ); ?>
+        </a>
+    </p>
+</div>
+<script>
+    jQuery(document).ready(function ($) {
+        'use strict';
+
+        $('#subway-invoice-button-print').on('click', function (e) {
+            e.preventDefault();
+            subway_invoice_print_element('subway-user-invoice');
+        });
+
+        var subway_invoice_print_element = function (elem) {
+
+            var print_window = window.open('', 'PRINT', 'height=400,width=600');
+
+            print_window.document.write('<html><head><title>' + document.title + '</title>');
+            print_window.document.write('</head><body >');
+            print_window.document.write('<h1>' + document.title + '</h1>');
+            print_window.document.write(document.getElementById(elem).innerHTML);
+            print_window.document.write('</body></html>');
+
+            print_window.document.close(); // necessary for IE >= 10
+            print_window.focus(); // necessary for IE >= 10*/
+
+            print_window.print();
+            print_window.close();
+
+            return true;
+        }
+    });
+
+
+</script>
