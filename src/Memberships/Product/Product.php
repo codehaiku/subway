@@ -173,6 +173,41 @@ class Product {
 		return $this;
 	}
 
+	public function fetch_all() {
+
+		$db = Helpers::get_db();
+
+		$stmt = $db->prepare( "SELECT * FROM $this->table WHERE id > %d", 0 );
+
+		$results = $db->get_results( $stmt, OBJECT );
+
+		$products = [];
+
+		if ( ! empty( $results ) ) {
+
+			foreach ( $results as $result ):
+
+				$p = new self();
+
+				$p->set_id( $result->id )
+				  ->set_name( $result->name )
+				  ->set_description( $result->description )
+				  ->set_status( $result->status )
+				  ->set_tax_rate( $result->tax_rate )
+				  ->set_tax_displayed( $result->tax_displayed )
+				  ->set_date_updated( $result->date_updated )
+				  ->set_date_created( $result->date_created );
+
+				$products[] = $p;
+
+			endforeach;
+
+		}
+
+		return $products;
+
+	}
+
 	/**
 	 * Retrieve a product by id.
 	 *
