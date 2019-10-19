@@ -7,15 +7,15 @@ use Subway\Earnings\Earnings;
 use Subway\FlashMessage\FlashMessage;
 use Subway\Memberships\Orders\Details;
 use Subway\Memberships\Orders\Orders;
-use Subway\Memberships\Products\ListTable;
-use Subway\Memberships\Products\Products;
+use Subway\Memberships\Plan\ListTable;
+use Subway\Memberships\Plan\Plan;
 use Subway\View\View;
 
 class Settings {
 
 	public function menu() {
 
-		// Add top-level menu "Membership".
+		// Add top-level menu "Memberships".
 		$hook = add_menu_page(
 			esc_html__( 'Memberships Settings', 'subway' ),
 			esc_html__( 'Memberships', 'subway' ),
@@ -116,7 +116,7 @@ class Settings {
 
 		$view->render(
 			'form-membership-products',
-			[ 'view' => $view, 'products' => new Products(), 'flash_message' => $flash, 'flash_message_add' => $flash_add ]
+			[ 'view' => $view, 'products' => new Plan(), 'flash_message' => $flash, 'flash_message_add' => $flash_add ]
 		);
 
 		return $this;
@@ -525,7 +525,7 @@ class Settings {
 		$option = 'per_page';
 
 		$args = array(
-			'label'   => esc_html__( 'Products', 'subway' ),
+			'label'   => esc_html__( 'Plan', 'subway' ),
 			'default' => 10,
 			'option'  => 'products_per_page'
 		);
