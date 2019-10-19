@@ -206,7 +206,7 @@ $product_id = filter_input( INPUT_GET, 'product_id', 519 );
                         </p>
                         <p>
                             <a href="#" class="sw-button">
-                                <?php esc_html_e('Select Membership Plan','subway'); ?>
+                                <?php esc_html_e('Select Memberships Plan','subway'); ?>
                             </a>
                         </p>
 
