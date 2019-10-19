@@ -57,7 +57,7 @@
                 <form method="POST" action="<?php echo admin_url('admin-post.php'); ?>">
                     <input type="hidden" name="action" value="repair_products_count" />
                     <button type="submit" class="button button-primary button-large">
-			            <?php esc_html_e('Repair Products Count', 'subway'); ?>
+			            <?php esc_html_e('Repair Plan Count', 'subway'); ?>
                     </button>
                 </form>
             </td>
