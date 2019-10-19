@@ -3,7 +3,7 @@
 namespace Subway\Post\Shortcodes;
 
 use Subway\Currency\Currency;
-use Subway\Memberships\Products\Products;
+use Subway\Memberships\Plan\Plan;
 use Subway\Options\Options;
 use Subway\View\View;
 
@@ -21,10 +21,10 @@ class Checkout {
 
 		$product_id = filter_input( INPUT_GET, 'product_id', FILTER_SANITIZE_NUMBER_INT );
 
-		$products = new Products();
+		$products = new Plan();
 		$products->set_display_tax( true );
 
-		$product = $products->get_product( $product_id );
+		$product = $products->get_plan( $product_id );
 
 		$currency = new Currency();
 		$options  = new Options();
