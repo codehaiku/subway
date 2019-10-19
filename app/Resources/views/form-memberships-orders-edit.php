@@ -54,8 +54,8 @@
 
                     <tr>
 	                    <?php
-	                    $products = new \Subway\Memberships\Products\Products();
-	                    $product = $products->get_product( $order->product_id );
+	                    $products = new \Subway\Memberships\Plan\Plan();
+	                    $product = $products->get_plan( $order->product_id );
 	                    ?>
                         <td>Product/Plan ID</td>
                         <td><?php echo esc_html( $product->get_name() ); ?></td>
