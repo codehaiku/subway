@@ -15,6 +15,7 @@ class Settings {
 
 	public function menu() {
 
+
 		// Add top-level menu "Memberships".
 		$hook = add_menu_page(
 			esc_html__( 'Memberships Settings', 'subway' ),
@@ -26,14 +27,24 @@ class Settings {
 			apply_filters( 'subway-memberships-admin-menu-position', 2 )
 		);
 
-		// Add 'dashboard' sub menu page.
+		// Add 'Products' sub menu page.
+		add_submenu_page(
+			'subway-membership',
+			esc_html__( 'Memberships: Products', 'subway' ),
+			esc_html__( 'Products', 'subway' ),
+			'manage_options',
+			'subway-membership',
+			array( $this, 'membership_products' )
+		);
+
+		// Add 'All Plans' sub menu page.
 		add_submenu_page(
 			'subway-membership',
 			esc_html__( 'Memberships: Plans', 'subway' ),
 			esc_html__( 'All Plans', 'subway' ),
 			'manage_options',
-			'subway-membership',
-			array( $this, 'membership_products' )
+			'subway-membership-plans',
+			array( $this, 'membership_plans' )
 		);
 
 		// Add Orders Sub Menu Page.
@@ -108,14 +119,24 @@ class Settings {
 
 		$view = new View();
 
+		$view->render('form-memberships-products', []);
+
+		return $this;
+
+	}
+
+	public function membership_plans() {
+
+		wp_enqueue_script( 'subway-product-update-js' );
+
+		$view = new View();
+
 		$flash = new FlashMessage( get_current_user_id(), 'product-edit-submit-messages' );
 
 		$flash_add = new FlashMessage( get_current_user_id(), 'product-add-submit-messages' );
 
-		wp_enqueue_script( 'subway-product-update-js' );
-
 		$view->render(
-			'form-membership-products',
+			'form-memberships-plans',
 			[ 'view' => $view, 'products' => new Plan(), 'flash_message' => $flash, 'flash_message_add' => $flash_add ]
 		);
 
@@ -571,6 +592,7 @@ class Settings {
 		$styled_settings_pages = [
 			'memberships_page_subway-membership-general',
 			'memberships_page_subway-membership-earnings',
+			'memberships_page_subway-membership-plans',
 			'toplevel_page_subway-membership'
 		];
 
@@ -607,7 +629,7 @@ class Settings {
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'assets' ) );
 
-		add_action( 'load-toplevel_page_subway-membership', array( $this, 'membership_screen_options' ) );
+		add_action( 'load-memberships_page_subway-membership-plans', array( $this, 'membership_screen_options' ) );
 
 		add_action( 'load-memberships_page_subway-membership-orders', array(
 			$this,

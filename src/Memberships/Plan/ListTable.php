@@ -51,7 +51,7 @@ class ListTable extends \WP_List_Table {
 			}
 
 			$view_items = sprintf(
-				'<a title="%s" class="%s" href="admin.php?page=subway-membership&status=%s">%s</a>',
+				'<a title="%s" class="%s" href="admin.php?page=subway-membership-plans&status=%s">%s</a>',
 				$label, $class, $key, $label
 			);
 

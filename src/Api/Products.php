@@ -251,7 +251,7 @@ class Products extends \WP_REST_Controller {
 		if ( $is_deleted ) {
 
 			$http_referrer = esc_url( add_query_arg(
-				[ 'page' => 'subway-membership' ],
+				[ 'page' => 'subway-membership-plans' ],
 				get_admin_url() . 'admin.php'
 			) );
 

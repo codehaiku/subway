@@ -18,12 +18,12 @@
     <div class="wrap">
 
         <h1 class="wp-heading-inline">
-			<?php esc_html_e( 'Create New Memberships Plan', 'subway' ); ?>
+			<?php esc_html_e( 'Create New Membership Plan', 'subway' ); ?>
         </h1>
 
         <hr class="wp-header-end">
 
-		<?php $view->render( 'form-memberships-products-new', [
+		<?php $view->render( 'form-memberships-plans-create', [
 			'flash_message_add' => $flash_message_add
 		] ); ?>
 
@@ -34,12 +34,12 @@
     <div class="wrap">
 
         <h1 class="wp-heading-inline">
-			<?php printf( esc_html__( 'Configure Memberships Plan: #%d', 'subway' ), $_GET['product'] ); ?>
+			<?php printf( esc_html__( 'Configure Membership Plan: #%d', 'subway' ), $_GET['product'] ); ?>
         </h1>
 
         <hr/>
 
-		<?php $view->render( 'form-memberships-products-edit', [
+		<?php $view->render( 'form-memberships-plans-edit', [
 			'membership'     => $products,
 			'flash_messages' => $flash_message->get()
 		] ); ?>
@@ -50,11 +50,13 @@
 
     <div class="wrap">
 
-        <h1 class="wp-heading-inline"><?php esc_html_e( 'Memberships Plans', 'subway' ); ?></h1>
+        <h1 class="wp-heading-inline">
+            <?php esc_html_e( 'Membership Plans', 'subway' ); ?>
+        </h1>
 
-        <a href="?page=subway-membership&new=yes"
-
-           class="page-title-action"><?php esc_html_e( 'Add New', 'subway' ); ?></a>
+        <a href="?page=subway-membership-plans&new=yes" class="page-title-action">
+            <?php esc_html_e( 'Add New', 'subway' ); ?>
+        </a>
 
         <hr class="wp-header-end">
 
@@ -64,7 +66,7 @@
 
         <form method="GET">
 
-            <input type="hidden" name="page" value="subway-membership"/>
+            <input type="hidden" name="page" value="subway-membership-plans"/>
 
 			<?php $SubwayListTableMembership->search_box( 'search', 'search_id' ); ?>
 

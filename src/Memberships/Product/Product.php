@@ -10,6 +10,7 @@ class Product {
 	protected $id;
 	protected $name;
 	protected $description;
+	protected $status = 'draft';
 	protected $tax_rate;
 	protected $tax_displayed = false;
 	protected $date_created = '';
@@ -80,6 +81,25 @@ class Product {
 
 		return $this;
 	}
+
+	/**
+	 * @return string
+	 */
+	public function get_status() {
+		return $this->status;
+	}
+
+	/**
+	 * @param string $status
+	 *
+	 * @return Product
+	 */
+	public function set_status( $status ) {
+		$this->status = $status;
+
+		return $this;
+	}
+
 
 	/**
 	 * @return mixed
@@ -174,6 +194,7 @@ class Product {
 			$this->set_id( $result->id )
 			     ->set_name( $result->name )
 			     ->set_description( $result->description )
+			     ->set_status( $result->status )
 			     ->set_tax_rate( $result->tax_rate )
 			     ->set_tax_displayed( $result->tax_displayed )
 			     ->set_date_updated( $result->date_updated )
@@ -198,6 +219,7 @@ class Product {
 		$defaults = [
 			'name'          => '',
 			'description'   => '',
+			'status'        => 'draft',
 			'tax_rate'      => 0,
 			'tax_displayed' => false,
 			'date_updated'  => current_time( 'mysql' ),
@@ -212,10 +234,13 @@ class Product {
 		], $defaults );
 
 		$format = [
-			'%s',
-			'%s',
-			'%f',
-			'%d'
+			'%s', // Name.
+			'%s', // Description.
+			'%s', // Status.
+			'%f', // Tax Rate.
+			'%d', // Tax Displayed.
+			'%s', // Date Updated.
+			'%s', // Date Created.
 		];
 
 		$inserted = $db->insert( $this->table, $data, $format );
@@ -264,7 +289,7 @@ class Product {
 			$this->table, $data, $where, $format, $where_format
 		);
 
-		if ( $updated ) {
+		if ( true === $updated ) {
 			return true;
 		}
 
@@ -272,10 +297,35 @@ class Product {
 
 	}
 
+	/**
+	 * Updates the product status to 'trashed'.
+	 * @return bool|string
+	 */
 	public function trash() {
+
+		$db = Helpers::get_db();
+
+		$data         = [ 'status' => 'trashed' ];
+		$where        = [ 'id' => $this->get_id() ];
+		$format       = [ '%s' ];
+		$where_format = [ '%d' ];
+
+		$trashed = $db->update( $this->table, $data, $where, $format, $where_format );
+
+		if ( true === $trashed ) {
+			return true;
+		} else {
+			return $db->last_error;
+		}
+
 	}
 
+	/**
+	 * Permanently Deletes the Product.
+	 * @return bool
+	 */
 	public function delete() {
+		return true;
 	}
 
 }

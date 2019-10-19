@@ -48,6 +48,7 @@ class InstallTable {
 				id mediumint(9) NOT NULL AUTO_INCREMENT,
 				name varchar(255) NOT NULL,
 				description text NULL,
+				status varchar(100) NOT NULL,
 				tax_rate double NOT NULL,
 				tax_displayed tinyint(1) NOT NULL,
 				date_created datetime DEFAULT CURRENT_TIMESTAMP,
