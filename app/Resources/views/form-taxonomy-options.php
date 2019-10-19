@@ -1,7 +1,7 @@
 <tr class="form-field subway-membership-access-type">
     <th scope="row" valign="top">
         <label for="subway-membership-access-type">
-			<?php esc_html_e( 'Membership Access', 'subway' ); ?>
+			<?php esc_html_e( 'Memberships Access', 'subway' ); ?>
         </label>
     </th>
 
