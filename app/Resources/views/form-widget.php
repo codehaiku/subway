@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <h4>
 	<a class="subway-widget-options-toggle button" data-target="subway-<?php echo esc_attr( $widget->id ); ?>" href="#">
 		<span class="dashicons dashicons-lock"></span>
-		<?php esc_html_e( 'Edit Membership Access', 'subway' ); ?>
+		<?php esc_html_e( 'Edit Memberships Access', 'subway' ); ?>
 	</a>
 </h4>
 <?php if ( ! isset( $instance['subway-widget-access-type'] ) ) : ?>
