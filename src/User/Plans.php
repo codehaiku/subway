@@ -2,13 +2,13 @@
 
 namespace Subway\User;
 
-use Subway\Memberships\Products\Products;
+use Subway\Memberships\Plan\Plan;
 
 class Plans {
 
 	protected $id;
 	protected $user_id;
-	protected $product_id;
+	protected $plan_id;
 	protected $status;
 	protected $trial_status;
 	protected $notes;
@@ -66,17 +66,17 @@ class Plans {
 	/**
 	 * @return mixed
 	 */
-	public function get_product_id() {
-		return $this->product_id;
+	public function get_plan_id() {
+		return $this->plan_id;
 	}
 
 	/**
-	 * @param mixed $product_id
+	 * @param mixed $plan_id
 	 *
 	 * @return Plans
 	 */
-	public function set_product_id( $product_id ) {
-		$this->product_id = $product_id;
+	public function set_product_id( $plan_id ) {
+		$this->plan_id = plan_id;
 
 		return $this;
 	}
@@ -210,9 +210,9 @@ class Plans {
 
 			foreach ( $results as $result ) {
 
-				$product = new Products();
+				$product = new Plan();
 
-				$p = $product->get_product( $result->prod_id );
+				$p = $product->get_plan( $result->prod_id );
 
 				$plans[] = $p;
 
