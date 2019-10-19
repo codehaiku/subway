@@ -12,7 +12,7 @@ use PayPal\Api\RedirectUrls;
 use PayPal\Api\Transaction;
 use Subway\Helpers\Helpers;
 use Subway\Memberships\Orders\Details as OrderDetails;
-use Subway\Memberships\Products\Products;
+use Subway\Memberships\Plan\Plan;
 use Subway\User\Plans;
 
 class Payment {
@@ -67,9 +67,9 @@ class Payment {
 
 		}
 
-		$products = new Products();
+		$products = new Plan();
 
-		$product = $products->get_product( $product_id );
+		$product = $products->get_plan( $product_id );
 
 		if ( empty( $product ) ) {
 
