@@ -1,12 +1,12 @@
 <?php
 
-namespace Subway\Memberships\Products;
+namespace Subway\Memberships\Plan;
 
 use Subway\FlashMessage\FlashMessage;
 use Subway\Helpers\Helpers;
 use Subway\Validators\GUMP;
 
-class Controller extends Products {
+class Controller extends Plan {
 
 	public function add_action() {
 
