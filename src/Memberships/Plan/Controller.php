@@ -158,7 +158,7 @@ class Controller extends Products {
 
 			$flash->add( [
 				'type'    => 'success',
-				'message' => __( 'Membership Plan has been successfully updated.', 'subway' )
+				'message' => __( 'Memberships Plan has been successfully updated.', 'subway' )
 			] );
 
 			wp_safe_redirect( $referrer, 302 );

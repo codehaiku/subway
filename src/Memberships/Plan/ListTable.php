@@ -3,7 +3,6 @@
 namespace Subway\Memberships\Products;
 
 use Subway\Currency\Currency;
-use Subway\Memberships\Products\Products;
 
 class ListTable extends \WP_List_Table {
 

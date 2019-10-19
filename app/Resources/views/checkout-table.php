@@ -3,7 +3,7 @@
         <thead>
         <tr>
             <th colspan="2">
-				<?php esc_html_e( 'Selected Membership Plan', 'subway' ); ?>
+				<?php esc_html_e( 'Selected Memberships Plan', 'subway' ); ?>
             </th>
         </tr>
         </thead>
@@ -91,7 +91,7 @@
 	                <?php esc_html_e( ' Click the button below to proceed.', 'subway' ); ?>
                 </p>
                 <button type="submit" class="sw-button subway-checkout-place-order-button">
-					<?php esc_html_e( 'Free Membership', 'subway' ); ?>
+					<?php esc_html_e( 'Free Memberships', 'subway' ); ?>
                 </button>
             </div><!--.subway-checkout-place-order-->
         </div>

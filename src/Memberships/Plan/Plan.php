@@ -1,6 +1,6 @@
 <?php
 
-namespace Subway\Memberships\Products;
+namespace Subway\Memberships\Plan;
 
 use mysql_xdevapi\Exception;
 use Subway\Currency\Currency;
