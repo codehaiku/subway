@@ -12,7 +12,7 @@ $current_plan = get_user_meta( get_current_user_id(), 'subway_user_membership_pr
             <thead>
             <tr>
                 <th colspan="3">
-					<?php esc_html_e( 'Membership Plans', 'subway' ); ?>
+					<?php esc_html_e( 'Memberships Plans', 'subway' ); ?>
                 </th>
             </tr>
             <tr>
@@ -61,8 +61,8 @@ $current_plan = get_user_meta( get_current_user_id(), 'subway_user_membership_pr
                             <?php else: ?>
 
                                 <a class="sw-button"
-                                   href="<?php echo esc_url( $product->get_product_checkout_url( $list_product->get_id() ) ); ?>">
-                                    <?php esc_html_e( 'Select Membership', 'subway' ); ?>
+                                   href="<?php echo esc_url( $product->get_plan_checkout_url( $list_product->get_id() ) ); ?>">
+                                    <?php esc_html_e( 'Select Memberships', 'subway' ); ?>
                                 </a>
 
                             <?php endif; ?>
@@ -77,10 +77,10 @@ $current_plan = get_user_meta( get_current_user_id(), 'subway_user_membership_pr
         </table>
 	<?php else: ?>
 
-        <div class="sw-form-errors">
+        <div class="subway-alert subway-alert-info">
 
             <p class="sw-error">
-				<?php esc_html_e( 'There are no memberships product available at the moment.', 'subway' ); ?>
+				<?php esc_html_e( 'There are no membership products and plans available right now.', 'subway' ); ?>
             </p>
 
         </div>
