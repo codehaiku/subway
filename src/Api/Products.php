@@ -3,7 +3,7 @@
 namespace Subway\Api;
 
 /**
- * Class Products
+ * Class Plan
  * @package Subway\Api
  */
 class Products extends \WP_REST_Controller {
@@ -159,7 +159,7 @@ class Products extends \WP_REST_Controller {
 
 		$sku = $request->get_param( 'sku' );
 
-		$membership = new \Subway\Memberships\Products\Products();
+		$membership = new \Subway\Memberships\Plan\Plan();
 
 		$membership->update(
 			[
@@ -240,7 +240,7 @@ class Products extends \WP_REST_Controller {
 
 		status_header( 200 );
 
-		$products = new \Subway\Memberships\Products\Products();
+		$products = new \Subway\Memberships\Plan\Plan();
 
 		$product_id = filter_input( INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT );
 
