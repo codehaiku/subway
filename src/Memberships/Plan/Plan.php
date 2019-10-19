@@ -6,10 +6,10 @@ use mysql_xdevapi\Exception;
 use Subway\Currency\Currency;
 
 /**
- * Class Products
- * @package Subway\Memberships\Products
+ * Class Plan
+ * @package Subway\Memberships\Plan
  */
-class Products {
+class Plan {
 
 	var $table = '';
 
@@ -31,7 +31,7 @@ class Products {
 
 		global $wpdb;
 
-		$this->table = $wpdb->prefix . 'subway_memberships_products';
+		$this->table = $wpdb->prefix . 'subway_memberships_products_plans';
 
 		$this->tax_rate = get_option( 'subway_tax_rate', 0.00 );
 
@@ -47,7 +47,7 @@ class Products {
 	/**
 	 * @param bool $display_tax
 	 *
-	 * @return Products
+	 * @return Plan
 	 */
 	public function set_display_tax( $display_tax ) {
 		$this->display_tax = $display_tax;
@@ -66,7 +66,7 @@ class Products {
 	/**
 	 * @param float $real_amount
 	 *
-	 * @return Products
+	 * @return Plan
 	 */
 	public function set_real_amount( $real_amount ) {
 		$this->real_amount = $real_amount;
@@ -92,7 +92,7 @@ class Products {
 	/**
 	 * @param string $id
 	 *
-	 * @return Products
+	 * @return Plan
 	 */
 	public function set_id( $id ) {
 		$this->id = $id;
@@ -111,7 +111,7 @@ class Products {
 	/**
 	 * @param string $name
 	 *
-	 * @return Products
+	 * @return Plan
 	 */
 	public function set_name( $name ) {
 		$this->name = $name;
@@ -129,7 +129,7 @@ class Products {
 	/**
 	 * @param string $sku
 	 *
-	 * @return Products
+	 * @return Plan
 	 */
 	public function set_sku( $sku ) {
 		$this->sku = $sku;
@@ -147,7 +147,7 @@ class Products {
 	/**
 	 * @param string $status
 	 *
-	 * @return Products
+	 * @return Plan
 	 */
 	public function set_status( $status ) {
 		$this->status = $status;
@@ -165,7 +165,7 @@ class Products {
 	/**
 	 * @param string $description
 	 *
-	 * @return Products
+	 * @return Plan
 	 */
 	public function set_description( $description ) {
 		$this->description = $description;
@@ -269,7 +269,7 @@ class Products {
 	/**
 	 * @param float $amount
 	 *
-	 * @return Products
+	 * @return Plan
 	 */
 	public function set_amount( $amount ) {
 
@@ -290,7 +290,7 @@ class Products {
 	/**
 	 * @param string $type
 	 *
-	 * @return Products
+	 * @return Plan
 	 */
 	public function set_type( $type ) {
 		$this->type = $type;
@@ -308,7 +308,7 @@ class Products {
 	/**
 	 * @param string $date_created
 	 *
-	 * @return Products
+	 * @return Plan
 	 */
 	public function set_date_created( $date_created ) {
 		$this->date_created = $date_created;
@@ -326,7 +326,7 @@ class Products {
 	/**
 	 * @param string $date_updated
 	 *
-	 * @return Products
+	 * @return Plan
 	 */
 	public function set_date_updated( $date_updated ) {
 		$this->date_updated = $date_updated;
@@ -336,7 +336,7 @@ class Products {
 
 
 
-	public function get_products( $args ) {
+	public function get_plans( $args ) {
 
 		global $wpdb;
 
@@ -382,7 +382,7 @@ class Products {
 
 		foreach ( $results as $result ) {
 
-			$p = new Products();
+			$p = new Plan();
 
 			// Disable tax when administrator disable from option.
 			if ( 0 === $tax_displayed ) {
@@ -417,7 +417,7 @@ class Products {
 	 */
 	public function get_wp_list_table_products( $args ) {
 
-		$products = $this->get_products( $args );
+		$products = $this->get_plans( $args );
 
 		$product_collections = [];
 
@@ -443,7 +443,7 @@ class Products {
 	}
 
 
-	public function get_product( $id ) {
+	public function get_plan( $id ) {
 
 		global $wpdb;
 
@@ -453,7 +453,7 @@ class Products {
 
 		if ( ! empty ( $result ) ) {
 
-			$product = new Products();
+			$product = new Plan();
 
 			$product->set_id( $result->id );
 			$product->set_name( $result->name );
@@ -565,7 +565,7 @@ class Products {
 
 	}
 
-	public function get_product_checkout_url( $id ) {
+	public function get_plan_checkout_url( $id ) {
 
 		$checkout_url = esc_url( add_query_arg( 'product_id', $id, 'http://multisite.local/checkout' ) );
 
@@ -573,11 +573,11 @@ class Products {
 			$checkout_url = esc_url( add_query_arg( 'product_id', $id, 'http://multisite.local/create-account' ) );
 		}
 
-		return apply_filters( 'get_product_checkout_url', $checkout_url );
+		return apply_filters( 'get_plan_checkout_url', $checkout_url );
 
 	}
 
-	public function get_product_url() {
+	public function get_plan_url() {
 		return '#';
 	}
 
