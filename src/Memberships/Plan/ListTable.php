@@ -1,6 +1,6 @@
 <?php
 
-namespace Subway\Memberships\Products;
+namespace Subway\Memberships\Plan;
 
 use Subway\Currency\Currency;
 
@@ -65,7 +65,7 @@ class ListTable extends \WP_List_Table {
 
 	function prepare_items() {
 
-		$memberships = new Products();
+		$memberships = new Plan();
 
 		// Process bulk actions.
 		$this->process_bulk_action( $memberships );
