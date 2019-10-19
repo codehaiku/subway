@@ -3,7 +3,7 @@
 namespace Subway\Memberships\Orders;
 
 use Subway\Helpers\Helpers;
-use Subway\Memberships\Products\Products;
+use Subway\Memberships\Plan\Plan;
 
 class Invoices {
 
