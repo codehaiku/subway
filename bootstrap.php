@@ -7,7 +7,7 @@ use Subway\Archives\Author;
 use Subway\Hooks\Hooks;
 use Subway\Memberships\Orders\Details;
 use Subway\Memberships\Orders\Orders;
-use Subway\Memberships\Products\Controller;
+use Subway\Memberships\Plan\Controller;
 use Subway\Migrate\InstallTables;
 use Subway\Options\Admin\Settings;
 use Subway\Post\Shortcodes\Checkout;
@@ -105,7 +105,7 @@ $membership->attach_hooks();
 $checkout = new Checkout( $view );
 $checkout->attach_hooks();
 
-// Load Membership Tools.
+// Load Memberships Tools.
 $checkout = new Repair( $wpdb );
 $checkout->attach_hooks();
 
@@ -113,7 +113,7 @@ $checkout->attach_hooks();
 $order = new Orders( $wpdb );
 $order->attach_hooks();
 
-// Load Products Controller.
+// Load Plan Controller.
 $products_controller = new Controller();
 $products_controller->attach_hooks();
 
