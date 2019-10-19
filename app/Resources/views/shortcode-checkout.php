@@ -68,11 +68,11 @@ $user       = wp_get_current_user();
                         </tr>
                         <tr>
                             <td>
-                                <?php esc_html_e('Current Membership Plan', 'subway'); ?>
+                                <?php esc_html_e('Current Memberships Plan', 'subway'); ?>
                             </td>
                             <td>
                                 <strong>
-                                    <a title="<?php echo esc_attr( $product->get_name() ); ?>" href="<?php echo esc_url( $product->get_product_url() ); ?>">
+                                    <a title="<?php echo esc_attr( $product->get_name() ); ?>" href="<?php echo esc_url( $product->get_plan_url() ); ?>">
                                         <?php echo esc_html( $product->get_name() ); ?>
                                     </a>
                                 </strong>
