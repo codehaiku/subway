@@ -40,14 +40,14 @@ class Metabox {
 
 		foreach ( $post_types as $post_type => $value ) {
 			add_meta_box( 'subway_comment_metabox',
-				esc_html__( 'Membership Discussion', 'subway' ),
+				esc_html__( 'Memberships Discussion', 'subway' ),
 				function ( $post ) {
 					$this->discussion( $post );
 				},
 				$post_type, 'side', 'high'
 			);
 			add_meta_box( 'subway_visibility_metabox',
-				esc_html__( 'Membership Access', 'subway' ),
+				esc_html__( 'Memberships Access', 'subway' ),
 				function ( $post ) {
 					$this->visibility( $post );
 				},
