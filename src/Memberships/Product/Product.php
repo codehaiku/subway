@@ -173,6 +173,10 @@ class Product {
 		return $this;
 	}
 
+	public function get_preview_image_url() {
+		return 'https://place-hold.it/300x250/#eee';
+	}
+
 	public function fetch_all() {
 
 		$db = Helpers::get_db();

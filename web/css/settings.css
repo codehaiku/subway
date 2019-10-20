@@ -351,6 +351,7 @@ ul#product-tabs li a:focus {
 #billing-cycle-number {
     width: 45px;
 }
+
 #trial-billing-cycle-period,
 #billing-cycle-period {
     width: 85px;
@@ -421,6 +422,22 @@ ul#product-tabs li a:focus {
     flex-basis: 100%;
 }
 
+.subway-flex-column-by-three {
+    flex-basis: 33.3333%;
+}
+.subway-flex-column-by-four {
+    flex-basis: 25%;
+}
+.subway-flex-column-by-two {
+    flex-basis: 50%;
+}
+.spacer {
+    padding: 0 15px 0 0;
+}
+.subway-flex-column-by-three:nth-child(3n) .spacer {
+    padding-right: 0;
+}
+
 #checkout-link-section {
     text-align: center;
     border: 1px solid #0073aa;
@@ -428,9 +445,27 @@ ul#product-tabs li a:focus {
     padding: 20px;
     margin-bottom: 0;
 }
+
 #trial-period-details,
 #billing-cycle, #billing-limit {
     display: none;
 }
 
+.subway-product-preview-image {
+    max-width: 100%;
+    width: 100%;
+}
+
+.subway-flex-wrap .subway-card {
+    margin-bottom: 0;
+}
+
+span.product-status {
+    text-transform: capitalize;
+    border: 1px solid;
+    padding: 5px 10px;
+    display: inline-block;
+    border-radius: 3px;
+    color: #72777c;
+}
 
