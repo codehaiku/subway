@@ -188,8 +188,9 @@ ul.fun-facts .fun-facts-24-hours {
 div.subway-card {
     padding: 20px;
     background: #fff;
-    box-shadow: 1px 1px 4px #c3c3c3;
-    border-radius: 0 3px 3px 3px;
+    box-shadow: 0 1px 0 #ccc;
+    border: 1px solid #ccc;
+    border-radius: 3px;
     margin: 20px 0;
 }
 
@@ -378,6 +379,10 @@ ul#product-tabs li a:focus {
     flex-wrap: wrap;
 }
 
+.subway-flex-wrap.h-align-center {
+    align-items: center;
+}
+
 .subway-flex-inner-wrap {
     padding: 10px 15px;
 }
@@ -425,17 +430,36 @@ ul#product-tabs li a:focus {
 .subway-flex-column-by-three {
     flex-basis: 33.3333%;
 }
+
 .subway-flex-column-by-four {
     flex-basis: 25%;
 }
+
 .subway-flex-column-by-two {
     flex-basis: 50%;
 }
-.spacer {
-    padding: 0 15px 0 0;
+
+.subway-text-align-left {
+    text-align: left;
 }
-.subway-flex-column-by-three:nth-child(3n) .spacer {
-    padding-right: 0;
+
+.subway-text-align-right {
+    text-align: right;
+}
+
+.subway-text-align-center {
+    text-align: center;
+}
+
+.subway-padding-right-5 {
+    padding-right: 5px;
+}
+
+.subway-mg-top-20 {
+    margin-top: 20px;
+}
+.spacer {
+    padding: 10px 20px;
 }
 
 #checkout-link-section {
@@ -469,3 +493,50 @@ span.product-status {
     color: #72777c;
 }
 
+.subway-pagination {
+}
+
+.subway-pagination .label{
+    margin-top: 5px;
+    display: inline-block;
+}
+
+.subway-pagination .page-numbers {
+    padding: 5px 10px;
+    background: #f7f7f7;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    text-decoration: none;
+    color: #555;
+    box-shadow: 0 1px 0 #ccc;
+    vertical-align: top;
+}
+
+.subway-pagination .page-numbers:hover {
+    background: #fafafa;
+    border-color: #999;
+    color: #23282d;
+}
+
+.subway-pagination .page-numbers:active,
+.subway-pagination .page-numbers.current {
+    background: #eee;
+    border-color: #999;
+    box-shadow: inset 0 2px 5px -3px rgba(0, 0, 0, .5);
+    transform: translateY(1px);
+}
+
+.subway-product-preview {
+    margin: -20px -20px 0 -20px;
+}
+
+.subway-filter select {
+    height: 31px;
+    margin-top: 0;
+    width: 200px;
+}
+
+.subway-section-offset {
+    margin: 0 -20px;
+}

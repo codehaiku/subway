@@ -174,33 +174,61 @@ class Product {
 	}
 
 	public function get_preview_image_url() {
-		return 'https://place-hold.it/300x250/#eee';
+
+		return 'https://picsum.photos/id/' . rand( 200, 400 ) . '/350/200';
+
 	}
 
-	public function fetch_all() {
+	public function fetch_all( $args = [] ) {
 
 		$db = Helpers::get_db();
 
-		$stmt = $db->prepare( "SELECT * FROM $this->table WHERE id > %d", 0 );
+		$defaults = [
+			'per_page'     => 12,
+			'current_page' => 1,
+		];
 
-		$results = $db->get_results( $stmt, OBJECT );
+		$args = wp_parse_args( $args, $defaults );
+
+		// Manually determine page query offset (offset + current page (minus one) x posts per page).
+		$args['offset'] = ( absint( $args['current_page'] ) - 1 ) * absint( $args['per_page'] );
+
+		$stmt = $db->prepare(
+			"SELECT SQL_CALC_FOUND_ROWS * FROM $this->table WHERE id > %d
+			LIMIT %d OFFSET %d",
+			0, $args['per_page'], $args['offset']
+		);
+
+		$items = $db->get_results( $stmt, OBJECT );
+
+		$count = $count = $db->get_var( 'SELECT FOUND_ROWS()' );
+
+		$info_result = [
+			'num_pages'    => ceil( $count / $args['per_page'] ),
+			'current_page' => absint( $args['current_page'] ),
+			'total'        => $count
+		];
 
 		$products = [];
 
-		if ( ! empty( $results ) ) {
+		$results = new \stdClass();
 
-			foreach ( $results as $result ):
+		$results->info_result = $info_result;
+
+		if ( ! empty( $items ) ) {
+
+			foreach ( $items as $item ):
 
 				$p = new self();
 
-				$p->set_id( $result->id )
-				  ->set_name( $result->name )
-				  ->set_description( $result->description )
-				  ->set_status( $result->status )
-				  ->set_tax_rate( $result->tax_rate )
-				  ->set_tax_displayed( $result->tax_displayed )
-				  ->set_date_updated( $result->date_updated )
-				  ->set_date_created( $result->date_created );
+				$p->set_id( $item->id )
+				  ->set_name( $item->name )
+				  ->set_description( $item->description )
+				  ->set_status( $item->status )
+				  ->set_tax_rate( $item->tax_rate )
+				  ->set_tax_displayed( $item->tax_displayed )
+				  ->set_date_updated( $item->date_updated )
+				  ->set_date_created( $item->date_created );
 
 				$products[] = $p;
 
@@ -208,7 +236,9 @@ class Product {
 
 		}
 
-		return $products;
+		$results->products = $products;
+
+		return $results;
 
 	}
 
@@ -365,6 +395,28 @@ class Product {
 	 */
 	public function delete() {
 		return true;
+	}
+
+	public function get_pagination( $list ) {
+
+		$current_page = filter_input(
+			INPUT_GET, 'paged', FILTER_VALIDATE_INT,
+			[ 'options' => [ 'default' => 1 ] ]
+		);
+
+		$big = 999999999; // need an unlikely integer
+
+		$paginate_args = array(
+			'format'    => '?paged=%#%',
+			'current'   => max( 1, $current_page ),
+			'total'     => $list->info_result['num_pages'],
+			'prev_text' => __( '&laquo;', 'subway' ),
+			'next_text' => __( '&raquo;', 'subway' ),
+		);
+
+
+		return paginate_links( $paginate_args );
+
 	}
 
 }
