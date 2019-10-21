@@ -175,7 +175,7 @@ class Product {
 
 	public function get_preview_image_url() {
 
-		return 'https://picsum.photos/id/' . rand( 200, 400 ) . '/350/200';
+		return 'https://picsum.photos/id/' . rand( 200, 400 ) . '/700/400';
 
 	}
 
@@ -413,7 +413,6 @@ class Product {
 			'prev_text' => __( '&laquo;', 'subway' ),
 			'next_text' => __( '&raquo;', 'subway' ),
 		);
-
 
 		return paginate_links( $paginate_args );
 

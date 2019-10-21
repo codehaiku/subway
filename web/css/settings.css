@@ -497,7 +497,7 @@ span.product-status {
 }
 
 .subway-pagination .label{
-    margin-top: 5px;
+    margin-top: 6px;
     display: inline-block;
 }
 
@@ -529,6 +529,10 @@ span.product-status {
 
 .subway-product-preview {
     margin: -20px -20px 0 -20px;
+}
+
+.subway-product-title {
+    text-decoration: none;
 }
 
 .subway-filter select {
