@@ -15,6 +15,7 @@ class Plan {
 
 	protected $id = '';
 	protected $name = '';
+	protected $product_id = '';
 	protected $sku = '';
 	protected $status = '';
 	protected $description = '';
@@ -115,6 +116,24 @@ class Plan {
 	 */
 	public function set_name( $name ) {
 		$this->name = $name;
+
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function get_product_id() {
+		return $this->product_id;
+	}
+
+	/**
+	 * @param string $product_id
+	 *
+	 * @return Plan
+	 */
+	public function set_product_id( $product_id ) {
+		$this->product_id = $product_id;
 
 		return $this;
 	}
@@ -256,7 +275,7 @@ class Plan {
 
 		$currency = new Currency();
 
-		$tax_rate    = $this->get_tax_rate() / 100;
+		$tax_rate = $this->get_tax_rate() / 100;
 
 		$taxed_price = $this->amount * $tax_rate;
 
@@ -333,7 +352,6 @@ class Plan {
 
 		return $this;
 	}
-
 
 
 	public function get_plans( $args ) {
@@ -457,6 +475,7 @@ class Plan {
 
 			$product->set_id( $result->id );
 			$product->set_name( $result->name );
+			$product->set_product_id( $result->product_id );
 			$product->set_amount( $result->amount );
 			$product->set_sku( $result->sku );
 			$product->set_description( $result->description );
@@ -482,6 +501,7 @@ class Plan {
 		$defaults = [
 			'name'         => '',
 			'description'  => '',
+			'product_id'   => '',
 			'amount'       => 0.00,
 			'type'         => 'free',
 			'sku'          => '',
@@ -542,6 +562,7 @@ class Plan {
 		$data = array(
 			'name'         => $args['title'],
 			'description'  => $args['description'],
+			'product_id'   => $args['product_id'],
 			'type'         => $args['type'],
 			'amount'       => $args['amount'],
 			'sku'          => $args['sku'],
@@ -552,7 +573,7 @@ class Plan {
 		$table = $this->table;
 
 		$where        = array( 'id' => $args['id'] );
-		$format       = array( '%s', '%s', '%s', '%f', '%s', '%s' );
+		$format       = array( '%s', '%s', '%s', '%s', '%f', '%s', '%s' );
 		$where_format = array( '%d' );
 
 		$updated = $wpdb->update( $table, $data, $where, $format, $where_format );
