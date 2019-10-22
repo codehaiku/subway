@@ -8,6 +8,7 @@ use Subway\Hooks\Hooks;
 use Subway\Memberships\Orders\Details;
 use Subway\Memberships\Orders\Orders;
 use Subway\Memberships\Plan\Controller;
+use Subway\Memberships\Product\Actions;
 use Subway\Migrate\InstallTable;
 use Subway\Options\Admin\Settings;
 use Subway\Post\Shortcodes\Checkout;
@@ -114,9 +115,13 @@ $order = new Orders( $wpdb );
 $order->attach_hooks();
 
 // Load Plan Controller.
-$products_controller = new Controller();
-$products_controller->attach_hooks();
+$plans_controller = new Controller();
+$plans_controller->attach_hooks();
 
 // Load User Controller.
 $user_controller = new \Subway\User\Controller();
 $user_controller->attach_hooks();
+
+// Load Products Actions.
+$hook_products = new Actions();
+$hook_products->attach_hooks();
