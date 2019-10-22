@@ -1,8 +1,12 @@
 <div class="wrap">
 
-    <h1 class="wp-heading-inline">Membership Products</h1>
+    <h1 class="wp-heading-inline">
+		<?php esc_html_e( 'Membership Products', 'subway' ); ?>
+    </h1>
 
-    <a href="?page=subway-membership-plans&amp;new=yes" class="page-title-action">Add New</a>
+    <a href="?page=subway-membership-plans&amp;new=yes" class="page-title-action">
+		<?php esc_html_e( 'Add New', 'subway' ); ?>
+    </a>
 
     <hr class="wp-header-end">
 
@@ -100,7 +104,7 @@
                                 />
                             </div>
                             <h3>
-                                <a class="subway-product-title" href="#"
+                                <a class="subway-product-title" href="<?php echo esc_url( '?action=edit&page=subway-membership&id=' . absint( $item->get_id() ) ); ?>"
                                    title="<?php echo esc_attr( $item->get_name() ); ?>">
 									<?php echo $item->get_name(); ?>
                                 </a>

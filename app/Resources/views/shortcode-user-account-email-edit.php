@@ -3,8 +3,6 @@
  * Doc
  */
 ?>
-<?php $response = end( $message ); ?>
-
 <?php if ( ! is_user_logged_in() ): ?>
     <div class="subway-login-form-message">
         <p class="error">
@@ -36,10 +34,10 @@
 				<?php esc_html_e( 'Edit E-mail Address', 'subway' ); ?>
             </h3>
 
-			<?php if ( isset( $response['type'] ) && $response['type'] === 'success' ): ?>
+			<?php if ( isset( $message['type'] ) && $message['type'] === 'success' ): ?>
                 <div class="sw-form-success">
                     <p class="sw-success">
-						<?php echo esc_html( $response['message'] ); ?>
+						<?php echo esc_html( $message['message'] ); ?>
                     </p>
                 </div>
 			<?php endif; ?>
@@ -76,10 +74,10 @@
 											<?php echo esc_html_e( 'Enter New Email Address:', 'subway' ); ?>
                                         </label>
                                     </div>
-									<?php if ( isset( $response['message']['email'] ) && ! empty( $response['message']['email'] ) ): ?>
+									<?php if ( isset( $message['message']['email'] ) && ! empty( $message['message']['email'] ) ): ?>
                                         <div class="sw-form-errors">
                                             <p class="sw-error">
-												<?php echo $response['message']['email']; ?>
+												<?php echo $message['message']['email']; ?>
                                             </p>
                                         </div>
 									<?php endif; ?>

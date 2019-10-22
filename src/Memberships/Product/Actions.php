@@ -47,6 +47,7 @@ class Actions extends Controller {
 			$this->set_id( $validated['id'] )
 			     ->set_name( $validated['name'] )
 			     ->set_description( $validated['description'] )
+			     ->set_status( $validated['status'] )
 			     ->set_tax_rate( $validated['tax_rate'] )
 			     ->set_tax_displayed( $validated['tax_rate_displayed'] )
 			     ->set_date_updated( current_time( 'mysql' ) );

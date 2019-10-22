@@ -31,7 +31,7 @@ class Settings {
 		add_submenu_page(
 			'subway-membership',
 			esc_html__( 'Memberships: Products', 'subway' ),
-			esc_html__( 'Products', 'subway' ),
+			esc_html__( 'All Products', 'subway' ),
 			'manage_options',
 			'subway-membership',
 			array( $this, 'membership_products' )
@@ -41,7 +41,7 @@ class Settings {
 		add_submenu_page(
 			'subway-membership',
 			esc_html__( 'Memberships: Plans', 'subway' ),
-			esc_html__( 'All Plans', 'subway' ),
+			esc_html__( 'See All Plans', 'subway' ),
 			'manage_options',
 			'subway-membership-plans',
 			array( $this, 'membership_plans' )
@@ -61,7 +61,7 @@ class Settings {
 		add_submenu_page(
 			'subway-membership',
 			esc_html__( 'Memberships: Earnings', 'subway' ),
-			esc_html__( 'Earnings', 'subway' ),
+			esc_html__( 'Revenue', 'subway' ),
 			'manage_options',
 			'subway-membership-earnings',
 			array( $this, 'earnings' )

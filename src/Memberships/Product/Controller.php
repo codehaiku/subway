@@ -1,4 +1,5 @@
 <?php
+
 namespace Subway\Memberships\Product;
 
 use Subway\Helpers\Helpers;
@@ -167,6 +168,7 @@ class Controller extends Product {
 		$defaults = [
 			'name'          => '',
 			'description'   => '',
+			'status'        => 'draft',
 			'tax_rate'      => 0,
 			'tax_displayed' => false,
 			'date_updated'  => current_time( 'mysql' ),
@@ -175,6 +177,7 @@ class Controller extends Product {
 		$data = wp_parse_args( [
 			'name'          => $this->get_name(),
 			'description'   => $this->get_description(),
+			'status'        => $this->get_status(),
 			'tax_rate'      => $this->get_tax_rate(),
 			'tax_displayed' => $this->is_tax_displayed()
 		], $defaults );
@@ -184,6 +187,7 @@ class Controller extends Product {
 		];
 
 		$format = [
+			'%s',
 			'%s',
 			'%s',
 			'%f',
