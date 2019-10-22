@@ -48,7 +48,6 @@ class Controller extends Plan {
 
 		try {
 
-
 			$product_id = $this->add( [
 				'name'        => $title,
 				'description' => $desc,
