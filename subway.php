@@ -30,7 +30,7 @@ global $wpdb;
 define( 'SUBWAY_VERSION', '3.0' );
 
 // Define Database Version.
-define( 'SUBWAY_DB_VERSION', '1.0.4' );
+define( 'SUBWAY_DB_VERSION', '1.0.5' );
 
 // Define Subway Directory Path.
 define( 'SUBWAY_DIR_PATH', trailingslashit( plugin_dir_path( __FILE__ ) ) );
