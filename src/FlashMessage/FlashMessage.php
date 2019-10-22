@@ -48,7 +48,7 @@ class FlashMessage {
 	 */
 	public function get() {
 
-		$message = get_user_meta( $this->user_id, $this->unique_key );
+		$message = get_user_meta( $this->user_id, $this->unique_key, true );
 
 		// Immediately delete the flash message after getting it.
 		delete_user_meta( $this->user_id, $this->unique_key );
