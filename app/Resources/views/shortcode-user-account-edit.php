@@ -3,7 +3,6 @@
  * Doc
  */
 ?>
-<?php $response = end( $message ); ?>
 
 <?php if ( ! is_user_logged_in() ): ?>
     <div class="subway-login-form-message">
@@ -35,10 +34,10 @@
 				<?php esc_html_e( 'Edit Personal Profile', 'subway' ); ?>
             </h3>
 
-			<?php if ( isset( $response['type'] ) && $response['type'] === 'success' ): ?>
+			<?php if ( isset( $message['type'] ) && $message['type'] === 'success' ): ?>
                 <div class="sw-form-success">
                     <p class="sw-success">
-						<?php echo esc_html( $response['message'] ); ?>
+						<?php echo esc_html( $message['message'] ); ?>
                     </p>
                 </div>
 			<?php endif; ?>
@@ -57,7 +56,7 @@
 
                                 <div class="sw-block sw-field-title">
                                     <label>
-										<?php echo esc_html_e( 'First Name:', 'subway' ); ?>
+										<?php esc_html_e( 'First Name:', 'subway' ); ?>
                                     </label>
                                 </div>
 
@@ -65,10 +64,10 @@
                                     <input autocomplete="off" placeholder="" type="text" name="name"
                                            value="<?php echo esc_attr( $wp_user->first_name ); ?>"/>
                                 </div>
-								<?php if ( isset( $response['message']['name'] ) && ! empty( $response['message']['name'] ) ): ?>
+								<?php if ( isset( $message['message']['name'] ) && ! empty( $message['message']['name'] ) ): ?>
                                     <div class="sw-form-errors">
                                         <p class="sw-error">
-											<?php echo $response['message']['name']; ?>
+											<?php echo $message['message']['name']; ?>
                                         </p>
                                     </div>
 								<?php endif; ?>
@@ -93,10 +92,10 @@
                                            value="<?php echo esc_attr( $wp_user->last_name ); ?>"/>
                                 </div>
 
-								<?php if ( isset( $response['message']['last_name'] ) && ! empty( $response['message']['last_name'] ) ): ?>
+								<?php if ( isset( $message['message']['last_name'] ) && ! empty( $message['message']['last_name'] ) ): ?>
                                     <div class="sw-form-errors">
                                         <p class="sw-error">
-											<?php echo $response['message']['last_name']; ?>
+											<?php echo $message['message']['last_name']; ?>
                                         </p>
                                     </div>
 								<?php endif; ?>
@@ -113,7 +112,7 @@
 
                                 <div class="sw-block sw-field-title">
                                     <label>
-										<?php echo esc_html_e( 'Display name publicly as:', 'subway' ); ?>
+										<?php esc_html_e( 'Display name publicly as:', 'subway' ); ?>
                                     </label>
                                 </div>
 
