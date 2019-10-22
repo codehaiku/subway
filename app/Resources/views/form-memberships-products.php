@@ -44,17 +44,17 @@
 					];
 					?>
                     <select id="order-by" name="order-by">
-	                    <?php foreach( $list_order_by as $key => $value ):?>
-                            <?php $selected = $key === $order_by ? 'selected': ''; ?>
+						<?php foreach ( $list_order_by as $key => $value ): ?>
+							<?php $selected = $key === $order_by ? 'selected' : ''; ?>
                             <option <?php echo esc_attr( $selected ); ?> value="<?php echo esc_attr( $key ); ?>">
-			                    <?php echo esc_html( $value ); ?>
+								<?php echo esc_html( $value ); ?>
                             </option>
-	                    <?php endforeach; ?>
+						<?php endforeach; ?>
                     </select>
 
                     <label for="order-dir">
                         <strong>
-                            <span class="dashicons dashicons-sort" style="margin-top: 5px;"></span>
+                            <span class="dashicons dashicons-text" style="margin-top: 5px;"></span>
                         </strong>
                     </label>
 					<?php
@@ -66,7 +66,7 @@
 
                     <select id="order-dir" name="order-dir">
 						<?php foreach ( $list_order_by_direction as $key => $value ): ?>
-							<?php $selected = $key === $order_dir ? 'selected': ''; ?>
+							<?php $selected = $key === $order_dir ? 'selected' : ''; ?>
                             <option <?php echo esc_attr( $selected ); ?> value="<?php echo esc_attr( $key ); ?>">
 								<?php echo esc_html( $value ); ?>
                             </option>
@@ -109,7 +109,7 @@
 								<?php echo $item->get_description(); ?>
                             </p>
                             <div class="actions">
-                                <a href="<?php echo esc_url( $item->get_id() ); ?>"
+                                <a href="<?php echo esc_url( '?action=edit&page=subway-membership&id=' . absint( $item->get_id() ) ); ?>"
                                    class="button button-primary button-large">
 									<?php esc_html_e( 'Configure', 'box-membership' ); ?>
                                 </a>
@@ -138,16 +138,16 @@
         </div>
 
 	<?php else: ?>
-
+		<?php //@Todo: Create a no products section ?>
         <h3>
-            Create new membership product and start adding plans to get started
+			<?php esc_html_e( 'Create new membership product and start adding plans to get started', 'subway' ); ?>
         </h3>
         <p>
             <img src="https://image.freepik.com/free-vector/recruiting-professionals-studying-candidate-profiles_1262-21404.jpg"/>
         </p>
         <p>
             <a href="?page=subway-membership-plans&amp;new=yes" class="button button-large button-primary">
-                Create Membership Product
+				<?php esc_html_e( 'Create Membership Product', 'subway' ); ?>
             </a>
         </p>
 

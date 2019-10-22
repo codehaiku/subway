@@ -175,7 +175,7 @@ class Product {
 
 	public function get_preview_image_url() {
 
-		return 'https://picsum.photos/id/' . rand( 390, 400 ) . '/700/400';
+		return 'https://picsum.photos/id/' . rand( 395, 405 ) . '/700/400';
 
 	}
 

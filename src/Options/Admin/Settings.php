@@ -104,7 +104,6 @@ class Settings {
 	}
 
 
-
 	public function general() {
 
 		$view = new View();
@@ -119,7 +118,20 @@ class Settings {
 
 		$view = new View();
 
-		$view->render('form-memberships-products', []);
+		$action = filter_input( 1, 'action', 516 );
+
+		$args = [];
+
+		switch ( $action ) {
+			case 'edit':
+				$template = 'form-memberships-products-edit';
+				break;
+			default:
+				$template = 'form-memberships-products';
+				break;
+		}
+
+		$view->render( $template, $args );
 
 		return $this;
 
