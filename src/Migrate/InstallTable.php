@@ -68,6 +68,7 @@ class InstallTable {
 
 		$sql = "CREATE TABLE $table (
 				id mediumint(9) NOT NULL AUTO_INCREMENT,
+				product_id mediumint(9) NOT NULL,
 				name tinytext NOT NULL,
 				sku tinytext NOT NULL,
 				description text NULL,
@@ -98,6 +99,7 @@ class InstallTable {
 
 			$sql = "CREATE TABLE $table (
 						id mediumint(9) NOT NULL AUTO_INCREMENT,
+						product_id mediumint(9) NOT NULL,
 						name tinytext NOT NULL,
 						sku tinytext NOT NULL,
 						description text NULL,
