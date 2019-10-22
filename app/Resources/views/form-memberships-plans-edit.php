@@ -15,9 +15,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <?php $section = filter_input( 1, 'section', 516 ); ?>
 
-<?php $product = $membership->get_plan( $id ); ?>
+<?php $plan = $membership->get_plan( $id ); ?>
 
-<?php if ( empty( $product ) ): ?>
+<?php if ( empty( $plan ) ): ?>
 
 	<?php $error = new WP_Error( 'broke', __( "Error: Product not found", "subway" ) ); ?>
 
@@ -70,14 +70,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 
                 <input type="hidden" name="new" value="yes"/>
 
-                <input type="hidden" id="input-id" name="product_id"
-                       value="<?php echo esc_attr( $product->get_id() ); ?>"/>
+                <input type="hidden" id="input-id" name="product_id" value="<?php echo esc_attr( $plan->get_id() ); ?>"/>
 
                 <!--Product Tabs-->
                 <ul id="product-tabs">
-                    <li><a class="<?php echo $section == 'product-information' ? 'active' : ''; ?>"
+                    <li>
+                        <a class="<?php echo $section == 'product-information' ? 'active' : ''; ?>"
                            data-section-target="product-information" href="#">
-                            <span class="dashicons dashicons-info"></span>Product Information</a></li>
+                            <span class="dashicons dashicons-info"></span>
+	                        <?php esc_html_e('Information', 'subway'); ?>
+                        </a>
+                    </li>
                     <li><a class="<?php echo $section == 'product-pricing' ? 'active' : ''; ?>"
                            data-section-target="product-pricing" href="#">
                             <span class="dashicons dashicons-tag"></span>Pricing</a></li>
@@ -122,14 +125,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 						<?php if ( isset( $form_data['type'] ) && ! empty( $form_data['type'] ) ): ?>
 
-							<?php $product->set_type( $form_data['type'] ); ?>
+							<?php $plan->set_type( $form_data['type'] ); ?>
 
 						<?php endif; ?>
 
                         <select name="type" id="billing-type">
 
 							<?php foreach ( $options as $value => $label ): ?>
-								<?php if ( $product->get_type() === $value ): ?>
+								<?php if ( $plan->get_type() === $value ): ?>
 									<?php $selected = 'selected'; ?>
 								<?php else: ?>
 									<?php $selected = ''; ?>
@@ -159,7 +162,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <input autofocus id="input-amount" name="amount" type="number" style="width: 6em;" size="3"
                                    placeholder="0.00"
                                    step="0.01"
-                                   value="<?php echo esc_attr( $product->get_real_amount() ); ?>"/>
+                                   value="<?php echo esc_attr( $plan->get_real_amount() ); ?>"/>
 
                         </div>
 						<?php if ( isset( $errors['amount'] ) ): ?>
@@ -279,6 +282,38 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <div class="subway-card subway-product-section <?php echo $section == 'product-information' ? 'active' : ''; ?>"
                      id="product-information">
 
+
+                    <!--Product-->
+                    <div class="subway-form-row">
+
+                        <h3 class="field-title">
+                            <label for="input-title">
+								<?php esc_html_e( 'Add to Product', 'subway' ); ?>
+                            </label>
+                        </h3>
+
+                        <p class="field-help">
+							<?php esc_html_e( 'Select from the list of available products.', 'subway' ); ?>
+                        </p>
+
+						<?php $products = new \Subway\Memberships\Product\Controller(); ?>
+						<?php $result = $products->fetch_all(); ?>
+						<?php $items = $result->products; ?>
+                        <select name="product">
+							<?php foreach ( $items as $item ): ?>
+								<?php if ( $item->get_id() === $plan->get_product_id() ): ?>
+                                    <?php $selected = 'selected'; ?>
+								<?php else: ?>
+                                    <?php $selected = ''; ?>
+								<?php endif; ?>
+                                <option <?php echo esc_attr( $selected ); ?> value="<?php echo esc_attr( $item->get_id() ); ?>">
+									<?php echo esc_html( $item->get_name() ); ?>
+                                </option>
+							<?php endforeach; ?>
+                        </select>
+                    </div>
+                    <!--Product End-->
+
                     <!--Product Name-->
                     <div class="subway-form-row">
 
@@ -290,7 +325,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
                         <p class="field-help"><?php esc_html_e( 'Enter the new name of this plan.', 'subway' ); ?></p>
 
-                        <input autofocus value="<?php echo esc_attr( $product->get_name() ); ?>"
+                        <input autofocus value="<?php echo esc_attr( $plan->get_name() ); ?>"
                                id="input-title" name="title" type="text" class="widefat"
                                placeholder="<?php esc_attr_e( 'Add Name', 'subway' ); ?>"/>
 
@@ -313,7 +348,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<?php esc_html_e( 'Give this membership plan a new and a unique SKU.', 'subway' ); ?>
                         </p>
 
-                        <input autofocus value="<?php echo esc_attr( $product->get_sku() ); ?>" id="input-sku"
+                        <input autofocus value="<?php echo esc_attr( $plan->get_sku() ); ?>" id="input-sku"
                                name="sku"
                                type="text" class="widefat"
                                placeholder="<?php esc_attr_e( '(Stock Keeping Unit e.g. PROD001)', 'subway' ); ?>"/>
@@ -336,7 +371,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<?php esc_html_e( 'Update this membership plan description.', 'subway' ); ?>
                         </p>
                         <textarea id="input-description" name="description" class="widefat" rows="5"
-                                  placeholder="<?php echo esc_attr( 'Product description', 'subway' ); ?>"><?php echo esc_html( $product->get_description() ); ?></textarea>
+                                  placeholder="<?php echo esc_attr( 'Product description', 'subway' ); ?>"><?php echo esc_html( $plan->get_description() ); ?></textarea>
 						<?php if ( isset( $errors['description'] ) ): ?>
                             <p class="validation-errors">
 								<?php echo $errors['description']; ?>
@@ -377,7 +412,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                             <select name="status">
 								<?php foreach ( $statuses as $key => $val ): ?>
 									<?php $selected = ''; ?>
-									<?php if ( $key === $product->get_status() ): ?>
+									<?php if ( $key === $plan->get_status() ): ?>
 										<?php $selected = 'selected'; ?>
 									<?php endif; ?>
                                     <option <?php echo esc_attr( $selected ); ?>
