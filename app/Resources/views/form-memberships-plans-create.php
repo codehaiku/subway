@@ -1,7 +1,7 @@
 <div id="subway-new-product-form">
 
 	<?php $messages = $flash_message_add->get(); ?>
-	<?php $messages = empty( $messages ) ? [] : end( $messages ); ?>
+	<?php $messages = empty( $messages ) ? [] : $messages; ?>
 
 	<?php $form_data = array( 'title' => '', 'description' => '', 'sku' => '' ); ?>
 	<?php if ( isset( $messages['form_data'] ) ): ?>
@@ -24,10 +24,34 @@
             <div class="subway-form-row">
                 <p class="lead mg-top-zero">
 					<?php esc_html_e( 'Howdy! You are creating a new membership plan.', 'subway' ); ?>
-					<?php esc_html_e( 'Start by giving it a beautiful name, a unique sku, and a great product description..', 'subway' ); ?>
+					<?php esc_html_e( 'Start by giving it a beautiful name, a unique sku, and a great description.', 'subway' ); ?>
                 </p>
             </div>
-            <!--Product Name -->
+
+            <!--Product  -->
+            <div class="subway-form-row">
+                <h3 class="field-title">
+                    <label for="product">
+						<?php esc_html_e( 'Add to Product', 'subway' ); ?>
+                    </label>
+                </h3>
+                <p>
+					<?php esc_html_e( 'Select from the list of products available.', 'subway' ); ?>
+                </p>
+				<?php $products = new \Subway\Memberships\Product\Controller(); ?>
+				<?php $result = $products->fetch_all(); ?>
+                <?php $items = $result->products; ?>
+                <select name="product">
+					<?php foreach ( $items as $item ): ?>
+                        <option value="<?php echo esc_attr( $item->get_id() ); ?>">
+							<?php echo esc_html( $item->get_name() ); ?>
+                        </option>
+					<?php endforeach; ?>
+                </select>
+            </div>
+            <!--/.Product -->
+
+            <!--Plan Name -->
             <div class="subway-form-row">
                 <h3 class="field-title">
                     <label for="input-title">
@@ -38,15 +62,15 @@
 					<?php esc_html_e( 'Enter the name of your membership product', 'subway' ); ?>
                 </p>
                 <input value="<?php echo esc_attr( $form_data['title'] ); ?>" id="input-title" name="title" type="text"
-                       class="widefat" placeholder="Add Name">
+                       class="widefat" placeholder="<?php esc_attr_e( 'Add Name', 'subway' ); ?>">
 				<?php if ( isset( $errors['title'] ) ): ?>
                     <p class="validation-errors">
 						<?php echo $errors['title']; ?>
                     </p>
 				<?php endif; ?>
             </div>
-            <!--/.Product Name -->
-            <!-- Product SKU-->
+            <!--/.Plan Name -->
+            <!-- Plan SKU-->
             <div class="subway-form-row">
                 <h3 class="field-title">
                     <label for="input-sku">
@@ -66,8 +90,8 @@
                     </p>
 				<?php endif; ?>
             </div>
-            <!--/.Product SKU-->
-            <!-- Product Description -->
+            <!--/.Plan SKU-->
+            <!-- Plan Description -->
             <div class="subway-form-row">
                 <h3 class="field-title">
                     <label for="input-description">
@@ -83,7 +107,7 @@
                     </p>
 				<?php endif; ?>
             </div>
-            <!--/. Product Description -->
+            <!--/. Plan Description -->
 
             <div>
                 <input id="publish-product" type="submit" class="button button-primary button-large"
