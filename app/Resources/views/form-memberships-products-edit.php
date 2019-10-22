@@ -188,7 +188,7 @@
 								'published' => __( 'Published', 'subway' )
 							];
 							?>
-                          
+
                             <select id="product-status" name="status">
 								<?php foreach ( $statuses as $key => $value ): ?>
 									<?php if ( $key === $product->get_status() ): ?>
