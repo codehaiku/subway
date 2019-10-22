@@ -175,7 +175,7 @@ class Product {
 
 	public function get_preview_image_url() {
 
-		return 'https://picsum.photos/id/' . rand( 200, 400 ) . '/700/400';
+		return 'https://picsum.photos/id/' . rand( 390, 400 ) . '/700/400';
 
 	}
 
@@ -186,6 +186,8 @@ class Product {
 		$defaults = [
 			'per_page'     => 12,
 			'current_page' => 1,
+			'field'        => 'date_created',
+			'direction'    => 'DESC'
 		];
 
 		$args = wp_parse_args( $args, $defaults );
@@ -193,8 +195,13 @@ class Product {
 		// Manually determine page query offset (offset + current page (minus one) x posts per page).
 		$args['offset'] = ( absint( $args['current_page'] ) - 1 ) * absint( $args['per_page'] );
 
+		// Manually create order by string.
+		$order_by = sanitize_sql_orderby( sprintf( '%s %s', $args['field'], $args['direction'] ) );
+
 		$stmt = $db->prepare(
-			"SELECT SQL_CALC_FOUND_ROWS * FROM $this->table WHERE id > %d
+			"SELECT SQL_CALC_FOUND_ROWS * FROM $this->table 
+			WHERE id > %d
+			ORDER BY {$order_by}
 			LIMIT %d OFFSET %d",
 			0, $args['per_page'], $args['offset']
 		);

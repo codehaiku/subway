@@ -9,33 +9,70 @@
 	<?php $products = new \Subway\Memberships\Product\Product(); ?>
 
 	<?php
-	$current_page = filter_input(
-		INPUT_GET, 'paged', FILTER_VALIDATE_INT,
-		[ 'options' => [ 'default' => 1 ] ]
-	);
+	$current_page = filter_input( INPUT_GET, 'paged', FILTER_VALIDATE_INT, [ 'options' => [ 'default' => 1 ] ] );
+	$order_by     = filter_input( INPUT_GET, 'order-by', FILTER_SANITIZE_STRING, [ 'options' => [ 'default' => 'date_created' ] ] );
+	$order_dir    = filter_input( INPUT_GET, 'order-dir', FILTER_SANITIZE_STRING, [ 'options' => [ 'default' => 'DESC' ] ] );
 	?>
 
-	<?php $list = $products->fetch_all( [ 'current_page' => $current_page ] ); ?>
+	<?php
+	$list = $products->fetch_all( [
+		'current_page' => $current_page,
+		'field'        => $order_by,
+		'direction'    => $order_dir
+	] );
+	?>
 
 	<?php if ( ! empty( $list->products ) ): ?>
 
         <div class="subway-filter">
 
-
             <form method="GET">
                 <input type="hidden" name="page" value="subway-membership"/>
-                <input type="hidden" name="paged" value="<?php echo esc_attr( $current_page ); ?>"/>
+                <!--Reset Paging-->
+                <input type="hidden" name="paged" value="1"/>
                 <p>
-                    <label for="sort">
+                    <label for="order-by">
                         <strong>
                             <span class="dashicons dashicons-editor-alignleft" style="margin-top: 5px;"></span>
                         </strong>
                     </label>
-                    <select id="sort" name="sort">
-                        <option value="latest">Latest</option>
-                        <option value="last-updated">Last Updated</option>
-                        <option value="alpha">Alphabetically</option>
+					<?php
+					$list_order_by = [
+						'date_created' => __( 'Latest', 'subway' ),
+						'date_updated' => __( 'Last Updated', 'subway' ),
+						'name'         => __( 'Alphabetical', 'subway' ),
+					];
+					?>
+                    <select id="order-by" name="order-by">
+	                    <?php foreach( $list_order_by as $key => $value ):?>
+                            <?php $selected = $key === $order_by ? 'selected': ''; ?>
+                            <option <?php echo esc_attr( $selected ); ?> value="<?php echo esc_attr( $key ); ?>">
+			                    <?php echo esc_html( $value ); ?>
+                            </option>
+	                    <?php endforeach; ?>
                     </select>
+
+                    <label for="order-dir">
+                        <strong>
+                            <span class="dashicons dashicons-sort" style="margin-top: 5px;"></span>
+                        </strong>
+                    </label>
+					<?php
+					$list_order_by_direction = [
+						'DESC' => __( 'Descending', 'subway' ),
+						'ASC'  => __( 'Ascending', 'subway' )
+					];
+					?>
+
+                    <select id="order-dir" name="order-dir">
+						<?php foreach ( $list_order_by_direction as $key => $value ): ?>
+							<?php $selected = $key === $order_dir ? 'selected': ''; ?>
+                            <option <?php echo esc_attr( $selected ); ?> value="<?php echo esc_attr( $key ); ?>">
+								<?php echo esc_html( $value ); ?>
+                            </option>
+						<?php endforeach; ?>
+                    </select>
+
                     <input type="submit" class="button button-large"
                            value="<?php esc_attr_e( 'Filter', 'subway' ); ?>"/>
                 </p>
@@ -74,7 +111,7 @@
                             <div class="actions">
                                 <a href="<?php echo esc_url( $item->get_id() ); ?>"
                                    class="button button-primary button-large">
-		                            <?php esc_html_e( 'Configure', 'box-membership' ); ?>
+									<?php esc_html_e( 'Configure', 'box-membership' ); ?>
                                 </a>
 
                                 <a href="<?php echo esc_url( $item->get_id() ); ?>"
