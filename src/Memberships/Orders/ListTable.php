@@ -59,7 +59,6 @@ class ListTable extends \WP_List_Table {
 		// Manually determine page query offset (offset + current page (minus one) x posts per page).
 		$page_offset = $offset + ( $current_page - 1 ) * $per_page;
 
-
 		$data = $orders->get_orders( array(
 			'orderby' => $orderby,
 			'order'   => $order,

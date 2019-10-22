@@ -16,7 +16,7 @@ class Orders {
 
 		$this->wpdb = $wpdb;
 
-		$this->product_table = $this->wpdb->prefix . 'subway_memberships_products';
+		$this->product_table = $this->wpdb->prefix . 'subway_memberships_products_plans';
 
 		$this->table = $this->wpdb->prefix . 'subway_memberships_orders';
 
