@@ -6,7 +6,7 @@
 
     <hr class="wp-header-end">
 
-	<?php $products = new \Subway\Memberships\Product\Product(); ?>
+	<?php $products = new \Subway\Memberships\Product\Controller(); ?>
 
 	<?php
 	$current_page = filter_input( INPUT_GET, 'paged', FILTER_VALIDATE_INT, [ 'options' => [ 'default' => 1 ] ] );
