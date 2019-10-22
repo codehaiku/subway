@@ -50,6 +50,7 @@ class Controller extends Plan {
 
 			$product_id = $this->add( [
 				'name'        => $title,
+				'product_id'  => $validated['product'],
 				'description' => $desc,
 				'sku'         => $sku
 			] );
@@ -146,6 +147,7 @@ class Controller extends Plan {
 			$updated = $this->update( [
 				'id'          => $id,
 				'title'       => $title,
+				'product_id'  => $validated['product'],
 				'description' => $desc,
 				'amount'      => $amount,
 				'type'        => $type,
