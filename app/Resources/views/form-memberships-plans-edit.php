@@ -29,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <?php endif; ?>
 
-<?php $messages = empty( $flash_messages ) ? [] : end( $flash_messages ); ?>
+<?php $messages = $flash_messages; ?>
 
 <?php $form_data = array( 'title' => '', 'description' => '', 'sku' => '', 'type' => '', 'amount' => 0.00 ); ?>
 
@@ -41,12 +41,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <?php endif; ?>
 
-<?php if ( isset( $flash_messages[0]['type'] ) ): ?>
+<?php if ( isset( $flash_messages['type'] ) ): ?>
 
-    <div class="notice notice-<?php echo esc_attr( $flash_messages[0]['type'] ); ?> is-dismissible">
+    <div class="notice notice-<?php echo esc_attr( $flash_messages['type'] ); ?> is-dismissible">
 
         <p>
-			<?php echo esc_html( $flash_messages[0]['message'] ); ?>
+			<?php echo esc_html( $flash_messages['message'] ); ?>
         </p>
 
     </div>
