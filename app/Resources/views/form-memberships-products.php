@@ -92,7 +92,6 @@
         </div>
 
         <div class="subway-flex-wrap subway-section-offset">
-
 			<?php foreach ( $list->products as $item ): ?>
                 <div class="subway-flex-column-by-three">
                     <div class="spacer">
@@ -115,7 +114,7 @@
                             <div class="actions">
                                 <a href="<?php echo esc_url( '?action=edit&page=subway-membership&id=' . absint( $item->get_id() ) ); ?>"
                                    class="button button-primary button-large">
-									<?php esc_html_e( 'Configure', 'box-membership' ); ?>
+									<?php esc_html_e( 'Edit', 'box-membership' ); ?>
                                 </a>
 
                                 <a href="<?php echo esc_url( $item->get_id() ); ?>"
