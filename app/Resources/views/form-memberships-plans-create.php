@@ -21,15 +21,9 @@
         </div>
 
         <div class="subway-card subway-product-section active" id="product-information-add">
-            <div class="subway-form-row">
-                <p class="lead mg-top-zero">
-					<?php esc_html_e( 'Howdy! You are creating a new membership plan.', 'subway' ); ?>
-					<?php esc_html_e( 'Start by giving it a beautiful name, a unique sku, and a great description.', 'subway' ); ?>
-                </p>
-            </div>
 
             <!--Product  -->
-            <div class="subway-form-row">
+            <div class="subway-form-row" id="product-row">
                 <h3 class="field-title">
                     <label for="product">
 						<?php esc_html_e( 'Add to Product', 'subway' ); ?>
