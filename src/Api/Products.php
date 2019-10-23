@@ -244,7 +244,7 @@ class Products extends \WP_REST_Controller {
 
 		$product_id = filter_input( INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT );
 
-		check_admin_referer( 'trash_product_' . absint( $product_id ) );
+		check_admin_referer( 'trash_plan_' . absint( $product_id ) );
 
 		$is_deleted = $products->delete( $product_id );
 
