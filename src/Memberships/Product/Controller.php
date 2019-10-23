@@ -260,6 +260,47 @@ class Controller extends Product {
 
 	}
 
+	/**
+	 * Returns the edit product url.
+	 *
+	 * @param string $tab The current displayed tab.
+	 *
+	 * @return string
+	 */
+	public function get_product_url_edit( $tab = 'settings' ) {
+
+		$url = add_query_arg(
+			[
+				'action' => 'edit',
+				'tab'    => $tab,
+				'page'   => 'subway-membership',
+				'id'     => $this->get_id()
+			],
+			admin_url( 'admin.php' )
+		);
+
+		return $url;
+	}
+
+	/**
+	 * Compares the tab provided with requested tab. Returns 'active' if match, otherwise 'inactive'.
+	 *
+	 * @param string $tab
+	 *
+	 * @return string
+	 */
+	public function get_is_active_tab( $tab = 'settings' ) {
+
+		$active_tab = filter_input( 1, 'tab', 516,
+			[ 'options' => [ 'default' => 'settings' ] ] );
+
+		if ( $tab === $active_tab ) {
+			return 'active';
+		}
+
+		return 'inactive';
+	}
+
 	public function get_preview_image_url() {
 
 		return 'https://picsum.photos/id/' . rand( 395, 405 ) . '/700/400';
