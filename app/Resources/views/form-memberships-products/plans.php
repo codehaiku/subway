@@ -2,10 +2,24 @@
 $plans = new \Subway\Memberships\Plan\Plan();
 $items = $plans->get_plans( [ 'product_id' => $product->get_id() ] );
 ?>
-<h3>Membership Plans</h3>
+
+<p>
+    <a href="<?php echo esc_url_raw( $plans->get_add_url( $product->get_id() ) ); ?>" class="button button-large button-primary">
+        <span>&plus;</span>
+		<?php esc_html_e('Create New Plan', 'subway'); ?>
+    </a>
+</p>
+
 <?php if ( ! empty( $items ) ): ?>
     <table class="wp-list-table widefat fixed striped posts">
         <thead>
+        <tr>
+            <th colspan="5">
+                <strong>
+                    <?php esc_html_e('Membership Plans','subway'); ?>
+                </strong>
+            </th>
+        </tr>
         <tr>
             <th><?php esc_html_e( 'Plan Name', 'subway' ); ?></th>
             <th><?php esc_html_e( 'Displayed Price', 'subway' ); ?></th>
@@ -55,9 +69,7 @@ $items = $plans->get_plans( [ 'product_id' => $product->get_id() ] );
         <tfoot>
         <tr>
             <td colspan="5">
-                <a href="<?php echo esc_url_raw( $plans->get_add_url( $product->get_id() ) ); ?>" class="button button-large button-secondary">
-                    <?php esc_html_e('Create New Membership Plan', 'subway'); ?>
-                </a>
+               <?php echo sprintf( esc_html__('Found %d Item(s)', 'subway'), count( $items ) ); ?>
             </td>
         </tr>
         </tfoot>
