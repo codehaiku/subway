@@ -10,7 +10,6 @@ class Controller extends Product {
 		parent::__construct();
 	}
 
-
 	public function fetch_all( $args = [] ) {
 
 		$db = Helpers::get_db();
