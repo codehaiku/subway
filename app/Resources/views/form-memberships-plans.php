@@ -18,7 +18,7 @@
     <div class="wrap">
 
         <h1 class="wp-heading-inline">
-			<?php esc_html_e( 'Create New Membership Plan', 'subway' ); ?>
+			<?php esc_html_e( 'New Membership Plan', 'subway' ); ?>
         </h1>
 
         <hr class="wp-header-end">
