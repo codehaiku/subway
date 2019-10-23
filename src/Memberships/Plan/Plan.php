@@ -598,6 +598,31 @@ class Plan {
 
 	}
 
+	public function get_edit_url( $id = 0 ) {
+
+		$url = add_query_arg( [
+			'page'    => 'subway-membership-plans',
+			'edit'    => 'yes',
+			'product' => $id,
+			'section' => 'product-information',
+
+		], admin_url( 'admin.php' ) );
+
+		return $url;
+	}
+
+	public function get_add_url( $product_id ) {
+
+		$url = add_query_arg( [
+			'page'       => 'subway-membership-plans',
+			'new'        => 'yes',
+			'product_id' => $product_id
+		], admin_url( 'admin.php' ) );
+
+		return $url;
+
+	}
+
 	public function get_plan_url() {
 		return '#';
 	}
