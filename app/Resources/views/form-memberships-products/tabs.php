@@ -1,4 +1,4 @@
-<ul id="product-tabs">
+<ul class="subway-section-tabs" id="product-tabs">
     <li>
         <a class="<?php echo esc_attr( $product->get_is_active_tab( 'settings' ) ); ?>"
            href="<?php echo esc_url_raw( $product->get_product_url_edit() ); ?>">
