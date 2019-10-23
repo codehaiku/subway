@@ -17,7 +17,7 @@ jQuery(document).ready(function ($) {
 
     $(target.replace('section-', '')).addClass('active');
 
-    $('#product-tabs > li > a').on('click', function (e) {
+    $('#plan-tabs > li > a').on('click', function (e) {
 
         var target = $(this).attr('data-section-target');
 
@@ -26,11 +26,11 @@ jQuery(document).ready(function ($) {
         e.preventDefault();
 
         // Remove classes.
-        $('#product-tabs > li > a').removeClass('active');
+        $('#plan-tabs > li > a').removeClass('active');
 
         $('a[data-section-target=' + target + ']').addClass('active');
 
-        $('.subway-product-section').removeClass('active');
+        $('.subway-plan-section').removeClass('active');
 
         $('input[name=active-section]').val(target);
 
@@ -43,14 +43,15 @@ jQuery(document).ready(function ($) {
 
         location.hash = 'section-' + target;
 
-        $('#update-product').attr('disabled', 'disabled');
+        $('#update-plan').attr('disabled', 'disabled');
+
         setTimeout(function () {
-            $('#update-product').removeAttr('disabled');
+            $('#update-plan').removeAttr('disabled');
         }, 500);
 
     });
 
-    $('#publish-product').on('click', function () {
+    $('#publish-plan').on('click', function () {
         var el = $(this);
         setTimeout(function () {
             el.attr('disabled', 'disabled');
