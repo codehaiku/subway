@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains the html for the product edit when
+ * This file contains the html for the plan edit when
  * you click 'edit' in the membership list table.
  *
  * @since  3.0
@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 
-<?php $id = filter_input( INPUT_GET, 'product', FILTER_VALIDATE_INT ); ?>
+<?php $id = filter_input( INPUT_GET, 'plan', FILTER_VALIDATE_INT ); ?>
 
 <?php $section = filter_input( 1, 'section', 516 ); ?>
 
@@ -53,7 +53,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <?php endif; ?>
 
-<div id="subway-edit-product-form">
+<div id="subway-edit-plan-form">
 
     <form autocomplete="off" method="POST" action="<?php echo admin_url( 'admin-post.php' ); ?>">
 
@@ -62,48 +62,49 @@ if ( ! defined( 'ABSPATH' ) ) {
             <div class="subway-flex-column subway-flex-column-70">
 
                 <!--hidden fields-->
-				<?php wp_nonce_field( 'subway_product_edit_action', 'subway_product_edit_action' ); ?>
+				<?php wp_nonce_field( 'subway_plan_edit_action', 'subway_plan_edit_action' ); ?>
 
-                <input type="hidden" name="action" value="subway_product_edit_action"/>
+                <input type="hidden" name="action" value="subway_plan_edit_action"/>
 
                 <input type="hidden" name="page" value="subway-membership"/>
 
                 <input type="hidden" name="new" value="yes"/>
 
-                <input type="hidden" id="input-id" name="product_id" value="<?php echo esc_attr( $plan->get_id() ); ?>"/>
+                <input type="hidden" id="input-id" name="plan_id"
+                       value="<?php echo esc_attr( $plan->get_id() ); ?>"/>
 
-                <!--Product Tabs-->
-                <ul id="product-tabs">
+                <!--Plan Tabs-->
+                <ul class="subway-section-tabs" id="plan-tabs">
                     <li>
-                        <a class="<?php echo $section == 'product-information' ? 'active' : ''; ?>"
-                           data-section-target="product-information" href="#">
+                        <a class="<?php echo $section == 'plan-information' ? 'active' : ''; ?>"
+                           data-section-target="plan-information" href="#">
                             <span class="dashicons dashicons-info"></span>
-	                        <?php esc_html_e('Information', 'subway'); ?>
+							<?php esc_html_e( 'Information', 'subway' ); ?>
                         </a>
                     </li>
-                    <li><a class="<?php echo $section == 'product-pricing' ? 'active' : ''; ?>"
-                           data-section-target="product-pricing" href="#">
+                    <li><a class="<?php echo $section == 'plan-pricing' ? 'active' : ''; ?>"
+                           data-section-target="plan-pricing" href="#">
                             <span class="dashicons dashicons-tag"></span>Pricing</a></li>
-                    <li><a class="<?php echo $section == 'product-email' ? 'active' : ''; ?>"
-                           data-section-target="product-email" href="#">
+                    <li><a class="<?php echo $section == 'plan-email' ? 'active' : ''; ?>"
+                           data-section-target="plan-email" href="#">
                             <span class="dashicons dashicons-email"></span>Emails</a></li>
-					<?php do_action( 'subway_product_edit_list_tabs' ); ?>
+					<?php do_action( 'subway_plan_edit_list_tabs' ); ?>
                 </ul>
-                <!--/.Product Tabs-->
+                <!--/.Plan Tabs-->
 
                 <input type="hidden" name="active-section"
-                       value="<?php echo ! empty( $section ) ? $section : 'product-information' ?>"/>
+                       value="<?php echo ! empty( $section ) ? $section : 'plan-information' ?>"/>
 
                 <!--Section Email-->
-                <div class="subway-card subway-product-section <?php echo $section == 'product-email' ? 'active' : ''; ?>"
-                     id="product-email">
-                    do_action('subway_products_edit_email_section');
+                <div class="subway-card subway-plan-section <?php echo $section == 'plan-email' ? 'active' : ''; ?>"
+                     id="plan-email">
+                    do_action('subway_plans_edit_email_section');
                 </div>
                 <!--/.Section Email-->
 
                 <!--Section Pricing-->
-                <div class="subway-card subway-product-section <?php echo $section == 'product-pricing' ? 'active' : ''; ?>"
-                     id="product-pricing">
+                <div class="subway-card subway-plan-section <?php echo $section == 'plan-pricing' ? 'active' : ''; ?>"
+                     id="plan-pricing">
 
                     <!-- Payment Type -->
                     <div class="subway-form-row">
@@ -145,7 +146,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                     </div>
                     <!--/.Payment Type-->
 
-                    <!--Product Price-->
+                    <!--Plan Price-->
                     <div class="subway-form-row" id="billing-amount">
                         <h3 class="field-title">
                             <label>
@@ -172,7 +173,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<?php endif; ?>
                     </div>
 
-                    <!--/.Product Price-->
+                    <!--/.Plan Price-->
 
                     <!--Billing Cycle-->
                     <div class="subway-form-row" id="billing-cycle">
@@ -278,43 +279,53 @@ if ( ! defined( 'ABSPATH' ) ) {
                 </div>
                 <!--/.Section Email-->
 
-                <!--Section Product Information-->
-                <div class="subway-card subway-product-section <?php echo $section == 'product-information' ? 'active' : ''; ?>"
-                     id="product-information">
+                <!--Section Plan Information-->
+                <div class="subway-card subway-plan-section <?php echo $section == 'plan-information' ? 'active' : ''; ?>"
+                     id="plan-information">
 
 
-                    <!--Product-->
-                    <div class="subway-form-row">
+                    <!--Plan-->
+                    <div class="subway-form-row" id="product-row">
 
                         <h3 class="field-title">
                             <label for="input-title">
+                                <span class="dashicons dashicons-admin-links"></span>
 								<?php esc_html_e( 'Add to Product', 'subway' ); ?>
                             </label>
                         </h3>
 
                         <p class="field-help">
-							<?php esc_html_e( 'Select from the list of available products.', 'subway' ); ?>
+							<?php esc_html_e( 'Select from the list of available plans.', 'subway' ); ?>
                         </p>
 
-						<?php $products = new \Subway\Memberships\Product\Controller(); ?>
-						<?php $result = $products->fetch_all(); ?>
+						<?php $plans = new \Subway\Memberships\Product\Controller(); ?>
+						<?php $result = $plans->fetch_all(); ?>
 						<?php $items = $result->products; ?>
-                        <select name="product">
+
+                        <select disabled name="plan">
 							<?php foreach ( $items as $item ): ?>
 								<?php if ( $item->get_id() === $plan->get_product_id() ): ?>
-                                    <?php $selected = 'selected'; ?>
+									<?php $selected = 'selected'; ?>
 								<?php else: ?>
-                                    <?php $selected = ''; ?>
+									<?php $selected = ''; ?>
 								<?php endif; ?>
-                                <option <?php echo esc_attr( $selected ); ?> value="<?php echo esc_attr( $item->get_id() ); ?>">
+                                <option <?php echo esc_attr( $selected ); ?>
+                                        value="<?php echo esc_attr( $item->get_id() ); ?>">
 									<?php echo esc_html( $item->get_name() ); ?>
                                 </option>
 							<?php endforeach; ?>
                         </select>
+						<?php if ( isset( $_REQUEST['plan'] ) && ! empty( $_REQUEST['plan'] ) ): ?>
+                            <p class="field-help" id="add-to-different-plan">
+                                <a href="#">
+									<?php esc_html_e( 'Add to Different Product', 'subway' ); ?>
+                                </a>
+                            </p>
+						<?php endif; ?>
                     </div>
-                    <!--Product End-->
+                    <!--Plan End-->
 
-                    <!--Product Name-->
+                    <!--Plan Name-->
                     <div class="subway-form-row">
 
                         <h3 class="field-title">
@@ -335,9 +346,9 @@ if ( ! defined( 'ABSPATH' ) ) {
                             </p>
 						<?php endif; ?>
                     </div>
-                    <!--/Product Name-->
+                    <!--/Plan Name-->
 
-                    <!-- Product SKU-->
+                    <!-- Plan SKU-->
                     <div class="subway-form-row">
                         <h3 class="field-title">
                             <label for="input-sku">
@@ -358,9 +369,9 @@ if ( ! defined( 'ABSPATH' ) ) {
                             </p>
 						<?php endif; ?>
                     </div>
-                    <!--/.Product SKU-->
+                    <!--/.Plan SKU-->
 
-                    <!-- Product Description -->
+                    <!-- Plan Description -->
                     <div class="subway-form-row">
                         <h3 class="field-title">
                             <label for="input-description">
@@ -378,20 +389,20 @@ if ( ! defined( 'ABSPATH' ) ) {
                             </p>
 						<?php endif; ?>
                     </div>
-                    <!--/.Product Description-->
+                    <!--/.Plan Description-->
 
                 </div>
 
-				<?php do_action( 'subway_product_edit_section' ); ?>
+				<?php do_action( 'subway_plan_edit_section' ); ?>
 
             </div>
-            <!--/.Section Product Information-->
+            <!--/.Section Plan Information-->
 
-            <!--Product Status-->
+            <!--Plan Status-->
             <div class="subway-flex-column subway-flex-column-30">
-                <div class="subway-flex-inner-wrap" style="margin-top:3.3em">
+                <div class="subway-flex-inner-wrap" style="margin-top:4.7em">
                     <div class="subway-card">
-                        <!--Product Status-->
+                        <!--Plan Status-->
                         <div class="subway-form-row">
                             <h3 class="field-title">
                                 <label for="input-description">
@@ -422,8 +433,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 								<?php endforeach; ?>
                             </select>
                         </div>
-                        <!--/.Product Status-->
-                        <!--Product Link -->
+                        <!--/.Plan Status-->
+                        <!--Plan Link -->
                         <div class="subway-form-row" id="checkout-link-section">
                             <h3 class="field-title">
                                 <label for="input-checkout-link">
@@ -447,24 +458,23 @@ if ( ! defined( 'ABSPATH' ) ) {
                                 </a>
                             </p>
                         </div>
-                        <!--.Product Link -->
+                        <!--.Plan Link -->
 
 
                     </div>
                 </div>
             </div>
-            <!--/.Product Status-->
+            <!--/.Plan Status-->
         </div>
 
 
-        <hr/>
         <!--Submit Button-->
         <div class="subway-card">
-            <input id="update-product" type="submit" class="button button-primary button-large"
+            <input id="update-plan" type="submit" class="button button-primary button-large"
                    value="<?php esc_attr_e( 'Update Memberships Plan', 'subway' ); ?>"/>
         </div>
         <!--/.Submit Button-->
     </form>
-</div><!--#subway-edit-product-form-->
+</div><!--#subway-edit-plan-form-->
 
 
