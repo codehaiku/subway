@@ -603,8 +603,8 @@ class Plan {
 		$url = add_query_arg( [
 			'page'    => 'subway-membership-plans',
 			'edit'    => 'yes',
-			'product' => $id,
-			'section' => 'product-information',
+			'plan'    => $id,
+			'section' => 'plan-information',
 
 		], admin_url( 'admin.php' ) );
 
