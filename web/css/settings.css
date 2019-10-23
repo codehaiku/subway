@@ -299,6 +299,9 @@ div.subway-form-row .field-group #input-amount {
 .subway-product-section.active {
     display: block;
 }
+.subway-tab-section.inactive {
+    display: none;
+}
 
 ul#product-tabs {
     display: inline-block;
