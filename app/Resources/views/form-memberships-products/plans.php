@@ -29,39 +29,39 @@ $items = $plans->get_plans( [ 'product_id' => $product->get_id() ] );
         </tr>
         </thead>
         <tbody>
-		<?php foreach ( $items as $item ): ?>
+		<?php foreach ( $items as $plan ): ?>
             <tr>
                 <td>
-                    <a href="<?php echo esc_url_raw( $item->get_edit_url( $item->get_id() ) ); ?>">
+                    <a href="<?php echo esc_url_raw( $plan->get_edit_url( $plan->get_id() ) ); ?>">
                         <strong>
-							<?php echo esc_html( $item->get_name() ); ?>
+							<?php echo esc_html( $plan->get_name() ); ?>
                         </strong>
                     </a>
                     <div class="row-actions">
-                        <a href="<?php echo esc_url_raw( $item->get_edit_url( $item->get_id() ) ); ?>" class="">
+                        <a href="<?php echo esc_url_raw( $plan->get_edit_url( $plan->get_id() ) ); ?>" class="">
                             Edit
                         </a>
                         |
-                        <a href="<?php echo esc_url_raw( $item->get_edit_url( $item->get_id() ) ); ?>" class="">
+                        <a href="<?php echo esc_url_raw( $plan->get_edit_url( $plan->get_id() ) ); ?>" class="">
                             View
                         </a>
                     </div>
                 </td>
 
                 <td>
-					<?php echo esc_html( $item->get_displayed_price() ); ?>
+					<?php echo esc_html( $plan->get_displayed_price() ); ?>
                 </td>
 
                 <td>
-					<?php echo esc_html( $item->get_type() ); ?>
+					<?php echo esc_html( $plan->get_type() ); ?>
                 </td>
 
                 <td>
-					<?php echo esc_html( $item->get_status() ); ?>
+					<?php echo esc_html( $plan->get_status() ); ?>
                 </td>
 
                 <td>
-					<?php echo esc_html( $item->get_date_updated() ); ?>
+					<?php echo esc_html( $plan->get_date_updated() ); ?>
                 </td>
             </tr>
 		<?php endforeach; ?>
