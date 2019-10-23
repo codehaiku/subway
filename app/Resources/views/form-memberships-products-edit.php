@@ -94,7 +94,7 @@
 
             <div class="subway-flex-column-30">
 
-                <div class="subway-flex-inner-wrap" style="margin-top:3.3em">
+                <div class="subway-flex-inner-wrap" style="margin-top:4.7em">
 
 					<?php $this->render( 'status', $extracted_vars, false, 'form-memberships-products' ); ?>
 
