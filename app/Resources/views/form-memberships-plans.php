@@ -34,7 +34,7 @@
     <div class="wrap">
 
         <h1 class="wp-heading-inline">
-			<?php printf( esc_html__( 'Configure Membership Plan: #%d', 'subway' ), $_GET['product'] ); ?>
+			<?php printf( esc_html__( 'Configure Membership Plan: #%d', 'subway' ), $_GET['plan'] ); ?>
         </h1>
 
         <hr/>
