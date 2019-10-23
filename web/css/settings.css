@@ -337,6 +337,7 @@ ul.subway-section-tabs li a {
     padding: 12.5px 20px;
     text-decoration: none;
     border: 1px solid #cccccc;
+    box-shadow: 0 1px 0 #ccc;
     margin-right: 10px;
     color: #444;
     font-size: 16px;
