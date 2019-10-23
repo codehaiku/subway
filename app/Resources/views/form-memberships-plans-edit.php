@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <?php if ( empty( $plan ) ): ?>
 
-	<?php $error = new WP_Error( 'broke', __( "Error: Product not found", "subway" ) ); ?>
+	<?php $error = new WP_Error( 'broke', __( "Error: Membership Plan is not found.", "subway" ) ); ?>
 
     <h3>
 		<?php echo $error->get_error_message(); ?>
@@ -104,38 +104,39 @@ if ( ! defined( 'ABSPATH' ) ) {
 					$this->render( 'information',
 						[
 							'plan'      => $plan,
+							'plan_id'   => $id,
 							'form_data' => $form_data,
 							'errors'    => $errors
 						],
 						false, 'form-memberships-plans' );
 					?>
-
                 </div>
-                <!--/.Section Plan Information-->
-
-                <!--Plan Status-->
-                <div class="subway-flex-column subway-flex-column-30">
-
-					<?php
-					$this->render( 'status', [
-						'plan'       => $plan,
-						'id'         => $id,
-						'membership' => $membership
-					], false, 'form-memberships-plans' );
-					?>
-
-                </div>
-                <!--/.Plan Status-->
             </div>
+            <!--/.Section Plan Information-->
 
-            <!--Submit Button-->
-            <div class="subway-card">
+            <!--Plan Status-->
+            <div class="subway-flex-column subway-flex-column-30">
 
-                <input id="update-plan" type="submit" class="button button-primary button-large"
-                       value="<?php esc_attr_e( 'Update Memberships Plan', 'subway' ); ?>"/>
+				<?php
+				$this->render( 'status', [
+					'plan'       => $plan,
+					'id'         => $id,
+					'membership' => $membership
+				], false, 'form-memberships-plans' );
+				?>
 
             </div>
-            <!--/.Submit Button-->
+            <!--/.Plan Status-->
+        </div>
+
+        <!--Submit Button-->
+        <div class="subway-card">
+
+            <input id="update-plan" type="submit" class="button button-primary button-large"
+                   value="<?php esc_attr_e( 'Update Memberships Plan', 'subway' ); ?>"/>
+
+        </div>
+        <!--/.Submit Button-->
     </form>
 
 </div><!--#subway-edit-plan-form-->
