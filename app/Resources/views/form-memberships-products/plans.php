@@ -32,18 +32,18 @@ $items = $plans->get_plans( [ 'product_id' => $product->get_id() ] );
 		<?php foreach ( $items as $plan ): ?>
             <tr>
                 <td>
-                    <a href="<?php echo esc_url_raw( $plan->get_edit_url( $plan->get_id() ) ); ?>">
+                    <a href="<?php echo esc_url_raw( $plan->get_edit_url( $plan->get_id(), $product->get_id() ) ); ?>">
                         <strong>
 							<?php echo esc_html( $plan->get_name() ); ?>
                         </strong>
                     </a>
                     <div class="row-actions">
-                        <a href="<?php echo esc_url_raw( $plan->get_edit_url( $plan->get_id() ) ); ?>" class="">
-                            Edit
+                        <a href="<?php echo esc_url_raw( $plan->get_edit_url( $plan->get_id(), $product->get_id() ) ); ?>" class="">
+                            <?php esc_html_e('Edit', 'subway'); ?>
                         </a>
                         |
-                        <a href="<?php echo esc_url_raw( $plan->get_edit_url( $plan->get_id() ) ); ?>" class="">
-                            View
+                        <a href="<?php echo esc_url_raw( $plan->get_edit_url( $plan->get_id(), $product->get_id() ) ); ?>" class="">
+	                        <?php esc_html_e('View', 'subway'); ?>
                         </a>
                     </div>
                 </td>
