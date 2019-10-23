@@ -124,7 +124,7 @@
     <div class="subway-form-row">
         <h3 class="field-title">
             <label for="input-sku">
-				<?php esc_html_e( 'Stock Keeping Unit (SKU)', 'subway' ); ?>
+				<?php esc_html_e( 'SKU', 'subway' ); ?>
             </label>
         </h3>
         <p class="field-help">

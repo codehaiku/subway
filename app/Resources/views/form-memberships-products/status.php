@@ -35,7 +35,7 @@
     <div class="subway-form-row" id="checkout-link-section">
         <h3 class="field-title">
             <label for="input-checkout-link">
-				<?php esc_html_e( 'Copy Product URL', 'subway' ); ?>
+				<?php esc_html_e( 'Product Link', 'subway' ); ?>
             </label>
         </h3>
         <p class="field-help">
@@ -45,7 +45,7 @@
                id="input-checkout-link" type="url">
         <p>
             <button id="btn-copy-checkout-link" type="button"
-                    class="button button-primary button-small">
+                    class="button button-small">
                 Copy Link
             </button>
             <a href="http://multisite.local/checkout?product_id=2" target="_blank"
@@ -55,8 +55,13 @@
     </div>
     <!--.Product Link -->
 
-    <div style="display: block; text-align: center; margin-top: 20px;">
-    <input id="publish-product" type="submit" class="button button-primary button-large"
-           value="<?php esc_attr_e( 'Update Product', 'subway' ); ?>">
+
+</div>
+
+<div class="subway-card">
+    <div style="display: block; text-align: center;">
+        <input id="publish-product" type="submit" class="button button-primary button-large"
+               value="<?php esc_attr_e( 'Update Product', 'subway' ); ?>">
+        <a href="#" class="button button-danger button-large">Move to Trash</a>
     </div>
 </div>

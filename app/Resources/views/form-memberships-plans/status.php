@@ -36,18 +36,18 @@
 		<div class="subway-form-row" id="checkout-link-section">
 			<h3 class="field-title">
 				<label for="input-checkout-link">
-					<?php esc_html_e( 'Copy Checkout URL', 'subway' ); ?>
+					<?php esc_html_e( 'Checkout Link', 'subway' ); ?>
 				</label>
 			</h3>
 			<p class="field-help">
-				<?php esc_html_e( 'Use the url below to share this membership plan anywhere.', 'subway' ); ?>
+				<?php esc_html_e( 'Use the link below to share this membership plan anywhere.', 'subway' ); ?>
 			</p>
 			<?php $checkout_url = $membership->get_plan_checkout_url( $id ); ?>
 			<input readonly value="<?php echo esc_url( $checkout_url ); ?>" id="input-checkout-link"
 			       type="url" value="input-checkout-link"/>
 			<p>
 				<button id="btn-copy-checkout-link" type="button"
-				        class="button button-primary button-small">
+				        class="button button-small">
 					<?php esc_html_e( 'Copy Link', 'subway' ); ?>
 				</button>
 				<a href="<?php echo esc_url( $checkout_url ); ?>" target="_blank"

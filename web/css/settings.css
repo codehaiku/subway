@@ -341,7 +341,7 @@ ul.subway-section-tabs li a {
     margin-right: 10px;
     color: #444;
     font-size: 16px;
-    border-radius: 20px;
+    border-radius: 3px;
 }
 
 ul.subway-section-tabs li a.active {
@@ -487,10 +487,6 @@ ul.subway-section-tabs li a:focus {
 }
 
 #checkout-link-section {
-    text-align: center;
-    border: 1px solid #0073aa;
-    background: rgba(0, 115, 170, 0.10);
-    padding: 20px;
     margin-bottom: 0;
 }
 
