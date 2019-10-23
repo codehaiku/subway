@@ -89,9 +89,9 @@ class Controller extends Plan {
 
 		$this->check_admin();
 
-		check_admin_referer( 'subway_product_edit_action', 'subway_product_edit_action' );
+		check_admin_referer( 'subway_plan_edit_action', 'subway_plan_edit_action' );
 
-		$id      = filter_input( 0, 'product_id', 519 );
+		$id      = filter_input( 0, 'plan_id', 519 );
 		$title   = filter_input( 0, 'title', 513 );
 		$desc    = filter_input( 0, 'description', 513 );
 		$amount  = filter_input( 0, 'amount', 513 );
@@ -208,9 +208,9 @@ class Controller extends Plan {
 
 	private function define_hooks() {
 
-		add_action( 'admin_post_subway_product_edit_action', [ $this, 'edit_action' ] );
+		add_action( 'admin_post_subway_plan_edit_action', [ $this, 'edit_action' ] );
 
-		add_action( 'admin_post_subway_product_add_action', [ $this, 'add_action' ] );
+		add_action( 'admin_post_subway_plan_add_action', [ $this, 'add_action' ] );
 
 	}
 
