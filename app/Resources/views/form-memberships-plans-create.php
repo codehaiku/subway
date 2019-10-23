@@ -1,7 +1,6 @@
 <div id="subway-new-product-form">
 
-	<?php $messages = $flash_message_add->get(); ?>
-	<?php $messages = empty( $messages ) ? [] : $messages; ?>
+	<?php $messages = (array)$flash_message_add->get(); ?>
 
 	<?php $form_data = array( 'title' => '', 'description' => '', 'sku' => '' ); ?>
 	<?php if ( isset( $messages['form_data'] ) ): ?>
@@ -13,9 +12,12 @@
 
         <div>
             <!--hidden fields-->
-			<?php wp_nonce_field( 'subway_product_add_action', 'subway_product_add_action' ); ?>
-            <input type="hidden" name="action" value="subway_product_add_action"/>
+			<?php wp_nonce_field( 'subway_plan_add_action', 'subway_plan_add_action' ); ?>
+
+            <input type="hidden" name="action" value="subway_plan_add_action"/>
+
             <input type="hidden" name="page" value="subway-membership"/>
+
             <input type="hidden" name="new" value="yes"/>
 
         </div>
@@ -24,45 +26,65 @@
 
             <!--Product  -->
             <div class="subway-form-row" id="product-row">
+
                 <h3 class="field-title">
+
                     <label for="product">
+
 						<?php esc_html_e( 'Add to Product', 'subway' ); ?>
+
                     </label>
+
                 </h3>
-                <p>
+
+                <p class="field-help">
 					<?php esc_html_e( 'Select from the list of products available.', 'subway' ); ?>
                 </p>
+
 				<?php $products = new \Subway\Memberships\Product\Controller(); ?>
 				<?php $result = $products->fetch_all(); ?>
                 <?php $items = $result->products; ?>
+
                 <select name="product">
+
 					<?php foreach ( $items as $item ): ?>
+
                         <option value="<?php echo esc_attr( $item->get_id() ); ?>">
+
 							<?php echo esc_html( $item->get_name() ); ?>
+
                         </option>
+
 					<?php endforeach; ?>
+
                 </select>
+
             </div>
             <!--/.Product -->
 
             <!--Plan Name -->
             <div class="subway-form-row">
+
                 <h3 class="field-title">
                     <label for="input-title">
-						<?php esc_html_e( 'Name', 'subway' ); ?>
+						<?php esc_html_e( 'Membership Plan Name', 'subway' ); ?>
                     </label>
                 </h3>
-                <p>
+
+                <p class="field-help">
 					<?php esc_html_e( 'Enter the name of your membership product', 'subway' ); ?>
                 </p>
+
                 <input value="<?php echo esc_attr( $form_data['title'] ); ?>" id="input-title" name="title" type="text"
                        class="widefat" placeholder="<?php esc_attr_e( 'Add Name', 'subway' ); ?>">
+
 				<?php if ( isset( $errors['title'] ) ): ?>
                     <p class="validation-errors">
 						<?php echo $errors['title']; ?>
                     </p>
 				<?php endif; ?>
             </div>
+
             <!--/.Plan Name -->
             <!-- Plan SKU-->
             <div class="subway-form-row">
@@ -71,8 +93,8 @@
 						<?php esc_html_e( 'SKU', 'subway' ); ?>
                     </label>
                 </h3>
-                <p>
-					<?php esc_html_e( 'Give your membership product a unique SKU', 'subway' ); ?>
+                <p class="field-help">
+					<?php esc_html_e( 'Give your membership plan a unique SKU', 'subway' ); ?>
                 </p>
 
                 <input value="<?php echo esc_attr( $form_data['sku'] ); ?>" id="input-sku" name="sku" type="text"
@@ -92,7 +114,7 @@
 						<?php esc_html_e( 'Description', 'subway' ); ?>
                     </label>
                 </h3>
-                <p><?php esc_html_e( 'Explain what this membership product is all about.' ); ?></p>
+                <p class="field-help"><?php esc_html_e( 'Explain what this membership plan is all about.' ); ?></p>
                 <textarea id="input-description" name="description" class="widefat" rows="5"
                           placeholder="Product description"><?php echo esc_html( $form_data['description'] ); ?></textarea>
 				<?php if ( isset( $errors['description'] ) ): ?>
@@ -104,7 +126,7 @@
             <!--/. Plan Description -->
 
             <div>
-                <input id="publish-product" type="submit" class="button button-primary button-large"
+                <input id="publish-plan" type="submit" class="button button-primary button-large"
                        value="<?php esc_attr_e( 'Save & Configure', 'subway' ); ?>"/>
             </div>
         </div>
