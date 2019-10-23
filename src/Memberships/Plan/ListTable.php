@@ -12,11 +12,11 @@ class ListTable extends \WP_List_Table {
 
 		$columns = array(
 			'cb'           => '<input type="checkbox" />',
-			'name'         => 'Product Name',
-			'sku'          => 'SKU',
-			'type'         => 'Type',
-			'amount'       => 'Amount',
-			'date_updated' => 'Last Update'
+			'name'         => esc_html__('Plan Name', 'subway'),
+			'sku'          => esc_html__('SKU', 'subway'),
+			'type'         => esc_html__('Type', 'subway'),
+			'amount'       => esc_html__('Amount', 'subway'),
+			'date_updated' => esc_html__('Last Update', 'subway')
 		);
 
 		return $columns;
@@ -65,14 +65,14 @@ class ListTable extends \WP_List_Table {
 
 	function prepare_items() {
 
-		$memberships = new Plan();
+		$plan = new Plan();
 
 		// Process bulk actions.
-		$this->process_bulk_action( $memberships );
+		$this->process_bulk_action( $plan );
 
 		$this->_column_headers = $this->get_column_info();
 
-		$per_page = $this->get_items_per_page( 'products_per_page', 5 );
+		$per_page = $this->get_items_per_page( 'plans_per_page', 5 );
 
 		$current_page = $this->get_pagenum();
 
@@ -93,7 +93,7 @@ class ListTable extends \WP_List_Table {
 		// Manually determine page query offset (offset + current page (minus one) x posts per page).
 		$page_offset = $offset + ( $current_page - 1 ) * $per_page;
 
-		$data = $memberships->get_wp_list_table_products( array(
+		$data = $plan->get_wp_list_table( array(
 			'orderby'   => 'date_updated',
 			'direction' => $order,
 			'offset'    => $page_offset,
@@ -102,7 +102,7 @@ class ListTable extends \WP_List_Table {
 			'status'    => $status
 		) );
 
-		$total_items = absint( get_option( 'subway_products_count' ) );
+		$total_items = absint( get_option( 'subway_plans_count' ) );
 
 		if ( ! empty( $search_value ) ) {
 			$total_items = count( $data );
@@ -167,13 +167,13 @@ class ListTable extends \WP_List_Table {
 
 		$delete_url = wp_nonce_url(
 			$trash_uri,
-			sprintf( 'trash_product_%s', $item['id'] ),
+			sprintf( 'trash_plan_%s', $item['id'] ),
 			'_wpnonce'
 		);
 
 		$edit_url = wp_nonce_url(
-			sprintf( '?page=%s&edit=%s&product=%s&section=product-information', $_REQUEST['page'], 'yes', $item['id'] ),
-			sprintf( 'edit_product_%s', $item['id'] ),
+			sprintf( '?page=%s&edit=%s&plan=%s&section=plan-information', $_REQUEST['page'], 'yes', $item['id'] ),
+			sprintf( 'edit_plan_%s', $item['id'] ),
 			'_wpnonce'
 		);
 
@@ -183,15 +183,15 @@ class ListTable extends \WP_List_Table {
 		);
 
 
-		$product_name = sprintf( '<strong><a href="%1$s" title="%2$s">%2$s</a></strong>', $edit_url, $item['name'] );
+		$plan_name = sprintf( '<strong><a href="%1$s" title="%2$s">%2$s</a></strong>', $edit_url, $item['name'] );
 
 		if ( 'draft' === $item['status'] ):
-			$product_name .= '&nbsp; &mdash; ' . esc_html__( 'Draft', 'subway' ) . '';
+			$plan_name .= '&nbsp; &mdash; ' . esc_html__( 'Draft', 'subway' ) . '';
 		endif;
 
-		$product_name .= $this->row_actions( $actions );
+		$plan_name .= $this->row_actions( $actions );
 
-		return $product_name;
+		return $plan_name;
 
 	}
 
@@ -205,18 +205,18 @@ class ListTable extends \WP_List_Table {
 
 	}
 
-	function process_bulk_action( $membership ) {
+	function process_bulk_action( $plan ) {
 
 		if ( 'delete' === $this->current_action() ) {
 
 			check_admin_referer( 'bulk-' . $this->_args['plural'] );
 
-			$product_ids = filter_input( INPUT_POST, 'product_ids',
+			$plan_ids = filter_input( INPUT_POST, 'plan_ids',
 				FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 
-			if ( ! empty( $product_ids ) ) {
-				foreach ( $product_ids as $id ) {
-					$membership->delete( $id );
+			if ( ! empty( $plan_ids ) ) {
+				foreach ( $plan_ids as $id ) {
+					$plan->delete( $id );
 				}
 			}
 
@@ -229,7 +229,7 @@ class ListTable extends \WP_List_Table {
 	function column_cb( $item ) {
 
 		return sprintf(
-			'<input type="checkbox" name="product_ids[]" value="%s" />', $item['id']
+			'<input type="checkbox" name="plan_ids[]" value="%s" />', $item['id']
 		);
 
 	}
