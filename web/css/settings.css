@@ -202,10 +202,21 @@ div.subway-card input[type=text] {
     padding: 10px;
     background: #f5f5f5;
     font-size: 16px;
-    border-radius: 6px;
+    border-radius: 3px;
     width: 100%;
+    box-shadow: inset 0 2px 5px -3px rgba(0, 0, 0, .5);
+    border-color: #999;
+
 }
 
+div.subway-card select,
+div.subway-card textarea,
+div.subway-card input[type=url],
+div.subway-card input[type=number],
+div.subway-card input[type=text],
+.validation-errors {
+    max-width: 720px;
+}
 
 div.subway-card select:active,
 div.subway-card textarea:active,
@@ -222,7 +233,6 @@ div.subway-card input[type=url]:focus,
 div.subway-card input[type=number]:focus,
 div.subway-card input[type=text]:focus {
     background: #fff;
-    box-shadow: none;
 }
 
 div.subway-card textarea {
@@ -245,10 +255,17 @@ div.subway-form-row {
 div.subway-form-row .field-help {
     font-size: 14px;
     opacity: 0.75;
+    margin: 0.5em 0 1em 0;
 }
 
 div.subway-form-row:hover .field-help {
     opacity: 1;
+}
+#add-to-different-product {
+    margin: 10px 0 0 0;
+}
+#add-to-different-product a {
+    text-decoration: none;
 }
 
 div.subway-form-row:first-child {
@@ -292,10 +309,12 @@ div.subway-form-row .field-group #input-amount {
     display: table-cell;
 }
 
+.subway-plan-section,
 .subway-product-section {
     display: none;
 }
 
+.subway-plan-section.active,
 .subway-product-section.active {
     display: block;
 }
@@ -303,38 +322,38 @@ div.subway-form-row .field-group #input-amount {
     display: none;
 }
 
-ul#product-tabs {
+ul.subway-section-tabs {
     display: inline-block;
-    margin: 30px 0 -9px 0;
+    margin: 30px 0 10px 0;
     padding: 0;
 }
 
-ul#product-tabs li {
+ul.subway-section-tabs li {
     display: inline-block;
     float: left;
 }
 
-ul#product-tabs li a {
-    padding: 20px;
-    background: #f3f3f3;
+ul.subway-section-tabs li a {
+    padding: 12.5px 20px;
     text-decoration: none;
-    border: 1px solid #e6e6e6;
-    margin-left: -1px;
+    border: 1px solid #cccccc;
+    margin-right: 10px;
     color: #444;
-    font-size: 18px;
+    font-size: 16px;
+    border-radius: 20px;
 }
 
-ul#product-tabs li a.active {
+ul.subway-section-tabs li a.active {
 
     background: #fff;
     color: #0073aa;
 }
 
-ul#product-tabs li a .dashicons {
+ul.subway-section-tabs li a .dashicons {
     margin: 1px 5px 0 0;
 }
 
-ul#product-tabs li a:focus {
+ul.subway-section-tabs li a:focus {
     box-shadow: none;
 }
 
@@ -367,6 +386,7 @@ ul#product-tabs li a:focus {
 }
 
 .subway-card .validation-errors {
+    box-sizing: border-box;
     background: #ffcfcf;
     padding: 10px 20px;
     font-size: 14px;
@@ -494,6 +514,21 @@ span.product-status {
     display: inline-block;
     border-radius: 3px;
     color: #72777c;
+}
+
+#product-row {
+    background: rgba(130, 110, 173, 0.20);
+    padding: 35px 20px;
+    border-bottom: 2px solid rgba(130, 110, 180, 0.40);
+    margin: -20px -20px 20px -20px;
+}
+
+#add-to-different-plan > a {
+    text-decoration: none;
+}
+
+#add-to-different-plan {
+    margin: 7.5px 0 0 0;
 }
 
 .subway-pagination {
