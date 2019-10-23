@@ -583,3 +583,8 @@ span.product-status {
 .subway-section-offset {
     margin: 0 -20px;
 }
+
+#boxmembership-product-plans-table {
+    border: 0 none;
+    box-shadow: none;
+}
