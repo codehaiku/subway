@@ -12,7 +12,7 @@ class Controller extends Plan {
 
 		$this->check_admin();
 
-		check_admin_referer( 'subway_product_add_action', 'subway_product_add_action' );
+		check_admin_referer( 'subway_plan_add_action', 'subway_plan_add_action' );
 
 		$title = filter_input( 0, 'title', 513 );
 		$desc  = filter_input( 0, 'description', 513 );
@@ -65,14 +65,14 @@ class Controller extends Plan {
 			[
 				'page'    => 'subway-membership-plans',
 				'edit'    => 'yes',
-				'product' => $product_id
+				'plan' => $product_id
 			],
-			admin_url( 'admin.php?section=product-pricing' )
+			admin_url( 'admin.php?section=plan-pricing' )
 		) );
 
-		$redirect_url = $redirect_url . '#section-product-pricing';
+		$redirect_url = $redirect_url . '#section-plan-pricing';
 
-		$flash = new FlashMessage( get_current_user_id(), 'product-edit-submit-messages' );
+		$flash = new FlashMessage( get_current_user_id(), 'plan-edit-submit-messages' );
 
 		$flash->add( [
 			'type'    => 'success',
