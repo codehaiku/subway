@@ -433,7 +433,7 @@ class Plan {
 	 *
 	 * @return array
 	 */
-	public function get_wp_list_table_products( $args ) {
+	public function get_wp_list_table( $args ) {
 
 		$products = $this->get_plans( $args );
 
