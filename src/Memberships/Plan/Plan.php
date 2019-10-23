@@ -359,12 +359,13 @@ class Plan {
 		global $wpdb;
 
 		$defaults = array(
-			'limit'     => 60,
-			'offset'    => 0,
-			'orderby'   => 'id',
-			'direction' => 'DESC',
-			'status'    => '',
-			'name_like' => ''
+			'limit'      => 60,
+			'offset'     => 0,
+			'product_id' => 0,
+			'orderby'    => 'id',
+			'direction'  => 'DESC',
+			'status'     => '',
+			'name_like'  => ''
 		);
 
 		$args = wp_parse_args( $args, $defaults );
@@ -379,15 +380,22 @@ class Plan {
 
 		$search_query = $wpdb->prepare( "AND name like '%%%s%%' ", $args['name_like'] );
 
+		$product_query = $wpdb->prepare( 'AND product_id = %d', $args['product_id'] );
+
 		if ( empty( $args['name_like'] ) ) {
 			$search_query = '';
 		}
 
+		if ( empty( $args['product_id'] ) ) {
+			$product_query = '';
+		}
+
 		$direction = strtoupper( $args['direction'] );
 
-		$stmt = $wpdb->prepare( "SELECT status, id, name, sku, description, type, amount, date_created, date_updated 
+		$stmt = $wpdb->prepare( "SELECT status, id, name, product_id, sku, description, type, amount, date_created, date_updated 
 			FROM $this->table 
 			WHERE status IN (" . $args['status'] . ")
+			$product_query
 			$search_query 
 			ORDER BY $orderby $direction LIMIT %d, %d",
 			array( $args['offset'], $args['limit'] ) );
@@ -407,15 +415,16 @@ class Plan {
 				$p->set_display_tax( false );
 			}
 
-			$p->set_id( $result->id );
-			$p->set_name( $result->name );
-			$p->set_amount( $result->amount );
-			$p->set_sku( $result->sku );
-			$p->set_description( $result->description );
-			$p->set_status( $result->status );
-			$p->set_type( $result->type );
-			$p->set_date_created( $result->date_created );
-			$p->set_date_updated( $result->date_updated );
+			$p->set_id( $result->id )
+			  ->set_name( $result->name )
+			  ->set_product_id( $result->product_id )
+			  ->set_amount( $result->amount )
+			  ->set_sku( $result->sku )
+			  ->set_description( $result->description )
+			  ->set_status( $result->status )
+			  ->set_type( $result->type )
+			  ->set_date_created( $result->date_created )
+			  ->set_date_updated( $result->date_updated );
 
 			$products[] = $p;
 
@@ -598,17 +607,29 @@ class Plan {
 
 	}
 
-	public function get_edit_url( $id = 0 ) {
+	/**
+	 * @param $plan_id
+	 * @param $product_id
+	 *
+	 * @return string
+	 */
+	public function get_edit_url( $plan_id, $product_id = 0 ) {
 
-		$url = add_query_arg( [
+		$args = [
 			'page'    => 'subway-membership-plans',
 			'edit'    => 'yes',
-			'plan'    => $id,
-			'section' => 'plan-information',
+			'plan'    => $plan_id,
+			'section' => 'plan-information'
+		];
 
-		], admin_url( 'admin.php' ) );
+		if ( ! empty( $product_id ) ) {
+			$args['product'] = $product_id;
+		}
+
+		$url = add_query_arg( $args, admin_url( 'admin.php' ) );
 
 		return $url;
+
 	}
 
 	public function get_add_url( $product_id ) {
