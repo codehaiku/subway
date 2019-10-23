@@ -389,11 +389,11 @@ ul.subway-section-tabs li a:focus {
 .subway-card .validation-errors {
     box-sizing: border-box;
     background: #ffcfcf;
-    padding: 10px 20px;
+    padding: 10px;
     font-size: 14px;
     color: #ea4343;
     font-weight: bold;
-    border-radius: 6px;
+    border-radius: 3px;
     border: 1px solid #fda6a6;
     box-shadow: 0 0 0 3px #ffecec;
 }
@@ -524,10 +524,16 @@ span.product-status {
     margin: -20px -20px 20px -20px;
 }
 
+#view-product {
+    float: left;
+    margin-right: 20px;
+}
+#view-product > a,
 #add-to-different-plan > a {
     text-decoration: none;
 }
 
+#view-product,
 #add-to-different-plan {
     margin: 7.5px 0 0 0;
 }
