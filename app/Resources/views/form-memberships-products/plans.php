@@ -11,7 +11,7 @@ $items = $plans->get_plans( [ 'product_id' => $product->get_id() ] );
 </p>
 
 <?php if ( ! empty( $items ) ): ?>
-    <table class="wp-list-table widefat fixed striped posts">
+    <table class="wp-list-table widefat fixed striped" id="boxmembership-product-plans-table">
         <thead>
         <tr>
             <th colspan="5">
