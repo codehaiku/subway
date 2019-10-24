@@ -34,13 +34,13 @@ class Register {
 			$password_confirm = filter_input( INPUT_POST, 'sw-password-confirm', FILTER_SANITIZE_STRING );
 
 			// Request Product Id.
-			$product_id = filter_input( INPUT_POST, 'sw-product-id', FILTER_SANITIZE_NUMBER_INT );
+			$plan_id = filter_input( INPUT_POST, 'sw-plan-id', FILTER_SANITIZE_NUMBER_INT );
 
-			$products = new Plan();
+			$plans = new Plan();
 
-			$product = $products->get_plan( $product_id );
+			$plan = $plans->get_plan( $plan_id );
 
-			if ( empty ( $product_id ) ) {
+			if ( empty ( $plan_id ) ) {
 				return;
 			}
 
@@ -49,11 +49,11 @@ class Register {
 				if ( $this->create_user( $username, $password, $email ) ) {
 
 					// Disable payment for free products.
-					if ( 'free' !== $product->get_type() ) {
+					if ( 'free' !== $plan->get_type() ) {
 
 						$payment = new Payment( $wpdb );
 
-						$payment->pay( $product_id );
+						$payment->pay( $plan_id );
 
 					} else {
 
@@ -159,17 +159,17 @@ class Register {
 
 	public function display_form() {
 
-		$product_id = filter_input( INPUT_GET, 'product_id', FILTER_SANITIZE_NUMBER_INT );
+		$plan_id = filter_input( INPUT_GET, 'plan_id', FILTER_SANITIZE_NUMBER_INT );
 
-		$products = new Plan();
+		$plans = new Plan();
 
-		$product = $products->get_plan( $product_id );
+		$plan = $plans->get_plan( $plan_id );
 
 		$currency = new Currency();
 
 		return $this->view->render( 'shortcode-register',
 			[
-				'product'  => $product,
+				'plan'     => $plan,
 				'currency' => $currency,
 				'options'  => new Options()
 			],
