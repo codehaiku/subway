@@ -15,11 +15,34 @@
 
 <?php if ( "yes" === $new ): ?>
 
+	<?php $requested_product = filter_input( 1, 'product_id', 519 ); ?>
+
+	<?php $attached_product = new \Subway\Memberships\Product\Controller(); ?>
+
+	<?php $attached_product->set_id( $requested_product ); ?>
+
+	<?php $attached_product = $attached_product->get(); ?>
+
     <div class="wrap">
 
-        <h1 class="wp-heading-inline">
-			<?php esc_html_e( 'New Membership Plan', 'subway' ); ?>
-        </h1>
+		<?php if ( $attached_product ): ?>
+
+            <h1 class="wp-heading-inline">
+				<?php echo esc_html( $attached_product->get_name() ); ?>
+            </h1>
+
+            <h2>
+                <span class="dashicons dashicons-plus"></span>
+				<?php esc_html_e( 'New Membership Plan', 'subway' ); ?>
+            </h2>
+
+		<?php else: ?>
+
+            <h2>
+				<?php esc_html_e( 'New Membership Plan', 'subway' ); ?>
+            </h2>
+
+		<?php endif; ?>
 
         <hr class="wp-header-end">
 
@@ -31,17 +54,36 @@
 
 <?php elseif ( "yes" === $edit ): ?>
 
+	<?php $id = filter_input( INPUT_GET, 'plan', FILTER_VALIDATE_INT ); ?>
+
+	<?php $plan = $plans->get_plan( $id ); ?>
+
+	<?php $product = new \Subway\Memberships\Product\Controller(); ?>
+
+	<?php $product->set_id( $plan->get_product_id() ); ?>
+
+	<?php $product = $product->get(); ?>
+
     <div class="wrap">
 
-        <h1 class="wp-heading-inline">
-			<?php printf( esc_html__( 'Configure Membership Plan: #%d', 'subway' ), $_GET['plan'] ); ?>
-        </h1>
+		<?php if ( $product ): ?>
 
-        <hr/>
+            <h1 class="wp-heading-inline">
+				<?php printf( esc_html__( '%s', 'subway' ), $product->get_name() ); ?>
+            </h1>
+
+		<?php endif; ?>
+
+        <h2>
+            <span class="dashicons dashicons-randomize"></span>
+			<?php printf( esc_html__( '%s', 'subway' ), $plan->get_name() ); ?>
+        </h2>
 
 		<?php $view->render( 'form-memberships-plans-edit', [
-			'membership'     => $products,
-			'flash_messages' => $flash_message->get()
+			'plans'    => $plans,
+			'plan'     => $plan,
+			'id'       => $id,
+			'messages' => $flash_message->get()
 		] ); ?>
 
     </div>
@@ -51,11 +93,11 @@
     <div class="wrap">
 
         <h1 class="wp-heading-inline">
-            <?php esc_html_e( 'Membership Plans', 'subway' ); ?>
+			<?php esc_html_e( 'Membership Plans', 'subway' ); ?>
         </h1>
 
         <a href="?page=subway-membership-plans&new=yes" class="page-title-action">
-            <?php esc_html_e( 'Add New', 'subway' ); ?>
+			<?php esc_html_e( 'Add New', 'subway' ); ?>
         </a>
 
         <hr class="wp-header-end">

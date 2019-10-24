@@ -145,20 +145,33 @@
 
     <!-- Plan Description -->
     <div class="subway-form-row">
+
         <h3 class="field-title">
+
             <label for="input-description">
+
 				<?php esc_html_e( 'Product Description', 'subway' ); ?>
+
             </label>
+
         </h3>
+
         <p class="field-help">
+
 			<?php esc_html_e( 'Update this membership plan description.', 'subway' ); ?>
+
         </p>
-        <textarea id="input-description" name="description" class="widefat" rows="5"
-                  placeholder="<?php echo esc_attr( 'Product description', 'subway' ); ?>"><?php echo esc_html( $plan->get_description() ); ?></textarea>
+
+	    <?php wp_editor( wp_kses_post( $plan->get_description() ), 'description', $settings = array('editor_height'=>150) ); ?>
+
 		<?php if ( isset( $errors['description'] ) ): ?>
+
             <p class="validation-errors">
-				<?php echo $errors['description']; ?>
+
+				<?php echo esc_html( $errors['description'] ); ?>
+
             </p>
+
 		<?php endif; ?>
     </div>
     <!--/.Plan Description-->
