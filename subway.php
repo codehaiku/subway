@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: Subway Memberships & Subscriptions
- * Description: Lock your site content base on user roles and membership type. Easily charge for membership subscription via PayPal Subscriptions and More!
- * Version: 3.0
+ * Plugin Name: Box Membership
+ * Description: Box Membership is a complete membership platform for WordPress. Charge users for content subscriptions, and more!
+ * Version: 1.0
  * Author: Joseph G
  * Author URI: http://subway-wp.com
  * Text Domain: subway
