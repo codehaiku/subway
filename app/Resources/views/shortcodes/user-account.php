@@ -95,16 +95,16 @@
                                 <tr>
                                     <td>
                                         <p>
-                                            <a href="<?php echo esc_url( $subscription->get_plan_url() ); ?>"
-                                               title=" <?php echo esc_attr( $subscription->get_name() ); ?>">
+                                            <a href="<?php echo esc_url( $subscription->plan->get_plan_url() ); ?>"
+                                               title=" <?php echo esc_attr( $subscription->plan->get_name() ); ?>">
                                                 <strong>
-													<?php echo esc_html( $subscription->get_name() ); ?>
+													<?php echo esc_html( $subscription->plan->get_name() ); ?>
                                                 </strong>
                                             </a>
                                             <br/>
-											<?php echo esc_html( $subscription->get_displayed_price_without_tax() ); ?>
+											<?php echo esc_html( $subscription->plan->get_displayed_price_without_tax() ); ?>
                                             &mdash;
-											<?php echo esc_html( $subscription->get_type() ); ?>
+											<?php echo esc_html( $subscription->plan->get_type() ); ?>
                                         </p>
                                     </td>
                                     <td>
@@ -112,7 +112,7 @@
                                     </td>
                                     <td>
                                         <p>
-                                            October 1, 2019
+                                            October 1, 2019 @todo
                                         </p>
                                     </td>
                                 </tr>
