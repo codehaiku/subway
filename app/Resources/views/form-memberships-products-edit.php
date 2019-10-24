@@ -27,8 +27,6 @@
 
     </h1>
 
-    <hr class="wps-header-end">
-
 	<?php if ( isset( $notices['type'] ) && $notices['type'] === 'success' ): ?>
 
         <div class="notice notice-success is-dismissible">
@@ -90,7 +88,6 @@
                 </div>
 
             </div>
-
 
             <div class="subway-flex-column-30">
 
