@@ -55,31 +55,31 @@ class Payment {
 	}
 
 	/**
-	 * @param int $product_id
+	 * @param int $plan_id
 	 *
 	 * @return bool|\PayPal\Api\Payment
 	 */
-	public function pay( $product_id = 0 ) {
+	public function pay( $plan_id = 0 ) {
 
-		if ( empty( $product_id ) ) {
-
-			return false;
-
-		}
-
-		$products = new Plan();
-
-		$product = $products->get_plan( $product_id );
-
-		if ( empty( $product ) ) {
+		if ( empty( $plan_id ) ) {
 
 			return false;
 
 		}
 
-		$tax_rate = $product->get_tax_rate();
+		$plans = new Plan();
 
-		$price = $product->get_real_amount();
+		$plan = $plans->get_plan( $plan_id );
+
+		if ( empty( $plan ) ) {
+
+			return false;
+
+		}
+
+		$tax_rate = $plan->get_tax_rate();
+
+		$price = $plan->get_real_amount();
 
 		$quantity = $this->quantity;
 
@@ -87,21 +87,18 @@ class Payment {
 
 		$subtotal = $price * $quantity;
 
-		$name = $product->get_name();
+		$name = $plan->get_name();
 
 		$currency = get_option( 'subway_currency', 'USD' );
 
-		$sku = $product->get_sku();
+		$sku = $plan->get_sku();
 
 		$redirect_url = esc_url( add_query_arg( 'success', 'true', $this->return_url ) );
 
 		$cancel_url = esc_url( add_query_arg( 'success', 'fail', $this->cancel_url ) );
 
 		// Generate Invoice Number.
-		$prefix = apply_filters(
-			'subway\payment.pay.invoice_number_prefix',
-			get_option( 'subway_invoice_prefix', 'WPBXM' )
-		);
+		$prefix = apply_filters( 'subway\payment.pay.invoice_number_prefix', get_option( 'subway_invoice_prefix', 'WPBXM' ) );
 
 		$user_id        = get_current_user_id();
 		$combination    = date( 'y' ) . date( 'd' ) . date( 'H' ) . date( 'i' ) . date( 's' );
@@ -109,7 +106,7 @@ class Payment {
 		$invoice_number = apply_filters( 'subway\payment.pay.invoice_number', $invoice );
 
 		// Add description.
-		$description = sprintf( __( 'Payment for: %s', 'subway' ), $product->get_name() );
+		$description = sprintf( __( 'Payment for: %s', 'subway' ), $plan->get_name() );
 
 		try {
 
@@ -117,17 +114,17 @@ class Payment {
 
 			$payer->setPaymentMethod( "paypal" );
 
-			$item1 = new Item();
+			$item = new Item();
 
-			$item1->setName( $name )
-			      ->setCurrency( $currency )
-			      ->setQuantity( $quantity )
-			      ->setSku( $sku ) // Similar to `item_number` in Classic API
-			      ->setPrice( $price );
+			$item->setName( $name )
+			     ->setCurrency( $currency )
+			     ->setQuantity( $quantity )
+			     ->setSku( $sku ) // Similar to `item_number` in Classic API
+			     ->setPrice( $price );
 
 			$itemList = new ItemList();
 
-			$itemList->setItems( array( $item1 ) );
+			$itemList->setItems( array( $item ) );
 
 			$details = new Details();
 
@@ -145,7 +142,7 @@ class Payment {
 			$transaction = new Transaction();
 
 			$transaction->setAmount( $amount )
-			            ->setCustom( $product->get_id() )
+			            ->setCustom( $plan->get_id() )
 			            ->setItemList( $itemList )
 			            ->setDescription( $description )
 			            ->setInvoiceNumber( $invoice_number );
@@ -165,7 +162,7 @@ class Payment {
 		} catch ( \Exception $e ) {
 			//@Todo: Assign valid return url.
 			echo '<pre>';
-			echo $e->getMessage();
+				echo $e->getMessage();
 			echo '</pre>';
 			die;
 		}
@@ -177,7 +174,7 @@ class Payment {
 		} catch ( \Exception $ex ) {
 			//@Todo: Assign valid return url.
 			echo '<pre>';
-			echo $ex->getMessage();
+				echo $ex->getMessage();
 			echo '</pre>';
 			die;
 		}
@@ -209,13 +206,13 @@ class Payment {
 
 				$payment = \PayPal\Api\Payment::get( $payment_id, $this->api_context );
 
-				$product_id = $payment->getTransactions()[0]->getCustom();
+				$plan_id = $payment->getTransactions()[0]->getCustom();
 
 				$added_order = $this->wpdb->insert(
 
 					$this->wpdb->prefix . 'subway_memberships_orders',
 					array(
-						'product_id'     => $product_id,
+						'plan_id'        => $plan_id,
 						'user_id'        => get_current_user_id(),
 						'invoice_number' => $payment->getTransactions()[0]->getInvoiceNumber(),
 						'status'         => $payment->getState(),
@@ -245,7 +242,7 @@ class Payment {
 				if ( $added_order ) {
 
 					// Update the user meta.
-					update_user_meta( get_current_user_id(), 'subway_user_membership_product_id', $product_id );
+					update_user_meta( get_current_user_id(), 'subway_user_membership_plan_id', $plan_id );
 
 					// Update orders count.
 					$count_orders = absint( get_option( 'subway_count_orders', 0 ) );
@@ -290,7 +287,7 @@ class Payment {
 
 					$user_plan_added = $user_plans->add( [
 						'user_id'      => get_current_user_id(),
-						'prod_id'      => $product_id,
+						'prod_id'      => $plan_id,
 						'status'       => 'completed',
 						'trial_status' => 'none'
 					] );
