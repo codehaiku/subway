@@ -19,20 +19,28 @@ class Checkout {
 
 	public function view() {
 
-		$product_id = filter_input( INPUT_GET, 'product_id', FILTER_SANITIZE_NUMBER_INT );
+		$plan_id = filter_input( INPUT_GET, 'plan_id', FILTER_SANITIZE_NUMBER_INT );
 
-		$products = new Plan();
-		$products->set_display_tax( true );
+		$plan = new Plan();
 
-		$product = $products->get_plan( $product_id );
+		if ( $plan ) {
+
+			$plan->set_display_tax( true );
+
+			$plan = $plan->get_plan( $plan_id );
+
+		} else {
+			$plan = [];
+		}
 
 		$currency = new Currency();
+
 		$options  = new Options();
 
 		return $this->view->render( 'shortcode-checkout',
 			[
 				'view'     => $this->view,
-				'product'  => $product,
+				'plan'  => $plan,
 				'currency' => $currency,
 				'options'  => $options
 			],
