@@ -215,13 +215,16 @@ class Plans {
 
 				$p = $product->get_plan( $result->prod_id );
 
-				$plans[] = $p;
+				if ( $p ) {
+					array_push( $plans, $p );
+				}
 
 			}
 
 		}
 
 		return $plans;
+
 	}
 
 }

@@ -103,11 +103,11 @@ class Invoices {
 
 		if ( ! empty ( $results ) ) {
 			foreach ( $results as $result ) {
-				$invoices[] = $result;
+				array_push( $invoices, $result );
 			}
 		}
 
 		return $invoices;
 	}
-	
+
 }

@@ -35,14 +35,14 @@ class UserAccount {
 		];
 
 		// Set default template to user account.
-		$template = 'shortcode-user-account';
+		$template = 'user-account';
 
 		switch ( $current_page ):
 
 			case 'update-email-address':
 
 				$flash           = new FlashMessage( get_current_user_id(), 'subway-user-edit-email' );
-				$template        = 'shortcode-user-account-email-edit';
+				$template        = 'user-account-email-edit';
 				$args['message'] = $flash->get();
 
 				break;
@@ -50,7 +50,7 @@ class UserAccount {
 			case 'update-personal-information':
 
 				$flash           = new FlashMessage( get_current_user_id(), 'subway-user-edit-profile' );
-				$template        = 'shortcode-user-account-edit';
+				$template        = 'user-account-edit';
 				$args['message'] = $flash->get();
 
 				break;
@@ -66,7 +66,7 @@ class UserAccount {
 				$invoice         = $invoices->get_user_invoice();
 				$args['invoice'] = $invoice;
 
-				$template     = 'shortcode-user-account-invoice';
+				$template     = 'user-account-invoice';
 
 				break;
 
@@ -78,11 +78,11 @@ class UserAccount {
 
 				$args['invoices'] = $invoices->get_user_invoices();
 
-				$args['product'] = new Plan();
+				$args['plan'] = new Plan();
 
 		endswitch;
 
-		return $this->view->render( $template, $args, true );
+		return $this->view->render( $template, $args, true, 'shortcodes' );
 
 	}
 
