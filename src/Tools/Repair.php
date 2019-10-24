@@ -14,7 +14,7 @@ class Repair {
 
 		$this->wpdb = $wpdb;
 
-		$this->products_table = $this->wpdb->prefix . 'subway_memberships_products';
+		$this->products_table = $this->wpdb->prefix . 'subway_memberships_products_plans';
 
 		$this->orders_table = $this->wpdb->prefix . 'subway_memberships_orders';
 
@@ -66,7 +66,7 @@ class Repair {
 
 		// Redirect back.
 		wp_safe_redirect(
-			esc_url( add_query_arg( [
+			esc_url_raw( add_query_arg( [
 				'page'     => 'subway-membership-tools',
 				'repaired' => 'orders_count'
 			],
@@ -79,7 +79,9 @@ class Repair {
 	}
 
 	public function attach_hooks() {
+
 		$this->define_hooks();
+
 	}
 
 	private function define_hooks() {
