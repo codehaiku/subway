@@ -181,7 +181,7 @@ class InstallTable {
 
 		$sql = "CREATE TABLE $table(
 				id mediumint(9) NOT NULL AUTO_INCREMENT,
-				product_id mediumint(9) NOT NULL,
+				plan_id mediumint(9) NOT NULL,
 				invoice_number varchar(100) NOT NULL,
 				user_id mediumint(9) NOT NULL,
 				status varchar(100) NOT NULL,
