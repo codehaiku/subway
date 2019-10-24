@@ -1,11 +1,15 @@
 <div id="subway-new-product-form">
 
-	<?php $messages = (array)$flash_message_add->get(); ?>
+	<?php $messages = (array) $flash_message_add->get(); ?>
 
 	<?php $form_data = array( 'title' => '', 'description' => '', 'sku' => '' ); ?>
+
 	<?php if ( isset( $messages['form_data'] ) ): ?>
-		<?php $form_data = $messages['form_data']; ?>
-		<?php $errors = $messages['validation']; ?>
+
+	<?php $form_data = $messages['form_data']; ?>
+
+	<?php $errors = $messages['validation']; ?>
+
 	<?php endif; ?>
 
     <form autocomplete="off" method="POST" action="<?php echo admin_url( 'admin-post.php' ); ?>">
@@ -43,7 +47,7 @@
 
 				<?php $products = new \Subway\Memberships\Product\Controller(); ?>
 				<?php $result = $products->fetch_all(); ?>
-                <?php $items = $result->products; ?>
+				<?php $items = $result->products; ?>
 
                 <select name="product">
 
@@ -75,7 +79,7 @@
 					<?php esc_html_e( 'Enter the name of your membership product', 'subway' ); ?>
                 </p>
 
-                <input value="<?php echo esc_attr( $form_data['title'] ); ?>" id="input-title" name="title" type="text"
+                <input autofocus value="<?php echo esc_attr( $form_data['title'] ); ?>" id="input-title" name="title" type="text"
                        class="widefat" placeholder="<?php esc_attr_e( 'Add Name', 'subway' ); ?>">
 
 				<?php if ( isset( $errors['title'] ) ): ?>
@@ -83,6 +87,7 @@
 						<?php echo $errors['title']; ?>
                     </p>
 				<?php endif; ?>
+                
             </div>
 
             <!--/.Plan Name -->
