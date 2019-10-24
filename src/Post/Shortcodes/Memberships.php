@@ -15,28 +15,34 @@ class Memberships {
 		$this->view = $view;
 	}
 
-	public function display() {
+	public function memberships() {
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'stylesheet' ) );
 
-		$product  = new Plan();
+		$plan    = new Plan();
 		$currency = new Currency();
 
-		$products = $product->get_plans( [ 'status' => 'published'] );
+		$plans = $plan->get_plans( [ 'status' => 'published' ] );
 
-		return $this->view->render( 'shortcode-memberships', [
-			'products' => $products,
-			'product'  => $product,
+		$args = [
+			'plan'     => $plan,
+			'plans'    => $plans,
 			'currency' => $currency
-		], true );
+		];
+
+		return $this->view->render( 'memberships', $args, true, 'shortcodes' );
 
 	}
 
 	public function attach_hooks() {
+
 		$this->define_hooks();
+
 	}
 
 	protected function define_hooks() {
-		add_shortcode( 'subway_memberships', array( $this, 'display' ) );
+
+		add_shortcode( 'subway_memberships', array( $this, 'memberships' ) );
+
 	}
 }
