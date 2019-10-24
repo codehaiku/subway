@@ -14,11 +14,8 @@ class Plans {
 	protected $notes;
 	protected $updated;
 	protected $created;
-
 	protected $wpdb;
-
 	protected $table;
-
 
 	public function __construct( \wpdb $wpdb ) {
 
@@ -205,19 +202,24 @@ class Plans {
 
 		$results = $this->wpdb->get_results( $stmt, OBJECT );
 
+		$r = new \stdClass();
+
 		$plans = [];
 
 		if ( ! empty( $results ) ) {
 
 			foreach ( $results as $result ) {
 
-				$product = new Plan();
+				$plan = new Plan();
+				$plan = $plan->get_plan( $result->prod_id );
 
-				$p = $product->get_plan( $result->prod_id );
+				$user = [];
 
-				if ( $p ) {
-					array_push( $plans, $p );
-				}
+				$r->result = $result;
+				$r->user   = $user;
+				$r->plan   = $plan;
+
+				array_push( $plans, $r );
 
 			}
 
