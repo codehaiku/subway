@@ -159,7 +159,7 @@
                         <tbody>
 						<?php if ( ! empty( $invoices ) ): ?>
 							<?php foreach ( $invoices as $invoice ): ?>
-								<?php $item = $plan->get_plan( $invoice->product_id ); ?>
+								<?php $item = $plan->get_plan( $invoice->plan_id ); ?>
 								<?php if ( $item ): ?>
                                     <tr>
                                         <td><?php echo esc_html( $invoice->created ); ?></td>
@@ -205,11 +205,12 @@
 
                         </tbody>
                         <tfoot>
-                            <tr>
-                                <td colspan="4">
-                                    <?php echo sprintf( __( 'Found %d Membership Plan(s)', 'subway' ), count( $subscriptions ) ); ?>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td colspan="4">
+								<?php $invoice_count = count( $invoices ); ?>
+								<?php printf( _n( 'Found %d Invoice', 'Found %d Invoices', $invoice_count, 'subway' ), number_format_i18n( $invoice_count ) ); ?>
+                            </td>
+                        </tr>
                         </tfoot>
                     </table>
 
