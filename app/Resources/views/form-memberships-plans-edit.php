@@ -11,11 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 
-<?php $id = filter_input( INPUT_GET, 'plan', FILTER_VALIDATE_INT ); ?>
-
 <?php $section = filter_input( 1, 'section', 516 ); ?>
-
-<?php $plan = $membership->get_plan( $id ); ?>
 
 <?php if ( empty( $plan ) ): ?>
 
@@ -29,8 +25,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <?php endif; ?>
 
-<?php $messages = $flash_messages; ?>
-
 <?php $form_data = array( 'title' => '', 'description' => '', 'sku' => '', 'type' => '', 'amount' => 0.00 ); ?>
 
 <?php $errors = []; ?>
@@ -43,12 +37,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <?php endif; ?>
 
-<?php if ( isset( $flash_messages['type'] ) ): ?>
+<?php if ( isset( $messages['type'] ) ): ?>
 
-    <div class="notice notice-<?php echo esc_attr( $flash_messages['type'] ); ?> is-dismissible">
+    <div class="notice notice-<?php echo esc_attr( $messages['type'] ); ?> is-dismissible">
 
         <p>
-			<?php echo esc_html( $flash_messages['message'] ); ?>
+			<?php echo esc_html( $messages['message'] ); ?>
         </p>
 
     </div>
@@ -92,7 +86,13 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <!--Section Pricing-->
                 <div class="subway-card subway-plan-section <?php echo $section == 'plan-pricing' ? 'active' : ''; ?>"
                      id="plan-pricing">
-					<?php $this->render( 'pricing', [ 'plan' => $plan ], false, 'form-memberships-plans' ); ?>
+					<?php
+					$this->render( 'pricing',
+						[
+							'plan'   => $plan,
+							'errors' => $errors
+						], false, 'form-memberships-plans' );
+					?>
                 </div>
                 <!--/.Section Email-->
 
@@ -119,9 +119,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				<?php
 				$this->render( 'status', [
-					'plan'       => $plan,
-					'id'         => $id,
-					'membership' => $membership
+					'plans' => $plans,
+					'plan'  => $plan,
+					'id'    => $id
 				], false, 'form-memberships-plans' );
 				?>
 
@@ -140,5 +140,3 @@ if ( ! defined( 'ABSPATH' ) ) {
     </form>
 
 </div><!--#subway-edit-plan-form-->
-
-
