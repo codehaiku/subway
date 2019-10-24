@@ -67,7 +67,7 @@
 
                 </div>
 
-                <div class="subway-card subway-tab-section subway-membership-plans-section <?php echo esc_attr( $product->get_is_active_tab( 'membership-plans' ) ); ?>">
+                <div class="subway-mg-top-20 subway-tab-section subway-membership-plans-section <?php echo esc_attr( $product->get_is_active_tab( 'membership-plans' ) ); ?>">
 
                     <?php if ( 'active' === $product->get_is_active_tab( 'membership-plans' ) ): ?>
 
@@ -77,7 +77,7 @@
 
                 </div>
 
-                <div class="subway-card subway-tab-section subway-subscribers-section <?php echo esc_attr( $product->get_is_active_tab( 'subscribers' ) ); ?>">
+                <div class="subway-mg-top-20 subway-tab-section subway-subscribers-section <?php echo esc_attr( $product->get_is_active_tab( 'subscribers' ) ); ?>">
 
                     <?php if ( 'active' === $product->get_is_active_tab( 'subscribers' ) ): ?>
 
