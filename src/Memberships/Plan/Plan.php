@@ -430,6 +430,12 @@ class Plan {
 
 		}
 
+		if ( empty( $products ) ) {
+
+			return false;
+
+		}
+
 		return $products;
 
 	}
@@ -597,10 +603,10 @@ class Plan {
 
 	public function get_plan_checkout_url( $id ) {
 
-		$checkout_url = esc_url( add_query_arg( 'product_id', $id, 'http://multisite.local/checkout' ) );
+		$checkout_url = esc_url( add_query_arg( 'plan_id', $id, 'http://multisite.local/checkout' ) );
 
 		if ( ! is_user_logged_in() ) {
-			$checkout_url = esc_url( add_query_arg( 'product_id', $id, 'http://multisite.local/create-account' ) );
+			$checkout_url = esc_url( add_query_arg( 'plan_id', $id, 'http://multisite.local/create-account' ) );
 		}
 
 		return apply_filters( 'get_plan_checkout_url', $checkout_url );
