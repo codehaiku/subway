@@ -89,8 +89,8 @@
         </div>
 
 		<?php
-		$products = new \Subway\Memberships\Plan\Plan();
-		$plan     = $products->get_plan( $invoice['order']->product_id );
+		$plans = new \Subway\Memberships\Plan\Plan();
+		$plan     = $plans->get_plan( $invoice['order']->plan_id );
 		?>
         <div class="subway-flex-column-50">
             <!--Invoice Merchant-->
