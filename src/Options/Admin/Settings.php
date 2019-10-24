@@ -149,7 +149,12 @@ class Settings {
 
 		$view->render(
 			'form-memberships-plans',
-			[ 'view' => $view, 'products' => new Plan(), 'flash_message' => $flash, 'flash_message_add' => $flash_add ]
+			[
+				'view'              => $view,
+				'plans'             => new Plan(),
+				'flash_message'     => $flash,
+				'flash_message_add' => $flash_add
+			]
 		);
 
 		return $this;

@@ -1,4 +1,4 @@
-<?php if ( 'free' !== $product->get_type() ): ?>
+<?php if ( 'free' !== $plan->get_type() ): ?>
     <table class="subway-checkout-review-order">
         <thead>
         <tr>
@@ -12,7 +12,7 @@
         <tr>
             <td>
                 <strong>
-					<?php echo esc_html( $product->get_name() ); ?>
+					<?php echo esc_html( $plan->get_name() ); ?>
                 </strong>
                 <a href="<?php echo esc_url( $options->get_membership_page_url() ); ?>" title="<?php esc_attr_e('(Change)','subway'); ?>">
 	                <?php esc_html_e('(Change)','subway'); ?>
@@ -20,7 +20,7 @@
             </td>
             <td>
                 <strong>
-					<?php echo esc_html( $product->get_displayed_price_without_tax() ); ?>
+					<?php echo esc_html( $plan->get_displayed_price_without_tax() ); ?>
                 </strong>
             </td>
         </tr>
@@ -30,14 +30,14 @@
         <tr>
             <td>Subtotal</td>
             <td>
-				<?php echo esc_html( $product->get_displayed_price_without_tax() ); ?>
+				<?php echo esc_html( $plan->get_displayed_price_without_tax() ); ?>
             </td>
         </tr>
 
         <tr>
             <td>Tax</td>
             <td>
-				<?php echo esc_html( sprintf( '%s%%', $product->get_tax_rate() ) ); ?>
+				<?php echo esc_html( sprintf( '%s%%', $plan->get_tax_rate() ) ); ?>
             </td>
         </tr>
 
@@ -45,7 +45,7 @@
             <td>Total</td>
             <td>
                 <strong>
-					<?php echo esc_html( $product->get_displayed_price() ); ?>
+					<?php echo esc_html( $plan->get_displayed_price() ); ?>
                 </strong>
             </td>
         </tr>
