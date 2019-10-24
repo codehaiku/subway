@@ -87,7 +87,7 @@
 						<?php echo $errors['title']; ?>
                     </p>
 				<?php endif; ?>
-                
+
             </div>
 
             <!--/.Plan Name -->
