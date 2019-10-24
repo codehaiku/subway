@@ -42,7 +42,7 @@
 			<p class="field-help">
 				<?php esc_html_e( 'Use the link below to share this membership plan anywhere.', 'subway' ); ?>
 			</p>
-			<?php $checkout_url = $membership->get_plan_checkout_url( $id ); ?>
+			<?php $checkout_url = $plans->get_plan_checkout_url( $id ); ?>
 			<input readonly value="<?php echo esc_url( $checkout_url ); ?>" id="input-checkout-link"
 			       type="url" value="input-checkout-link"/>
 			<p>
