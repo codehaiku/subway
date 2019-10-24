@@ -109,7 +109,7 @@
                                 </a>
                             </h3>
                             <p>
-								<?php echo $item->get_description(); ?>
+								<?php echo strip_tags( trim( str_replace('&nbsp;','', $item->get_description() ) ) ); ?>
                             </p>
                             <div class="actions">
                                 <a href="<?php echo esc_url( '?action=edit&page=subway-membership&id=' . absint( $item->get_id() ) ); ?>"

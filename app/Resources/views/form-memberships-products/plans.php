@@ -53,11 +53,11 @@ $items = $plans->get_plans( [ 'product_id' => $product->get_id() ] );
                 </td>
 
                 <td>
-					<?php echo esc_html( $plan->get_type() ); ?>
+					<?php echo esc_html( ucfirst( $plan->get_type() ) ); ?>
                 </td>
 
                 <td>
-					<?php echo esc_html( $plan->get_status() ); ?>
+					<?php echo esc_html( ucfirst($plan->get_status() )); ?>
                 </td>
 
                 <td>
