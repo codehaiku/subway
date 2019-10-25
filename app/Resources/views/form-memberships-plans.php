@@ -46,9 +46,12 @@
 
         <hr class="wp-header-end">
 
-		<?php $view->render( 'form-memberships-plans-create', [
-			'flash_message_add' => $flash_message_add
-		] ); ?>
+		<?php
+		$view->render( 'form-memberships-plans-create', [
+			'flash_message_add' => $flash_message_add,
+			'attached_product'  => $attached_product
+		] );
+		?>
 
     </div>
 
@@ -58,23 +61,26 @@
 
 	<?php $plan = $plans->get_plan( $id ); ?>
 
-	<?php $product = new \Subway\Memberships\Product\Controller(); ?>
+	<?php $controller = new \Subway\Memberships\Product\Controller(); ?>
 
-	<?php $product->set_id( $plan->get_product_id() ); ?>
+	<?php $controller->set_id( $plan->get_product_id() ); ?>
 
-	<?php $product = $product->get(); ?>
+	<?php $product = $controller->get(); ?>
 
     <div class="wrap">
 
 		<?php if ( $product ): ?>
+            <a href="<?php echo esc_url( $controller->get_product_url_edit() ); ?>">
 
-            <h1 class="wp-heading-inline">
-				<?php printf( esc_html__( '%s', 'subway' ), $product->get_name() ); ?>
-            </h1>
+                <h1 class="wp-heading-inline">
+                    <span class="dashicons dashicons-category" style="margin-top: 4px;"></span>
+					<?php printf( esc_html__( '%s', 'subway' ), $product->get_name() ); ?>
+                </h1>
+            </a>
 
 		<?php endif; ?>
 
-        <h2>
+        <h2 id="box-membership-sub-title">
             <span class="dashicons dashicons-randomize"></span>
 			<?php printf( esc_html__( '%s', 'subway' ), $plan->get_name() ); ?>
         </h2>
