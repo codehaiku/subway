@@ -70,13 +70,17 @@
     <div class="wrap">
 
 		<?php if ( $product ): ?>
-            <a href="<?php echo esc_url( $controller->get_product_url_edit() ); ?>">
+
 
                 <h1 class="wp-heading-inline">
-                    <span class="dashicons dashicons-category" style="margin-top: 4px;"></span>
 					<?php printf( esc_html__( '%s', 'subway' ), $product->get_name() ); ?>
+                    <small>
+                        <a style="margin: 2.5px 0 0 10px;" class="button button-small" href="<?php echo esc_url( $controller->get_product_url_edit() ); ?>">
+		                    <?php esc_html_e('View Product', 'subway'); ?>
+                        </a>
+                    </small>
                 </h1>
-            </a>
+
 
 		<?php endif; ?>
 

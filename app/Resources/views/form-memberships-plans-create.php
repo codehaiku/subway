@@ -51,15 +51,20 @@
 
 				<?php $items = $result->products; ?>
 
-                <select name="product">
+                <select id="product" name="product">
 
 					<?php foreach ( $items as $item ): ?>
 
+						<?php $selected = ''; ?>
 
-						<?php if ( $item->get_id() === $attached_product->get_id() ): ?>
-							<?php $selected = 'selected'; ?>
-						<?php else: ?>
-							<?php $selected = ''; ?>
+						<?php if ( $attached_product ): ?>
+
+							<?php if ( $item->get_id() === $attached_product->get_id() ): ?>
+
+								<?php $selected = 'selected'; ?>
+
+							<?php endif; ?>
+
 						<?php endif; ?>
 
                         <option <?php echo esc_attr( $selected ); ?> value="<?php echo esc_attr( $item->get_id() ); ?>">
