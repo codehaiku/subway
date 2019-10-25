@@ -2,7 +2,6 @@
 
 namespace Subway\Memberships\Plan;
 
-use mysql_xdevapi\Exception;
 use Subway\Currency\Currency;
 
 /**
@@ -263,6 +262,7 @@ class Plan {
 		$currency = new Currency();
 
 		$tax_rate    = 1 + ( $this->get_tax_rate() / 100 );
+
 		$taxed_price = $this->amount * $tax_rate;
 
 		$amount = $currency->format( $taxed_price, get_option( 'subway_currency', 'USD ' ) );
@@ -303,7 +303,9 @@ class Plan {
 	 * @return string
 	 */
 	public function get_type() {
+
 		return $this->type;
+
 	}
 
 	/**
@@ -312,16 +314,20 @@ class Plan {
 	 * @return Plan
 	 */
 	public function set_type( $type ) {
+
 		$this->type = $type;
 
 		return $this;
+
 	}
 
 	/**
 	 * @return string
 	 */
 	public function get_date_created() {
+
 		return $this->date_created;
+
 	}
 
 	/**
@@ -330,16 +336,20 @@ class Plan {
 	 * @return Plan
 	 */
 	public function set_date_created( $date_created ) {
+
 		$this->date_created = $date_created;
 
 		return $this;
+
 	}
 
 	/**
 	 * @return string
 	 */
 	public function get_date_updated() {
+
 		return $this->date_updated;
+
 	}
 
 	/**
@@ -348,9 +358,11 @@ class Plan {
 	 * @return Plan
 	 */
 	public function set_date_updated( $date_updated ) {
+
 		$this->date_updated = $date_updated;
 
 		return $this;
+
 	}
 
 
