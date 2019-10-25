@@ -51,7 +51,7 @@
         <!--.Products-->
         <tr>
             <td>
-                Products
+                <?php esc_html_e('Membership Plans', 'subway'); ?>
             </td>
             <td>
                 <form method="POST" action="<?php echo admin_url('admin-post.php'); ?>">
@@ -66,7 +66,7 @@
         <!--.Products-->
         <tr>
             <td>
-                Orders
+	            <?php esc_html_e('Orders', 'subway'); ?>
             </td>
             <td>
                 <form method="POST" action="<?php echo admin_url('admin-post.php'); ?>">
