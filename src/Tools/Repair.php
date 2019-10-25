@@ -38,7 +38,7 @@ class Repair {
 
 		// Redirect back.
 		wp_safe_redirect(
-			esc_url( add_query_arg( [
+			esc_url_raw( add_query_arg( [
 				'page'     => 'subway-membership-tools',
 				'repaired' => 'products_count'
 			],
