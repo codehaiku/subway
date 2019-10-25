@@ -41,13 +41,15 @@
 
     <form autocomplete="off" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 
+        <!-- Product Tabs -->
+	    <?php $this->render( 'tabs', $extracted_vars, false, 'form-memberships-products' ); ?>
+        <!-- Product Tabs End -->
+
         <div class="subway-flex-wrap">
 
             <div class="subway-flex-column-70">
 
-                <!-- Product Tabs -->
-				<?php $this->render( 'tabs', $extracted_vars, false, 'form-memberships-products' ); ?>
-                <!-- Product Tabs End -->
+
 
                 <div>
                     <!--Hidden Fields-->
@@ -91,7 +93,7 @@
 
             <div class="subway-flex-column-30">
 
-                <div class="subway-flex-inner-wrap" style="margin-top:4.7em">
+                <div class="subway-flex-inner-wrap" style="margin-top:-10px">
 
 					<?php $this->render( 'status', $extracted_vars, false, 'form-memberships-products' ); ?>
 
