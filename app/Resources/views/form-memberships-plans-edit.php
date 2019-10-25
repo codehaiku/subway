@@ -53,6 +53,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
     <form autocomplete="off" method="POST" action="<?php echo admin_url( 'admin-post.php' ); ?>">
 
+        <div id="subway-ul-section-tabs">
+		    <?php $this->render( 'tabs', [ 'section' => $section ], false, 'form-memberships-plans' ); ?>
+        </div>
+
         <div class="subway-flex-wrap">
 
             <div class="subway-flex-column subway-flex-column-70">
@@ -69,9 +73,6 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <input type="hidden" id="input-id" name="plan_id"
                        value="<?php echo esc_attr( $plan->get_id() ); ?>"/>
 
-                <div id="subway-ul-section-tabs">
-					<?php $this->render( 'tabs', [ 'section' => $section ], false, 'form-memberships-plans' ); ?>
-                </div>
 
                 <input type="hidden" name="active-section"
                        value="<?php echo ! empty( $section ) ? $section : 'plan-information' ?>"/>
@@ -125,18 +126,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 				], false, 'form-memberships-plans' );
 				?>
 
+                <div class="subway-card" id="box-membership-submit-wrap">
+
+                    <input id="update-plan" type="submit" class="button button-primary button-large"
+                           value="<?php esc_attr_e( 'Update Memberships Plan', 'subway' ); ?>"/>
+
+                    <input name="trash-plan" id="trash-plan" type="submit" class="button button-trash button-large"
+                           value="<?php esc_attr_e( 'Send to Trash', 'subway' ); ?>"/>
+
+                </div>
+
             </div>
             <!--/.Plan Status-->
         </div>
 
-        <!--Submit Button-->
-        <div class="subway-card">
 
-            <input id="update-plan" type="submit" class="button button-primary button-large"
-                   value="<?php esc_attr_e( 'Update Memberships Plan', 'subway' ); ?>"/>
-
-        </div>
-        <!--/.Submit Button-->
     </form>
 
 </div><!--#subway-edit-plan-form-->
