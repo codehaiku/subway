@@ -15,7 +15,9 @@ class UserAccount {
 	protected $view;
 
 	public function __construct( View $view ) {
+
 		$this->view = $view;
+
 	}
 
 	public function display() {
@@ -93,6 +95,8 @@ class UserAccount {
 	}
 
 	protected function define_hooks() {
+
 		add_shortcode( 'subway_user_account', array( $this, 'display' ) );
+
 	}
 }
