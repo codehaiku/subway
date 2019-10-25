@@ -5,8 +5,8 @@
 ?>
 
 <?php if ( ! is_user_logged_in() ): ?>
-    <div class="subway-login-form-message">
-        <p class="error">
+    <div class="subway-alert subway-alert-info">
+        <p>
 			<?php esc_html_e( 'Please login to view your account. ', 'subway' ); ?>
             <a href="<?php echo esc_url( wp_login_url() ); ?>" title="<?php echo esc_attr( 'Login', 'subway' ); ?>">
 				<?php echo esc_html( __( 'Login', 'subway' ) ); ?>
