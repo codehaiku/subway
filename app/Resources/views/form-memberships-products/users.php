@@ -48,6 +48,14 @@ if ( ! defined( 'ABSPATH' ) ) {
             </tr>
 		<?php endforeach; ?>
         </tbody>
+    <?php else: ?>
+        <tbody>
+        <tr>
+            <td colspan="5">
+                <?php esc_html_e('There are currently no people subscribe into this product.', 'subway'); ?>
+            </td>
+        </tr>
+        </tbody>
 	<?php endif; ?>
     <tfoot></tfoot>
 </table>
