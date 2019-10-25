@@ -6,9 +6,9 @@
 
 	<?php if ( isset( $messages['form_data'] ) ): ?>
 
-	<?php $form_data = $messages['form_data']; ?>
+		<?php $form_data = $messages['form_data']; ?>
 
-	<?php $errors = $messages['validation']; ?>
+		<?php $errors = $messages['validation']; ?>
 
 	<?php endif; ?>
 
@@ -46,14 +46,23 @@
                 </p>
 
 				<?php $products = new \Subway\Memberships\Product\Controller(); ?>
+
 				<?php $result = $products->fetch_all(); ?>
+
 				<?php $items = $result->products; ?>
 
                 <select name="product">
 
 					<?php foreach ( $items as $item ): ?>
 
-                        <option value="<?php echo esc_attr( $item->get_id() ); ?>">
+
+						<?php if ( $item->get_id() === $attached_product->get_id() ): ?>
+							<?php $selected = 'selected'; ?>
+						<?php else: ?>
+							<?php $selected = ''; ?>
+						<?php endif; ?>
+
+                        <option <?php echo esc_attr( $selected ); ?> value="<?php echo esc_attr( $item->get_id() ); ?>">
 
 							<?php echo esc_html( $item->get_name() ); ?>
 
@@ -79,7 +88,8 @@
 					<?php esc_html_e( 'Enter the name of your membership product', 'subway' ); ?>
                 </p>
 
-                <input autofocus value="<?php echo esc_attr( $form_data['title'] ); ?>" id="input-title" name="title" type="text"
+                <input autofocus value="<?php echo esc_attr( $form_data['title'] ); ?>" id="input-title" name="title"
+                       type="text"
                        class="widefat" placeholder="<?php esc_attr_e( 'Add Name', 'subway' ); ?>">
 
 				<?php if ( isset( $errors['title'] ) ): ?>
