@@ -209,15 +209,6 @@ div.subway-card input[type=text] {
 
 }
 
-div.subway-card select,
-div.subway-card textarea,
-div.subway-card input[type=url],
-div.subway-card input[type=number],
-div.subway-card input[type=text],
-.validation-errors {
-    max-width: 720px;
-}
-
 div.subway-card select:active,
 div.subway-card textarea:active,
 div.subway-card input[type=url]:active,
@@ -249,7 +240,8 @@ div.subway-card input[type=number] {
 }
 
 div.subway-form-row {
-    margin: 0 0 25px 0;
+    margin: 0 auto 25px auto;
+    max-width: 720px;
 }
 
 div.subway-form-row .field-help {
@@ -269,7 +261,7 @@ div.subway-form-row:hover .field-help {
 }
 
 div.subway-form-row:first-child {
-    margin-top: 0;
+    margin-top: 3em;
 }
 
 div.subway-form-row h3.field-title {
@@ -518,6 +510,7 @@ span.product-status {
     padding: 35px 20px;
     border-bottom: 2px solid rgba(130, 110, 180, 0.40);
     margin: -20px -20px 20px -20px;
+    max-width: none;
 }
 
 #view-product {
