@@ -1,32 +1,34 @@
 <?php
 $plans = new \Subway\Memberships\Plan\Plan();
 $items = $plans->get_plans( [ 'product_id' => $product->get_id() ] );
+if ( ! $items ) {
+    $items = [];
+}
 ?>
 
-<?php if ( ! empty( $items ) ): ?>
-    <table class="wp-list-table widefat fixed striped" id="boxmembership-product-plans-table">
-        <thead>
-        <tr>
-            <th colspan="1">
-				<?php esc_html_e( 'Membership Plans', 'subway' ); ?>
-
-            </th>
-            <th colspan="4">
-                <a href="<?php echo esc_url_raw( $plans->get_add_url( $product->get_id() ) ); ?>"
-                   class="button button-small button-secondary">
-                    <span>&plus;</span>
-					<?php esc_html_e( 'Create New Plan', 'subway' ); ?>
-                </a>
-            </th>
-        </tr>
-        <tr>
-            <th><?php esc_html_e( 'Plan Name', 'subway' ); ?></th>
-            <th><?php esc_html_e( 'Displayed Price', 'subway' ); ?></th>
-            <th><?php esc_html_e( 'Type', 'subway' ); ?></th>
-            <th><?php esc_html_e( 'Status', 'subway' ); ?></th>
-            <th><?php esc_html_e( 'Updated', 'subway' ); ?></th>
-        </tr>
-        </thead>
+<table class="wp-list-table widefat fixed striped" id="boxmembership-product-plans-table">
+    <thead>
+    <tr>
+        <th colspan="1">
+			<?php esc_html_e( 'Membership Plans', 'subway' ); ?>
+        </th>
+        <th colspan="4">
+            <a href="<?php echo esc_url_raw( $plans->get_add_url( $product->get_id() ) ); ?>"
+               class="button button-small button-secondary">
+                <span>&plus;</span>
+				<?php esc_html_e( 'Create New Plan', 'subway' ); ?>
+            </a>
+        </th>
+    </tr>
+    <tr>
+        <th><?php esc_html_e( 'Plan Name', 'subway' ); ?></th>
+        <th><?php esc_html_e( 'Displayed Price', 'subway' ); ?></th>
+        <th><?php esc_html_e( 'Type', 'subway' ); ?></th>
+        <th><?php esc_html_e( 'Status', 'subway' ); ?></th>
+        <th><?php esc_html_e( 'Updated', 'subway' ); ?></th>
+    </tr>
+    </thead>
+	<?php if ( ! empty( $items ) ): ?>
         <tbody>
 		<?php foreach ( $items as $plan ): ?>
             <tr>
@@ -56,7 +58,7 @@ $items = $plans->get_plans( [ 'product_id' => $product->get_id() ] );
                 </td>
 
                 <td>
-	                    <?php echo esc_html( ucfirst( $plan->get_type() ) ); ?>
+					<?php echo esc_html( ucfirst( $plan->get_type() ) ); ?>
                 </td>
 
                 <td>
@@ -64,17 +66,26 @@ $items = $plans->get_plans( [ 'product_id' => $product->get_id() ] );
                 </td>
 
                 <td>
-					<?php echo esc_html( date('M d, o h:s A', strtotime( $plan->get_date_updated() ) ) ); ?>
+					<?php echo esc_html( date( 'M d, o h:s A', strtotime( $plan->get_date_updated() ) ) ); ?>
                 </td>
             </tr>
 		<?php endforeach; ?>
         </tbody>
-        <tfoot>
+    <?php else: ?>
+        <tbody>
         <tr>
-            <td colspan="4">
-				<?php echo sprintf( esc_html__( 'Found %d Item(s)', 'subway' ), count( $items ) ); ?>
+            <td colspan="5">
+                <?php esc_html_e('There are no membership plans found. Click the "Create New Plan" button to add new membership plan.', 'subway'); ?>
             </td>
         </tr>
-        </tfoot>
-    </table>
-<?php endif; ?>
+        </tbody>
+	<?php endif; ?>
+    <tfoot>
+    <tr>
+        <td colspan="5">
+			<?php echo sprintf( esc_html__( 'Found %d Item(s)', 'subway' ), count( $items ) ); ?>
+        </td>
+    </tr>
+    </tfoot>
+</table>
+
