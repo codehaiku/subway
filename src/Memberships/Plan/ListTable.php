@@ -12,11 +12,11 @@ class ListTable extends \WP_List_Table {
 
 		$columns = array(
 			'cb'           => '<input type="checkbox" />',
-			'name'         => esc_html__('Plan Name', 'subway'),
-			'sku'          => esc_html__('SKU', 'subway'),
-			'type'         => esc_html__('Type', 'subway'),
-			'amount'       => esc_html__('Amount', 'subway'),
-			'date_updated' => esc_html__('Last Update', 'subway')
+			'name'         => esc_html__( 'Plan Name', 'subway' ),
+			'sku'          => esc_html__( 'SKU', 'subway' ),
+			'type'         => esc_html__( 'Type', 'subway' ),
+			'amount'       => esc_html__( 'Amount', 'subway' ),
+			'date_updated' => esc_html__( 'Last Update', 'subway' )
 		);
 
 		return $columns;
