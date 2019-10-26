@@ -15,9 +15,9 @@ class Details extends Orders {
 
 	public function get( $order_id = 0 ) {
 
-		$stmt = $this->wpdb->prepare("SELECT * FROM $this->table WHERE order_id = %d", $order_id);
+		$stmt = $this->wpdb->prepare( "SELECT * FROM $this->table WHERE order_id = %d", $order_id );
 
-		$details = $this->wpdb->get_row( $stmt,OBJECT );
+		$details = $this->wpdb->get_row( $stmt, OBJECT );
 
 		return $details;
 	}
