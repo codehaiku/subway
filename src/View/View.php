@@ -21,7 +21,7 @@ class View {
 		if ( ! file_exists( $file_path ) ) {
 
 			echo "<code>";
-				echo sprintf( __( 'ERROR: Cannot find %s %s in view directory', 'subway' ), $sub_dir, $file );
+			echo sprintf( __( 'ERROR: Cannot find %s %s in view directory', 'subway' ), $sub_dir, $file );
 			echo "</code>";
 
 			return $this;
