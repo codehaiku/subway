@@ -2,7 +2,7 @@
 $plans = new \Subway\Memberships\Plan\Plan();
 $items = $plans->get_plans( [ 'product_id' => $product->get_id() ] );
 if ( ! $items ) {
-    $items = [];
+	$items = [];
 }
 ?>
 
@@ -71,11 +71,11 @@ if ( ! $items ) {
             </tr>
 		<?php endforeach; ?>
         </tbody>
-    <?php else: ?>
+	<?php else: ?>
         <tbody>
         <tr>
             <td colspan="5">
-                <?php esc_html_e('There are no membership plans found. Click the "Create New Plan" button to add new membership plan.', 'subway'); ?>
+				<?php esc_html_e( 'There are no membership plans found. Click the "Create New Plan" button to add new membership plan.', 'subway' ); ?>
             </td>
         </tr>
         </tbody>
