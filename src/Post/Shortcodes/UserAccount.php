@@ -68,7 +68,7 @@ class UserAccount {
 				$invoice         = $invoices->get_user_invoice();
 				$args['invoice'] = $invoice;
 
-				$template     = 'user-account-invoice';
+				$template = 'user-account-invoice';
 
 				break;
 
