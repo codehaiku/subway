@@ -124,3 +124,4 @@
         </p>
     </div>
 <?php endif; ?>
+<!--.Take a break! Have a KitKat!-->
