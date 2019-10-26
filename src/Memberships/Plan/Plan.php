@@ -261,7 +261,7 @@ class Plan {
 
 		$currency = new Currency();
 
-		$tax_rate    = 1 + ( $this->get_tax_rate() / 100 );
+		$tax_rate = 1 + ( $this->get_tax_rate() / 100 );
 
 		$taxed_price = $this->amount * $tax_rate;
 
