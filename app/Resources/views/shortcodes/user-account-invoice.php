@@ -90,7 +90,7 @@
 
 		<?php
 		$plans = new \Subway\Memberships\Plan\Plan();
-		$plan     = $plans->get_plan( $invoice['order']->plan_id );
+		$plan  = $plans->get_plan( $invoice['order']->plan_id );
 		?>
         <div class="subway-flex-column-50">
             <!--Invoice Merchant-->
@@ -184,13 +184,15 @@
 </div>
 <div id="subway-invoice-customer-actions">
     <p>
-        <a class="sw-button" href="#" id="subway-invoice-button-print" title="<?php esc_attr_e( 'Print Invoice', 'subway' ); ?>">
+        <a class="sw-button" href="#" id="subway-invoice-button-print"
+           title="<?php esc_attr_e( 'Print Invoice', 'subway' ); ?>">
 			<?php esc_html_e( 'Print Invoice', 'subway' ); ?>
         </a>
-        <?php $options = new \Subway\Options\Options(); ?>
-        <?php $accounts_url = $options->get_accounts_page_url(); ?>
-        <a class="sw-button" href="<?php echo esc_url( $accounts_url ); ?>" id="subway-invoice-button-dashboard" title="<?php esc_attr_e( 'Go to Dashboard', 'subway' ); ?>">
-		    <?php esc_html_e( 'My Dashboard', 'subway' ); ?>
+		<?php $options = new \Subway\Options\Options(); ?>
+		<?php $accounts_url = $options->get_accounts_page_url(); ?>
+        <a class="sw-button" href="<?php echo esc_url( $accounts_url ); ?>" id="subway-invoice-button-dashboard"
+           title="<?php esc_attr_e( 'Go to Dashboard', 'subway' ); ?>">
+			<?php esc_html_e( 'My Dashboard', 'subway' ); ?>
         </a>
     </p>
 </div>
