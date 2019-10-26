@@ -1,4 +1,5 @@
 <?php
+
 namespace Subway\Validators;
 /**
  * GUMP - A fast, extensible PHP input validation class.
@@ -1253,7 +1254,7 @@ class GUMP {
 			return;
 		}
 
-		if (!preg_match('/^([a-z0-9ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖßÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ_-])+$/i', $input[$field]) !== false) {
+		if ( ! preg_match( '/^([a-z0-9ÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÒÓÔÕÖßÙÚÛÜÝàáâãäåçèéêëìíîïðòóôõöùúûüýÿ_-])+$/i', $input[ $field ] ) !== false ) {
 			return array(
 				'field' => $field,
 				'value' => $input[ $field ],
