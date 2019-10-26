@@ -90,7 +90,7 @@
 
                 <ul class="fun-facts">
                     <li class="fun-facts-24-hours">
-		                <?php echo $currency->format( $earnings->get_last_n_days( 1 ), 'USD' ); ?>
+						<?php echo $currency->format( $earnings->get_last_n_days( 1 ), 'USD' ); ?>
                         Today
                     </li>
 
@@ -99,7 +99,7 @@
                         in the last 7 days
                     </li>
                     <li>
-		                <?php echo $currency->format( $earnings->get_last_n_days( 30 ), 'USD' ); ?>
+						<?php echo $currency->format( $earnings->get_last_n_days( 30 ), 'USD' ); ?>
                         in the last 30 days
                     </li>
 
@@ -108,21 +108,21 @@
 
 
                 <h3>
-                    <?php esc_html_e('Recent Transaction', 'subway'); ?>
+					<?php esc_html_e( 'Recent Transaction', 'subway' ); ?>
                 </h3>
 				<?php $last_sale = $earnings->get_last_sale(); ?>
-                <?php if ( empty( $last_sale ) ): ?>
-                    <?php esc_html_e('No recent sales recorded', 'subway'); ?>
-                <?php else: ?>
-	                <?php
-                        echo sprintf(
-                                esc_html__( '%s %s ago via %s', 'subway' ),
-                                $currency->format( $last_sale->amount, 'USD' ),
-                                human_time_diff( strtotime( $last_sale->created, strtotime( 'now' ) ) ),
-	                            $last_sale->gateway
-                        );
-	                ?>
-                <?php endif; ?>
+				<?php if ( empty( $last_sale ) ): ?>
+					<?php esc_html_e( 'No recent sales recorded', 'subway' ); ?>
+				<?php else: ?>
+					<?php
+					echo sprintf(
+						esc_html__( '%s %s ago via %s', 'subway' ),
+						$currency->format( $last_sale->amount, 'USD' ),
+						human_time_diff( strtotime( $last_sale->created, strtotime( 'now' ) ) ),
+						$last_sale->gateway
+					);
+					?>
+				<?php endif; ?>
 
                 <h3>Average Daily Sales</h3>
 
