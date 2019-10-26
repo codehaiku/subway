@@ -37,15 +37,14 @@ class Checkout {
 
 		$options = new Options();
 
-		return $this->view->render( 'shortcode-checkout',
-			[
-				'view'     => $this->view,
-				'plan'     => $plan,
-				'currency' => $currency,
-				'options'  => $options
-			],
-			true
-		);
+		$args = [
+			'view'     => $this->view,
+			'plan'     => $plan,
+			'currency' => $currency,
+			'options'  => $options
+		];
+
+		return $this->view->render( 'checkout', $args, true, 'shortcodes' );
 
 	}
 
