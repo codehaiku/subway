@@ -2,6 +2,7 @@
 
 namespace Subway\User;
 
+use Subway\Helpers\Helpers;
 use Subway\Memberships\Plan\Plan;
 
 class Plans {
@@ -174,7 +175,8 @@ class Plans {
 
 		$defaults = [
 			'user_id'      => '',
-			'prod_id'      => '',
+			'plan_id'      => '',
+			'product_id'   => '',
 			'status'       => 'pending',
 			'trial_status' => 'none',
 			'notes'        => '',
@@ -184,7 +186,7 @@ class Plans {
 
 		$r = wp_parse_args( $args, $defaults );
 
-		$inserted = $this->wpdb->insert( $this->table, $r, $format );
+		$inserted = $this->wpdb->insert( $this->table, $r );
 
 		if ( $inserted ) {
 
@@ -193,6 +195,48 @@ class Plans {
 		}
 
 		return $this->wpdb->last_error;
+
+	}
+
+	public function get_users_by_product( $product_id ) {
+
+		$users = [];
+		$index = 0;
+
+		$plan     = new \Subway\Memberships\Plan\Plan();
+		$plans    = $plan->get_plans( [ 'product_id' => $product_id ] );
+		$plan_ids = [];
+
+		if ( $plans ) {
+			foreach ( $plans as $plan ) {
+				array_push( $plan_ids, $plan->get_id() );
+			}
+		}
+
+		$plan_ids = esc_sql( implode( ',', $plan_ids ) );
+
+		$stmt = $this->wpdb->prepare( "SELECT * FROM $this->table WHERE plan_id IN({$plan_ids}) AND id > %d", $index );
+
+		$results = $this->wpdb->get_results( $stmt, OBJECT );
+
+		if ( ! empty( $results ) ) {
+
+			foreach ( $results as $result ) {
+
+				$plan = new Plan();
+				$plan = $plan->get_plan( $result->plan_id );
+
+				$r         = new \stdClass();
+				$r->result = $result;
+				$r->user   = [];
+				$r->plan   = $plan;
+
+				array_push( $users, $r );
+			}
+
+		}
+
+		return $users;
 
 	}
 
@@ -211,7 +255,7 @@ class Plans {
 			foreach ( $results as $result ) {
 
 				$plan = new Plan();
-				$plan = $plan->get_plan( $result->prod_id );
+				$plan = $plan->get_plan( $result->plan_id );
 
 				$user = [];
 
