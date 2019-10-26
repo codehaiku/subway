@@ -40,7 +40,7 @@ class Orders {
 		$fields = implode( ',',
 			[
 				$this->table . '.id as order_id',
-				$this->table . '.product_id as order_product_id',
+				$this->table . '.plan_id as order_plan_id',
 				$this->table . '.created as order_created',
 				$this->table . '.last_updated as order_updated',
 				$this->table . '.amount as order_amount',
@@ -56,7 +56,7 @@ class Orders {
 		$stmt = $this->wpdb->prepare( "
 				SELECT $fields FROM $this->table 
 				INNER JOIN $product_table 
-				WHERE {$this->table}.product_id = {$product_table}.id
+				WHERE {$this->table}.plan_id = {$product_table}.id
 				AND {$this->table}.id > %d
 				ORDER BY {$args['orderby']} {$args['order']}
 				LIMIT %d, %d
