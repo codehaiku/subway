@@ -167,7 +167,8 @@
                         </p>
                         <!-- Save Button End -->
                         <p>
-                            <a href="<?php echo esc_url( $options->get_accounts_page_url() ); ?>" class="sw-button-link">
+                            <a href="<?php echo esc_url( $options->get_accounts_page_url() ); ?>"
+                               class="sw-button-link">
 								<?php esc_html_e( '&larr; Go back to Account Dashboard', 'subway' ); ?>
                             </a>
                         </p>
