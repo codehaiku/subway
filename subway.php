@@ -2,9 +2,9 @@
 /**
  * Plugin Name: Box Membership
  * Description: Box Membership is a complete membership platform for WordPress. Charge users for content subscriptions, and more!
- * Version: 1.0
+ * Version: 3.0
  * Author: Joseph G
- * Author URI: http://subway-wp.com
+ * Author URI: http://boxmemberships.com
  * Text Domain: subway
  * License: GPL2
  *
@@ -43,4 +43,4 @@ define( 'SUBWAY_CSS_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'web/c
 define( 'SUBWAY_JS_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'web/js/' );
 
 // Require our autoloader.
-require_once SUBWAY_DIR_PATH . 'vendor' . '/autoload.php';
+require_once SUBWAY_DIR_PATH . 'vendor/autoload.php';
