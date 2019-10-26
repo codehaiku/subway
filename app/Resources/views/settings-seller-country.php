@@ -254,8 +254,8 @@ $country = get_option( 'subway_seller_country', 'US' );
 
 		<?php if ( $country === $code ): ?>
 			<?php $selected = 'selected'; ?>
-        <?php else: ?>
-            <?php $selected = ''; ?>
+		<?php else: ?>
+			<?php $selected = ''; ?>
 		<?php endif; ?>
         <option
 			<?php echo esc_attr( $selected ); ?>
