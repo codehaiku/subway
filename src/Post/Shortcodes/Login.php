@@ -34,17 +34,17 @@ class Login {
 
 		wp_enqueue_script( 'subway-shortcode-login' );
 
-		wp_enqueue_style( 'subway-general');
+		wp_enqueue_style( 'subway-general' );
 
 		return $this->view->render( 'shortcode-login', [ 'atts' => $atts ], true );
 
 	}
 
-	public function handle_login_request()
-	{
+	public function handle_login_request() {
 		$ajax_login = new LoginAjax();
 		$ajax_login->handle_login_request();
 	}
+
 	public function enqueue_script() {
 
 		wp_register_script(
