@@ -76,8 +76,9 @@ class Metabox {
 		// Disable commenting meta in blog page.
 		if ( $this->is_blog_page() ) {
 			echo '<p class="howto">';
-			esc_html_e('You are currently editing blog page. Comment limiting is disabled.');
+			esc_html_e( 'You are currently editing blog page. Comment limiting is disabled.' );
 			echo '</p>';
+
 			return false;
 		}
 		$this->view->render( 'form-post-discussion-metabox', [
