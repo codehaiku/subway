@@ -35,7 +35,7 @@ wp_dropdown_pages(
 <button type="button" class="button button-secondary button-medium">Create</button>
 <p class="description">
 	<?php
-		echo sprintf( esc_html__( "Select a page to be used as your registration page. 
+	echo sprintf( esc_html__( "Select a page to be used as your registration page. 
 		Click 'Create' button to automatically select and create new page (Register). 
 		The shortcode [subway_register] will be automatically added to the selected page.", 'subway' ) )
 	?>
