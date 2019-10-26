@@ -27,7 +27,7 @@ class Author {
 	 * Author constructor.
 	 *
 	 * @param Options $options DI parameter must pass an instance of Options.
-	 * @param User    $user DI parameter must pass an instance of User.
+	 * @param User $user DI parameter must pass an instance of User.
 	 */
 	public function __construct( Options $options, User $user ) {
 
