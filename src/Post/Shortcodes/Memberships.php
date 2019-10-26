@@ -19,7 +19,7 @@ class Memberships {
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'stylesheet' ) );
 
-		$plan    = new Plan();
+		$plan     = new Plan();
 		$currency = new Currency();
 
 		$plans = $plan->get_plans( [ 'status' => 'published' ] );
