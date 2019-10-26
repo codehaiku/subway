@@ -13,6 +13,8 @@ use PayPal\Api\Transaction;
 use Subway\Helpers\Helpers;
 use Subway\Memberships\Orders\Details as OrderDetails;
 use Subway\Memberships\Plan\Plan;
+use Subway\Memberships\Product\Controller;
+use Subway\Memberships\Product\Product;
 use Subway\User\Plans;
 
 class Payment {
@@ -95,7 +97,7 @@ class Payment {
 
 		$redirect_url = esc_url( add_query_arg( 'success', 'true', $this->return_url ) );
 
-		$cancel_url = esc_url( add_query_arg( 'success', 'fail', $this->cancel_url ) );
+		$cancel_url = esc_url( add_query_arg( 'success', 'false', $this->cancel_url ) );
 
 		// Generate Invoice Number.
 		$prefix = apply_filters( 'subway\payment.pay.invoice_number_prefix', get_option( 'subway_invoice_prefix', 'WPBXM' ) );
@@ -111,7 +113,6 @@ class Payment {
 		try {
 
 			$payer = new Payer();
-
 			$payer->setPaymentMethod( "paypal" );
 
 			$item = new Item();
@@ -160,9 +161,10 @@ class Payment {
 
 
 		} catch ( \Exception $e ) {
+
 			//@Todo: Assign valid return url.
 			echo '<pre>';
-				echo $e->getMessage();
+			echo $e->getMessage();
 			echo '</pre>';
 			die;
 		}
@@ -174,7 +176,7 @@ class Payment {
 		} catch ( \Exception $ex ) {
 			//@Todo: Assign valid return url.
 			echo '<pre>';
-				echo $ex->getMessage();
+			echo $ex->getMessage();
 			echo '</pre>';
 			die;
 		}
@@ -285,9 +287,17 @@ class Payment {
 					// Create new user plan.
 					$user_plans = new Plans( $this->wpdb );
 
+					// Get the Plan's product id.
+					$plans      = new \Subway\Memberships\Plan\Controller();
+					$plan       = $plans->get_plan( $plan_id );
+
+					$product_id = $plan->get_product_id();
+
+					// Actually insert the plan into users plan table.
 					$user_plan_added = $user_plans->add( [
 						'user_id'      => get_current_user_id(),
-						'prod_id'      => $plan_id,
+						'product_id'   => $product_id,
+						'plan_id'      => $plan_id,
 						'status'       => 'completed',
 						'trial_status' => 'none'
 					] );
@@ -303,6 +313,7 @@ class Payment {
 								302
 							) );
 					} else {
+
 						$this->error_redirect_url( $this->cancel_url );
 					}
 
