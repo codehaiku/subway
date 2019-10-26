@@ -10,7 +10,7 @@ if ( ! empty( $account_page ) ) {
 	$account_page_object = get_post( $account_page );
 
 	if ( ! empty( $account_page_object ) && isset( $account_page_object->post_content ) ) {
-	    
+
 		if ( ! has_shortcode( $account_page_object->post_content, 'subway_user_account' ) ) {
 
 			$new_post_object = array(
