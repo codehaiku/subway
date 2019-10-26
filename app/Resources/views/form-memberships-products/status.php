@@ -55,13 +55,4 @@
     </div>
     <!--.Product Link -->
 
-
-</div>
-
-<div class="subway-card">
-    <div style="display: block; text-align: center;">
-        <input id="publish-product" type="submit" class="button button-primary button-large"
-               value="<?php esc_attr_e( 'Update Product', 'subway' ); ?>">
-        <a href="#" class="button button-danger button-large">Move to Trash</a>
-    </div>
 </div>
