@@ -66,9 +66,13 @@
                 </option>
 
 			<?php endforeach; ?>
+			<?php if ( empty( $attached_product ) ): ?>
+                <option selected value="">
+					<?php esc_html_e( '-Select Membership Product-', 'subway' ); ?>
+                </option>
+			<?php endif; ?>
 
         </select>
-
 
 
 		<?php if ( ! empty( $attached_product ) && ! empty( $_REQUEST['product'] ) ): ?>
@@ -84,13 +88,15 @@
 
             </p>
 
-		<?php endif; ?>
 
-        <p id="view-product">
-            <a class="button button-small" href="<?php echo esc_url( $attached_product->get_product_url_edit() ); ?>">
-			    <?php echo sprintf( esc_html__( 'Edit %s', 'subway' ), $attached_product->get_name() ); ?>
-            </a>
-        </p>
+            <p id="view-product">
+                <a class="button button-small"
+                   href="<?php echo esc_url( $attached_product->get_product_url_edit() ); ?>">
+					<?php echo sprintf( esc_html__( 'Edit %s', 'subway' ), $attached_product->get_name() ); ?>
+                </a>
+            </p>
+
+		<?php endif; ?>
 
         <div class="clear"></div>
 
@@ -162,7 +168,7 @@
 
         </p>
 
-	    <?php wp_editor( wp_kses_post( $plan->get_description() ), 'description', $settings = array('editor_height'=>150) ); ?>
+		<?php wp_editor( wp_kses_post( $plan->get_description() ), 'description', $settings = array( 'editor_height' => 150 ) ); ?>
 
 		<?php if ( isset( $errors['description'] ) ): ?>
 
