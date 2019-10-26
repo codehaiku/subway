@@ -54,7 +54,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     <form autocomplete="off" method="POST" action="<?php echo admin_url( 'admin-post.php' ); ?>">
 
         <div id="subway-ul-section-tabs">
-		    <?php $this->render( 'tabs', [ 'section' => $section ], false, 'form-memberships-plans' ); ?>
+			<?php $this->render( 'tabs', [ 'section' => $section ], false, 'form-memberships-plans' ); ?>
         </div>
 
         <div class="subway-flex-wrap">
