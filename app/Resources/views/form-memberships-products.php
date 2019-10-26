@@ -103,29 +103,36 @@
                                 />
                             </div>
                             <h3>
+                                 <span class="product-status">
+                                    <?php echo esc_html( $item->get_status() ); ?>
+                                </span>
                                 <a class="subway-product-title"
                                    href="<?php echo esc_url( '?action=edit&page=subway-membership&id=' . absint( $item->get_id() ) ); ?>"
                                    title="<?php echo esc_attr( $item->get_name() ); ?>">
 									<?php echo $item->get_name(); ?>
                                 </a>
                             </h3>
+
+
                             <p>
 								<?php echo strip_tags( trim( str_replace( '&nbsp;', '', $item->get_description() ) ) ); ?>
                             </p>
                             <div class="actions">
                                 <a href="<?php echo esc_url( '?action=edit&page=subway-membership&id=' . absint( $item->get_id() ) ); ?>"
-                                   class="button button-primary button-large">
-									<?php esc_html_e( 'Edit', 'box-membership' ); ?>
+                                   class="button button-primary button-small">
+		                            <?php esc_html_e( 'Edit Product', 'box-membership' ); ?>
+                                </a>
+                                <a title="<?php echo esc_attr_e( 'Membership Plans', 'box-membership' ); ?>" href="<?php echo esc_url_raw( $item->get_product_url_edit( 'membership-plans' ) ); ?>"
+                                   class="button button-secondary button-small">
+									<?php esc_html_e( 'Membership Plans', 'box-membership' ); ?>
                                 </a>
 
-                                <a href="<?php echo esc_url( $item->get_id() ); ?>"
-                                   class="button button-secondary button-large">
-									<?php esc_html_e( 'See Product', 'box-membership' ); ?>
+                                <a title="<?php echo esc_attr_e( 'Subscribers', 'box-membership' ); ?>" href="<?php echo esc_url_raw( $item->get_product_url_edit( 'subscribers' ) ); ?>"
+                                   class="button button-secondary button-small">
+		                            <?php esc_html_e( 'Subscribers', 'box-membership' ); ?>
                                 </a>
 
-                                <span class="product-status">
-                                    <?php echo esc_html( $item->get_status() ); ?>
-                                </span>
+
                             </div>
                         </div>
                     </div>
