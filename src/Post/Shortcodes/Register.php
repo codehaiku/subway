@@ -167,14 +167,13 @@ class Register {
 
 		$currency = new Currency();
 
-		return $this->view->render( 'shortcode-register',
-			[
-				'plan'     => $plan,
-				'currency' => $currency,
-				'options'  => new Options()
-			],
-			true
-		);
+		$args = [
+			'plan'     => $plan,
+			'currency' => $currency,
+			'options'  => new Options()
+		];
+
+		return $this->view->render( 'register', $args, true, 'shortcodes' );
 
 	}
 
