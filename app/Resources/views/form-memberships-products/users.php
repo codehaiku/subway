@@ -4,8 +4,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 <?php global $wpdb; ?>
+
 <?php $user_plans = new \Subway\User\Plans( $wpdb ); ?>
-<?php $user_plans = $user_plans->get_user_plans( get_current_user_id() ); ?>
+
+<?php $subscribed_users = $user_plans->get_users_by_product( $product->get_id() ); ?>
+
 <table class="wp-list-table widefat fixed striped">
     <thead>
     <tr>
@@ -21,38 +24,52 @@ if ( ! defined( 'ABSPATH' ) ) {
         <th><?php esc_html_e( 'Started', 'subway' ); ?></th>
     </tr>
     </thead>
-	<?php if ( ! empty( $user_plans ) ): ?>
+	<?php if ( ! empty( $subscribed_users ) ): ?>
         <tbody>
-		<?php foreach ( $user_plans as $user_plan ): ?>
+		<?php foreach ( $subscribed_users as $subscribed_user ): ?>
             <tr>
                 <td class="column-username">
                     <a href="#" title="">
-						<?php $user = get_user_by( 'id', $user_plan->result->user_id ); ?>
-						<?php echo get_avatar( $user->ID, 32 ); ?>
+						<?php $user = get_user_by( 'id', $subscribed_user->result->user_id ); ?>
+						<?php echo get_avatar( $user->ID, 42 ); ?>
                     </a>
-                    <a href="#" title="">
+                    <a title="<?php echo esc_attr( $user->display_name ); ?>"
+                       href="<?php echo get_edit_user_link(); ?>">
 						<?php echo esc_html( $user->user_login ); ?>
                     </a>
                     <div class="row-actions">
                         <span class="edit">
-                            <a href="#">
+                            <a title="<?php echo esc_attr( $user->display_name ); ?>"
+                               href="<?php echo get_edit_user_link(); ?>">
                                 <?php esc_html_e( 'Edit', 'subway' ); ?>
                             </a>
                         </span>
                     </div>
                 </td>
-                <td><?php echo esc_html( $user->display_name ); ?></td>
+                <td>
+                    <a title="<?php echo esc_attr( $user->display_name ); ?>"
+                       href="<?php echo get_edit_user_link(); ?>">
+						<?php echo esc_html( $user->display_name ); ?>
+                    </a>
+                </td>
                 <td><?php echo esc_html( $user->user_email ); ?></td>
-                <td><?php echo esc_html( $user_plan->result->prod_id ); ?></td>
-                <td>Oct 02, 2018 (@todo)</td>
+                <td>
+                    <a title="<?php esc_attr_e( $subscribed_user->plan->get_name() ); ?>"
+                       href="<?php echo esc_url( $subscribed_user->plan->get_edit_url( $subscribed_user->plan->get_id() ) ); ?>">
+						<?php echo esc_html( $subscribed_user->plan->get_name() ); ?>
+                    </a>
+                </td>
+                <td>
+					<?php echo esc_html( date( 'M d, o h:s A', strtotime( $subscribed_user->result->created ) ) ); ?>
+                </td>
             </tr>
 		<?php endforeach; ?>
         </tbody>
-    <?php else: ?>
+	<?php else: ?>
         <tbody>
         <tr>
             <td colspan="5">
-                <?php esc_html_e('There are currently no people subscribe into this product.', 'subway'); ?>
+				<?php esc_html_e( 'There are currently no people subscribe into this product.', 'subway' ); ?>
             </td>
         </tr>
         </tbody>
