@@ -63,8 +63,8 @@ class Controller extends Plan {
 
 		$redirect_url = esc_url_raw( add_query_arg(
 			[
-				'page'    => 'subway-membership-plans',
-				'edit'    => 'yes',
+				'page' => 'subway-membership-plans',
+				'edit' => 'yes',
 				'plan' => $product_id
 			],
 			admin_url( 'admin.php?section=plan-pricing' )
