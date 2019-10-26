@@ -69,7 +69,9 @@ class Hooks {
 
 		$flash = new FlashMessage( get_current_user_id(), 'subway-user-edit-email' );
 
-		$flash->add( [ 'type' => 'success', 'message' => esc_html__( 'Email change request successfully deleted', 'subway' ) ] );
+		$flash->add( [ 'type'    => 'success',
+		               'message' => esc_html__( 'Email change request successfully deleted', 'subway' )
+		] );
 
 		$options = new Options();
 
