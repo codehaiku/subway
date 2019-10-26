@@ -62,7 +62,7 @@
                                 <td>
 									<?php echo esc_html( $user->user_email ); ?>
                                     <br/>
-                                    <a href="<?php echo esc_url( add_query_arg( 'edit', 'profile', $options->get_accounts_page_url() ) ); ?>"
+                                    <a href="<?php echo esc_url( add_query_arg( 'account-page', 'update-email-address', $options->get_accounts_page_url() ) ); ?>"
                                        title="<?php esc_attr_e( 'Update Email Address', 'subway' ); ?>">
 										<?php esc_html_e( 'Update Email Address', 'subway' ); ?>
                                     </a>
