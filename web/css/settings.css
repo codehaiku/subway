@@ -195,12 +195,10 @@ div.subway-card {
 }
 
 div.subway-card .actions {
-    margin: 10px -20px -21px -20px;
-    text-align: center;
+    margin: 20px -20px -21px -20px;
     background: #f3f4f5;
     border-top: 1px solid #edeff0;
     padding: 20px;
-    display: inline-block;
     width: 100%;
 }
 

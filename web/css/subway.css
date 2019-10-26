@@ -637,6 +637,10 @@ table.subway-membership-lists {
     font-size: 1em;
     font-weight: normal;
 }
+.entry-content table.subway-membership-lists td,
+table.subway-membership-lists td{
+    padding: 10px;
+}
 #subway-invoice-numbers,
 .subway-user-invoice table.subway-membership-lists th:last-child {
     text-align: right;
