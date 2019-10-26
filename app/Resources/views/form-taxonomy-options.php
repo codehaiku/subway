@@ -56,7 +56,7 @@
 
 			<?php $editable_roles = get_editable_roles(); ?>
 			<?php $selected_roles = get_term_meta( $term->term_id,
-                'subway_membership_access_type_roles', true ); ?>
+				'subway_membership_access_type_roles', true ); ?>
 
 			<?php // Set the default to 'check all'?>
 			<?php unset( $editable_roles['administrator'] ); ?>
