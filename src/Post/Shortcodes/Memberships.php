@@ -4,6 +4,9 @@ namespace Subway\Post\Shortcodes;
 
 use Subway\Currency\Currency;
 use Subway\Memberships\Plan\Plan;
+use Subway\Memberships\Product\Controller;
+use Subway\Memberships\Product\Product;
+use Subway\Options\Options;
 use Subway\View\View;
 
 class Memberships {
@@ -22,6 +25,8 @@ class Memberships {
 		$plan     = new Plan();
 		$currency = new Currency();
 
+		$template = 'memberships';
+
 		$plans = $plan->get_plans( [ 'status' => 'published' ] );
 
 		$args = [
@@ -30,7 +35,28 @@ class Memberships {
 			'currency' => $currency
 		];
 
-		return $this->view->render( 'memberships', $args, true, 'shortcodes' );
+		$product_id = filter_input( 1, 'box-membership-product-id', 519 );
+
+		if ( ! empty( $product_id ) ) {
+
+			$template = 'product';
+			// Product Controller.
+			$product = new Controller();
+			$product->set_id( $product_id );
+
+			// Get associated membership plans.
+			$plans = $plan->get_plans(['product_id' => $product_id]);
+
+			// Options.
+			$options = new Options();
+
+			$args['plans'] = $plans;
+			$args['options'] = $options;
+			$args['product'] = $product->get();
+
+		}
+
+		return $this->view->render( $template, $args, true, 'shortcodes' );
 
 	}
 
