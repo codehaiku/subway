@@ -13,7 +13,7 @@ class Post {
 
 	public function __construct( User $user, Options $options ) {
 
-		$this->user    = $user;
+		$this->user = $user;
 
 		$this->options = $options;
 
@@ -181,7 +181,7 @@ class Post {
 
 	public function hook_the_content( $content ) {
 
-		$internal_pages  = $this->options->get_internal_pages();
+		$internal_pages = $this->options->get_internal_pages();
 
 		$current_page_id = get_queried_object_id();
 
