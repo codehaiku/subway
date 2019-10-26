@@ -42,13 +42,12 @@
     <form autocomplete="off" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 
         <!-- Product Tabs -->
-	    <?php $this->render( 'tabs', $extracted_vars, false, 'form-memberships-products' ); ?>
+		<?php $this->render( 'tabs', $extracted_vars, false, 'form-memberships-products' ); ?>
         <!-- Product Tabs End -->
 
         <div class="subway-flex-wrap">
 
             <div class="subway-flex-column-70">
-
 
 
                 <div>
@@ -61,31 +60,31 @@
 
                 <div class="subway-card subway-tab-section subway-product-section <?php echo esc_attr( $product->get_is_active_tab( 'settings' ) ); ?>">
 
-	                <?php if ( 'active' === $product->get_is_active_tab( 'settings' ) ): ?>
+					<?php if ( 'active' === $product->get_is_active_tab( 'settings' ) ): ?>
 
-					    <?php $this->render( 'settings', $extracted_vars, false, 'form-memberships-products' ); ?>
+						<?php $this->render( 'settings', $extracted_vars, false, 'form-memberships-products' ); ?>
 
-                    <?php endif; ?>
+					<?php endif; ?>
 
                 </div>
 
                 <div class="subway-mg-top-20 subway-tab-section subway-membership-plans-section <?php echo esc_attr( $product->get_is_active_tab( 'membership-plans' ) ); ?>">
 
-                    <?php if ( 'active' === $product->get_is_active_tab( 'membership-plans' ) ): ?>
+					<?php if ( 'active' === $product->get_is_active_tab( 'membership-plans' ) ): ?>
 
 						<?php $this->render( 'plans', $extracted_vars, false, 'form-memberships-products' ); ?>
 
-                    <?php endif; ?>
+					<?php endif; ?>
 
                 </div>
 
                 <div class="subway-mg-top-20 subway-tab-section subway-subscribers-section <?php echo esc_attr( $product->get_is_active_tab( 'subscribers' ) ); ?>">
 
-                    <?php if ( 'active' === $product->get_is_active_tab( 'subscribers' ) ): ?>
+					<?php if ( 'active' === $product->get_is_active_tab( 'subscribers' ) ): ?>
 
 						<?php $this->render( 'users', $extracted_vars, false, 'form-memberships-products' ); ?>
 
-                    <?php endif; ?>
+					<?php endif; ?>
 
                 </div>
 
@@ -97,7 +96,19 @@
 
 					<?php $this->render( 'status', $extracted_vars, false, 'form-memberships-products' ); ?>
 
+	                <?php if ( 'active' === $product->get_is_active_tab( 'settings' ) ): ?>
+                        <div class="subway-card">
+                            <div style="display: block; text-align: center;">
+                                <input id="publish-product" type="submit" class="button button-primary button-large"
+                                       value="<?php esc_attr_e( 'Update Product', 'subway' ); ?>">
+                                <a href="#" class="button button-danger button-large">Move to Trash</a>
+                            </div>
+                        </div>
+	                <?php endif; ?>
+
                 </div>
+
+
 
             </div>
 
