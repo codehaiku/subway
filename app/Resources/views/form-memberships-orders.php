@@ -2,7 +2,7 @@
 
 <div class="wrap">
 
-    <h1 class="wp-heading-inline"><?php esc_html_e( 'Orders', 'subway' ); ?></h1>
+    <h1 class="wp-heading-inline"><?php esc_html_e( 'Statements', 'subway' ); ?></h1>
 
 
     <hr class="wp-header-end">
