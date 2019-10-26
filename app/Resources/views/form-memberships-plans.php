@@ -61,42 +61,52 @@
 
 	<?php $plan = $plans->get_plan( $id ); ?>
 
-	<?php $controller = new \Subway\Memberships\Product\Controller(); ?>
+	<?php if ( $plan ): ?>
 
-	<?php $controller->set_id( $plan->get_product_id() ); ?>
+		<?php $controller = new \Subway\Memberships\Product\Controller(); ?>
 
-	<?php $product = $controller->get(); ?>
+		<?php $controller->set_id( $plan->get_product_id() ); ?>
 
-    <div class="wrap">
+		<?php $product = $controller->get(); ?>
 
-		<?php if ( $product ): ?>
+        <div class="wrap">
+
+			<?php if ( $product ): ?>
 
 
                 <h1 class="wp-heading-inline">
 					<?php printf( esc_html__( '%s', 'subway' ), $product->get_name() ); ?>
                     <small>
-                        <a style="margin: 2.5px 0 0 10px;" class="button button-small" href="<?php echo esc_url( $controller->get_product_url_edit() ); ?>">
-		                    <?php esc_html_e('View Product', 'subway'); ?>
+                        <a style="margin: 2.5px 0 0 10px;" class="button button-small"
+                           href="<?php echo esc_url( $controller->get_product_url_edit() ); ?>">
+							<?php esc_html_e( 'View Product', 'subway' ); ?>
                         </a>
                     </small>
                 </h1>
 
 
-		<?php endif; ?>
+			<?php endif; ?>
 
-        <h2 id="box-membership-sub-title">
-            <span class="dashicons dashicons-randomize"></span>
-			<?php printf( esc_html__( '%s', 'subway' ), $plan->get_name() ); ?>
-        </h2>
+            <h2 id="box-membership-sub-title">
+                <span class="dashicons dashicons-randomize"></span>
+				<?php printf( esc_html__( '%s', 'subway' ), $plan->get_name() ); ?>
+            </h2>
 
-		<?php $view->render( 'form-memberships-plans-edit', [
-			'plans'    => $plans,
-			'plan'     => $plan,
-			'id'       => $id,
-			'messages' => $flash_message->get()
-		] ); ?>
+			<?php $view->render( 'form-memberships-plans-edit', [
+				'plans'    => $plans,
+				'plan'     => $plan,
+				'id'       => $id,
+				'messages' => $flash_message->get()
+			] ); ?>
 
-    </div>
+        </div>
+    <?php else: ?>
+        <div class="wrap">
+            <p>
+                <?php esc_html_e('Product is not found.', 'subway'); ?>
+            </p>
+        </div>
+	<?php endif; ?>
 
 <?php else: ?>
 
