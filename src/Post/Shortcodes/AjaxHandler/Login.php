@@ -53,8 +53,8 @@ class Login {
 		$subway_redirect_url = $this->get_login_redirect_url( '', $is_signing );
 
 		$response['redirect_url'] = apply_filters(
-				'subway_login_redirect', $subway_redirect_url, $is_signing
-			);
+			'subway_login_redirect', $subway_redirect_url, $is_signing
+		);
 
 		echo wp_json_encode( $response );
 
