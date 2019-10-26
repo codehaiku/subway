@@ -21,31 +21,31 @@ if ( isset( $http_request_login ) ) {
 
 			$message_types = array(
 
-				'default' => array(
+				'default'                        => array(
 					'message' => __( 'There was an error trying to sign-in to your account. Make sure the credentials below are correct.', 'subway' ),
 				),
-				'__blank' => array(
+				'__blank'                        => array(
 					'message' => __( 'Required: Username and Password cannot be empty.', 'subway' ),
 				),
-				'__userempty' => array(
+				'__userempty'                    => array(
 					'message' => __( 'Required: Username cannot be empty.', 'subway' ),
 				),
-				'__passempty' => array(
+				'__passempty'                    => array(
 					'message' => __( 'Required: Password cannot be empty.', 'subway' ),
 				),
-				'fb_invalid_email' => array(
+				'fb_invalid_email'               => array(
 					'message' => __( 'Facebook email address is invalid or is not yet verified.', 'subway' ),
 				),
-				'fb_error' => array(
+				'fb_error'                       => array(
 					'message' => __( 'Facebook Application Error. Misconfigured or App is rejected.', 'subway' ),
 				),
-				'app_not_live' => array(
+				'app_not_live'                   => array(
 					'message' => __( 'Unable to fetch your Facebook Profile.', 'subway' ),
 				),
 				'gears_username_or_email_exists' => array(
 					'message' => __( 'Username or email address already exists', 'subway' ),
 				),
-				'gp_error_authentication' => array(
+				'gp_error_authentication'        => array(
 					'message' => __( 'Google Plus Authentication Error. Invalid Client ID or Secret.', 'subway' ),
 				),
 			);
@@ -75,36 +75,36 @@ if ( isset( $http_request_logout ) ) {
 $http_request_redirected = filter_input( INPUT_GET, '_redirected', FILTER_SANITIZE_SPECIAL_CHARS );
 
 if ( isset( $http_request_redirected ) ) {
-	$message = get_option('subway_redirected_message_login_form',
-		esc_html__('Members only page. Please use the login form below to access the page.','subway'));
+	$message = get_option( 'subway_redirected_message_login_form',
+		esc_html__( 'Members only page. Please use the login form below to access the page.', 'subway' ) );
 
 	$error_login_message = '<div id="message" class="success">' . wp_kses_post( $message ) . '</div>';
 }
 
 ?>
 <?php if ( ! is_user_logged_in() ) { ?>
-	<div class="mg-top-35 mg-bottom-35 subway-login-form">
-		<div class="subway-login-form-form">
-			<div class="subway-login-form__actions">
-				<h3>
+    <div class="mg-top-35 mg-bottom-35 subway-login-form">
+        <div class="subway-login-form-form">
+            <div class="subway-login-form__actions">
+                <h3>
 					<?php esc_html_e( 'Account Sign-in', 'subway' ); ?>
-				</h3>
+                </h3>
 				<?php do_action( 'gears_login_form' ); ?>
-			</div>
-			<div class="subway-login-form-message">
+            </div>
+            <div class="subway-login-form-message">
 				<?php echo wp_kses_post( $error_login_message ); ?>
-			</div>
-			<div class="subway-login-form__form">
+            </div>
+            <div class="subway-login-form__form">
 				<?php echo wp_login_form( $atts ); ?>
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 <?php } else { ?>
-	<div class="mg-top-35 mg-bottom-35 subway-login-sucessfull">
-		<p style="margin-bottom: 0px;">
+    <div class="mg-top-35 mg-bottom-35 subway-login-sucessfull">
+        <p style="margin-bottom: 0px;">
 			<?php $success_message = apply_filters( 'subway_login_message_success', esc_html__( 'You are currently logged-in.', 'subway' ) ); ?>
 			<?php echo esc_html( $success_message ); ?>
 
-		</p>
-	</div>
+        </p>
+    </div>
 <?php } ?>
