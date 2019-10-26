@@ -117,8 +117,9 @@
         <p>
 			<?php esc_html_e( 'Error: Plan not found', 'subway' ); ?>
             <br/>
-            <a class="sw-button" href="<?php echo esc_url(  $options->get_membership_page_url()  ); ?>" title="<?php esc_attr_e('Select Membership','subway'); ?>">
-                <?php esc_html_e('Select Membership Plan','subway'); ?>
+            <a class="sw-button" href="<?php echo esc_url( $options->get_membership_page_url() ); ?>"
+               title="<?php esc_attr_e( 'Select Membership', 'subway' ); ?>">
+				<?php esc_html_e( 'Select Membership Plan', 'subway' ); ?>
             </a>
         </p>
     </div>
