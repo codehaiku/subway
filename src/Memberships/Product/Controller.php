@@ -3,6 +3,8 @@
 namespace Subway\Memberships\Product;
 
 use Subway\Helpers\Helpers;
+use Subway\Options\Options;
+use Subway\User\Plans;
 
 class Controller extends Product {
 
@@ -300,9 +302,23 @@ class Controller extends Product {
 		return 'inactive';
 	}
 
+	public function get_url() {
+
+		$options = new Options();
+		$url = esc_url_raw( add_query_arg([
+			'box-membership-product-id' => $this->get_id()
+		], $options->get_membership_page_url()) );
+
+		return $url;
+
+
+	}
+
+
+
 	public function get_preview_image_url() {
 
-		return 'https://picsum.photos/id/' . rand( 395, 405 ) . '/700/400';
+		return 'https://picsum.photos/id/' . rand( 395, 405 ) . '/700/700';
 
 	}
 }
