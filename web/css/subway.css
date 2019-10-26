@@ -271,6 +271,7 @@ tr.current-user-plan > td {
     color: #ffffff;
     font-weight: bold;
     font-size: 13px;
+    margin: 15px 0;
     padding: 6px 24px;
     text-decoration: none;
     text-shadow: 0px 1px 0px #154682;
@@ -637,9 +638,14 @@ table.subway-membership-lists {
     font-size: 1em;
     font-weight: normal;
 }
+.entry-content table.subway-checkout-user-info-table td,
 .entry-content table.subway-membership-lists td,
+.entry-content table.subway-checkout-review-order td,
+table.subway-checkout-review-order td,
+table.subway-checkout-user-info-table td,
 table.subway-membership-lists td{
     padding: 10px;
+    vertical-align: middle;
 }
 #subway-invoice-numbers,
 .subway-user-invoice table.subway-membership-lists th:last-child {
@@ -671,3 +677,12 @@ table.subway-membership-lists td{
 /**
  * Invoice End
  */
+/**
+ * Product Loop.
+ */
+.box-membership-product-preview img,
+.subway-product-preview img{
+    max-width: 100%;
+    width: auto;
+}
+.subway-pd-left-20 { padding-left: 20px;}
