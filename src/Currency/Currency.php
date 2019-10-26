@@ -40,7 +40,7 @@ class Currency {
 
 		$fmt = new \NumberFormatter( get_locale(), \NumberFormatter::CURRENCY );
 
-		$display_amount = $fmt->formatCurrency($amount, trim( $currency ) );
+		$display_amount = $fmt->formatCurrency( $amount, trim( $currency ) );
 
 		return apply_filters( 'subway\currency::format', $display_amount );
 
