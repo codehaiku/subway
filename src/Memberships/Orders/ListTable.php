@@ -67,7 +67,7 @@ class ListTable extends \WP_List_Table {
 		) );
 
 		//@Todo: Update total order count.
-		$total_items = absint( get_option('subway_count_orders', 0) );
+		$total_items = absint( get_option( 'subway_count_orders', 0 ) );
 
 		$this->set_pagination_args( array(
 			'total_items' => $total_items, // We have to calculate the total number of items.
