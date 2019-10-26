@@ -103,13 +103,14 @@
                                 />
                             </div>
                             <h3>
-                                <a class="subway-product-title" href="<?php echo esc_url( '?action=edit&page=subway-membership&id=' . absint( $item->get_id() ) ); ?>"
+                                <a class="subway-product-title"
+                                   href="<?php echo esc_url( '?action=edit&page=subway-membership&id=' . absint( $item->get_id() ) ); ?>"
                                    title="<?php echo esc_attr( $item->get_name() ); ?>">
 									<?php echo $item->get_name(); ?>
                                 </a>
                             </h3>
                             <p>
-								<?php echo strip_tags( trim( str_replace('&nbsp;','', $item->get_description() ) ) ); ?>
+								<?php echo strip_tags( trim( str_replace( '&nbsp;', '', $item->get_description() ) ) ); ?>
                             </p>
                             <div class="actions">
                                 <a href="<?php echo esc_url( '?action=edit&page=subway-membership&id=' . absint( $item->get_id() ) ); ?>"
