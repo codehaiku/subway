@@ -31,7 +31,7 @@
 		<?php esc_html_e( 'Explain what this product is all about.', 'subway' ); ?>
     </p>
 
-	<?php wp_editor( wp_kses_post( $product->get_description() ), 'description', $settings = array('editor_height'=>150) ); ?>
+	<?php wp_editor( wp_kses_post( $product->get_description() ), 'description', $settings = array( 'editor_height' => 150 ) ); ?>
 
 	<?php if ( isset( $notices['message']['description'] ) ): ?>
         <p class="validation-errors">
