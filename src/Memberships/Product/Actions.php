@@ -43,16 +43,20 @@ class Actions extends Controller {
 				$validated['tax_rate_displayed'] = true;
 			}
 
-			// Update the product.
-			$this->set_id( $validated['id'] )
-			     ->set_name( $validated['name'] )
-			     ->set_description( $validated['description'] )
-			     ->set_status( $validated['status'] )
-			     ->set_tax_rate( $validated['tax_rate'] )
-			     ->set_tax_displayed( $validated['tax_rate_displayed'] )
-			     ->set_date_updated( current_time( 'mysql' ) );
+			// Fetch the product to populate the object properties.
+			$product = new Controller();
+			$product->set_id( $validated['id'] );
+			$product->get();
 
-			$this->update();
+			// Update other attributes.
+			$product->set_name( $validated['name'] )
+			        ->set_description( $validated['description'] )
+			        ->set_status( $validated['status'] )
+			        ->set_tax_rate( $validated['tax_rate'] )
+			        ->set_tax_displayed( $validated['tax_rate_displayed'] )
+			        ->set_date_updated( current_time( 'mysql' ) );
+
+			$product->update();
 
 			wp_safe_redirect( wp_get_referer(), 302 );
 
@@ -98,6 +102,7 @@ class Actions extends Controller {
 	private function define_hooks() {
 		add_action( 'admin_post_subway_product_edit', [ $this, 'edit' ] );
 		add_action( 'admin_post_subway_product_edit_set_default_plan', [ $this, 'edit_set_default_plan' ] );
+
 	}
 
 }
