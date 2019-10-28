@@ -17,55 +17,55 @@ class SettingsCallback {
 
 	public function seller_name() {
 
-		$this->view->render( 'settings-seller-name', [] );
+		$this->view->render( 'seller-name', [], false, 'settings' );
 
 	}
 
 	public function seller_address_line1() {
 
-		$this->view->render( 'settings-seller-address-line1', [] );
+		$this->view->render( 'seller-address-line1', [], false, 'settings' );
 
 	}
 
 	public function seller_address_line2() {
 
-		$this->view->render( 'settings-seller-address-line2', [] );
+		$this->view->render( 'seller-address-line2', [], false, 'settings' );
 
 	}
 
 	public function seller_city() {
 
-		$this->view->render( 'settings-seller-city', [] );
+		$this->view->render( 'seller-city', [], false, 'settings' );
 
 	}
 
 	public function seller_postal_code() {
 
-		$this->view->render( 'settings-postal-code', [] );
+		$this->view->render( 'postal-code', [], false, 'settings' );
 
 	}
 
 	public function seller_country() {
 
-		$this->view->render( 'settings-seller-country', [] );
+		$this->view->render( 'seller-country', [], false, 'settings' );
 
 	}
 
 	public function seller_email() {
 
-		$this->view->render( 'settings-seller-email', [] );
+		$this->view->render( 'seller-email', [], false, 'settings' );
 
 	}
 
 	public function seller_vat() {
 
-		$this->view->render( 'settings-seller-vat', [] );
+		$this->view->render( 'seller-vat', [], false, 'settings' );
 
 	}
 
 	public function seller_registration_number() {
 
-		$this->view->render( 'settings-registration-number', [] );
+		$this->view->render( 'registration-number', [], false, 'settings' );
 
 	}
 
@@ -75,81 +75,85 @@ class SettingsCallback {
 
 		$selected_currency = get_option( 'subway_currency', 'USD' );
 
-		$this->view->render( 'settings-currency', [
+		$this->view->render( 'currency', [
 			'currencies'        => $currencies,
 			'selected_currency' => $selected_currency
-		] );
+		], false, 'settings' );
 
 	}
 
 	public function tax_rate() {
 		$tax_rate = get_option( 'subway_tax_rate', 0.00 );
-		$this->view->render( 'settings-tax-rate', [ 'tax_rate' => $tax_rate ] );
+		$this->view->render( 'tax-rate', [ 'tax_rate' => $tax_rate ], false, 'settings' );
 	}
 
 	public function display_tax() {
 		$subway_display_tax = get_option( 'subway_display_tax', '1' );
-		$this->view->render( 'settings-tax-display', [ 'subway_display_tax' => $subway_display_tax ] );
+		$this->view->render( 'tax-display', [ 'subway_display_tax' => $subway_display_tax ], false, 'settings' );
 	}
 
 	public function login_page() {
-		$this->view->render( 'settings-login-page', [] );
+		$this->view->render( 'login-page', [], false, 'settings' );
+	}
+
+	public function checkout_page() {
+		$this->view->render( 'checkout-page', [], false, 'settings' );
 	}
 
 	public function membership_page() {
-		$this->view->render( 'settings-membership-page', [] );
+		$this->view->render( 'membership-page', [], false, 'settings' );
 	}
 
 	public function register_page() {
-		$this->view->render( 'settings-register-page', [] );
+		$this->view->render( 'register-page', [], false, 'settings' );
 	}
 
 	public function user_account() {
-		$this->view->render( 'settings-account-page', [] );
+		$this->view->render( 'account-page', [], false, 'settings' );
 	}
 
 	public function author_archives() {
-		$this->view->render( 'settings-author-archives', [] );
+		$this->view->render( 'author-archives', [], false, 'settings' );
 	}
 
 	public function date_archives() {
-		$this->view->render( 'settings-date-archives', [] );
+		$this->view->render( 'date-archives', [], false, 'settings' );
 	}
 
 	public function redirect_type() {
-		$this->view->render( 'settings-redirect-type', [] );
+		$this->view->render( 'redirect-type', [], false, 'settings' );
 	}
 
 	public function info_wp_login_link() {
-		$this->view->render( 'settings-info-wp-login-link', [] );
+		$this->view->render( 'info-wp-login-link', [], false, 'settings' );
 	}
 
 	public function partial_message() {
-		$this->view->render( 'settings-partial-message', [] );
+		$this->view->render( 'partial-message', [], false, 'settings' );
 	}
 
 	public function comment_limited() {
-		$this->view->render( 'settings-comment-limited', [] );
+		$this->view->render( 'comment-limited', [], false, 'settings' );
 	}
 
 	public function shortcode_login_form() {
-		$this->view->render( 'settings-shortcode-login-form', [] );
+		$this->view->render( 'shortcode-login-form', [], false, 'settings' );
 	}
 
 	public function paypal_client_id() {
-		$this->view->render( 'settings-paypal-client-id', [] );
+		$this->view->render( 'paypal-client-id', [], false, 'settings' );
 	}
 
 	public function paypal_client_secret() {
-		$this->view->render( 'settings-paypal-client-secret', [] );
+		$this->view->render( 'paypal-client-secret', [], false, 'settings' );
 	}
 
 	public function paypal_page_confirmation() {
-		$this->view->render( 'settings-paypal-page-confirmation', [] );
+		$this->view->render( 'paypal-page-confirmation', [], false, 'settings' );
 	}
 
 	public function paypal_page_cancel() {
-		$this->view->render( 'settings-paypal-page-cancel', [] );
+		$this->view->render( 'paypal-page-cancel', [], false, 'settings' );
 	}
 }
 
