@@ -182,10 +182,14 @@ class Product {
 	}
 
 	/**
-	 * @param string $default_plan_id
+	 * @param $default_plan_id
+	 *
+	 * @return $this
 	 */
 	public function set_default_plan_id( $default_plan_id ) {
 		$this->default_plan_id = $default_plan_id;
+
+		return $this;
 	}
 
 }
