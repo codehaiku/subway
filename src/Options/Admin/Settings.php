@@ -15,7 +15,6 @@ class Settings {
 
 	public function menu() {
 
-
 		// Add top-level menu "Memberships".
 		$hook = add_menu_page(
 			esc_html__( 'Memberships Settings', 'subway' ),
@@ -427,10 +426,18 @@ class Settings {
 				'section'  => 'subway-settings-section',
 				'group'    => 'subway-page-visibility-section'
 			),
+			// Checkout page.
+			array(
+				'id'       => 'subway_options_checkout_page',
+				'label'    => __( 'Checkout', 'subway' ),
+				'callback' => array( $settings_callback, 'checkout_page' ),
+				'section'  => 'subway-settings-section',
+				'group'    => 'subway-page-visibility-section'
+			),
 			// Redirect page for logged-in users.
 			array(
 				'id'       => 'subway_options_membership_page',
-				'label'    => __( 'Memberships', 'subway' ),
+				'label'    => __( 'Products', 'subway' ),
 				'callback' => array( $settings_callback, 'membership_page' ),
 				'section'  => 'subway-settings-section',
 				'group'    => 'subway-page-visibility-section'
