@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 <?php if ( $plans ): ?>
-    <form action="http://multisite.local/checkout" method="GET">
+    <form action="<?php echo esc_url( $plan->get_plan_checkout_url() ); ?>" method="GET">
         <table class="subway-membership-product-plans">
             <thead>
             <tr>
@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                     <td>
 						<?php $id = sprintf( 'membership-plan-%d', $plan->get_id() ); ?>
                         <label for="<?php echo esc_attr( $id ); ?>">
-                            <input id="<?php echo esc_attr( $id ); ?>" type="radio" name="plan_id"
+                            <input required id="<?php echo esc_attr( $id ); ?>" type="radio" name="plan_id"
                                    value="<?php echo esc_attr( $plan->get_id() ); ?>">
 							<?php echo esc_html( $plan->get_name() ); ?>
                         </label>
