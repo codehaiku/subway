@@ -51,6 +51,7 @@ class InstallTable {
 				status varchar(100) NOT NULL,
 				tax_rate double NOT NULL,
 				tax_displayed tinyint(1) NOT NULL,
+				default_plan_id mediumint(9) NOT NULL,
 				date_created datetime DEFAULT CURRENT_TIMESTAMP,
 				date_updated datetime DEFAULT CURRENT_TIMESTAMP,
 				PRIMARY KEY  (id)
@@ -59,7 +60,7 @@ class InstallTable {
 
 		dbDelta( $sql );
 
-		update_option( "subway_memberships_products_plans_version", $this->db_version );
+		update_option( "subway_memberships_products_version", $this->db_version );
 	}
 
 	protected function membership_products_plans_install() {
