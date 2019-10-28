@@ -48,7 +48,7 @@ class Login {
 		$ajax_login = new LoginAjax();
 
 		$ajax_login->handle_login_request();
-		
+
 	}
 
 	public function enqueue_script() {
