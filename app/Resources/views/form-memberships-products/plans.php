@@ -9,7 +9,7 @@ if ( ! $items ) {
 <table class="wp-list-table widefat fixed striped" id="boxmembership-product-plans-table">
     <thead>
     <tr>
-        <th colspan="1">
+        <th colspan="2">
 			<?php esc_html_e( 'Membership Plans', 'subway' ); ?>
         </th>
         <th colspan="4">
@@ -21,7 +21,7 @@ if ( ! $items ) {
         </th>
     </tr>
     <tr>
-        <th><?php esc_html_e( 'Plan Name', 'subway' ); ?></th>
+        <th colspan="2"><?php esc_html_e( 'Plan Name', 'subway' ); ?></th>
         <th><?php esc_html_e( 'Displayed Price', 'subway' ); ?></th>
         <th><?php esc_html_e( 'Type', 'subway' ); ?></th>
         <th><?php esc_html_e( 'Status', 'subway' ); ?></th>
@@ -32,22 +32,42 @@ if ( ! $items ) {
         <tbody>
 		<?php foreach ( $items as $plan ): ?>
             <tr>
-                <td>
+                <td colspan="2">
+
                     <a href="<?php echo esc_url_raw( $plan->get_edit_url( $plan->get_id(), $product->get_id() ) ); ?>">
+
                         <strong>
+
 							<?php echo esc_html( $plan->get_name() ); ?>
+
                         </strong>
+
                     </a>
 
+					<?php if ( $product->get_default_plan_id() === $plan->get_id() ): ?>
+
+                        <span class="box-memberships-label-default">
+
+                            <?php esc_html_e( 'Default', 'subway' ); ?>
+
+                        </span>
+
+					<?php endif; ?>
+
                     <div class="row-actions">
-                        <a href="<?php echo esc_url_raw( $plan->get_edit_url( $plan->get_id(), $product->get_id() ) ); ?>"
+
+                        <a href="<?php echo esc_url_raw( add_query_arg( [
+							'product-id' => $product->get_id(),
+							'plan-id'    => $plan->get_id(),
+							'action'     => 'subway_product_edit_set_default_plan'
+						], admin_url( 'admin-post.php' ) ) ); ?>"
                            class="">
-							<?php esc_html_e( 'Edit', 'subway' ); ?>
+							<?php esc_html_e( 'Set as Default', 'subway' ); ?>
                         </a>
                         |
                         <a href="<?php echo esc_url_raw( $plan->get_edit_url( $plan->get_id(), $product->get_id() ) ); ?>"
                            class="">
-							<?php esc_html_e( 'View', 'subway' ); ?>
+							<?php esc_html_e( 'Edit', 'subway' ); ?>
                         </a>
                     </div>
                 </td>
