@@ -9,8 +9,11 @@ class Details extends Orders {
 	protected $table;
 
 	public function __construct( \wpdb $wpdb ) {
+
 		parent::__construct( $wpdb );
+
 		$this->table = $this->wpdb->prefix . 'subway_memberships_orders_details';
+
 	}
 
 	public function get( $order_id = 0 ) {
