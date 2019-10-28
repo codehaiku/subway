@@ -32,29 +32,33 @@ if ( ! defined( 'ABSPATH' ) ) {
 
             <div class="subway-flex-wrap">
 				<?php if ( $plans ): ?>
+					<?php $default_plan = $plan->get_plan( $product->get_default_plan_id() ); ?>
+
                     <div class="subway-flex-column-60">
                         <h3 class="subway-mg-top-zero">
-                            Developer
+							<?php echo esc_html( $default_plan->get_name() ); ?>
                         </h3>
                         <h4>
-                            $8.80 / recurring<br/>
+							<?php echo esc_html( $default_plan->get_displayed_price() ); ?>
+                            /
+							<?php echo esc_html( $default_plan->get_type() ); ?>
+                            <br/>
                             <small>
-                                SKU: MEMBERPROD1
+								<?php echo esc_html( sprintf( __( 'SKU: %s', 'subway' ), $default_plan->get_sku() ) ); ?>
                             </small>
                         </h4>
 
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pharetra elit a consectetur
-                        ultricies.
-                        Donec a convallis nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
-                        inceptos himenaeos. Fusce hendrerit ornare erat quis dapibus. Donec placerat eu erat vitae
-                        congue. Etiam nunc risus, aliquet eu porttitor non, malesuada et sapien.
+                        <div id="product-plan-description">
+                            <?php echo wp_kses_post( wpautop( $default_plan->get_description() ) ); ?>
+                        </div>
                     </div>
                     <div class="subway-flex-column-40">
                         <div class="subway-pd-left-20">
                             <div class="box-membership-product-plans">
 								<?php $this->render( 'product-plans', [
-									'plans' => $plans,
-									'plan'  => $plan
+									'plans'   => $plans,
+									'plan'    => $plan,
+									'product' => $product
 								], false, 'shortcodes' ); ?>
                             </div>
                         </div>
@@ -67,7 +71,8 @@ if ( ! defined( 'ABSPATH' ) ) {
                             </p>
                         </div>
                         <p>
-                            <a href="<?php echo esc_url( $options->get_membership_page_url() ); ?>" title="<?php esc_attr_e( 'Browse Membership Products', 'subway' ); ?>" class="sw-button">
+                            <a href="<?php echo esc_url( $options->get_membership_page_url() ); ?>"
+                               title="<?php esc_attr_e( 'Browse Membership Products', 'subway' ); ?>" class="sw-button">
 								<?php esc_html_e( 'Browse Membership Products', 'subway' ); ?>
                             </a>
                         </p>
