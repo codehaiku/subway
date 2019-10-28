@@ -8,10 +8,18 @@ use Subway\Post\Shortcodes\AjaxHandler\Login as LoginAjax;
 class Login {
 
 	public function __construct( View $view ) {
+
 		$this->view = $view;
+
 	}
 
 	public function login_form( $attributes ) {
+
+		wp_enqueue_script( 'subway-global' );
+
+		wp_enqueue_script( 'subway-shortcode-login' );
+
+		wp_enqueue_style( 'subway-general' );
 
 		$atts = shortcode_atts( array(
 			'echo'           => true,
@@ -28,21 +36,19 @@ class Login {
 			'value_username' => '',
 			'value_remember' => false,
 			'redirect'       => home_url(),
-		), $atts );
+		), $attributes );
 
-		wp_enqueue_script( 'subway-global' );
 
-		wp_enqueue_script( 'subway-shortcode-login' );
-
-		wp_enqueue_style( 'subway-general' );
-
-		return $this->view->render( 'shortcode-login', [ 'atts' => $atts ], true );
+		return $this->view->render( 'login', [ 'atts' => $atts ], true, 'shortcodes' );
 
 	}
 
 	public function handle_login_request() {
+
 		$ajax_login = new LoginAjax();
+
 		$ajax_login->handle_login_request();
+		
 	}
 
 	public function enqueue_script() {
