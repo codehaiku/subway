@@ -191,14 +191,55 @@ class Controller extends Plan {
 
 	}
 
+	public function get_plan_details() {
+
+		header( 'Content-Type: application/json' );
+
+		$plan_id = filter_input( 1, 'plan_id', FILTER_SANITIZE_NUMBER_INT );
+
+		$plan = $this->get_plan( $plan_id );
+
+		$response = [
+			'type' => 'fail',
+			'plan' => [
+				'id'              => '',
+				'name'            => '',
+				'description'     => '',
+				'sku'             => '',
+				'displayed_price' => '',
+				'tax_rate'        => '',
+				'type'            => ''
+			]
+		];
+
+		if ( $plan ) {
+			$response['type']                    = 'success';
+			$response['plan']['id']              = $plan->get_id();
+			$response['plan']['name']            = $plan->get_name();
+			$response['plan']['description']     = $plan->get_description();
+			$response['plan']['sku']             = $plan->get_sku();
+			$response['plan']['displayed_price'] = $plan->get_displayed_price();
+			$response['plan']['tax_rate']        = $plan->get_tax_rate();
+			$response['plan']['type']            = $plan->get_type();
+		}
+
+		echo json_encode( $response );
+
+		die;
+
+	}
+
 	private function check_admin() {
 
 		if ( ! current_user_can( 'manage_options' ) ) {
+
 			wp_die( __( 'You are not allowed to do this.', 'subway' ) );
+
 		}
 
 		return;
 	}
+
 
 	public function attach_hooks() {
 
@@ -211,6 +252,10 @@ class Controller extends Plan {
 		add_action( 'admin_post_subway_plan_edit_action', [ $this, 'edit_action' ] );
 
 		add_action( 'admin_post_subway_plan_add_action', [ $this, 'add_action' ] );
+
+		add_action( 'wp_ajax_get_plan_details', [ $this, 'get_plan_details' ] );
+
+		add_action( 'wp_ajax_nopriv_get_plan_details', [ $this, 'get_plan_details' ] );
 
 	}
 
