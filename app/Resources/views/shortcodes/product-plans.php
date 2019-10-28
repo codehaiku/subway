@@ -18,33 +18,39 @@ if ( ! defined( 'ABSPATH' ) ) {
                     <td>
 						<?php $id = sprintf( 'membership-plan-%d', $plan->get_id() ); ?>
 
-                        <?php if ( $plan->get_id() === $product->get_default_plan_id() ): ?>
+						<?php if ( $plan->get_id() === $product->get_default_plan_id() ): ?>
 
-                            <?php $checked = 'checked'; ?>
+							<?php $checked = 'checked'; ?>
 
-                        <?php else: ?>
+						<?php else: ?>
 
-                            <?php $checked = ''; ?>
+							<?php $checked = ''; ?>
 
-                        <?php endif; ?>
+						<?php endif; ?>
 
                         <label for="<?php echo esc_attr( $id ); ?>">
-                            <input <?php echo esc_attr( $checked ); ?> required id="<?php echo esc_attr( $id ); ?>" type="radio" name="plan_id"
-                                   value="<?php echo esc_attr( $plan->get_id() ); ?>">
+                            <input <?php echo esc_attr( $checked ); ?>
+                                    class="product-single-product-plan"
+                                    required id="<?php echo esc_attr( $id ); ?>"
+                                    type="radio" name="plan_id"
+                                    value="<?php echo esc_attr( $plan->get_id() ); ?>"
+                            />
 							<?php echo esc_html( $plan->get_name() ); ?>
 
                         </label>
                         <em>
-						<?php echo esc_html( $plan->get_displayed_price() ); ?>
-                        /
-						<?php echo esc_html( $plan->get_type() ); ?>
+							<?php echo esc_html( $plan->get_displayed_price() ); ?>
+                            /
+							<?php echo esc_html( $plan->get_type() ); ?>
                         </em>
                     </td>
                 </tr>
 			<?php endforeach; ?>
         </table>
-        <button type="submit" class="sw-button subway-mg-top-zero">
-			<?php esc_html_e( 'Select Membership Plan', 'subway' ); ?>
-        </button>
+        <div id="product-plans-list">
+            <button type="submit" class="sw-button subway-mg-top-zero aligncenter">
+				<?php esc_html_e( 'Select Membership Plan', 'subway' ); ?>
+            </button>
+        </div>
     </form>
 <?php endif; ?>
