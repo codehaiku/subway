@@ -279,7 +279,9 @@ tr.current-user-plan > td {
     padding: 6px 24px;
     text-decoration: none;
     text-shadow: 0px 1px 0px #154682;
+    line-height: 24px;
 }
+
 
 .sw-button:hover {
     background: linear-gradient(to bottom, #0061a7 5%, #007dc1 100%);
@@ -441,6 +443,7 @@ tr.current-user-plan > td {
 
 
 .subway-flex-wrap {
+    position: relative;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
