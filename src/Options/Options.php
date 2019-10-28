@@ -2,9 +2,17 @@
 
 namespace Subway\Options;
 
+/**
+ * Class Options
+ * @package Subway\Options
+ */
 class Options {
 
+	/**
+	 * @return array
+	 */
 	public function get_internal_pages() {
+
 		// Login Page.
 		$login_page = (int) get_option( 'subway_login_page' );
 		// No Access Page.
@@ -12,6 +20,7 @@ class Options {
 
 		// Return the pages.
 		return array_diff( [ $login_page, $no_access_page ], [ 0 ] );
+
 	}
 
 	/**
@@ -25,12 +34,35 @@ class Options {
 
 	}
 
+	/**
+	 * @return false|string
+	 */
 	public function get_membership_page_url() {
 
 		return $this->get_membership_pages_settings( 'subway_options_membership_page' );
 
 	}
 
+	/**
+	 * @return false|string
+	 */
+	public function get_checkout_page_url() {
+
+		return $this->get_membership_pages_settings( 'subway_options_checkout_page' );
+
+	}
+
+	public function get_registration_page_url() {
+
+		return $this->get_membership_pages_settings( 'subway_options_register_page' );
+
+	}
+
+	/**
+	 * @param $options_name
+	 *
+	 * @return false|string
+	 */
 	protected function get_membership_pages_settings( $options_name ) {
 
 		$page_id = absint( get_option( $options_name, 0 ) );
@@ -46,6 +78,9 @@ class Options {
 		return $url;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function get_redirect_url() {
 
 		$selected_login_post_id = intval( get_option( 'subway_login_page' ) );
