@@ -23,34 +23,59 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <div class="box-membership-product-details">
                     <div class="box-membership-product-title">
                         <h2 class="box-membership-product-title-h subway-mg-top-zero">
-							<?php echo esc_html( $product->get_name() ); ?>
+							<span id="product-name">
+                                <?php echo esc_html( $product->get_name() ); ?>
+                            </span>
                         </h2>
                     </div>
-					<?php echo wp_kses_post( wpautop( $product->get_description() ) ); ?>
+                    <div id="product-description">
+						<?php echo wp_kses_post( wpautop( $product->get_description() ) ); ?>
+                    </div>
                 </div>
             </div>
 
-            <div class="subway-flex-wrap">
+            <div class="subway-flex-wrap" id="box-membership-plan-details">
+
 				<?php if ( $plans ): ?>
+
 					<?php $default_plan = $plan->get_plan( $product->get_default_plan_id() ); ?>
 
                     <div class="subway-flex-column-60">
-                        <h3 class="subway-mg-top-zero">
-							<?php echo esc_html( $default_plan->get_name() ); ?>
-                        </h3>
-                        <h4>
-							<?php echo esc_html( $default_plan->get_displayed_price() ); ?>
-                            /
-							<?php echo esc_html( $default_plan->get_type() ); ?>
-                            <br/>
-                            <small>
-								<?php echo esc_html( sprintf( __( 'SKU: %s', 'subway' ), $default_plan->get_sku() ) ); ?>
-                            </small>
-                        </h4>
+						<?php if ( $default_plan ): ?>
+                            <div id="box-membership-plan-details-context">
 
-                        <div id="product-plan-description">
-                            <?php echo wp_kses_post( wpautop( $default_plan->get_description() ) ); ?>
-                        </div>
+                                <h3 class="subway-mg-top-zero">
+                                <span id="plan-name">
+								    <?php echo esc_html( $default_plan->get_name() ); ?>
+                                </span>
+                                </h3>
+                                <h4>
+                                <span id="plan-displayed-price">
+								    <?php echo esc_html( $default_plan->get_displayed_price() ); ?>
+                                </span>
+                                    /
+                                    <span id="plan-type">
+								    <?php echo esc_html( $default_plan->get_type() ); ?>
+                                </span>
+                                    <br/>
+                                    <small>
+										<?php esc_html_e( 'SKU:', 'subway' ); ?>
+                                        <span id="plan-sku">
+                                        <?php echo esc_html( $default_plan->get_sku() ); ?>
+                                    </span>
+                                    </small>
+                                </h4>
+
+                                <div id="plan-description">
+									<?php echo wp_kses_post( wpautop( $default_plan->get_description() ) ); ?>
+                                </div>
+
+                            </div>
+						<?php else: ?>
+                            <div class="subway-alert subway-alert-info">
+								<?php esc_html_e( 'Select membership plan to continue.', 'subway' ); ?>
+                            </div>
+						<?php endif; ?>
                     </div>
                     <div class="subway-flex-column-40">
                         <div class="subway-pd-left-20">
@@ -98,3 +123,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php endif; ?>
 </div>
 
+<?php wp_enqueue_script( 'subway-global' ); ?>
