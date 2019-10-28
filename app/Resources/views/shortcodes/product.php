@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                             </h2>
                         </div>
                         <div class="box-membership-product-plans">
-							<?php $this->render( 'product-plans', [ 'plans' => $plans ], false, 'shortcodes' ); ?>
+							<?php $this->render( 'product-plans', [ 'plans' => $plans, 'plan' => $plan ], false, 'shortcodes' ); ?>
                         </div>
                     </div>
                 </div>
