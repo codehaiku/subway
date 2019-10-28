@@ -103,6 +103,7 @@ class Controller extends Product {
 			$this->set_id( $result->id )
 			     ->set_name( $result->name )
 			     ->set_description( $result->description )
+			     ->set_default_plan_id( $result->default_plan_id )
 			     ->set_status( $result->status )
 			     ->set_tax_rate( $result->tax_rate )
 			     ->set_tax_displayed( $result->tax_displayed )
@@ -167,20 +168,22 @@ class Controller extends Product {
 		$db = Helpers::get_db();
 
 		$defaults = [
-			'name'          => '',
-			'description'   => '',
-			'status'        => 'draft',
-			'tax_rate'      => 0,
-			'tax_displayed' => false,
-			'date_updated'  => current_time( 'mysql' ),
+			'name'            => '',
+			'description'     => '',
+			'default_plan_id' => '',
+			'status'          => 'draft',
+			'tax_rate'        => 0,
+			'tax_displayed'   => false,
+			'date_updated'    => current_time( 'mysql' ),
 		];
 
 		$data = wp_parse_args( [
-			'name'          => $this->get_name(),
-			'description'   => $this->get_description(),
-			'status'        => $this->get_status(),
-			'tax_rate'      => $this->get_tax_rate(),
-			'tax_displayed' => $this->is_tax_displayed()
+			'name'            => $this->get_name(),
+			'description'     => $this->get_description(),
+			'default_plan_id' => $this->get_default_plan_id(),
+			'status'          => $this->get_status(),
+			'tax_rate'        => $this->get_tax_rate(),
+			'tax_displayed'   => $this->is_tax_displayed()
 		], $defaults );
 
 		$where = [
@@ -190,6 +193,7 @@ class Controller extends Product {
 		$format = [
 			'%s',
 			'%s',
+			'%d',
 			'%s',
 			'%f',
 			'%d'
@@ -202,6 +206,10 @@ class Controller extends Product {
 		);
 
 		if ( true === $updated ) {
+			return true;
+		}
+
+		if ( 1 === $updated ) {
 			return true;
 		}
 
@@ -306,9 +314,9 @@ class Controller extends Product {
 	public function get_url() {
 
 		$options = new Options();
-		$url = esc_url_raw( add_query_arg([
+		$url     = esc_url_raw( add_query_arg( [
 			'box-membership-product-id' => $this->get_id()
-		], $options->get_membership_page_url()) );
+		], $options->get_membership_page_url() ) );
 
 		return $url;
 
