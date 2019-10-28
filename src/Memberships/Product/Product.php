@@ -14,6 +14,8 @@ class Product {
 	protected $tax_displayed = false;
 	protected $date_created = '';
 	protected $date_updated = '';
+	protected $plans = [];
+	protected $default_plan_id = '';
 
 	protected $table = '';
 
@@ -172,6 +174,19 @@ class Product {
 		return $this;
 	}
 
+	/**
+	 * @return string
+	 */
+	public function get_default_plan_id() {
+		return $this->default_plan_id;
+	}
+
+	/**
+	 * @param string $default_plan_id
+	 */
+	public function set_default_plan_id( $default_plan_id ) {
+		$this->default_plan_id = $default_plan_id;
+	}
 
 }
 
