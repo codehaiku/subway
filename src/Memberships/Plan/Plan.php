@@ -3,6 +3,7 @@
 namespace Subway\Memberships\Plan;
 
 use Subway\Currency\Currency;
+use Subway\Options\Options;
 
 /**
  * Class Plan
@@ -613,12 +614,32 @@ class Plan {
 
 	}
 
-	public function get_plan_checkout_url( $id ) {
+	public function get_plan_checkout_url( $id = 0 ) {
 
-		$checkout_url = esc_url( add_query_arg( 'plan_id', $id, 'http://multisite.local/checkout' ) );
+		$options = new Options();
 
-		if ( ! is_user_logged_in() ) {
-			$checkout_url = esc_url( add_query_arg( 'plan_id', $id, 'http://multisite.local/create-account' ) );
+		if ( is_user_logged_in() ) {
+
+			$options_checkout_url = $options->get_checkout_page_url();
+
+		} else {
+
+			$options_checkout_url = $options->get_registration_page_url();
+
+		}
+
+		$checkout_url = esc_url( $options_checkout_url );
+
+		if ( ! empty( $id ) ) {
+
+			$checkout_url = esc_url( add_query_arg( 'plan_id', $id, $checkout_url ) );
+
+			if ( ! is_user_logged_in() ) {
+
+				$checkout_url = esc_url( add_query_arg( 'plan_id', $id, $checkout_url ) );
+
+			}
+
 		}
 
 		return apply_filters( 'get_plan_checkout_url', $checkout_url );
