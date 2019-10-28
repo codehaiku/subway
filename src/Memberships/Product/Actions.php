@@ -60,12 +60,44 @@ class Actions extends Controller {
 
 	}
 
+	public function edit_set_default_plan() {
+
+		$product_id = filter_input( 1, 'product-id', FILTER_SANITIZE_NUMBER_INT );
+		$plan_id    = filter_input( 1, 'plan-id', FILTER_SANITIZE_NUMBER_INT );
+
+		if ( empty( $product_id ) ) {
+			wp_die( __( 'Invalid Product ID', 'subway' ), __( 'Invalid Product ID', 'subway' ) );
+		}
+
+		if ( empty( $plan_id ) ) {
+			wp_die( __( 'Invalid Plan ID', 'subway' ), __( 'Invalid Plan ID', 'subway' ) );
+		}
+
+		$this->set_id( $product_id );
+		$product = $this->get();
+
+		if ( $product ) {
+			// Set the default plan id to requested plan id.
+			$product->set_default_plan_id( $plan_id );
+
+			$updated = $product->update();
+
+			if ( $updated ) {
+				wp_safe_redirect( wp_get_referer(), 302 );
+				exit;
+			}
+		}
+
+		return;
+	}
+
 	public function attach_hooks() {
 		$this->define_hooks();
 	}
 
 	private function define_hooks() {
 		add_action( 'admin_post_subway_product_edit', [ $this, 'edit' ] );
+		add_action( 'admin_post_subway_product_edit_set_default_plan', [ $this, 'edit_set_default_plan' ] );
 	}
 
 }
