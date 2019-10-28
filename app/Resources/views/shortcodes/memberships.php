@@ -38,6 +38,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php endforeach; ?>
         </div>
 	<?php else: ?>
-        ss12asdasd
+        <div class="subway-alert-info subway-alert">
+            <p>
+                <?php esc_html_e('There are no membership products available. Try again soon.', 'subway'); ?>
+            </p>
+        </div>
 	<?php endif; ?>
 </div>
