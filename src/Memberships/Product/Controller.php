@@ -240,6 +240,7 @@ class Controller extends Product {
 		return true;
 	}
 
+
 	public function get_pagination( $list ) {
 
 		$current_page = filter_input(
@@ -314,11 +315,10 @@ class Controller extends Product {
 
 	}
 
-
-
 	public function get_preview_image_url() {
 
-		return 'https://picsum.photos/id/' . rand( 395, 405 ) . '/700/700';
+		//return 'https://picsum.photos/id/' . rand( 395, 405 ) . '/700/350';
+		return 'http://multisite.local/wp-content/uploads/2019/10/netflix.png';
 
 	}
 }
