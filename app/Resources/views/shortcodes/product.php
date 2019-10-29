@@ -23,11 +23,25 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <div class="subway-flex-column-100">
                     <div class="box-membership-product-details">
                         <div class="box-membership-product-title">
-                            <h2 class="box-membership-product-title-h subway-mg-top-zero">
-							<span id="product-name">
-                                <?php echo esc_html( $product->get_name() ); ?>
-                            </span>
-                            </h2>
+                            <div class="subway-flex-wrap">
+                                <div class="subway-flex-column-70">
+                                    <h2 class="box-membership-product-title-h subway-mg-top-zero">
+                                        <span id="product-name">
+                                            <?php echo esc_html( $product->get_name() ); ?>
+                                        </span>
+                                    </h2>
+                                </div>
+                                <div class="subway-flex-column-30 subway-text-right">
+                                    <div id="product-plans-link">
+                                        <a href="#box-membership-plan-details-context"
+                                           title="<?php esc_attr_e( ' View Membership Plans', 'subway' ); ?>">
+                                            <small>
+												<?php esc_html_e( ' View Membership Plans', 'subway' ); ?>
+                                            </small>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div id="product-description">
 							<?php echo wp_kses_post( wpautop( $product->get_description() ) ); ?>
