@@ -46,8 +46,9 @@ $user->set_id( get_current_user_id() );
                                         value="<?php echo esc_attr( $plan->get_id() ); ?>"
                                 />
 							<?php endif; ?>
-
-                            <?php echo esc_html( $plan->get_name() ); ?>
+                            <span class="product-plan-title">
+                                <?php echo esc_html( $plan->get_name() ); ?>
+                            </span>
 
 							<?php if ( $disabled ): ?>
                                 <span class="product-plan-user-subscribed">
