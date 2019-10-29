@@ -23,7 +23,7 @@ jQuery(document).ready(function ($) {
             success: function (response) {
                 if ('success' === response.type) {
                     $('#plan-name').text( response.plan.name );
-                    $('#plan-description').text( response.plan.description );
+                    $('#plan-description').html( response.plan.description );
                     $('#plan-sku').text( response.plan.sku );
                     $('#plan-displayed-price').text( response.plan.displayed_price );
                 }
