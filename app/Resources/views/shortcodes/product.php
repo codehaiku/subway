@@ -20,16 +20,18 @@ if ( ! defined( 'ABSPATH' ) ) {
             </div>
 
             <div class="subway-flex-wrap" id="box-membership-product-details">
-                <div class="box-membership-product-details">
-                    <div class="box-membership-product-title">
-                        <h2 class="box-membership-product-title-h subway-mg-top-zero">
+                <div class="subway-flex-column-100">
+                    <div class="box-membership-product-details">
+                        <div class="box-membership-product-title">
+                            <h2 class="box-membership-product-title-h subway-mg-top-zero">
 							<span id="product-name">
                                 <?php echo esc_html( $product->get_name() ); ?>
                             </span>
-                        </h2>
-                    </div>
-                    <div id="product-description">
-						<?php echo wp_kses_post( wpautop( $product->get_description() ) ); ?>
+                            </h2>
+                        </div>
+                        <div id="product-description">
+							<?php echo wp_kses_post( wpautop( $product->get_description() ) ); ?>
+                        </div>
                     </div>
                 </div>
             </div>
