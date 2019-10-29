@@ -9,9 +9,9 @@
 	<?php $user->set_id( get_current_user_id() ); ?>
 
 	<?php if ( $user->has_plan( $plan_id ) ): ?>
-        <div class="subway-alert-danger subway-alert">
+        <div class="subway-alert-success subway-alert">
             <p>
-				<?php esc_html_e( 'You have chosen a membership plan which is the same as your current membership plan. Please select a different membership plan to switch.', 'subway' ); ?>
+				<?php esc_html_e( 'You are already subscribed into this membership plan.', 'subway' ); ?>
             </p>
         </div>
         <a class="sw-button" href="<?php echo esc_url( $plan->get_plan_url( false ) ); ?>"
