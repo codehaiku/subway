@@ -3,6 +3,7 @@
 namespace Subway\User;
 
 use Subway\FlashMessage\FlashMessage;
+use Subway\Helpers\Helpers;
 use Subway\Post\Post;
 use Subway\Options\Options;
 
@@ -13,7 +14,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * This class handles basic methods for retrieving user info.
  */
-class User {
+class User extends Plans {
+
+	public function __construct() {
+		parent::__construct( Helpers::get_db() );
+	}
+
 
 	/**
 	 * Returns the given user role.
@@ -67,16 +73,33 @@ class User {
 	 * Lists all the user's subscription.
 	 * @return array
 	 */
-	public function get_subscriptions( $user_id ) {
+	public function get_subscriptions() {
 
-		global $wpdb;
-
-		$plans = new Plans( $wpdb );
-
-		$user_plans = $plans->get_user_plans( $user_id );
+		$user_plans = $this->get_user_plans( $this->get_id() );
 
 		return $user_plans;
 
+	}
+
+	public function has_plan( $plan_id ) {
+
+		$subscriptions      = $this->get_subscriptions();
+		$subscription_plans = array();
+
+		if ( ! empty( $subscriptions ) ) {
+			foreach ( $subscriptions as $subscription ) {
+				if( $subscription ) {
+					array_push( $subscription_plans, $subscription->plan->get_id() );
+				}
+
+			}
+		}
+
+		if ( in_array( $plan_id, $subscription_plans ) ) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
