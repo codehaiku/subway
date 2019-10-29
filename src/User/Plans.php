@@ -246,13 +246,15 @@ class Plans {
 
 		$results = $this->wpdb->get_results( $stmt, OBJECT );
 
-		$r = new \stdClass();
+
 
 		$plans = [];
 
 		if ( ! empty( $results ) ) {
 
 			foreach ( $results as $result ) {
+
+				$r = new \stdClass();
 
 				$plan = new Plan();
 				$plan = $plan->get_plan( $result->plan_id );
