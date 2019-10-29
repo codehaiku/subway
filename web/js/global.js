@@ -3,7 +3,7 @@
  */
 jQuery(document).ready(function ($) {
 
-    $('.product-single-product-plan').click(function () {
+    $('.product-single-product-plan').on('change',function () {
 
         let plan_id = $(this).val();
         let ripple = '<div id="subway_preloader"><div class="subway-ripple-css" style="transform:scale(0.14);"><div></div><div></div></div></div>';
