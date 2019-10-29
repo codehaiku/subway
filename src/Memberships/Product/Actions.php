@@ -50,7 +50,7 @@ class Actions extends Controller {
 
 			// Update other attributes.
 			$product->set_name( $validated['name'] )
-			        ->set_description( $validated['description'] )
+			        ->set_description( wp_kses_post( wp_unslash( $validated['description'] ) ) )
 			        ->set_status( $validated['status'] )
 			        ->set_tax_rate( $validated['tax_rate'] )
 			        ->set_tax_displayed( $validated['tax_rate_displayed'] )
