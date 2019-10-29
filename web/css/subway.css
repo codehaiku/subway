@@ -140,7 +140,7 @@
 }
 
 .subway-alert.subway-alert-success {
-    color: #a3b745;
+    color: #46B450;
 }
 
 .subway-alert.subway-alert-warning {
@@ -709,4 +709,8 @@ table.subway-membership-lists td{
     padding: 3px 6px;
     color: #46B450;
     border-radius: 3px;
+}
+.product-plan-pricing {
+    display: block;
+    font-weight: bold;
 }
