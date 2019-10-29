@@ -684,8 +684,42 @@ class Plan {
 	}
 
 	public function get_plan_url() {
-		return '#';
+
+		$options = new Options();
+
+		$edit_url = add_query_arg( [
+			'box-membership-product-id' => $this->get_product_id(),
+			'plan-id'                   => $this->get_id()
+		], $options->get_membership_page_url() );
+
+		return $edit_url . '#box-membership-plan-details';
+
 	}
 
+	public function get_product_link() {
+
+		$cache_key = 'box_membership_product_plan_get_product_link';
+
+		$link = wp_cache_get( $cache_key );
+
+		$product = new \Subway\Memberships\Product\Controller();
+
+		if ( false === $link ) {
+
+			$product->set_id( $this->get_product_id() );
+
+			$product = $product->get();
+
+			$link = '<a href="%1$s" title="%2$s">%2$s</a>';
+
+			$link = sprintf( $link, esc_url( $product->get_url() ), esc_html( $product->get_name() ) );
+
+			wp_cache_set( $cache_key, $link, 'box-membership' );
+
+		}
+
+		return apply_filters( 'box_membership_product_plan_get_product_link', $link, $product );
+
+	}
 
 }
