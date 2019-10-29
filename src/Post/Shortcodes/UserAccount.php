@@ -28,6 +28,8 @@ class UserAccount {
 
 		$user = new User();
 
+		$user->set_id( get_current_user_id() );
+
 		$options = new Options();
 
 		$args = [
