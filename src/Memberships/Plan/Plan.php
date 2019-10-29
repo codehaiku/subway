@@ -683,14 +683,19 @@ class Plan {
 
 	}
 
-	public function get_plan_url() {
+	public function get_plan_url( $is_current_plan_selected = true ) {
 
 		$options = new Options();
 
-		$edit_url = add_query_arg( [
-			'box-membership-product-id' => $this->get_product_id(),
-			'plan-id'                   => $this->get_id()
-		], $options->get_membership_page_url() );
+		$args = [
+			'box-membership-product-id' => $this->get_product_id()
+		];
+
+		if ( $is_current_plan_selected ) {
+			$args['plan-id'] = $this->get_id();
+		}
+
+		$edit_url = add_query_arg( $args, $options->get_membership_page_url() );
 
 		return $edit_url . '#box-membership-plan-details';
 
@@ -710,11 +715,15 @@ class Plan {
 
 			$product = $product->get();
 
-			$link = '<a href="%1$s" title="%2$s">%2$s</a>';
+			if ( $product ) {
 
-			$link = sprintf( $link, esc_url( $product->get_url() ), esc_html( $product->get_name() ) );
+				$link = '<a href="%1$s" title="%2$s">%2$s</a>';
 
-			wp_cache_set( $cache_key, $link, 'box-membership' );
+				$link = sprintf( $link, esc_url( $product->get_url() ), esc_html( $product->get_name() ) );
+
+				wp_cache_set( $cache_key, $link, 'box-membership' );
+
+			}
 
 		}
 
