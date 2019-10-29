@@ -191,12 +191,13 @@ class Controller extends Product {
 		];
 
 		$format = [
-			'%s',
-			'%s',
-			'%d',
-			'%s',
-			'%f',
-			'%d'
+			'%s', // Name.
+			'%s', // Description.
+			'%d', // Default Plan Id.
+			'%s', // Status.
+			'%f', // Tax Rate.
+			'%d', // Tax Displayed.
+			'%s'  // Date updated.
 		];
 
 		$where_format = [ '%d' ];
@@ -314,12 +315,12 @@ class Controller extends Product {
 	public function get_url() {
 
 		$options = new Options();
-		$url     = esc_url_raw( add_query_arg( [
+
+		$url = esc_url_raw( add_query_arg( [
 			'box-membership-product-id' => $this->get_id()
 		], $options->get_membership_page_url() ) );
 
 		return $url;
-
 
 	}
 
