@@ -79,7 +79,8 @@
             </h3>
             <div class="subway-flex-wrap">
                 <div class="subway-flex-column-100">
-					<?php $subscriptions = $user->get_subscriptions( get_current_user_id() ); ?>
+
+					<?php $subscriptions = $user->get_subscriptions(); ?>
 
 					<?php if ( ! empty( $subscriptions ) ): ?>
 
