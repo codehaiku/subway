@@ -69,7 +69,9 @@ class Product {
 	 * @return mixed
 	 */
 	public function get_description() {
+
 		return $this->description;
+
 	}
 
 	/**
@@ -78,6 +80,7 @@ class Product {
 	 * @return Product
 	 */
 	public function set_description( $description ) {
+
 		$this->description = $description;
 
 		return $this;
@@ -87,7 +90,9 @@ class Product {
 	 * @return string
 	 */
 	public function get_status() {
+
 		return $this->status;
+
 	}
 
 	/**
@@ -96,6 +101,7 @@ class Product {
 	 * @return Product
 	 */
 	public function set_status( $status ) {
+
 		$this->status = $status;
 
 		return $this;
@@ -106,7 +112,9 @@ class Product {
 	 * @return mixed
 	 */
 	public function get_tax_rate() {
+
 		return $this->tax_rate;
+
 	}
 
 	/**
@@ -115,6 +123,7 @@ class Product {
 	 * @return Product
 	 */
 	public function set_tax_rate( $tax_rate ) {
+
 		$this->tax_rate = $tax_rate;
 
 		return $this;
@@ -124,7 +133,9 @@ class Product {
 	 * @return bool
 	 */
 	public function is_tax_displayed() {
+
 		return $this->tax_displayed;
+
 	}
 
 	/**
@@ -133,6 +144,7 @@ class Product {
 	 * @return Product
 	 */
 	public function set_tax_displayed( $is_tax_displayed ) {
+
 		$this->tax_displayed = $is_tax_displayed;
 
 		return $this;
@@ -142,7 +154,9 @@ class Product {
 	 * @return string
 	 */
 	public function get_date_created() {
+
 		return $this->date_created;
+
 	}
 
 	/**
@@ -151,6 +165,7 @@ class Product {
 	 * @return Product
 	 */
 	public function set_date_created( $date_created ) {
+
 		$this->date_created = $date_created;
 
 		return $this;
@@ -160,7 +175,9 @@ class Product {
 	 * @return string
 	 */
 	public function get_date_updated() {
+
 		return $this->date_updated;
+
 	}
 
 	/**
@@ -169,6 +186,7 @@ class Product {
 	 * @return Product
 	 */
 	public function set_date_updated( $date_updated ) {
+
 		$this->date_updated = $date_updated;
 
 		return $this;
@@ -178,7 +196,9 @@ class Product {
 	 * @return string
 	 */
 	public function get_default_plan_id() {
+
 		return $this->default_plan_id;
+
 	}
 
 	/**
@@ -187,6 +207,7 @@ class Product {
 	 * @return $this
 	 */
 	public function set_default_plan_id( $default_plan_id ) {
+
 		$this->default_plan_id = $default_plan_id;
 
 		return $this;
