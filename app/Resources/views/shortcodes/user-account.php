@@ -30,7 +30,9 @@
         </div>
 
         <div>
-            <h3>My Profile</h3>
+            <h3>
+				<?php esc_html_e( 'My Profile', 'subway' ); ?>
+            </h3>
             <div class="subway-flex-wrap">
 
                 <div class="subway-flex-column-50">
@@ -94,6 +96,11 @@
 							<?php foreach ( $subscriptions as $subscription ): ?>
                                 <tr>
                                     <td>
+
+                                        <h4 class="subway-mg-top-zero subway-mg-bot-zero">
+											<?php echo $subscription->plan->get_product_link(); ?>
+                                        </h4>
+
                                         <p>
                                             <a href="<?php echo esc_url( $subscription->plan->get_plan_url() ); ?>"
                                                title=" <?php echo esc_attr( $subscription->plan->get_name() ); ?>">
@@ -101,14 +108,15 @@
 													<?php echo esc_html( $subscription->plan->get_name() ); ?>
                                                 </strong>
                                             </a>
-                                            <br/>
-											<?php echo esc_html( $subscription->plan->get_displayed_price_without_tax() ); ?>
-                                            &mdash;
-											<?php echo esc_html( $subscription->plan->get_type() ); ?>
+
                                         </p>
                                     </td>
                                     <td>
 										<?php esc_html_e( 'Active', 'subway' ); ?>
+                                        <br/>
+	                                    <?php echo esc_html( $subscription->plan->get_displayed_price_without_tax() ); ?>
+                                        &mdash;
+	                                    <?php echo esc_html( $subscription->plan->get_type() ); ?>
                                     </td>
                                     <td>
                                         <p>
