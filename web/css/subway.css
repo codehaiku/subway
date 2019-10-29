@@ -703,3 +703,10 @@ table.subway-membership-lists td{
 .subway-text-right {
     text-align: right;
 }
+.product-plan-user-subscribed {
+    display: inline-block;
+    border: 1px solid;
+    padding: 3px 6px;
+    color: #46B450;
+    border-radius: 3px;
+}
