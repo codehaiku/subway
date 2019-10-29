@@ -121,18 +121,23 @@ class ListTable extends \WP_List_Table {
 
 				$user = get_userdata( $user_id );
 
-				$user_name = $user->display_name;
+				$user_column = esc_html__('Error: WP User was not found. User might be deleted.', 'box-membership');
 
-				$user_edit_link = esc_url( add_query_arg( 'user_id', $user_id, admin_url( 'wp-admin/user-edit.php' ) ) );
+				if ( $user ) {
 
-				$user_link = sprintf( '<a href="%s" title="%s">%s</a>', $user_edit_link, $user_name, $user_name );
+					$user_name = $user->display_name;
 
-				$user_avatar = get_avatar( $user_id, 32 );
+					$user_edit_link = esc_url( add_query_arg( 'user_id', $user_id, admin_url( 'wp-admin/user-edit.php' ) ) );
 
-				$user_column = sprintf( '<div style="float: left; margin-right: 10px;">%s</div> %s',
-					$user_avatar,
-					$user_link
-				);
+					$user_link = sprintf( '<a href="%s" title="%s">%s</a>', $user_edit_link, $user_name, $user_name );
+
+					$user_avatar = get_avatar( $user_id, 32 );
+
+					$user_column = sprintf( '<div style="float: left; margin-right: 10px;">%s</div> %s',
+						$user_avatar,
+						$user_link
+					);
+				}
 
 				return apply_filters( 'subway_orders_list_table_user', $user_column );
 
