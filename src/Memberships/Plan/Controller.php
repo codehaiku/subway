@@ -93,7 +93,7 @@ class Controller extends Plan {
 
 		$id      = filter_input( 0, 'plan_id', 519 );
 		$title   = filter_input( 0, 'title', 513 );
-		$desc    = filter_input( 0, 'description', 513 );
+		$desc    = filter_input( 0, 'description', FILTER_DEFAULT );
 		$amount  = filter_input( 0, 'amount', 513 );
 		$type    = filter_input( 0, 'type', 513 );
 		$sku     = filter_input( 0, 'sku', 513 );
@@ -129,7 +129,7 @@ class Controller extends Plan {
 				'validation' => $validator->get_errors_array(),
 				'form_data'  => [
 					'title'       => $title,
-					'description' => $desc,
+					'description' => wp_kses_post( wp_unslash( $desc ) ),
 					'sku'         => $sku,
 					'amount'      => $amount,
 					'type'        => $type
@@ -216,7 +216,7 @@ class Controller extends Plan {
 			$response['type']                    = 'success';
 			$response['plan']['id']              = $plan->get_id();
 			$response['plan']['name']            = $plan->get_name();
-			$response['plan']['description']     = $plan->get_description();
+			$response['plan']['description']     = wp_kses_post( wpautop( $plan->get_description() ) );
 			$response['plan']['sku']             = $plan->get_sku();
 			$response['plan']['displayed_price'] = $plan->get_displayed_price();
 			$response['plan']['tax_rate']        = $plan->get_tax_rate();
