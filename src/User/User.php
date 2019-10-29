@@ -84,6 +84,7 @@ class User extends Plans {
 	public function has_plan( $plan_id ) {
 
 		$subscriptions      = $this->get_subscriptions();
+
 		$subscription_plans = array();
 
 		if ( ! empty( $subscriptions ) ) {
