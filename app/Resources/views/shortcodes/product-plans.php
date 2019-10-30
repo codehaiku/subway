@@ -38,16 +38,16 @@ $user->set_id( get_current_user_id() );
 
                         <label for="<?php echo esc_attr( $id ); ?>">
 
-							<?php if ( ! $disabled ): ?>
-                                <input <?php echo esc_attr( $checked ); ?>
-                                        class="product-single-product-plan"
-                                        required id="<?php echo esc_attr( $id ); ?>"
-                                        type="radio" name="plan_id"
-                                        value="<?php echo esc_attr( $plan->get_id() ); ?>"
-                                />
-							<?php endif; ?>
                             <span class="product-plan-title">
-                                <?php echo esc_html( $plan->get_name() ); ?>
+                                <?php if ( ! $disabled ): ?>
+                                    <input <?php echo esc_attr( $checked ); ?>
+                                            class="product-single-product-plan"
+                                            required id="<?php echo esc_attr( $id ); ?>"
+                                            type="radio" name="plan_id"
+                                            value="<?php echo esc_attr( $plan->get_id() ); ?>"
+                                    />
+                                <?php endif; ?>
+	                            <?php echo esc_html( $plan->get_name() ); ?>
                             </span>
 
 							<?php if ( $disabled ): ?>
@@ -55,7 +55,6 @@ $user->set_id( get_current_user_id() );
 		                            <?php esc_html_e( 'Subscribed', 'subway' ); ?>
                                 </span>
 							<?php endif; ?>
-
 
 
                         </label>
@@ -69,6 +68,7 @@ $user->set_id( get_current_user_id() );
                 </tr>
 			<?php endforeach; ?>
         </table>
+
         <div id="product-plans-list">
             <button type="submit" class="sw-button subway-mg-top-zero aligncenter">
 				<?php esc_html_e( 'Select Membership Plan', 'subway' ); ?>
