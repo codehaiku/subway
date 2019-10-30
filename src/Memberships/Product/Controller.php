@@ -315,7 +315,7 @@ class Controller extends Product {
 
 	/**
 	 * Counts the number of plans the current membership product has.
-	 *  
+	 *
 	 * @return mixed|void
 	 */
 	public function get_plan_count() {
