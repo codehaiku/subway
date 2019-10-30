@@ -197,6 +197,17 @@ class Product {
 	 */
 	public function get_default_plan_id() {
 
+		$requested_product_id = filter_input( 1, 'box-membership-product-id', 516 );
+
+		$requested_plan_id    = filter_input( 1, 'plan-id', 516 );
+
+		// Set default plan id to requested plan if in single product and plan-id is set.
+		if ( ! empty( $requested_product_id ) && ! empty( $requested_plan_id ) ) {
+
+			return $requested_plan_id;
+
+		}
+
 		return $this->default_plan_id;
 
 	}
