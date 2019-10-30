@@ -3,9 +3,15 @@
 namespace Subway\User;
 
 use Subway\FlashMessage\FlashMessage;
+use Subway\Helpers\Helpers;
+use Subway\Options\Options;
 use Subway\Validators\GUMP;
 
-class Controller {
+class Controller extends Plans {
+
+	public function __construct() {
+		parent::__construct( Helpers::get_db() );
+	}
 
 	public function edit_profile() {
 
@@ -104,6 +110,45 @@ class Controller {
 
 	}
 
+	public function cancel_membership() {
+
+		$plan_id = filter_input( 0, 'plan_id', 519 );
+
+		$user_id = get_current_user_id();
+
+		$options = new Options();
+
+		$flash = new FlashMessage( get_current_user_id(), 'user_account_cancelled' );
+
+		if ( $this->cancel_user_plan( $user_id, $plan_id ) ) {
+
+			$flash->add(
+				[
+					'type'    => 'success',
+					'message' => __( 'You have successfully cancelled your membership.', 'subway' )
+				]
+			);
+
+			wp_safe_redirect( $options->get_accounts_page_url(), 302 );
+
+			exit;
+
+		} else {
+
+			$flash->add(
+				[
+					'type'    => 'danger',
+					'message' => __( 'An error occurred while we are cancelling your membership. Please contact administrator.', 'subway' )
+				]
+			);
+
+			wp_safe_redirect( $options->get_accounts_page_url(), 302 );
+
+			exit;
+		}
+
+	}
+
 	public function attach_hooks() {
 		$this->define_hooks();
 	}
@@ -112,5 +157,6 @@ class Controller {
 
 		add_action( 'admin_post_subway_user_edit_profile', [ $this, 'edit_profile' ] );
 		add_action( 'admin_post_subway_user_edit_email', [ $this, 'edit_email' ] );
+		add_action( 'admin_post_subway_user_account_cancel_membership', [ $this, 'cancel_membership' ] );
 	}
 }
