@@ -701,6 +701,21 @@ class Plan {
 
 	}
 
+	public function get_cancel_url() {
+
+		$options = new Options();
+
+		$args = [
+			'account-page' => 'cancel-membership',
+			'plan-id'      => $this->get_id()
+		];
+
+		$cancel_url = add_query_arg( $args, $options->get_accounts_page_url() );
+
+		return apply_filters( 'subway_memberships_plan_get_cancel_url', $cancel_url );
+
+	}
+
 	public function get_product_link() {
 
 		$cache_key = 'box_membership_product_plan_get_product_link';
