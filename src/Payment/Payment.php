@@ -298,7 +298,7 @@ class Payment {
 						'user_id'      => get_current_user_id(),
 						'product_id'   => $product_id,
 						'plan_id'      => $plan_id,
-						'status'       => 'completed',
+						'status'       => 'active',
 						'trial_status' => 'none'
 					] );
 
