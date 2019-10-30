@@ -191,7 +191,7 @@
                                                     </small>
                                                 </em>
                                             </p>
-                                        
+
 										<?php else: ?>
 
                                             <p class="subway-mg-bot-zero">July 02, 2020 @TODO</p>

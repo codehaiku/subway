@@ -71,7 +71,7 @@ $user->set_id( get_current_user_id() );
 
         <div id="product-plans-list">
             <button type="submit" class="sw-button subway-mg-top-zero aligncenter">
-				<?php esc_html_e( 'Select Membership Plan', 'subway' ); ?>
+				<?php esc_html_e( 'Checkout', 'subway' ); ?>
             </button>
         </div>
     </form>
