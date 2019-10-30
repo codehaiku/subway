@@ -242,10 +242,9 @@ class Plans {
 
 	public function get_user_plans( $user_id ) {
 
-		$stmt = $this->wpdb->prepare( "SELECT * FROM $this->table WHERE user_id = %d", $user_id );
+		$stmt = $this->wpdb->prepare( "SELECT * FROM $this->table WHERE user_id = %d ORDER BY id DESC", $user_id );
 
 		$results = $this->wpdb->get_results( $stmt, OBJECT );
-
 
 
 		$plans = [];
@@ -272,6 +271,36 @@ class Plans {
 		}
 
 		return $plans;
+
+	}
+
+	/**
+	 * Cancels the user plan by changing the user plan status to 'cancelled'.
+	 *
+	 * @param $user_id
+	 * @param $plan_id
+	 *
+	 * @return bool
+	 */
+	public function cancel_user_plan( $user_id, $plan_id ) {
+
+		$db = $this->wpdb;
+
+		$data = [ 'status' => 'cancelled' ];
+
+		$where = [ 'user_id' => $user_id, 'plan_id' => $plan_id ];
+
+		$format = [ '%s' ];
+
+		$where_format = [ '%d', '%d' ];
+
+		$cancelled = $db->update( $this->table, $data, $where, $format, $where_format );
+
+		if ( false === $cancelled ) {
+			return false;
+		}
+
+		return true;
 
 	}
 
