@@ -3,6 +3,7 @@
 namespace Subway\Memberships\Product;
 
 use Subway\Helpers\Helpers;
+use Subway\Memberships\Plan\Plan;
 use Subway\Options\Options;
 use Subway\User\Plans;
 
@@ -310,6 +311,25 @@ class Controller extends Product {
 		}
 
 		return 'inactive';
+	}
+
+	/**
+	 * Counts the number of plans the current membership product has.
+	 *  
+	 * @return mixed|void
+	 */
+	public function get_plan_count() {
+
+		$plan  = new Plan();
+
+		$table = $plan->table;
+
+		$stmt = $this->db->prepare( "SELECT COUNT(*) FROM $table WHERE product_id = %d", $this->get_id() );
+
+		$count = $this->db->get_var( $stmt );
+
+		return apply_filters( 'subway_memberships_product_get_plan_count', $count );
+
 	}
 
 	public function get_url() {
