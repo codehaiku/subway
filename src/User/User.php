@@ -83,21 +83,32 @@ class User extends Plans {
 
 	public function has_plan( $plan_id ) {
 
-		$subscriptions      = $this->get_subscriptions();
+		$subscriptions = $this->get_subscriptions();
 
 		$subscription_plans = array();
 
 		if ( ! empty( $subscriptions ) ) {
+
 			foreach ( $subscriptions as $subscription ) {
-				if( $subscription ) {
-					array_push( $subscription_plans, $subscription->plan->get_id() );
+
+				if ( $subscription ) {
+
+					if ( ! in_array( $subscription->result->status, [ 'cancelled', 'paused' ] ) ) {
+
+						array_push( $subscription_plans, $subscription->plan->get_id() );
+
+					}
+
 				}
 
 			}
+
 		}
 
 		if ( in_array( $plan_id, $subscription_plans ) ) {
+
 			return true;
+
 		}
 
 		return false;
