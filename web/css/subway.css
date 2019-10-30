@@ -109,10 +109,12 @@
 .subway-mg-top-zero {
     margin-top: 0;
 }
+
 .entry-content .subway-mg-bot-zero,
 .subway-mg-bot-zero {
     margin-bottom: 0;
 }
+
 .subway-ripple-css {
     background: 0 0;
     width: 200px;
@@ -135,6 +137,7 @@
 .subway-alert p:last-child {
     margin-bottom: 0;
 }
+
 .subway-alert.subway-alert-info {
     color: #0073aa;
 }
@@ -265,7 +268,7 @@ tr.current-user-plan > td {
 .entry-content .sw-button:visited,
 .entry-content .sw-button,
 .sw-button {
-    background-color: #0073AA;
+    background-color: #826EB4;
     border: 0;
     border-radius: 2px;
     -webkit-box-shadow: none;
@@ -290,15 +293,13 @@ tr.current-user-plan > td {
 
 
 .sw-button:hover {
-    background: linear-gradient(to bottom, #0061a7 5%, #007dc1 100%);
-    background-color: #0061a7;
+    background-color: RGB(130, 110, 180, 0.90);
 }
 
 .sw-button:active {
     position: relative;
     top: 1px;
 }
-
 
 /*Buttons End*/
 
@@ -438,6 +439,7 @@ tr.current-user-plan > td {
 .checkout-container img.gateway-img {
     margin: 0 auto;
 }
+
 .subway-checkout-place-order .subway-checkout-place-order-button {
     font-size: 1em;
 }
@@ -464,16 +466,45 @@ tr.current-user-plan > td {
     flex-grow: 1;
 }
 
-.subway-flex-wrap .subway-flex-column-10 { flex-basis:10% }
-.subway-flex-wrap .subway-flex-column-20 {flex-basis: 20% }
-.subway-flex-wrap .subway-flex-column-30 {flex-basis: 30%}
-.subway-flex-wrap .subway-flex-column-40 {flex-basis: 40%}
-.subway-flex-wrap .subway-flex-column-50 {flex-basis: 50%}
-.subway-flex-wrap .subway-flex-column-60 {flex-basis: 60%}
-.subway-flex-wrap .subway-flex-column-70 {flex-basis: 70%}
-.subway-flex-wrap .subway-flex-column-80 {flex-basis: 80%}
-.subway-flex-wrap .subway-flex-column-90 {flex-basis: 90%}
-.subway-flex-wrap .subway-flex-column-100 {flex-basis: 100%}
+.subway-flex-wrap .subway-flex-column-10 {
+    flex-basis: 10%
+}
+
+.subway-flex-wrap .subway-flex-column-20 {
+    flex-basis: 20%
+}
+
+.subway-flex-wrap .subway-flex-column-30 {
+    flex-basis: 30%
+}
+
+.subway-flex-wrap .subway-flex-column-40 {
+    flex-basis: 40%
+}
+
+.subway-flex-wrap .subway-flex-column-50 {
+    flex-basis: 50%
+}
+
+.subway-flex-wrap .subway-flex-column-60 {
+    flex-basis: 60%
+}
+
+.subway-flex-wrap .subway-flex-column-70 {
+    flex-basis: 70%
+}
+
+.subway-flex-wrap .subway-flex-column-80 {
+    flex-basis: 80%
+}
+
+.subway-flex-wrap .subway-flex-column-90 {
+    flex-basis: 90%
+}
+
+.subway-flex-wrap .subway-flex-column-100 {
+    flex-basis: 100%
+}
 
 .subway-checkout-user-info-table,
 .subway-checkout-review-order,
@@ -507,21 +538,21 @@ tr.current-user-plan > td {
 .entry-content .subway-membership-lists th {
     background: #f0f0f0;
     border-color: #ddd;
-    background: rgba(255,255,255,1);
-    background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
-    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255,255,255,1)), color-stop(47%, rgba(246,246,246,1)), color-stop(100%, rgba(237,237,237,1)));
-    background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
-    background: -o-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
-    background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
-    background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed', GradientType=0 );
+    background: rgba(255, 255, 255, 1);
+    background: -moz-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255, 255, 255, 1)), color-stop(47%, rgba(246, 246, 246, 1)), color-stop(100%, rgba(237, 237, 237, 1)));
+    background: -webkit-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+    background: -o-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+    background: -ms-linear-gradient(top, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(246, 246, 246, 1) 47%, rgba(237, 237, 237, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed', GradientType=0);
     font-size: 16px;
     color: #333;
 }
+
 .subway-checkout-user-info-table,
 .subway-checkout-review-order,
-.subway-membership-lists
-{
+.subway-membership-lists {
 }
 
 .checkout-container {
@@ -534,7 +565,7 @@ tr.current-user-plan > td {
     border-right: 1px solid #eee;
 }
 
-.checkout-container:before{
+.checkout-container:before {
     content: " ";
     background-image: linear-gradient(129deg, #98CD8D 25%, #F6F0CF 25%, #F6F0CF 50%, #98CD8D 50%, #98CD8D 75%, #F6F0CF 75%, #F6F0CF 100%);
     background-size: 51.47px 63.56px;
@@ -561,28 +592,34 @@ ul.subway-user-account-actions li {
     border-top: 5px solid #444;
 
 }
+
 .subway-user-invoice table,
 .subway-user-invoice {
     font-size: 0.87em;
     font-family: Arial, Helvetica, sans-serif;
 }
+
 .subway-user-invoice ul {
     padding: 0;
     margin: 0;
 }
+
 .subway-user-invoice ul li {
     list-style: none;
     line-height: 1.25em;
 }
+
 #subway-invoice-info-header,
 .entry-content .subway-invoice-merchant-name,
 .subway-invoice-merchant-name {
     margin: 0 0 15px 0;
 }
+
 .entry-content ul.subway-invoice-list-details,
 ul.subway-invoice-list-details {
     margin: 0;
 }
+
 #subway-invoice-info {
     text-align: right;
 }
@@ -598,6 +635,7 @@ ul.subway-invoice-list-details {
     font-weight: normal;
     margin: 20px 0 10px 0;
 }
+
 #subway-invoice-payment-status {
     border: 1px solid #98cd8d;
     margin: 0 0 0 5em;
@@ -630,6 +668,7 @@ ul.subway-invoice-list-details {
     font-size: 16px;
     padding: 10px 15px;
 }
+
 .entry-content table.subway-membership-lists,
 table.subway-membership-lists,
 .entry-content .subway-user-invoice table#subway-invoice-numbers tbody,
@@ -640,53 +679,64 @@ table.subway-membership-lists,
     border: 0 none;
     box-shadow: none;
 }
+
 .entry-content table.subway-membership-lists,
 table.subway-membership-lists {
     margin-top: 40px;
 }
-.subway-user-invoice table.subway-membership-lists th{
+
+.subway-user-invoice table.subway-membership-lists th {
     background: #555;
     color: #fff;
     border: 0;
     font-size: 1em;
     font-weight: normal;
 }
+
 .entry-content table.subway-checkout-user-info-table td,
 .entry-content table.subway-membership-lists td,
 .entry-content table.subway-checkout-review-order td,
 table.subway-checkout-review-order td,
 table.subway-checkout-user-info-table td,
-table.subway-membership-lists td{
+table.subway-membership-lists td {
     padding: 10px;
     vertical-align: top;
 }
+
 #subway-invoice-numbers,
 .subway-user-invoice table.subway-membership-lists th:last-child {
     text-align: right;
 }
+
 .subway-user-invoice table#subway-invoice-numbers tr,
 .subway-user-invoice table#subway-invoice-numbers td {
     border: 0 none;
     background: none;
 }
+
 .subway-user-invoice table#subway-invoice-numbers td,
-.subway-user-invoice table.subway-membership-lists td{
+.subway-user-invoice table.subway-membership-lists td {
     font-size: 14px;
     padding: 10px;
 }
+
 .subway-user-invoice table#subway-invoice-numbers {
     margin-top: 20px;
 }
+
 .subway-user-invoice table#subway-invoice-numbers td {
     padding: 2.5px 10px;
 }
+
 #subway-invoice-row-subtotal {
     text-align: right;
 }
+
 #subway-invoice-customer-actions {
     padding: 1em;
     text-align: center;
 }
+
 /**
  * Invoice End
  */
@@ -694,11 +744,14 @@ table.subway-membership-lists td{
  * Product Loop.
  */
 .box-membership-product-preview img,
-.subway-product-preview img{
+.subway-product-preview img {
     max-width: 100%;
     width: auto;
 }
-.subway-pd-left-20 { padding-left: 20px;}
+
+.subway-pd-left-20 {
+    padding-left: 20px;
+}
 
 /**
  * Product Single
@@ -706,6 +759,7 @@ table.subway-membership-lists td{
 #box-membership-product-details {
     margin: 2rem 0;
 }
+
 .subway-text-right {
     text-align: right;
 }
@@ -732,4 +786,8 @@ table.subway-membership-lists td{
 .product-plan-title,
 .product-plan-pricing {
     display: block;
+}
+
+.disabled.subway-membership-product-plans tr.checked > td {
+    background: rgba(70, 180, 80, 0.15);
 }
