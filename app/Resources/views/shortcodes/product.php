@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                                 </div>
                                 <div class="subway-flex-column-30 subway-text-right">
                                     <div id="product-plans-link">
-                                        <a href="#box-membership-plan-details-context"
+                                        <a class="sw-button subway-mg-top-zero" href="#box-membership-plan-details-context"
                                            title="<?php esc_attr_e( ' View Membership Plans', 'subway' ); ?>">
                                             <small>
 												<?php esc_html_e( ' View Membership Plans', 'subway' ); ?>
