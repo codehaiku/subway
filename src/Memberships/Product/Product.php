@@ -16,6 +16,7 @@ class Product {
 	protected $date_updated = '';
 	protected $plans = [];
 	protected $default_plan_id = '';
+	protected $db = null;
 
 	protected $table = '';
 
@@ -23,7 +24,9 @@ class Product {
 
 		$db = Helpers::get_db();
 
-		$this->table = $db->prefix . 'subway_memberships_products';
+		$this->db = $db;
+
+		$this->table = $this->db->prefix . 'subway_memberships_products';
 
 		return $this;
 
