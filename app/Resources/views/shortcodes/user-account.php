@@ -182,13 +182,28 @@
                                     </td>
 
                                     <td>
-                                        <p class="subway-mg-bot-zero">July 02, 2020 @TODO</p>
-                                        <p>
-                                            <a title="<?php esc_attr_e( 'Cancel Membership', 'subway' ); ?>"
-                                               href="<?php echo esc_url( $subscription->plan->get_cancel_url() ); ?>">
-												<?php esc_html_e( 'Cancel Membership', 'subway' ); ?>
-                                            </a>
-                                        </p>
+										<?php if ( 'cancelled' === $subscription->result->status ): ?>
+
+                                            <p>
+                                                <em>
+                                                    <small>
+														<?php esc_html_e( 'Not Applicable', 'subway' ); ?>
+                                                    </small>
+                                                </em>
+                                            </p>
+                                        
+										<?php else: ?>
+
+                                            <p class="subway-mg-bot-zero">July 02, 2020 @TODO</p>
+                                            <p>
+                                                <a title="<?php esc_attr_e( 'Cancel Membership', 'subway' ); ?>"
+                                                   href="<?php echo esc_url( $subscription->plan->get_cancel_url() ); ?>">
+													<?php esc_html_e( 'Cancel Membership', 'subway' ); ?>
+                                                </a>
+                                            </p>
+
+										<?php endif; ?>
+
                                     </td>
 
                                 </tr>
@@ -241,7 +256,7 @@
                                         <td><?php echo esc_html( $invoice->created ); ?></td>
                                         <td>
                                             <h4 class="subway-mg-top-zero subway-mg-bot-zero">
-		                                        <?php echo $item->get_product_link(); ?>
+												<?php echo $item->get_product_link(); ?>
                                             </h4>
                                             <a href="<?php echo esc_url( $item->get_plan_url() ); ?>"
                                                title="<?php echo esc_attr( $item->get_name() ); ?>">
