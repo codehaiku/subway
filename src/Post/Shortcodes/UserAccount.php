@@ -74,6 +74,18 @@ class UserAccount {
 
 				break;
 
+			case 'cancel-membership':
+
+				$template = 'user-account-cancel-membership';
+
+				$plan = new Plan();
+
+				$plan_id = filter_input( 1, 'plan-id', 519 );
+
+				$args['plan'] = $plan->get_plan( $plan_id );
+
+				break;
+
 			default:
 
 				$invoices = new Invoices( Helpers::get_db() );
