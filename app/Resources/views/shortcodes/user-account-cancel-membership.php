@@ -35,7 +35,9 @@ if ( ! defined( 'ABSPATH' ) ) {
             <input type="hidden" value="subway_user_account_cancel_membership" name="action" />
 
             <button class="sw-button sw-button-danger" type="submit">
+
 				<?php esc_html_e( 'Confirm Membership Cancellation', 'subway' ); ?>
+
             </button>
 
         </form>
