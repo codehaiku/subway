@@ -124,7 +124,6 @@
 													<?php echo esc_html( $subscription->plan->get_name() ); ?>
                                                 </strong>
                                             </a>
-
                                         </p>
 
                                     </td>
@@ -241,7 +240,9 @@
                                     <tr>
                                         <td><?php echo esc_html( $invoice->created ); ?></td>
                                         <td>
-
+                                            <h4 class="subway-mg-top-zero subway-mg-bot-zero">
+		                                        <?php echo $item->get_product_link(); ?>
+                                            </h4>
                                             <a href="<?php echo esc_url( $item->get_plan_url() ); ?>"
                                                title="<?php echo esc_attr( $item->get_name() ); ?>">
 												<?php echo esc_html( $item->get_name() ); ?>

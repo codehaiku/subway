@@ -121,6 +121,9 @@
                 <tbody>
                 <tr>
                     <td colspan="2">
+                        <h4 class="subway-mg-top-zero subway-mg-bot-zero">
+		                    <?php echo $plan->get_product_link(); ?>
+                        </h4>
 						<?php echo esc_html( $plan->get_name() ); ?>
                     </td>
                     <td>
