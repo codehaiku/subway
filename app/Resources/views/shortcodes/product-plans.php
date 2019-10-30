@@ -16,19 +16,22 @@ $user->set_id( get_current_user_id() );
             </tr>
             </thead>
 			<?php foreach ( $plans as $plan ): ?>
-                <tr>
+
+				<?php $checked = ''; ?>
+
+				<?php $disabled = ''; ?>
+
+				<?php if ( $plan->get_id() === $product->get_default_plan_id() ): ?>
+
+					<?php $checked = 'checked'; ?>
+
+				<?php endif; ?>
+
+                <tr class="<?php echo esc_attr($checked); ?>">
+
+
                     <td>
 						<?php $id = sprintf( 'membership-plan-%d', $plan->get_id() ); ?>
-
-						<?php $checked = ''; ?>
-
-						<?php $disabled = ''; ?>
-
-						<?php if ( $plan->get_id() === $product->get_default_plan_id() ): ?>
-
-							<?php $checked = 'checked'; ?>
-
-						<?php endif; ?>
 
 						<?php if ( $user->has_plan( $plan->get_id() ) ): ?>
 
