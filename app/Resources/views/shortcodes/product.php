@@ -29,11 +29,27 @@ if ( ! defined( 'ABSPATH' ) ) {
                                         <span id="product-name">
                                             <?php echo esc_html( $product->get_name() ); ?>
                                         </span>
+                                        <br/>
+                                        <small>
+											<?php
+											printf(
+												_n(
+													'%d Membership Plan at %s',
+													'%s Membership Plans Starting at %s',
+													$product->get_plan_count(),
+													'subway' ),
+												$product->get_plan_count(),
+												'$99.99'
+											);
+											?>
+
+                                        </small>
                                     </h2>
                                 </div>
                                 <div class="subway-flex-column-30 subway-text-right">
                                     <div id="product-plans-link">
-                                        <a class="sw-button subway-mg-top-zero" href="#box-membership-plan-details-context"
+                                        <a class="sw-button subway-mg-top-zero"
+                                           href="#box-membership-plan-details-context"
                                            title="<?php esc_attr_e( ' View Membership Plans', 'subway' ); ?>">
                                             <small>
 												<?php esc_html_e( ' View Membership Plans', 'subway' ); ?>
