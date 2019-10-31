@@ -1,16 +1,13 @@
 <table class="subway-checkout-user-info-table">
     <thead>
     <tr>
-        <th colspan="2">
+        <th>
 			<?php esc_html_e( 'Personal Information', 'subway' ); ?>
         </th>
     </tr>
     </thead>
     <tbody>
     <tr>
-        <td>
-			<?php esc_html_e( 'Name', 'subway' ); ?>
-        </td>
         <td>
             <div class="subway-flex-wrap">
                 <div class="subway-flex-column-20">
@@ -27,15 +24,14 @@
 
                 </div>
             </div>
-
-
         </td>
     </tr>
     <tr>
         <td>
-			<?php esc_html_e( 'Email Address', 'subway' ); ?>
-        </td>
-        <td>
+            <strong>
+				<?php esc_html_e( 'Email Address', 'subway' ); ?>
+            </strong>
+            <br/>
 			<?php echo esc_html( $user->user_email ); ?>
             <br/>
             <a href="<?php echo esc_url( add_query_arg( 'account-page', 'update-email-address', $options->get_accounts_page_url() ) ); ?>"
@@ -46,18 +42,19 @@
     </tr>
     <tr>
         <td>
-			<?php esc_html_e( 'Current Memberships Plan', 'subway' ); ?>
-        </td>
-        <td>
             <strong>
-                <h3 class="subway-mg-bot-zero subway-mg-top-zero">
-                    <?php echo $plan->get_product_link(); ?>
-                </h3>
-                <a title="<?php echo esc_attr( $plan->get_name() ); ?>"
-                   href="<?php echo esc_url( $plan->get_plan_url() ); ?>">
-					<?php echo esc_html( $plan->get_name() ); ?>
-                </a>
+				<?php esc_html_e( 'Current Plan', 'subway' ); ?>
             </strong>
+
+            <h3 class="subway-mg-bot-zero subway-mg-top-zero">
+				<?php echo $plan->get_product_link(); ?>
+            </h3>
+            
+            <a title="<?php echo esc_attr( $plan->get_name() ); ?>"
+               href="<?php echo esc_url( $plan->get_plan_url() ); ?>">
+				<?php echo esc_html( $plan->get_name() ); ?>
+            </a>
+
         </td>
     </tr>
     </tbody>
