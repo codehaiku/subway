@@ -45,7 +45,7 @@ class Memberships {
 			$product->set_id( $product_id );
 
 			// Get associated membership plans.
-			$plans = $plan->get_plans(['product_id' => $product_id]);
+			$plans = $plan->get_plans(['product_id' => $product_id, 'status' => 'published']);
 
 			// Options.
 			$options = new Options();
