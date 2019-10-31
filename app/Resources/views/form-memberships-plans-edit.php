@@ -129,7 +129,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <div class="subway-card" id="box-membership-submit-wrap">
 
                     <input id="update-plan" type="submit" class="button button-primary button-large"
-                           value="<?php esc_attr_e( 'Update Memberships Plan', 'subway' ); ?>"/>
+                           value="<?php esc_attr_e( 'Update Plan', 'subway' ); ?>"/>
 
                     <input name="trash-plan" id="trash-plan" type="submit" class="button button-trash button-large"
                            value="<?php esc_attr_e( 'Send to Trash', 'subway' ); ?>"/>
