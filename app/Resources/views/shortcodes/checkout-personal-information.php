@@ -49,7 +49,7 @@
             <h3 class="subway-mg-bot-zero subway-mg-top-zero">
 				<?php echo $plan->get_product_link(); ?>
             </h3>
-            
+
             <a title="<?php echo esc_attr( $plan->get_name() ); ?>"
                href="<?php echo esc_url( $plan->get_plan_url() ); ?>">
 				<?php echo esc_html( $plan->get_name() ); ?>
