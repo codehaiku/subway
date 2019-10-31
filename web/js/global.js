@@ -13,6 +13,13 @@ jQuery(document).ready(function ($) {
 
         $(this).parent().append( ripple );
 
+        // Remove .checked class in table row.
+        $('table.subway-membership-product-plans tr').removeClass('checked');
+        // Apply .checked class to current option's tr.
+        $( this ).closest('tr').addClass('checked');
+
+        let user_has_plan = false;
+
         $.ajax({
             url: subway_config.ajax_url,
             data: {
@@ -21,11 +28,20 @@ jQuery(document).ready(function ($) {
             },
             dataType: 'json',
             success: function (response) {
+
                 if ('success' === response.type) {
                     $('#plan-name').text( response.plan.name );
                     $('#plan-description').html( response.plan.description );
                     $('#plan-sku').text( response.plan.sku );
                     $('#plan-displayed-price').text( response.plan.displayed_price );
+
+                    user_has_plan = response.user.has_plan;
+
+                    if ( user_has_plan ){
+                        $('#product-plans-submit > button').attr('disabled', 'disabled');
+                    } else {
+                        $('#product-plans-submit > button').attr('disabled', false );
+                    }
                 }
             },
             error: function() {
