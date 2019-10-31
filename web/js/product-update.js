@@ -75,12 +75,14 @@ jQuery(document).ready(function ($) {
         document.execCommand("copy");
 
         /* Alert the copied text */
-        var copy_success_text = 'Checkout link successfully copied!';
+        let copy_success_text = 'Checkout link successfully copied!';
+
         $('#copy-success').remove();
         $('#input-checkout-link').after('<p id="copy-success">' + copy_success_text + '</p>');
     };
 
     $('#btn-copy-checkout-link').on('click', function () {
+        alert('test');
         copy_to_clipboard();
     });
 
