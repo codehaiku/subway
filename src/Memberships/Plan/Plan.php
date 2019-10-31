@@ -489,11 +489,15 @@ class Plan {
 	}
 
 
-	public function get_plan( $id ) {
+	public function get_plan( $id, $is_published = false ) {
 
 		global $wpdb;
 
 		$stmt = $wpdb->prepare( "SELECT * FROM $this->table WHERE id = %d", absint( $id ) );
+
+		if ( $is_published ) {
+			$stmt .= $wpdb->prepare(" AND status = %s", 'published');
+		}
 
 		$result = $wpdb->get_row( $stmt, OBJECT );
 
