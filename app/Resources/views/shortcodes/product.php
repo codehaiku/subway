@@ -32,15 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                                         <br/>
                                         <small>
 											<?php
-											printf(
-												_n(
-													'%d Membership Plan at %s',
-													'%s Membership Plans Starting at %s',
-													$product->get_plan_count(),
-													'subway' ),
-												$product->get_plan_count(),
-												'$99.99'
-											);
+											echo esc_html( $product->get_pricing_preview() );
 											?>
 
                                         </small>

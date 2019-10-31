@@ -320,15 +320,91 @@ class Controller extends Product {
 	 */
 	public function get_plan_count() {
 
-		$plan  = new Plan();
+		$plan = new Plan();
 
 		$table = $plan->table;
 
-		$stmt = $this->db->prepare( "SELECT COUNT(*) FROM $table WHERE product_id = %d", $this->get_id() );
+		$stmt = $this->db->prepare( "SELECT COUNT(id) FROM $table WHERE product_id = %d", $this->get_id() );
 
-		$count = $this->db->get_var( $stmt );
+		$count = absint( $this->db->get_var( $stmt ) );
 
 		return apply_filters( 'subway_memberships_product_get_plan_count', $count );
+
+	}
+
+	/**
+	 * Get the lowest priced plan on current product.
+	 *
+	 * @return bool|Plan
+	 */
+	public function get_lowest_priced_plan() {
+
+		$plan = new Plan();
+
+		$table = $plan->table;
+
+		$stmt = $this->db->prepare( "SELECT id, amount FROM $table WHERE product_id = %d ORDER BY amount ASC LIMIT 1", $this->get_id() );
+
+		$result = $this->db->get_row( $stmt, object );
+
+		if ( ! empty( $result ) ) {
+
+			return $plan->get_plan( $result->id );
+		}
+
+		return false;
+
+	}
+
+
+	/**
+	 * Get the highest priced plan on current product.
+	 *
+	 * @return bool|Plan
+	 */
+	public function get_highest_priced_plan() {
+
+		$plan = new Plan();
+
+		$table = $plan->table;
+
+		$stmt = $this->db->prepare( "SELECT id, amount FROM $table WHERE product_id = %d ORDER BY amount DESC LIMIT 1", $this->get_id() );
+
+		$result = $this->db->get_row( $stmt, object );
+
+		if ( ! empty( $result ) ) {
+			return $plan->get_plan( $result->id );
+		}
+
+		return false;
+
+	}
+
+	/**
+	 * Returns the pricing preview of the current product.
+	 *
+	 * @return mixed|void
+	 */
+	public function get_pricing_preview() {
+
+		if ( 0 === $this->get_plan_count() ) {
+
+			$pricing_preview = __('No membership plans available', 'Subway');
+
+		} else {
+			$pricing_preview = sprintf(
+				_n(
+					'%d Membership Plan at %s',
+					'%s Membership Plans Starting at %s',
+					$this->get_plan_count(),
+					'subway'
+				),
+				$this->get_plan_count(),
+				$this->get_lowest_priced_plan()->get_displayed_price()
+			);
+		}
+
+		return apply_filters( 'subway_memberships_product_get_pricing_preview', $pricing_preview );
 
 	}
 
