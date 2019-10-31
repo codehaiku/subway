@@ -56,6 +56,13 @@ if ( ! $items ) {
 
                     <div class="row-actions">
 
+                        <a href="<?php echo esc_url_raw( $plan->get_edit_url( $plan->get_id(), $product->get_id() ) ); ?>"
+                           class="">
+		                    <?php esc_html_e( 'Edit Plan', 'subway' ); ?>
+                        </a>
+
+                        |
+
                         <a href="<?php echo esc_url_raw( add_query_arg( [
 							'product-id' => $product->get_id(),
 							'plan-id'    => $plan->get_id(),
@@ -64,11 +71,7 @@ if ( ! $items ) {
                            class="">
 							<?php esc_html_e( 'Set as Default', 'subway' ); ?>
                         </a>
-                        |
-                        <a href="<?php echo esc_url_raw( $plan->get_edit_url( $plan->get_id(), $product->get_id() ) ); ?>"
-                           class="">
-							<?php esc_html_e( 'Edit', 'subway' ); ?>
-                        </a>
+
                     </div>
                 </td>
 
