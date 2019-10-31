@@ -25,7 +25,7 @@
     </h3>
     <p class="field-help">
 
-		<?php esc_html_e( 'Product is automatically selected on your behalf.', 'subway' ); ?>
+		<?php esc_html_e( 'Product is automatically selected.', 'subway' ); ?>
 
     </p>
 
