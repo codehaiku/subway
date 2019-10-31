@@ -14,7 +14,7 @@ class ListTable extends \WP_List_Table {
 		$columns = array(
 			'cb'            => '<input type="checkbox" />',
 			'order_created' => 'Created',
-			'name'          => 'Product',
+			'name'          => 'Membership Plan',
 			'order_id'      => 'Order ID',
 			'order_amount'  => 'Amount',
 			'order_user_id' => 'Customer',
