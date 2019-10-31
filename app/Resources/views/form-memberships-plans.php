@@ -47,10 +47,10 @@
         <hr class="wp-header-end">
 
 		<?php
-		$view->render( 'form-memberships-plans-create', [
+		$view->render( 'create', [
 			'flash_message_add' => $flash_message_add,
 			'attached_product'  => $attached_product
-		] );
+		], false,'form-memberships-plans' );
 		?>
 
     </div>
@@ -73,7 +73,6 @@
 
 			<?php if ( $product ): ?>
 
-
                 <h1 class="wp-heading-inline">
 					<?php printf( esc_html__( '%s', 'subway' ), $product->get_name() ); ?>
                     <small>
@@ -83,7 +82,6 @@
                         </a>
                     </small>
                 </h1>
-
 
 			<?php endif; ?>
 
