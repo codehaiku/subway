@@ -444,6 +444,7 @@ tr.current-user-plan > td {
 
 .checkout-container img.gateway-img {
     margin: 0 auto;
+    max-width: 100%;
 }
 
 .subway-checkout-place-order .subway-checkout-place-order-button {
@@ -556,9 +557,10 @@ tr.current-user-plan > td {
     color: #333;
 }
 
-.subway-checkout-user-info-table,
-.subway-checkout-review-order,
-.subway-membership-lists {
+.entry-content table.subway-checkout-user-info-table,
+.entry-content table.subway-checkout-review-order,
+.entry-content table.subway-membership-lists {
+    margin: 0;
 }
 
 .checkout-container {
@@ -813,4 +815,12 @@ tr.checked > td label.plan-pricing-details {
 
 .entry-content table.subway-membership-product-plans tr td {
     padding: 0;
+}
+
+#subway-checkout-order-review {
+    margin-bottom: 25px;
+}
+
+#subway-checkout-user-info {
+    padding-right: 25px;
 }
