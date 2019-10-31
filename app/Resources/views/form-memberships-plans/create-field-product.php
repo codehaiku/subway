@@ -15,21 +15,20 @@
 <?php endif; ?>
 
 <?php // Show different view for each different instance. ?>
+
 <?php if ( ! empty( $preselected_product ) ): ?>
+
     <h3 class="field-title">
-        <label for="product">
-
+        <label for="input-product">
 			<?php esc_html_e( 'Membership Product:', 'subway' ); ?>
-
         </label>
     </h3>
+
     <p class="field-help">
-
 		<?php esc_html_e( 'Product is automatically selected.', 'subway' ); ?>
-
     </p>
 
-    <select readonly="readonly" disabled>
+    <select readonly="readonly" name="input-product" id="input-product" disabled>
         <option value="<?php echo esc_attr( $preselected_product->get_id() ); ?>">
 			<?php echo esc_html( $preselected_product->get_name() ); ?>
         </option>
