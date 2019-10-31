@@ -49,7 +49,6 @@ class Orders {
 				$this->table . '.gateway as order_gateway',
 				$product_table . '.id as product_id',
 				$product_table . '.name'
-
 			]
 		);
 
