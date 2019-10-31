@@ -32,9 +32,8 @@ if ( ! defined( 'ABSPATH' ) ) {
                                         <br/>
                                         <small>
 											<?php
-											echo esc_html( $product->get_pricing_preview() );
+											    echo esc_html( $product->get_pricing_preview() );
 											?>
-
                                         </small>
                                     </h2>
                                 </div>
