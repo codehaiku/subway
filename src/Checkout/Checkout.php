@@ -2,6 +2,7 @@
 
 namespace Subway\Checkout;
 
+use Subway\Memberships\Plan\Plan;
 use Subway\Payment\Payment;
 
 
@@ -19,13 +20,25 @@ class Checkout {
 
 		$action = filter_input( INPUT_POST, 'sw-action', 516 );
 
-		$product_id = filter_input( INPUT_POST, 'sw-product-id', 519 );
+		$plan_id = filter_input( INPUT_POST, 'sw-plan-id', 519 );
+
+		$plan = new Plan();
+
+		$plan = $plan->get_plan( $plan_id );
+
+		if ( ! $plan ) {
+			return $this;
+		}
+
+		if ( 'published' !== $plan->get_status() ) {
+			return $this;
+		}
 
 		if ( 'checkout' === $action ) {
 
 			$payment = new Payment( $this->wpdb );
 
-			$payment->pay( $product_id );
+			$payment->pay( $plan_id );
 
 		}
 
