@@ -286,6 +286,12 @@ tr.current-user-plan > td {
     margin: 1em 0;
 }
 
+.sw-button[disabled]:hover,
+.sw-button[disabled] {
+    background: #A0A5AA;
+    opacity: 0.5;
+    cursor: not-allowed;
+}
 
 .sw-button.sw-button-danger {
     background-color: #DC3232;
@@ -787,7 +793,24 @@ table.subway-membership-lists td {
 .product-plan-pricing {
     display: block;
 }
+.product-plan-pricing {
+    font-weight: normal;
+}
 
 .disabled.subway-membership-product-plans tr.checked > td {
     background: rgba(70, 180, 80, 0.15);
+}
+.width-100 {
+    width: 100%;
+}
+tr > td label.plan-pricing-details {
+    padding: 15px;
+    margin: 0;
+}
+tr.checked > td label.plan-pricing-details {
+    background: rgba(70, 180, 80, 0.15);
+}
+
+.entry-content table.subway-membership-product-plans tr td {
+    padding: 0;
 }
