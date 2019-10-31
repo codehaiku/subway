@@ -109,11 +109,10 @@
 
                 </div>
 
-
             </div>
 
         </div><!--FlexWrap-->
-
     </form>
-
 </div><!--.wrap-->
+
+<?php wp_enqueue_script('subway-product-update-js'); ?>
