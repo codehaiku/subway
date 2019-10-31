@@ -23,6 +23,7 @@ class Memberships {
 		add_action( 'wp_enqueue_scripts', array( $this, 'stylesheet' ) );
 
 		$plan     = new Plan();
+
 		$currency = new Currency();
 
 		$template = 'memberships';
@@ -40,6 +41,7 @@ class Memberships {
 		if ( ! empty( $product_id ) ) {
 
 			$template = 'product';
+
 			// Product Controller.
 			$product = new Controller();
 			$product->set_id( $product_id );
