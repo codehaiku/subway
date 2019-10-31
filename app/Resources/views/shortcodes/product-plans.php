@@ -27,8 +27,7 @@ $user->set_id( get_current_user_id() );
 
 				<?php endif; ?>
 
-                <tr class="<?php echo esc_attr($checked); ?>">
-
+                <tr class="<?php echo esc_attr( $checked ); ?>">
 
                     <td>
 						<?php $id = sprintf( 'membership-plan-%d', $plan->get_id() ); ?>
@@ -39,7 +38,7 @@ $user->set_id( get_current_user_id() );
 
 						<?php endif; ?>
 
-                        <label for="<?php echo esc_attr( $id ); ?>">
+                        <label for="<?php echo esc_attr( $id ); ?>" class="plan-pricing-details">
 
                             <span class="product-plan-title">
                                 <?php if ( ! $disabled ): ?>
@@ -59,12 +58,11 @@ $user->set_id( get_current_user_id() );
                                 </span>
 							<?php endif; ?>
 
+                            <span class="product-plan-pricing">
+							    <?php echo esc_html( $plan->get_displayed_price() ); ?>  / <?php echo esc_html( $plan->get_type() ); ?>
+                            </span>
 
                         </label>
-
-                        <span class="product-plan-pricing">
-							<?php echo esc_html( $plan->get_displayed_price() ); ?>  / <?php echo esc_html( $plan->get_type() ); ?>
-                        </span>
 
 
                     </td>
@@ -72,10 +70,17 @@ $user->set_id( get_current_user_id() );
 			<?php endforeach; ?>
         </table>
 
-        <div id="product-plans-list">
-            <button type="submit" class="sw-button subway-mg-top-zero aligncenter">
-				<?php esc_html_e( 'Checkout', 'subway' ); ?>
-            </button>
+        <div id="product-plans-submit">
+			<?php if ( $user->has_plan( filter_input( 1, 'plan-id', 519 ) ) ): ?>
+                <button disabled type="submit" class="sw-button subway-mg-top-zero width-100">
+					<?php esc_html_e( 'Proceed to checkout &rarr;', 'subway' ); ?>
+                </button>
+			<?php else: ?>
+                <button type="submit" class="sw-button subway-mg-top-zero width-100">
+					<?php esc_html_e( 'Proceed to checkout &rarr;', 'subway' ); ?>
+                </button>
+			<?php endif; ?>
         </div>
+
     </form>
 <?php endif; ?>
