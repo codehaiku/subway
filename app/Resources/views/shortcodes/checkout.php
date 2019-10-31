@@ -1,10 +1,10 @@
 <?php if ( $plan ): ?>
 
-	<?php $plan_id = $plan->get_id(); ?>
+	<?php $user = new \Subway\User\User() ?>
+
+    <?php $plan_id = $plan->get_id(); ?>
 
 	<?php $wp_user = wp_get_current_user(); ?>
-
-	<?php $user = new \Subway\User\User() ?>
 
 	<?php $user->set_id( get_current_user_id() ); ?>
 
@@ -28,7 +28,7 @@
 
                     <input type="hidden" name="sw-action" value="checkout"/>
 
-                    <input type="hidden" name="sw-product-id" value="<?php echo absint( $plan_id ); ?>"/>
+                    <input type="hidden" name="sw-plan-id" value="<?php echo absint( $plan_id ); ?>"/>
 
                     <div class="subway-checkout-user-info">
 
@@ -98,13 +98,13 @@
 
 
 <?php else: ?>
-    <div class="subway-alert subway-alert-info">
+    <div class="subway-alert subway-alert-warning">
         <p>
-			<?php esc_html_e( 'Error: Plan not found', 'subway' ); ?>
+			<?php esc_html_e( 'There is an error with the checkout process. Requested Membership Plan is not found.', 'subway' ); ?>
             <br/>
             <a class="sw-button" href="<?php echo esc_url( $options->get_membership_page_url() ); ?>"
-               title="<?php esc_attr_e( 'Select Membership', 'subway' ); ?>">
-				<?php esc_html_e( 'Select Membership Plan', 'subway' ); ?>
+               title="<?php esc_attr_e( 'Browse Membership Products', 'subway' ); ?>">
+				<?php esc_html_e( '&larr; Browse Membership Products', 'subway' ); ?>
             </a>
         </p>
     </div>
