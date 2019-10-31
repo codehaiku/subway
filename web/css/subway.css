@@ -303,8 +303,7 @@ tr.current-user-plan > td {
 }
 
 .sw-button:active {
-    position: relative;
-    top: 1px;
+    box-shadow: inset 0px 0px 10px 0px #543f82;
 }
 
 /*Buttons End*/
