@@ -4,6 +4,7 @@ namespace Subway\Memberships\Plan;
 
 use Subway\FlashMessage\FlashMessage;
 use Subway\Helpers\Helpers;
+use Subway\User\User;
 use Subway\Validators\GUMP;
 
 class Controller extends Plan {
@@ -221,6 +222,14 @@ class Controller extends Plan {
 			$response['plan']['displayed_price'] = $plan->get_displayed_price();
 			$response['plan']['tax_rate']        = $plan->get_tax_rate();
 			$response['plan']['type']            = $plan->get_type();
+			$response['user']['has_plan']        = false;
+
+			$user = new User();
+			$user->set_id( get_current_user_id() );
+
+			if ( $user->has_plan( $plan->get_id() ) ) {
+				$response['user']['has_plan'] = true;
+			}
 		}
 
 		echo json_encode( $response );
