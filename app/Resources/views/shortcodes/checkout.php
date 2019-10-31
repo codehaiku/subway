@@ -100,7 +100,7 @@
 <?php else: ?>
     <div class="subway-alert subway-alert-warning">
         <p>
-			<?php esc_html_e( 'There is an error with the checkout process. Requested Membership Plan is not found.', 'subway' ); ?>
+			<?php esc_html_e( 'There is an error with the checkout process. Requested Membership Plan is either not found or not yet published.', 'subway' ); ?>
             <br/>
             <a class="sw-button" href="<?php echo esc_url( $options->get_membership_page_url() ); ?>"
                title="<?php esc_attr_e( 'Browse Membership Products', 'subway' ); ?>">
