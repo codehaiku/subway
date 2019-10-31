@@ -27,10 +27,12 @@ class Checkout {
 
 			$plan->set_display_tax( true );
 
-			$plan = $plan->get_plan( $plan_id );
+			$plan = $plan->get_plan( $plan_id, true );
 
 		} else {
+
 			$plan = [];
+
 		}
 
 		$currency = new Currency();
