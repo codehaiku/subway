@@ -41,16 +41,14 @@
         <p class="field-help">
 			<?php esc_html_e( 'Use the url below to share this membership product', 'subway' ); ?>
         </p>
-        <input readonly="" value="http://multisite.local/checkout?product_id=2"
-               id="input-checkout-link" type="url">
+        <input readonly value="<?php echo esc_url( $product->get_url() ); ?>" id="input-checkout-link" type="url">
         <p>
-            <button id="btn-copy-checkout-link" type="button"
-                    class="button button-small">
-                Copy Link
+            <button id="btn-copy-checkout-link" type="button" class="button button-small">
+                <?php esc_html_e('Copy Link', 'subway'); ?>
             </button>
-            <a href="http://multisite.local/checkout?product_id=2" target="_blank"
-               class="button button-secondary button-small">
-                Visit Link </a>
+            <a href="<?php echo esc_url( $product->get_url() ); ?>" target="_blank" class="button button-secondary button-small">
+	            <?php esc_html_e('Visit Link', 'subway'); ?>
+            </a>
         </p>
     </div>
     <!--.Product Link -->
