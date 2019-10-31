@@ -49,7 +49,6 @@
 
             <div class="subway-flex-column-70">
 
-
                 <div>
                     <!--Hidden Fields-->
                     <input type="hidden" name="action" value="subway_product_edit"/>
@@ -96,18 +95,19 @@
 
 					<?php $this->render( 'status', $extracted_vars, false, 'form-memberships-products' ); ?>
 
-	                <?php if ( 'active' === $product->get_is_active_tab( 'settings' ) ): ?>
+					<?php if ( 'active' === $product->get_is_active_tab( 'settings' ) ): ?>
                         <div class="subway-card">
                             <div style="display: block; text-align: center;">
                                 <input id="publish-product" type="submit" class="button button-primary button-large"
                                        value="<?php esc_attr_e( 'Update Product', 'subway' ); ?>">
-                                <a href="#" class="button button-danger button-large">Move to Trash</a>
+                                <a href="#" class="button button-danger button-large">
+									<?php esc_html_e( 'Move to Trash', 'subway' ); ?>
+                                </a>
                             </div>
                         </div>
-	                <?php endif; ?>
+					<?php endif; ?>
 
                 </div>
-
 
 
             </div>
