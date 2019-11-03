@@ -74,7 +74,7 @@
         <label for="input-tax-rate-display">
             <input <?php checked( true, $product->is_tax_displayed(), true ); ?>
                     type="checkbox" name="tax_rate_displayed" id="input-tax-rate-display"/>
-			<?php esc_html_e( 'Check to include tax in membership plans pricing.', 'subway' ); ?>
+			<?php esc_html_e( 'Check to include the tax in the listing amount.', 'subway' ); ?>
         </label>
     </p>
 </div>
