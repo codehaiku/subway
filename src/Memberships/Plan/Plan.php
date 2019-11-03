@@ -118,7 +118,7 @@ class Plan {
 		} else {
 
 			// Use Options instead.
-			$this->set_tax_rate( get_option('subway_tax_rate', 0) );
+			$this->set_tax_rate( get_option( 'subway_tax_rate', 0 ) );
 
 		}
 
@@ -183,19 +183,30 @@ class Plan {
 		return $this;
 	}
 
-	/**
-	 * @return string
-	 */
 	public function get_product() {
 
 		$product = new \Subway\Memberships\Product\Controller();
+
 		$product->set_id( 1 );
 
-		$this->product = $product->get();
+		// Cache the product.
+		$key   = 'subway_membership_plan_get_product_key';
+		$group = 'subway_membership_plan_get_product_group';
+
+		$cache = wp_cache_get( $key, $group );
+
+		if ( $cache ) {
+			// Return the cache when found.
+			return $cache;
+
+		} else {
+			// Otherwise, get the product.
+			$this->product = $product->get();
+			wp_cache_set( $key, $this->product, $group );
+		}
 
 		return $this->product;
 	}
-
 
 
 	/**
@@ -490,7 +501,6 @@ class Plan {
 		$results = $wpdb->get_results( $stmt, OBJECT );
 
 		$products = [];
-
 
 
 		foreach ( $results as $result ) {
