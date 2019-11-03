@@ -16,6 +16,7 @@ class Plan {
 	protected $id = '';
 	protected $name = '';
 	protected $product_id = '';
+	protected $product = '';
 	protected $sku = '';
 	protected $status = '';
 	protected $description = '';
@@ -34,8 +35,6 @@ class Plan {
 
 		$this->table = $wpdb->prefix . 'subway_memberships_products_plans';
 
-		$this->tax_rate = get_option( 'subway_tax_rate', 0.00 );
-
 	}
 
 	/**
@@ -51,9 +50,11 @@ class Plan {
 	 * @return Plan
 	 */
 	public function set_display_tax( $display_tax ) {
+
 		$this->display_tax = $display_tax;
 
 		return $this;
+
 	}
 
 
@@ -61,7 +62,9 @@ class Plan {
 	 * @return float
 	 */
 	public function get_real_amount() {
+
 		return $this->real_amount;
+
 	}
 
 	/**
@@ -70,22 +73,55 @@ class Plan {
 	 * @return Plan
 	 */
 	public function set_real_amount( $real_amount ) {
+
 		$this->real_amount = $real_amount;
 
 		return $this;
+
 	}
 
 	/**
 	 * @return string
 	 */
 	public function get_id() {
+
 		return $this->id;
+
+	}
+
+	/**
+	 * @param int|string $tax_rate
+	 */
+	public function set_tax_rate( $tax_rate ) {
+
+		$this->tax_rate = $tax_rate;
+
 	}
 
 	/**
 	 * @return string
 	 */
 	public function get_tax_rate() {
+
+		$product = new \Subway\Memberships\Product\Controller();
+
+		$product->set_id( $this->get_product_id() );
+
+		$product = $product->get();
+
+		$this->set_tax_rate( 0 );
+
+		if ( $product ) {
+
+			$this->set_tax_rate( $product->get_tax_rate() );
+
+		} else {
+
+			// Use Options instead.
+			$this->set_tax_rate( get_option('subway_tax_rate', 0) );
+
+		}
+
 		return $this->tax_rate;
 	}
 
@@ -96,9 +132,11 @@ class Plan {
 	 * @return Plan
 	 */
 	public function set_id( $id ) {
+
 		$this->id = $id;
 
 		return $this;
+
 	}
 
 
@@ -106,7 +144,9 @@ class Plan {
 	 * @return string
 	 */
 	public function get_name() {
+
 		return $this->name;
+
 	}
 
 	/**
@@ -115,16 +155,20 @@ class Plan {
 	 * @return Plan
 	 */
 	public function set_name( $name ) {
+
 		$this->name = $name;
 
 		return $this;
+
 	}
 
 	/**
 	 * @return string
 	 */
 	public function get_product_id() {
+
 		return $this->product_id;
+
 	}
 
 	/**
@@ -133,6 +177,7 @@ class Plan {
 	 * @return Plan
 	 */
 	public function set_product_id( $product_id ) {
+
 		$this->product_id = $product_id;
 
 		return $this;
@@ -141,8 +186,25 @@ class Plan {
 	/**
 	 * @return string
 	 */
+	public function get_product() {
+
+		$product = new \Subway\Memberships\Product\Controller();
+		$product->set_id( 1 );
+
+		$this->product = $product->get();
+
+		return $this->product;
+	}
+
+
+
+	/**
+	 * @return string
+	 */
 	public function get_sku() {
+
 		return $this->sku;
+
 	}
 
 	/**
@@ -151,16 +213,20 @@ class Plan {
 	 * @return Plan
 	 */
 	public function set_sku( $sku ) {
+
 		$this->sku = $sku;
 
 		return $this;
+
 	}
 
 	/**
 	 * @return string
 	 */
 	public function get_status() {
+
 		return $this->status;
+
 	}
 
 	/**
@@ -169,16 +235,20 @@ class Plan {
 	 * @return Plan
 	 */
 	public function set_status( $status ) {
+
 		$this->status = $status;
 
 		return $this;
+
 	}
 
 	/**
 	 * @return string
 	 */
 	public function get_description() {
+
 		return $this->description;
+
 	}
 
 	/**
@@ -187,9 +257,11 @@ class Plan {
 	 * @return Plan
 	 */
 	public function set_description( $description ) {
+
 		$this->description = $description;
 
 		return $this;
+
 	}
 
 	/**
@@ -236,7 +308,9 @@ class Plan {
 		$formatted_amount = $currency->format( $displayed_price, get_option( 'subway_currency' ) );
 
 		if ( 'free' === $this->get_type() ) {
+
 			$formatted_amount = esc_html__( 'Free', 'subway' );
+
 		}
 
 		return apply_filters( 'subway_product_get_displayed_price', $formatted_amount );
@@ -417,16 +491,11 @@ class Plan {
 
 		$products = [];
 
-		$tax_displayed = absint( get_option( 'subway_display_tax', 1 ) );
+
 
 		foreach ( $results as $result ) {
 
 			$p = new Plan();
-
-			// Disable tax when administrator disable from option.
-			if ( 0 === $tax_displayed ) {
-				$p->set_display_tax( false );
-			}
 
 			$p->set_id( $result->id )
 			  ->set_name( $result->name )
@@ -438,6 +507,13 @@ class Plan {
 			  ->set_type( $result->type )
 			  ->set_date_created( $result->date_created )
 			  ->set_date_updated( $result->date_updated );
+
+			$tax_displayed = $this->get_product()->is_tax_displayed();
+
+			// Disable tax when administrator disable from product option.
+			if ( ! $tax_displayed ) {
+				$p->set_display_tax( false );
+			}
 
 			$products[] = $p;
 
@@ -496,7 +572,7 @@ class Plan {
 		$stmt = $wpdb->prepare( "SELECT * FROM $this->table WHERE id = %d", absint( $id ) );
 
 		if ( $is_published ) {
-			$stmt .= $wpdb->prepare(" AND status = %s", 'published');
+			$stmt .= $wpdb->prepare( " AND status = %s", 'published' );
 		}
 
 		$result = $wpdb->get_row( $stmt, OBJECT );
