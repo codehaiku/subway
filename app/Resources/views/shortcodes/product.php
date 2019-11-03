@@ -78,8 +78,8 @@ if ( ! defined( 'ABSPATH' ) ) {
                                 </span>
                                     /
                                     <span id="plan-type">
-								    <?php echo esc_html( $default_plan->get_type() ); ?>
-                                </span>
+								        <?php echo esc_html( $default_plan->get_type() ); ?>
+                                    </span>
                                     <br/>
                                     <small>
 										<?php esc_html_e( 'SKU:', 'subway' ); ?>

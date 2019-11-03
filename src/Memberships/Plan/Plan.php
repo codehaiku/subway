@@ -186,8 +186,7 @@ class Plan {
 	public function get_product() {
 
 		$product = new \Subway\Memberships\Product\Controller();
-
-		$product->set_id( 1 );
+		$product->set_id( $this->get_product_id() );
 
 		// Cache the product.
 		$key   = 'subway_membership_plan_get_product_key';
@@ -518,24 +517,24 @@ class Plan {
 			  ->set_date_created( $result->date_created )
 			  ->set_date_updated( $result->date_updated );
 
-			$tax_displayed = $this->get_product()->is_tax_displayed();
+			$tax_displayed = $p->get_product()->is_tax_displayed();
 
 			// Disable tax when administrator disable from product option.
 			if ( ! $tax_displayed ) {
 				$p->set_display_tax( false );
 			}
 
-			$products[] = $p;
+			$plans[] = $p;
 
 		}
 
-		if ( empty( $products ) ) {
+		if ( empty( $plans ) ) {
 
 			return false;
 
 		}
 
-		return $products;
+		return $plans;
 
 	}
 
@@ -589,26 +588,31 @@ class Plan {
 
 		if ( ! empty ( $result ) ) {
 
-			$product = new Plan();
+			$plan = new Plan();
 
-			$product->set_id( $result->id );
-			$product->set_name( $result->name );
-			$product->set_product_id( $result->product_id );
-			$product->set_amount( $result->amount );
-			$product->set_sku( $result->sku );
-			$product->set_description( $result->description );
-			$product->set_status( $result->status );
-			$product->set_type( $result->type );
-			$product->set_date_created( $result->date_created );
-			$product->set_date_updated( $result->date_updated );
+			$plan->set_id( $result->id );
+			$plan->set_name( $result->name );
+			$plan->set_product_id( $result->product_id );
+			$plan->set_amount( $result->amount );
+			$plan->set_display_tax( false );
+			$plan->set_sku( $result->sku );
+			$plan->set_description( $result->description );
+			$plan->set_status( $result->status );
+			$plan->set_type( $result->type );
+			$plan->set_date_created( $result->date_created );
+			$plan->set_date_updated( $result->date_updated );
+
+			if ( $plan->get_product()->is_tax_displayed() ){
+				$plan->set_display_tax( true );
+			}
 
 		} else {
 
-			$product = false;
+			$plan = false;
 
 		}
 
-		return $product;
+		return $plan;
 
 	}
 
