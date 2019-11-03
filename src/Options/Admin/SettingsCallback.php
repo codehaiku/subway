@@ -82,16 +82,6 @@ class SettingsCallback {
 
 	}
 
-	public function tax_rate() {
-		$tax_rate = get_option( 'subway_tax_rate', 0.00 );
-		$this->view->render( 'tax-rate', [ 'tax_rate' => $tax_rate ], false, 'settings' );
-	}
-
-	public function display_tax() {
-		$subway_display_tax = get_option( 'subway_display_tax', '1' );
-		$this->view->render( 'tax-display', [ 'subway_display_tax' => $subway_display_tax ], false, 'settings' );
-	}
-
 	public function login_page() {
 		$this->view->render( 'login-page', [], false, 'settings' );
 	}
