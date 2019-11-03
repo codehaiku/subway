@@ -1,5 +1,22 @@
 <?php if ( 'free' !== $plan->get_type() ): ?>
     <!-- Gateway Badge-->
+    <div class="subway-form-row subway-mg-top-zero">
+
+        <div class="subway-flex-wrap">
+            <div class="subway-flex-column-50">
+                <label class="subway-payment-gateway-option" for="payment-gateway">
+                    <input type="radio" id="payment-gateway" name="payment-gateway" value="paypal" checked />
+		            <?php esc_html_e('PayPal', 'subway'); ?>
+                </label>
+            </div>
+            <div class="subway-flex-column-50">
+                <label class="subway-payment-gateway-option" for="payment-gateway-card">
+                    <input type="radio" id="payment-gateway-card" name="payment-gateway" disabled value="paypal" />
+		            <?php esc_html_e('Credit Card', 'subway'); ?>
+                </label>
+            </div>
+        </div>
+    </div>
     <div class="checkout-container">
         <div class="subway-checkout-gateway-banner">
             <p><br/>
@@ -26,6 +43,7 @@
             </p>
         </div>
 	<?php else: ?>
+
         <!-- Gateway Badge-->
         <div class="checkout-container">
             <div class="subway-checkout-place-order">
