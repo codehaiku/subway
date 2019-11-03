@@ -14,14 +14,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	return;
 }
 
-
+$redirect_type = get_option( 'subway_redirect_type', 'default' );
 ?>
 <p class="subway-redirect-type-choices">
 
     <!-- Page -->
     <label for="subway_use_page">
 
-        <input <?php checked( 'page', get_option( 'subway_redirect_type' ), true ); ?>
+        <input <?php checked( 'page', $redirect_type, true ); ?>
                 value="page"
                 name="subway_redirect_type"
                 id="subway_use_page" type="radio"
@@ -35,7 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
     <label for="subway_use_custom_url">
 
-        <input <?php checked( 'custom_url', get_option( 'subway_redirect_type' ), true ); ?>
+        <input <?php checked( 'custom_url', $redirect_type, true ); ?>
                 value="custom_url"
                 name="subway_redirect_type"
                 id="subway_use_custom_url"
@@ -49,7 +49,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
     <label for="subway_use_default">
 
-        <input <?php checked( 'default', get_option( 'subway_redirect_type' ), true ); ?>
+        <input <?php checked( 'default', $redirect_type, true ); ?>
                 value="default"
                 name="subway_redirect_type"
                 id="subway_use_default"
