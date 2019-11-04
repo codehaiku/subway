@@ -11,7 +11,9 @@
 	<?php if ( $user->has_plan( $plan_id ) ): ?>
 
         <div class="subway-alert-success subway-alert">
-            <p><?php esc_html_e( 'You are already subscribed into this membership plan.', 'subway' ); ?></p>
+            <p>
+                <?php esc_html_e( 'You are already subscribed into this membership plan.', 'subway' ); ?>
+            </p>
         </div>
 
         <a class="sw-button" href="<?php echo esc_url( $plan->get_plan_url( false ) ); ?>"
@@ -20,6 +22,7 @@
         </a>
 
 	<?php else: ?>
+
         <form class="sw-form" action="" method="POST">
 
             <div id="subway-checkout-wrap">
