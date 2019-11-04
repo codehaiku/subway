@@ -761,6 +761,18 @@ class Plan {
 
 	}
 
+	public function get_restore_url( $plan_id ) {
+
+		$args = [
+			'action'   => 'subway_plan_restore_action',
+			'plan-id'  => $plan_id,
+			'_wpnonce' => wp_create_nonce( sprintf( 'subway_plan_restore_action_%d', $plan_id ) )
+		];
+
+		return add_query_arg( $args, admin_url( 'admin-post.php' ) );
+
+	}
+
 	/**
 	 * @param $plan_id
 	 * @param $product_id
