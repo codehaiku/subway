@@ -49,98 +49,112 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <?php endif; ?>
 
-<div id="subway-edit-plan-form">
+<?php if ( 'trashed' !== $plan->get_status() ): ?>
 
-    <form autocomplete="off" method="POST" action="<?php echo admin_url( 'admin-post.php' ); ?>">
+	<?php do_action( 'subway_before_plan_edit' ); ?>
 
-        <div id="subway-ul-section-tabs">
-			<?php $this->render( 'tabs', [ 'section' => $section ], false, 'form-memberships-plans' ); ?>
-        </div>
+    <div id="subway-edit-plan-form">
 
-        <div class="subway-flex-wrap">
+        <form autocomplete="off" method="POST" action="<?php echo admin_url( 'admin-post.php' ); ?>">
 
-            <div class="subway-flex-column subway-flex-column-70">
-
-                <!--hidden fields-->
-				<?php wp_nonce_field( 'subway_plan_edit_action', 'subway_plan_edit_action' ); ?>
-
-                <input type="hidden" name="action" value="subway_plan_edit_action"/>
-
-                <input type="hidden" name="page" value="subway-membership"/>
-
-                <input type="hidden" name="new" value="yes"/>
-
-                <input type="hidden" id="input-id" name="plan_id"
-                       value="<?php echo esc_attr( $plan->get_id() ); ?>"/>
-
-
-                <input type="hidden" name="active-section"
-                       value="<?php echo ! empty( $section ) ? $section : 'plan-information' ?>"/>
-
-                <!--Section Email-->
-                <div class="subway-card subway-plan-section <?php echo $section == 'plan-email' ? 'active' : ''; ?>"
-                     id="plan-email">
-					<?php $this->render( 'email', [], false, 'form-memberships-plans' ); ?>
-                </div>
-                <!--/.Section Email-->
-
-                <!--Section Pricing-->
-                <div class="subway-card subway-plan-section <?php echo $section == 'plan-pricing' ? 'active' : ''; ?>"
-                     id="plan-pricing">
-					<?php
-					$this->render( 'pricing',
-						[
-							'plan'   => $plan,
-							'errors' => $errors
-						], false, 'form-memberships-plans' );
-					?>
-                </div>
-                <!--/.Section Email-->
-
-                <!--Section Plan Information-->
-                <div class="subway-card subway-plan-section <?php echo $section == 'plan-information' ? 'active' : ''; ?>"
-                     id="plan-information">
-
-					<?php
-					$this->render( 'information',
-						[
-							'plan'      => $plan,
-							'plan_id'   => $id,
-							'form_data' => $form_data,
-							'errors'    => $errors
-						],
-						false, 'form-memberships-plans' );
-					?>
-                </div>
+            <div id="subway-ul-section-tabs">
+				<?php $this->render( 'tabs', [ 'section' => $section ], false, 'form-memberships-plans' ); ?>
             </div>
-            <!--/.Section Plan Information-->
 
-            <!--Plan Status-->
-            <div class="subway-flex-column subway-flex-column-30">
+            <div class="subway-flex-wrap">
 
-				<?php
-				$this->render( 'status', [
-					'plans' => $plans,
-					'plan'  => $plan,
-					'id'    => $id
-				], false, 'form-memberships-plans' );
-				?>
+                <div class="subway-flex-column subway-flex-column-70">
 
-                <div class="subway-card" id="box-membership-submit-wrap">
+                    <!--hidden fields-->
+					<?php wp_nonce_field( 'subway_plan_edit_action', 'subway_plan_edit_action' ); ?>
 
-                    <input id="update-plan" type="submit" class="button button-primary button-large"
-                           value="<?php esc_attr_e( 'Update Plan', 'subway' ); ?>"/>
+                    <input type="hidden" name="action" value="subway_plan_edit_action"/>
 
-                    <input name="trash-plan" id="trash-plan" type="submit" class="button button-trash button-large"
-                           value="<?php esc_attr_e( 'Send to Trash', 'subway' ); ?>"/>
+                    <input type="hidden" name="page" value="subway-membership"/>
+
+                    <input type="hidden" name="new" value="yes"/>
+
+                    <input type="hidden" id="input-id" name="plan_id"
+                           value="<?php echo esc_attr( $plan->get_id() ); ?>"/>
+
+
+                    <input type="hidden" name="active-section"
+                           value="<?php echo ! empty( $section ) ? $section : 'plan-information' ?>"/>
+
+                    <!--Section Email-->
+                    <div class="subway-card subway-plan-section <?php echo $section == 'plan-email' ? 'active' : ''; ?>"
+                         id="plan-email">
+						<?php $this->render( 'email', [], false, 'form-memberships-plans' ); ?>
+                    </div>
+                    <!--/.Section Email-->
+
+                    <!--Section Pricing-->
+                    <div class="subway-card subway-plan-section <?php echo $section == 'plan-pricing' ? 'active' : ''; ?>"
+                         id="plan-pricing">
+						<?php
+						$this->render( 'pricing',
+							[
+								'plan'   => $plan,
+								'errors' => $errors
+							], false, 'form-memberships-plans' );
+						?>
+                    </div>
+                    <!--/.Section Email-->
+
+                    <!--Section Plan Information-->
+                    <div class="subway-card subway-plan-section <?php echo $section == 'plan-information' ? 'active' : ''; ?>"
+                         id="plan-information">
+
+						<?php
+						$this->render( 'information',
+							[
+								'plan'      => $plan,
+								'plan_id'   => $id,
+								'form_data' => $form_data,
+								'errors'    => $errors
+							],
+							false, 'form-memberships-plans' );
+						?>
+                    </div>
+                </div>
+                <!--/.Section Plan Information-->
+
+                <!--Plan Status-->
+                <div class="subway-flex-column subway-flex-column-30">
+
+					<?php
+					$this->render( 'status', [
+						'plans' => $plans,
+						'plan'  => $plan,
+						'id'    => $id
+					], false, 'form-memberships-plans' );
+					?>
+
+                    <div class="subway-card" id="box-membership-submit-wrap">
+
+                        <input id="update-plan" type="submit" class="button button-primary button-large"
+                               value="<?php esc_attr_e( 'Update Plan', 'subway' ); ?>"/>
+
+                        <input name="trash-plan" id="trash-plan" type="submit" class="button button-trash button-large"
+                               value="<?php esc_attr_e( 'Send to Trash', 'subway' ); ?>"/>
+
+                    </div>
 
                 </div>
-
+                <!--/.Plan Status-->
             </div>
-            <!--/.Plan Status-->
-        </div>
 
 
-    </form>
+        </form>
 
-</div><!--#subway-edit-plan-form-->
+    </div><!--#subway-edit-plan-form-->
+
+<?php else: ?>
+
+    <div class="notice notice-error">
+        <p>
+			<?php esc_html_e( 'You can’t edit this item because it is in the Trash. Please restore it and try again.', 'subway' ); ?>
+        </p>
+    </div>
+
+<?php endif; ?>
