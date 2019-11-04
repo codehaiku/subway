@@ -160,8 +160,10 @@ class ListTable extends \WP_List_Table {
 
 	function column_name( $item ) {
 
-	    $plan = new Plan();
+		$plan      = new Plan();
 		$trash_url = $plan->get_trash_url( $item['id'] );
+		$restore_url = $plan->get_restore_url( $item['id'] );
+        $delete_url = '#';
 
 		$edit_url = wp_nonce_url(
 			sprintf( '?page=%s&edit=%s&plan=%s&section=plan-information', $_REQUEST['page'], 'yes', $item['id'] ),
@@ -170,9 +172,16 @@ class ListTable extends \WP_List_Table {
 		);
 
 		$actions = array(
-			'edit'   => sprintf( '<a href="%s">' . esc_html__( 'Configure Plan', 'subway' ) . '</a>', esc_url( $edit_url ) ),
+			'edit'  => sprintf( '<a href="%s">' . esc_html__( 'Configure Plan', 'subway' ) . '</a>', esc_url( $edit_url ) ),
 			'trash' => sprintf( '<a href="%s">' . esc_html__( 'Trash', 'subway' ) . '</a>', esc_url( $trash_url ) ),
 		);
+
+		if ( 'trashed' === $item['status'] ) {
+			$actions = array(
+				'restore'  => sprintf( '<a href="%s">' . esc_html__( 'Restore', 'subway' ) . '</a>', esc_url( $restore_url ) ),
+				'delete' => sprintf( '<a href="%s">' . esc_html__( 'Delete Permanently', 'subway' ) . '</a>', esc_url( $delete_url ) ),
+			);
+		}
 
 
 		$plan_name = sprintf( '<strong><a href="%1$s" title="%2$s">%2$s</a></strong>', $edit_url, $item['name'] );
