@@ -137,7 +137,7 @@ class Product {
 	 */
 	public function is_tax_displayed() {
 
-		return $this->tax_displayed;
+		return (bool) $this->tax_displayed;
 
 	}
 
