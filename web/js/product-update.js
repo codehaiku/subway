@@ -82,7 +82,6 @@ jQuery(document).ready(function ($) {
     };
 
     $('#btn-copy-checkout-link').on('click', function () {
-        alert('test');
         copy_to_clipboard();
     });
 
