@@ -77,7 +77,6 @@ if ( ! $items ) {
 
                 <td>
 					<?php echo esc_html( $plan->get_displayed_price() ); ?>
-
                 </td>
 
                 <td>
@@ -97,7 +96,7 @@ if ( ! $items ) {
 	<?php else: ?>
         <tbody>
         <tr>
-            <td colspan="5">
+            <td colspan="6">
 				<?php esc_html_e( 'There are no membership plans found. Click the "Create New Plan" button to add new membership plan.', 'subway' ); ?>
             </td>
         </tr>
@@ -105,7 +104,7 @@ if ( ! $items ) {
 	<?php endif; ?>
     <tfoot>
     <tr>
-        <td colspan="5">
+        <td colspan="6">
 			<?php echo sprintf( esc_html__( 'Found %d Item(s)', 'subway' ), count( $items ) ); ?>
         </td>
     </tr>
