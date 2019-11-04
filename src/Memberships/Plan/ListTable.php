@@ -160,16 +160,8 @@ class ListTable extends \WP_List_Table {
 
 	function column_name( $item ) {
 
-		$trash_uri = esc_url_raw( add_query_arg( array(
-			'action' => 'listing_delete_action',
-			'id'     => $item['id'],
-		), get_admin_url() . 'admin-post.php' ) );
-
-		$delete_url = wp_nonce_url(
-			$trash_uri,
-			sprintf( 'trash_plan_%s', $item['id'] ),
-			'_wpnonce'
-		);
+	    $plan = new Plan();
+		$trash_url = $plan->get_trash_url( $item['id'] );
 
 		$edit_url = wp_nonce_url(
 			sprintf( '?page=%s&edit=%s&plan=%s&section=plan-information', $_REQUEST['page'], 'yes', $item['id'] ),
@@ -179,7 +171,7 @@ class ListTable extends \WP_List_Table {
 
 		$actions = array(
 			'edit'   => sprintf( '<a href="%s">' . esc_html__( 'Configure Plan', 'subway' ) . '</a>', esc_url( $edit_url ) ),
-			'delete' => sprintf( '<a href="%s">' . esc_html__( 'Trash', 'subway' ) . '</a>', esc_url( $delete_url ) ),
+			'trash' => sprintf( '<a href="%s">' . esc_html__( 'Trash', 'subway' ) . '</a>', esc_url( $trash_url ) ),
 		);
 
 
