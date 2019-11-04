@@ -3,6 +3,7 @@
 namespace Subway\Memberships\Plan;
 
 use Subway\Currency\Currency;
+use Subway\Helpers\Helpers;
 use Subway\Options\Options;
 
 /**
@@ -28,12 +29,14 @@ class Plan {
 	protected $tax_rate = '';
 	protected $display_tax = true;
 
+	protected $db;
+
 
 	public function __construct() {
 
-		global $wpdb;
+		$this->db = Helpers::get_db();
 
-		$this->table = $wpdb->prefix . 'subway_memberships_products_plans';
+		$this->table = $this->db->prefix . 'subway_memberships_products_plans';
 
 	}
 
@@ -517,10 +520,16 @@ class Plan {
 			  ->set_date_created( $result->date_created )
 			  ->set_date_updated( $result->date_updated );
 
-			$tax_displayed = $p->get_product()->is_tax_displayed();
+			$product = $p->get_product();
+
+			$tax_displayed = false;
+
+			if ( $product ) {
+				$tax_displayed = $product->is_tax_displayed();
+			}
 
 			// Disable tax when administrator disable from product option.
-			if ( ! $tax_displayed ) {
+			if ( false === $tax_displayed ) {
 				$p->set_display_tax( false );
 			}
 
@@ -602,8 +611,12 @@ class Plan {
 			$plan->set_date_created( $result->date_created );
 			$plan->set_date_updated( $result->date_updated );
 
-			if ( $plan->get_product()->is_tax_displayed() ){
-				$plan->set_display_tax( true );
+			$product = $plan->get_product();
+
+			if ( $product ) {
+				if ( $product->is_tax_displayed() ) {
+					$plan->set_display_tax( true );
+				}
 			}
 
 		} else {
@@ -673,35 +686,26 @@ class Plan {
 
 	/**
 	 * @param array $args
+	 * @param int $id
 	 *
-	 * @return false|int
-	 * @throws \Exception
+	 * @return bool
 	 */
-	public function update( $args = array() ) {
+	public function update( $args = array(), $id = 0 ) {
 
-		global $wpdb;
+		$plan = $this->get_plan( $id );
 
-		$data = array(
-			'name'         => $args['title'],
-			'description'  => $args['description'],
-			'product_id'   => $args['product_id'],
-			'type'         => $args['type'],
-			'amount'       => $args['amount'],
-			'sku'          => $args['sku'],
-			'status'       => $args['status'],
-			'date_updated' => current_time( 'mysql' )
-		);
+		if ( ! $plan ) {
 
-		$table = $this->table;
+			return false;
 
-		$where        = array( 'id' => $args['id'] );
-		$format       = array( '%s', '%s', '%s', '%s', '%f', '%s', '%s' );
-		$where_format = array( '%d' );
+		}
 
-		$updated = $wpdb->update( $table, $data, $where, $format, $where_format );
+		$updated = $this->db->update( $this->table, $args, [ 'id' => $plan->get_id() ] );
 
 		if ( false === $updated ) {
+
 			return false;
+
 		}
 
 		return true;
@@ -737,6 +741,23 @@ class Plan {
 		}
 
 		return apply_filters( 'get_plan_checkout_url', $checkout_url );
+
+	}
+
+	/**
+	 * @param $plan_id
+	 *
+	 * @return string
+	 */
+	public function get_trash_url( $plan_id ) {
+
+		$args = [
+			'action'   => 'subway_plan_trash_action',
+			'plan-id'  => $plan_id,
+			'_wpnonce' => wp_create_nonce( sprintf( 'subway_plan_trash_action_%d', $plan_id ) )
+		];
+
+		return add_query_arg( $args, admin_url( 'admin-post.php' ) );
 
 	}
 
