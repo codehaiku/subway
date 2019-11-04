@@ -343,7 +343,7 @@ class Controller extends Product {
 
 		$table = $plan->table;
 
-		$stmt = $this->db->prepare( "SELECT id, amount FROM $table WHERE product_id = %d ORDER BY amount ASC LIMIT 1", $this->get_id() );
+		$stmt = $this->db->prepare( "SELECT id, amount FROM $table WHERE product_id = %d AND status = 'published' ORDER BY amount ASC LIMIT 1", $this->get_id() );
 
 		$result = $this->db->get_row( $stmt, object );
 
@@ -368,7 +368,7 @@ class Controller extends Product {
 
 		$table = $plan->table;
 
-		$stmt = $this->db->prepare( "SELECT id, amount FROM $table WHERE product_id = %d ORDER BY amount DESC LIMIT 1", $this->get_id() );
+		$stmt = $this->db->prepare( "SELECT id, amount FROM $table WHERE product_id = %d AND status = 'published' ORDER BY amount DESC LIMIT 1", $this->get_id() );
 
 		$result = $this->db->get_row( $stmt, object );
 
@@ -389,19 +389,23 @@ class Controller extends Product {
 
 		if ( 0 === $this->get_plan_count() ) {
 
-			$pricing_preview = __('No membership plans available', 'Subway');
+			$pricing_preview = __( 'No membership plans available', 'Subway' );
 
 		} else {
-			$pricing_preview = sprintf(
-				_n(
-					'%d Membership Plan at %s',
-					'%s Membership Plans Starting at %s',
+			$plan_lowest_priced = $this->get_lowest_priced_plan();
+			$pricing_preview = esc_html__('There are no membership plans', 'subway');
+			if ( $plan_lowest_priced ) {
+				$pricing_preview = sprintf(
+					_n(
+						'%d Membership Plan at %s',
+						'%s Membership Plans Starting at %s',
+						$this->get_plan_count(),
+						'subway'
+					),
 					$this->get_plan_count(),
-					'subway'
-				),
-				$this->get_plan_count(),
-				$this->get_lowest_priced_plan()->get_displayed_price()
-			);
+					$plan_lowest_priced->get_displayed_price()
+				);
+			}
 		}
 
 		return apply_filters( 'subway_memberships_product_get_pricing_preview', $pricing_preview );
