@@ -557,29 +557,29 @@ class Plan {
 	 */
 	public function get_wp_list_table( $args ) {
 
-		$products = $this->get_plans( $args );
+		$plans = $this->get_plans( $args );
 
-		$product_collections = [];
+		$plan_collection = [];
 
-		if ( ! empty( $products ) ) {
+		if ( ! empty( $plans ) ) {
 
-			foreach ( $products as $product ) {
+			foreach ( $plans as $plan ) {
 				$p                     = [];
-				$p['id']               = $product->get_id();
-				$p['name']             = $product->get_name();
-				$p['sku']              = $product->get_sku();
-				$p['amount']           = $product->get_amount();
-				$p['description']      = $product->get_description();
-				$p['type']             = $product->get_type();
-				$p['status']           = $product->get_status();
-				$p['date_created']     = $product->get_date_created();
-				$p['date_updated']     = $product->get_date_updated();
-				$product_collections[] = $p;
+				$p['id']               = $plan->get_id();
+				$p['name']             = $plan->get_name();
+				$p['sku']              = $plan->get_sku();
+				$p['amount']           = $plan->get_displayed_price_without_tax();
+				$p['description']      = $plan->get_description();
+				$p['type']             = $plan->get_type();
+				$p['status']           = $plan->get_status();
+				$p['date_created']     = $plan->get_date_created();
+				$p['date_updated']     = $plan->get_date_updated();
+				$plan_collection[] = $p;
 			}
 
 		}
 
-		return $product_collections;
+		return $plan_collection;
 	}
 
 
