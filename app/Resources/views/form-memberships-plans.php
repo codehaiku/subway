@@ -50,7 +50,7 @@
 		$view->render( 'create', [
 			'flash_message_add' => $flash_message_add,
 			'attached_product'  => $attached_product
-		], false,'form-memberships-plans' );
+		], false, 'form-memberships-plans' );
 		?>
 
     </div>
@@ -73,22 +73,30 @@
 
 			<?php if ( $product ): ?>
 
-                <h1 class="wp-heading-inline">
-					<?php printf( esc_html__( '%s', 'subway' ), $product->get_name() ); ?>
-                    <small>
-                        <a style="margin: 2.5px 0 0 10px;" class="button button-small"
-                           href="<?php echo esc_url( $controller->get_product_url_edit() ); ?>">
-							<?php esc_html_e( 'View Product', 'subway' ); ?>
-                        </a>
-                    </small>
-                </h1>
+				<?php if ( 'trashed' !== $plan->get_status() ): ?>
+                    <h1 class="wp-heading-inline">
+						<?php printf( esc_html__( '%s', 'subway' ), $product->get_name() ); ?>
+                        <small>
+                            <a class="button"
+                               href="<?php echo esc_url( $controller->get_product_url_edit() ); ?>">
+								<?php esc_html_e( 'Edit Product', 'subway' ); ?>
+                            </a>
+                        </small>
+                    </h1>
+				<?php else: ?>
+                    <h1 class="wp-heading-inline">
+						<?php esc_html_e( 'An Error Occurred', 'subway' ); ?>
+                    </h1>
+				<?php endif; ?>
 
 			<?php endif; ?>
 
-            <h2 id="box-membership-sub-title">
-                <span class="dashicons dashicons-randomize"></span>
-				<?php printf( esc_html__( '%s', 'subway' ), $plan->get_name() ); ?>
-            </h2>
+			<?php if ( 'trashed' !== $plan->get_status() ): ?>
+                <h2 id="box-membership-sub-title">
+                    <span class="dashicons dashicons-randomize"></span>
+					<?php printf( esc_html__( '%s', 'subway' ), $plan->get_name() ); ?>
+                </h2>
+			<?php endif; ?>
 
 			<?php $view->render( 'form-memberships-plans-edit', [
 				'plans'    => $plans,
@@ -98,10 +106,10 @@
 			] ); ?>
 
         </div>
-    <?php else: ?>
+	<?php else: ?>
         <div class="wrap">
             <p>
-                <?php esc_html_e('Product is not found.', 'subway'); ?>
+				<?php esc_html_e( 'Product is not found.', 'subway' ); ?>
             </p>
         </div>
 	<?php endif; ?>
