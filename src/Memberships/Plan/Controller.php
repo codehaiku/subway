@@ -189,10 +189,10 @@ class Controller extends Plan {
 		}
 
 		$args = [
-			'name'       => $title,
+			'name'        => $title,
 			'product_id'  => $validated['product'],
 			'description' => $desc,
-			'amount'      => $amount,
+			'amount'      => round( $amount, 2 ), // Round the amount to 2nd decimal place.
 			'type'        => $type,
 			'sku'         => $sku,
 			'status'      => $status
