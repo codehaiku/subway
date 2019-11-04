@@ -108,106 +108,106 @@
                             </thead>
 
                             <tbody>
-
-							<?php foreach ( $subscriptions as $subscription ): ?>
-
-                                <tr>
-                                    <td>
-                                        <h4 class="subway-mg-top-zero subway-mg-bot-zero">
-											<?php echo $subscription->plan->get_product_link(); ?>
-                                        </h4>
-
-                                        <p>
-                                            <a href="<?php echo esc_url( $subscription->plan->get_plan_url() ); ?>"
-                                               title=" <?php echo esc_attr( $subscription->plan->get_name() ); ?>">
-                                                <strong>
-													<?php echo esc_html( $subscription->plan->get_name() ); ?>
-                                                </strong>
-                                            </a>
-                                        </p>
-
-                                    </td>
-
-                                    <td>
-										<?php if ( 'cancelled' === $subscription->result->status ): ?>
-
-                                            <div class="product-plan-user-cancelled">
-
-												<?php echo esc_html( $subscription->result->status ); ?>
-
-                                            </div>
-
-										<?php else: ?>
-
-                                            <div class="product-plan-user-subscribed">
-
-												<?php echo esc_html( $subscription->result->status ); ?>
-
-                                            </div>
-
-										<?php endif; ?>
-
-
-                                    </td>
-
-                                    <td>
-                                        <div class="product-user-plan-details">
-
-											<?php if ( 'cancelled' === $subscription->result->status ): ?>
+                                <?php foreach ( $subscriptions as $subscription ): ?>
+                                    <?php if ( $subscription->plan ) : ?>
+                                        <tr>
+                                            <td>
+                                                <h4 class="subway-mg-top-zero subway-mg-bot-zero">
+                                                    <?php echo $subscription->plan->get_product_link(); ?>
+                                                </h4>
 
                                                 <p>
-                                                    <em>
-                                                        <small>
-															<?php esc_html_e( 'Not Applicable', 'subway' ); ?>
-                                                        </small>
-                                                    </em>
+                                                    <a href="<?php echo esc_url( $subscription->plan->get_plan_url() ); ?>"
+                                                       title=" <?php echo esc_attr( $subscription->plan->get_name() ); ?>">
+                                                        <strong>
+                                                            <?php echo esc_html( $subscription->plan->get_name() ); ?>
+                                                        </strong>
+                                                    </a>
                                                 </p>
 
-											<?php else: ?>
+                                            </td>
 
-												<?php echo esc_html( $subscription->plan->get_displayed_price_without_tax() ); ?>
-                                                /
-												<?php echo esc_html( $subscription->plan->get_type() ); ?>
+                                            <td>
+                                                <?php if ( 'cancelled' === $subscription->result->status ): ?>
 
-                                                <p class="subway-mg-bot-zero">
-                                                    <small>Paid:
-                                                        Oct 18, 2019 @TODO
-                                                    </small>
-                                                </p>
+                                                    <div class="product-plan-user-cancelled">
+
+                                                        <?php echo esc_html( $subscription->result->status ); ?>
+
+                                                    </div>
+
+                                                <?php else: ?>
+
+                                                    <div class="product-plan-user-subscribed">
+
+                                                        <?php echo esc_html( $subscription->result->status ); ?>
+
+                                                    </div>
+
+                                                <?php endif; ?>
 
 
-											<?php endif; ?>
+                                            </td>
 
-                                        </div>
-                                    </td>
+                                            <td>
+                                                <div class="product-user-plan-details">
 
-                                    <td>
-										<?php if ( 'cancelled' === $subscription->result->status ): ?>
+                                                    <?php if ( 'cancelled' === $subscription->result->status ): ?>
 
-                                            <p>
-                                                <em>
-                                                    <small>
-														<?php esc_html_e( 'Not Applicable', 'subway' ); ?>
-                                                    </small>
-                                                </em>
-                                            </p>
+                                                        <p>
+                                                            <em>
+                                                                <small>
+                                                                    <?php esc_html_e( 'Not Applicable', 'subway' ); ?>
+                                                                </small>
+                                                            </em>
+                                                        </p>
 
-										<?php else: ?>
+                                                    <?php else: ?>
 
-                                            <p class="subway-mg-bot-zero">July 02, 2020 @TODO</p>
-                                            <p>
-                                                <a title="<?php esc_attr_e( 'Cancel Membership', 'subway' ); ?>"
-                                                   href="<?php echo esc_url( $subscription->plan->get_cancel_url() ); ?>">
-													<?php esc_html_e( 'Cancel Membership', 'subway' ); ?>
-                                                </a>
-                                            </p>
+                                                        <?php echo esc_html( $subscription->plan->get_displayed_price_without_tax() ); ?>
+                                                        /
+                                                        <?php echo esc_html( $subscription->plan->get_type() ); ?>
 
-										<?php endif; ?>
+                                                        <p class="subway-mg-bot-zero">
+                                                            <small>Paid:
+                                                                Oct 18, 2019 @TODO
+                                                            </small>
+                                                        </p>
 
-                                    </td>
 
-                                </tr>
-							<?php endforeach; ?>
+                                                    <?php endif; ?>
+
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <?php if ( 'cancelled' === $subscription->result->status ): ?>
+
+                                                    <p>
+                                                        <em>
+                                                            <small>
+                                                                <?php esc_html_e( 'Not Applicable', 'subway' ); ?>
+                                                            </small>
+                                                        </em>
+                                                    </p>
+
+                                                <?php else: ?>
+
+                                                    <p class="subway-mg-bot-zero">July 02, 2020 @TODO</p>
+                                                    <p>
+                                                        <a title="<?php esc_attr_e( 'Cancel Membership', 'subway' ); ?>"
+                                                           href="<?php echo esc_url( $subscription->plan->get_cancel_url() ); ?>">
+                                                            <?php esc_html_e( 'Cancel Membership', 'subway' ); ?>
+                                                        </a>
+                                                    </p>
+
+                                                <?php endif; ?>
+
+                                            </td>
+
+                                        </tr>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
                             </tbody>
 
                         </table>
@@ -226,7 +226,6 @@
 					<?php endif; ?>
 
                 </div>
-
 
             </div>
 
