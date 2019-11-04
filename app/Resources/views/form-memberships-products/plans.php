@@ -76,7 +76,7 @@ if ( ! $items ) {
                 </td>
 
                 <td>
-					<?php echo esc_html( $plan->get_displayed_price() ); ?>
+					<?php echo esc_html( $plan->get_displayed_price_without_tax() ); ?>
                 </td>
 
                 <td>
