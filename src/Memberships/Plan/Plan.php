@@ -520,9 +520,9 @@ class Plan {
 			  ->set_date_created( $result->date_created )
 			  ->set_date_updated( $result->date_updated );
 
-			$product = $p->get_product();
-
 			$tax_displayed = false;
+
+			$product = $p->get_product();
 
 			if ( $product ) {
 				$tax_displayed = $product->is_tax_displayed();
