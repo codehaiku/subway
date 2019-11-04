@@ -9,6 +9,8 @@ use Subway\Validators\GUMP;
 
 class Controller extends Plan {
 
+	const trashed = 'trashed';
+
 	public function add_action() {
 
 		$this->check_admin();
@@ -86,6 +88,26 @@ class Controller extends Plan {
 
 	}
 
+	public function trash_action() {
+
+		$this->check_admin();
+
+		$plan_id = filter_input( 1, 'plan-id', 519 );
+
+		check_admin_referer( sprintf( 'subway_plan_trash_action_%d', $plan_id ) );
+
+		$plan = $this->get_plan( $plan_id );
+
+		$plan->update( [
+			'status' => self::trashed
+		], $plan_id );
+
+		wp_safe_redirect( wp_get_referer(), 302 );
+
+		exit;
+
+	}
+
 	public function edit_action() {
 
 		$this->check_admin();
@@ -143,52 +165,38 @@ class Controller extends Plan {
 
 		}
 
-		try {
+		$args = [
+			'name'       => $title,
+			'product_id'  => $validated['product'],
+			'description' => $desc,
+			'amount'      => $amount,
+			'type'        => $type,
+			'sku'         => $sku,
+			'status'      => $status
+		];
 
-			$updated = $this->update( [
-				'id'          => $id,
-				'title'       => $title,
-				'product_id'  => $validated['product'],
-				'description' => $desc,
-				'amount'      => $amount,
-				'type'        => $type,
-				'sku'         => $sku,
-				'status'      => $status
+		$updated = $this->update( $args, $id );
+
+		if ( false === $updated ) {
+
+			$flash->add( [
+				'type'    => 'error',
+				'message' => __( 'An error occurred while updating this membership plan.', 'subway' )
 			] );
 
-			do_action( 'subway_product_edit_saved' );
+		} else {
+
+			do_action( 'subway_product_updated' );
 
 			$flash->add( [
 				'type'    => 'success',
 				'message' => __( 'Memberships Plan has been successfully updated.', 'subway' )
 			] );
-
-			wp_safe_redirect( $referrer, 302 );
-
-			die();
-
-		} catch ( \Exception $e ) {
-
-			try {
-
-				$flash->add( [ 'type' => 'error', 'message' => $e->getMessage() ] );
-
-			} catch ( \Exception $e ) {
-
-				wp_die(
-					$e->getMessage() .
-					sprintf(
-						'<a href="%1$s" title="%s">%2$s</a>',
-						esc_url( $referrer ),
-						esc_html__( 'Go Back', 'subway' )
-					),
-				);
-
-			}
-
-			wp_safe_redirect( $referrer );
-
 		}
+
+		wp_safe_redirect( $referrer, 302 );
+
+		exit;
 
 	}
 
@@ -261,6 +269,8 @@ class Controller extends Plan {
 		add_action( 'admin_post_subway_plan_edit_action', [ $this, 'edit_action' ] );
 
 		add_action( 'admin_post_subway_plan_add_action', [ $this, 'add_action' ] );
+
+		add_action( 'admin_post_subway_plan_trash_action', [ $this, 'trash_action' ] );
 
 		add_action( 'wp_ajax_get_plan_details', [ $this, 'get_plan_details' ] );
 
