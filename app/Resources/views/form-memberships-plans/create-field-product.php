@@ -49,6 +49,11 @@
 
     </h3>
 
+    <p class="field-help">
+		<?php esc_html_e( 'Select a membership product.', 'subway' ); ?>
+    </p>
+
+
 
 	<?php $result = $product->fetch_all(); ?>
 
