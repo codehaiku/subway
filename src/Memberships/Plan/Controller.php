@@ -11,6 +11,8 @@ class Controller extends Plan {
 
 	const trashed = 'trashed';
 
+	const published = 'published';
+
 	public function add_action() {
 
 		$this->check_admin();
@@ -100,6 +102,27 @@ class Controller extends Plan {
 
 		$plan->update( [
 			'status' => self::trashed
+		], $plan_id );
+
+		wp_safe_redirect( wp_get_referer(), 302 );
+
+		exit;
+
+	}
+
+	/**
+	 * Updates the status of plan to 'published'.
+	 */
+	public function restore_action() {
+
+		$this->check_admin();
+
+		$plan_id = filter_input( 1, 'plan-id', 519 );
+
+		check_admin_referer( sprintf( 'subway_plan_restore_action_%d', $plan_id ) );
+
+		$this->update( [
+			'status' => self::published
 		], $plan_id );
 
 		wp_safe_redirect( wp_get_referer(), 302 );
@@ -257,7 +280,6 @@ class Controller extends Plan {
 		return;
 	}
 
-
 	public function attach_hooks() {
 
 		$this->define_hooks();
@@ -271,6 +293,8 @@ class Controller extends Plan {
 		add_action( 'admin_post_subway_plan_add_action', [ $this, 'add_action' ] );
 
 		add_action( 'admin_post_subway_plan_trash_action', [ $this, 'trash_action' ] );
+
+		add_action( 'admin_post_subway_plan_restore_action', [ $this, 'restore_action' ] );
 
 		add_action( 'wp_ajax_get_plan_details', [ $this, 'get_plan_details' ] );
 
