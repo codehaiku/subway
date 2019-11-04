@@ -54,7 +54,7 @@
         </td>
         <td>
             <strong>
-				<?php echo esc_html( $plan->get_displayed_price() ); ?>
+				<?php echo esc_html( $plan->get_taxed_price() ); ?>
             </strong>
         </td>
     </tr>
