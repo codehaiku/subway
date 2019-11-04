@@ -10,13 +10,13 @@ class Orders {
 
 	protected $table = '';
 
-	protected $product_table;
+	protected $plan_table;
 
 	public function __construct( \wpdb $wpdb ) {
 
 		$this->wpdb = $wpdb;
 
-		$this->product_table = $this->wpdb->prefix . 'subway_memberships_products_plans';
+		$this->plan_table = $this->wpdb->prefix . 'subway_memberships_products_plans';
 
 		$this->table = $this->wpdb->prefix . 'subway_memberships_orders';
 
@@ -35,7 +35,7 @@ class Orders {
 
 		$args = wp_parse_args( $args, $defaults );
 
-		$product_table = $this->product_table;
+		$plan_table = $this->plan_table;
 
 		$fields = implode( ',',
 			[
@@ -47,15 +47,15 @@ class Orders {
 				$this->table . '.user_id as order_user_id',
 				$this->table . '.status as order_status',
 				$this->table . '.gateway as order_gateway',
-				$product_table . '.id as product_id',
-				$product_table . '.name'
+				$plan_table . '.id as product_id',
+				$plan_table . '.name'
 			]
 		);
 
 		$stmt = $this->wpdb->prepare( "
 				SELECT $fields FROM $this->table 
-				INNER JOIN $product_table 
-				WHERE {$this->table}.plan_id = {$product_table}.id
+				INNER JOIN $plan_table 
+				WHERE {$this->table}.plan_id = {$plan_table}.id
 				AND {$this->table}.id > %d
 				ORDER BY {$args['orderby']} {$args['order']}
 				LIMIT %d, %d
@@ -94,6 +94,7 @@ class Orders {
 		if ( ! isset ( $table ) ) {
 			$table = $this->table;
 		}
+
 		$update = $this->wpdb->update(
 			$table,
 			$args,

@@ -564,16 +564,16 @@ class Plan {
 		if ( ! empty( $plans ) ) {
 
 			foreach ( $plans as $plan ) {
-				$p                     = [];
-				$p['id']               = $plan->get_id();
-				$p['name']             = $plan->get_name();
-				$p['sku']              = $plan->get_sku();
-				$p['amount']           = $plan->get_displayed_price_without_tax();
-				$p['description']      = $plan->get_description();
-				$p['type']             = $plan->get_type();
-				$p['status']           = $plan->get_status();
-				$p['date_created']     = $plan->get_date_created();
-				$p['date_updated']     = $plan->get_date_updated();
+				$p                 = [];
+				$p['id']           = $plan->get_id();
+				$p['name']         = $plan->get_name();
+				$p['sku']          = $plan->get_sku();
+				$p['amount']       = $plan->get_displayed_price_without_tax();
+				$p['description']  = $plan->get_description();
+				$p['type']         = $plan->get_type();
+				$p['status']       = $plan->get_status();
+				$p['date_created'] = $plan->get_date_created();
+				$p['date_updated'] = $plan->get_date_updated();
 				$plan_collection[] = $p;
 			}
 
@@ -662,20 +662,19 @@ class Plan {
 
 	}
 
-	public function delete( $product_id ) {
+	public function delete( $plan_id ) {
 
-		global $wpdb;
-
-		$is_deleted = $wpdb->delete( $this->table,
-			array( 'id' => $product_id ), array( '%d' ) );
+		$is_deleted = $this->db->delete( $this->table, [ 'id' => $plan_id ], [ '%d' ] );
 
 		// Update the total membership count.
 		if ( $is_deleted ) {
 
-			$current_total = get_option( 'subway_products_count', 0 );
+			$current_total = get_option( 'subway_plans_count', 0 );
 
 			if ( $current_total !== 0 ) {
-				update_option( 'subway_products_count', absint( $current_total ) - 1 );
+
+				update_option( 'subway_plans_count', absint( $current_total ) - 1 );
+
 			}
 
 		}
