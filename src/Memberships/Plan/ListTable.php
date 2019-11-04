@@ -141,10 +141,6 @@ class ListTable extends \WP_List_Table {
 		$currency = new Currency();
 
 		switch ( $column_name ) {
-			case 'amount':
-				return $currency->format( $item[ $column_name ], get_option( 'subway_currency', 'USD' ) );
-				break;
-
 			case 'date_created':
 			case 'date_updated':
 				return date( $datetime_format, strtotime( $item[ $column_name ] ) );
