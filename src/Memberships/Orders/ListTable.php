@@ -3,6 +3,7 @@
 namespace Subway\Memberships\Orders;
 
 use Subway\Currency\Currency;
+use Subway\Helpers\Helpers;
 use Subway\Memberships\Plan\Plan;
 
 class ListTable extends \WP_List_Table {
@@ -19,13 +20,12 @@ class ListTable extends \WP_List_Table {
 	function get_columns() {
 
 		$columns = array(
-			'cb'            => '<input type="checkbox" />',
-			'order_created' => 'Created',
-			'name'          => 'Membership Plan',
-			'order_id'      => 'Order ID',
-			'order_amount'  => 'Amount',
-			'order_user_id' => 'Customer',
-
+			'cb'      => '<input type="checkbox" />',
+			'created' => 'Created',
+			'plan_id' => 'Membership Plan',
+			'id'      => 'Order ID',
+			'amount'  => 'Amount',
+			'user_id' => 'Customer',
 		);
 
 		return $columns;
@@ -34,27 +34,18 @@ class ListTable extends \WP_List_Table {
 
 	function prepare_items() {
 
-		global $wpdb;
+		$orders = new Orders( Helpers::get_db() );
 
-		$orders = new Orders( $wpdb );
+		$order        = filter_input( INPUT_GET, 'order', 513 );
+		$order_by     = filter_input( INPUT_GET, 'orderby', 513 );
+		$per_page     = $this->get_items_per_page( 'orders_per_page', 5 );
+		$current_page = $this->get_pagenum();
 
 		// Process bulk actions.
 		$this->process_bulk_action( $orders );
 
-		$columns               = $this->get_columns();
-		$hidden                = array();
-		$sortable              = $this->get_sortable_columns();
-		$this->_column_headers = $this->get_column_info();
-
-		$per_page     = $this->get_items_per_page( 'orders_per_page', 5 );
-		$current_page = $this->get_pagenum();
-
-		$order = filter_input( INPUT_GET, 'order', FILTER_SANITIZE_SPECIAL_CHARS );
-
-		$orderby = filter_input( INPUT_GET, 'orderby', FILTER_SANITIZE_SPECIAL_CHARS );
-
-		if ( empty( $orderby ) ) {
-			$orderby = 'order_created';
+		if ( empty( $order_by ) ) {
+			$order_by = 'created';
 		}
 
 		if ( empty ( $order ) ) {
@@ -67,13 +58,12 @@ class ListTable extends \WP_List_Table {
 		$page_offset = $offset + ( $current_page - 1 ) * $per_page;
 
 		$data = $orders->get_orders( array(
-			'orderby' => $orderby,
+			'orderby' => $order_by,
 			'order'   => $order,
 			'offset'  => $page_offset,
 			'limit'   => $per_page
 		) );
 
-		//@Todo: Update total order count.
 		$total_items = absint( get_option( 'subway_count_orders', 0 ) );
 
 		$this->set_pagination_args( array(
@@ -90,10 +80,9 @@ class ListTable extends \WP_List_Table {
 	function get_sortable_columns() {
 
 		$sortable_columns = array(
-			'order_created' => array( 'order_created', false ),
-			'order_id'      => array( 'order_id', false ),
-			'order_amount'  => array( 'order_amount', false ),
-			'name'          => array( 'name', false ),
+			'created' => array( 'created', false ),
+			'id'      => array( 'id', false ),
+			'amount'  => array( 'amount', false ),
 		);
 
 		return $sortable_columns;
@@ -111,7 +100,7 @@ class ListTable extends \WP_List_Table {
 
 		switch ( $column_name ) {
 
-			case 'order_amount':
+			case 'amount':
 
 				$src           = 'https://www.paypalobjects.com/webstatic/mktg/logo-center/PP_Acceptance_Marks_for_LogoCenter_76x48.png';
 				$amount_column = '<img style="vertical-align: middle;" width="32" alt="PayPal Logo" src="' . esc_url( $src ) . '" />';
@@ -122,13 +111,13 @@ class ListTable extends \WP_List_Table {
 
 				break;
 
-			case 'order_user_id':
+			case 'user_id':
 
 				$user_id = $item[ $column_name ];
 
 				$user = get_userdata( $user_id );
 
-				$user_column = esc_html__('Error: WP User was not found. User might be deleted.', 'box-membership');
+				$user_column = esc_html__( 'Error: WP User was not found. User might be deleted.', 'box-membership' );
 
 				if ( $user ) {
 
@@ -150,26 +139,8 @@ class ListTable extends \WP_List_Table {
 
 				break;
 
-			case 'name':
-
-				$plan_id = $item['plan_id'];
-
-				$plan_edit_link = $this->plan->get_edit_url( $plan_id );
-
-				$this->plan->set_product_id( 1 );
-
-				$product_column = sprintf(
-					"<strong>%s</strong><br/><a href='%s' title='%s'>%s</a>",
-					$this->plan->get_product_link( $plan_id ),
-					$plan_edit_link, $item[ $column_name ],$item[ $column_name ]
-				);
-
-				return apply_filters( 'subway_orders_list_table_product', $product_column );;
-
-				break;
-
-			case 'order_created':
-			case 'order_last_updated':
+			case 'created':
+			case 'last_updated':
 
 				return date( $datetime_format, strtotime( $item[ $column_name ] ) );
 
@@ -182,7 +153,7 @@ class ListTable extends \WP_List_Table {
 
 	}
 
-	function column_order_created( $item ) {
+	function column_created( $item ) {
 
 		$datetime_format = sprintf( '%s',
 			get_option( 'date_format', 'F j, Y' )
@@ -190,18 +161,18 @@ class ListTable extends \WP_List_Table {
 
 		$trash_uri = esc_url( add_query_arg( array(
 			'action' => 'listing_delete_action',
-			'id'     => $item['order_id'],
+			'id'     => $item['id'],
 		), get_admin_url() . 'admin-post.php' ) );
 
 		$delete_url = wp_nonce_url(
 			$trash_uri,
-			sprintf( 'trash_order_%s', $item['order_id'] ),
+			sprintf( 'trash_order_%s', $item['id'] ),
 			'_wpnonce'
 		);
 
 		$edit_url = wp_nonce_url(
-			sprintf( '?page=%s&edit=%s&order=%s', $_REQUEST['page'], 'yes', $item['order_id'] ),
-			sprintf( 'edit_order_%s', $item['order_id'] ),
+			sprintf( '?page=%s&edit=%s&order=%s', $_REQUEST['page'], 'yes', $item['id'] ),
+			sprintf( 'edit_order_%s', $item['id'] ),
 			'_wpnonce'
 		);
 
@@ -210,7 +181,7 @@ class ListTable extends \WP_List_Table {
 			'delete' => sprintf( '<a href="%s">' . esc_html__( 'Trash', 'subway' ) . '</a>', esc_url( $delete_url ) ),
 		);
 
-		return sprintf( '%1$s %2$s', '<a href="#"><strong>' . date( $datetime_format, strtotime( $item['order_created'] ) ) . '</strong></a>',
+		return sprintf( '%1$s %2$s', '<a href="#"><strong>' . date( $datetime_format, strtotime( $item['created'] ) ) . '</strong></a>',
 			$this->row_actions( $actions ) );
 
 	}
@@ -249,7 +220,7 @@ class ListTable extends \WP_List_Table {
 	function column_cb( $item ) {
 
 		return sprintf(
-			'<input type="checkbox" name="order_ids[]" value="%s" />', $item['order_id']
+			'<input type="checkbox" name="order_ids[]" value="%s" />', $item['id']
 		);
 
 	}

@@ -25,7 +25,7 @@ class Repair {
 	public function repair_products_count() {
 
 		// Prepare the query.
-		$stmt = $this->wpdb->prepare( "SELECT COUNT(*) as total from {$this->products_table} 
+		$stmt = $this->wpdb->prepare( "SELECT COUNT(id) as total from {$this->products_table} 
 				WHERE id > %d", 0 );
 
 		// Get the total number of rows.
@@ -53,7 +53,7 @@ class Repair {
 	public function repair_orders_count() {
 
 		// Prepare the query.
-		$stmt = $this->wpdb->prepare( "SELECT COUNT(*) as total from {$this->orders_table} 
+		$stmt = $this->wpdb->prepare( "SELECT COUNT(id) as total from {$this->orders_table} 
 				WHERE id > %d", 0 );
 
 		// Get the total number of rows.

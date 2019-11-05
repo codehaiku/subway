@@ -10,15 +10,11 @@ class Orders {
 
 	protected $table = '';
 
-	protected $plan_table;
-
 	protected $db = null;
 
 	public function __construct( \wpdb $wpdb ) {
 
 		$this->db = Helpers::get_db();
-
-		$this->plan_table = $this->db->prefix . 'subway_memberships_products_plans';
 
 		$this->table = $this->db->prefix . 'subway_memberships_orders';
 
@@ -29,7 +25,7 @@ class Orders {
 	public function get_orders( $args = [] ) {
 
 		$defaults = [
-			'orderby' => 'order_created',
+			'orderby' => 'created',
 			'order'   => 'desc',
 			'limit'   => 10,
 			'offset'  => 0,
@@ -37,35 +33,18 @@ class Orders {
 
 		$args = wp_parse_args( $args, $defaults );
 
-		$plan_table = $this->plan_table;
-
-		$fields = implode( ',',
-			[
-				$this->table . '.id as order_id',
-				$this->table . '.plan_id as order_plan_id',
-				$this->table . '.created as order_created',
-				$this->table . '.last_updated as order_updated',
-				$this->table . '.amount as order_amount',
-				$this->table . '.user_id as order_user_id',
-				$this->table . '.status as order_status',
-				$this->table . '.gateway as order_gateway',
-				$plan_table . '.id as plan_id',
-				$plan_table . '.name'
-			]
-		);
+		$fields = implode( ',', [ '*' ] );
 
 		$stmt = $this->db->prepare( "
 				SELECT $fields FROM $this->table 
-				INNER JOIN $plan_table 
-				WHERE {$this->table}.plan_id = {$plan_table}.id
-				AND {$this->table}.id > %d
+				WHERE id > %d
 				ORDER BY {$args['orderby']} {$args['order']}
-				LIMIT %d, %d
+				LIMIT %d OFFSET %d
 				"
 			,
 			0,
-			$args['offset'],
-			$args['limit']
+			$args['limit'],
+			$args['offset']
 		);
 
 		$result = $this->db->get_results( $stmt, ARRAY_A );
