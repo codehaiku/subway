@@ -12,15 +12,15 @@ class Details extends Orders {
 
 		parent::__construct( $wpdb );
 
-		$this->table = $this->wpdb->prefix . 'subway_memberships_orders_details';
+		$this->table = $this->db->prefix . 'subway_memberships_orders_details';
 
 	}
 
 	public function get( $order_id = 0 ) {
 
-		$stmt = $this->wpdb->prepare( "SELECT * FROM $this->table WHERE order_id = %d", $order_id );
+		$stmt = $this->db->prepare( "SELECT * FROM $this->table WHERE order_id = %d", $order_id );
 
-		$details = $this->wpdb->get_row( $stmt, OBJECT );
+		$details = $this->db->get_row( $stmt, OBJECT );
 
 		return $details;
 	}
@@ -45,14 +45,14 @@ class Details extends Orders {
 
 		$args = wp_parse_args( $args, $defaults );
 
-		$inserted = $this->wpdb->insert(
+		$inserted = $this->db->insert(
 			$this->table, $args,
 			[ '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s' ]
 		);
 
 		if ( ! $inserted ) {
 
-			return $this->wpdb;
+			return $this->db;
 
 		} else {
 

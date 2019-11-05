@@ -94,8 +94,10 @@ class User extends Plans {
 				if ( $subscription ) {
 
 					if ( ! in_array( $subscription->result->status, [ 'cancelled', 'paused' ] ) ) {
-
-						array_push( $subscription_plans, $subscription->plan->get_id() );
+						$subscription_plan = $subscription->plan;
+						if ( $subscription_plan ) {
+							array_push( $subscription_plans, $subscription_plan->get_id() );
+						}
 
 					}
 

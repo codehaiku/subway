@@ -12,13 +12,15 @@ class Orders {
 
 	protected $plan_table;
 
+	protected $db = null;
+
 	public function __construct( \wpdb $wpdb ) {
 
-		$this->wpdb = $wpdb;
+		$this->db = Helpers::get_db();
 
-		$this->plan_table = $this->wpdb->prefix . 'subway_memberships_products_plans';
+		$this->plan_table = $this->db->prefix . 'subway_memberships_products_plans';
 
-		$this->table = $this->wpdb->prefix . 'subway_memberships_orders';
+		$this->table = $this->db->prefix . 'subway_memberships_orders';
 
 		return $this;
 
@@ -52,7 +54,7 @@ class Orders {
 			]
 		);
 
-		$stmt = $this->wpdb->prepare( "
+		$stmt = $this->db->prepare( "
 				SELECT $fields FROM $this->table 
 				INNER JOIN $plan_table 
 				WHERE {$this->table}.plan_id = {$plan_table}.id
@@ -66,7 +68,7 @@ class Orders {
 			$args['limit']
 		);
 
-		$result = $this->wpdb->get_results( $stmt, ARRAY_A );
+		$result = $this->db->get_results( $stmt, ARRAY_A );
 
 		return $result;
 
@@ -74,9 +76,9 @@ class Orders {
 
 	public function get_order( $order_id = 0 ) {
 
-		$stmt = $this->wpdb->prepare( "SELECT * FROM $this->table WHERE id = %d", $order_id );
+		$stmt = $this->db->prepare( "SELECT * FROM $this->table WHERE id = %d", $order_id );
 
-		return $this->wpdb->get_row( $stmt, OBJECT );
+		return $this->db->get_row( $stmt, OBJECT );
 
 	}
 
@@ -95,7 +97,7 @@ class Orders {
 			$table = $this->table;
 		}
 
-		$update = $this->wpdb->update(
+		$update = $this->db->update(
 			$table,
 			$args,
 			$compare,
@@ -104,7 +106,7 @@ class Orders {
 		);
 
 		if ( false === $update ) {
-			return $this->wpdb->last_error;
+			return $this->db->last_error;
 		}
 
 		return $update;
@@ -150,7 +152,7 @@ class Orders {
 		$format_c = [ '%d' ];
 
 		$edited = $this->edit( $args, $compare, $format_v, $format_c,
-			$this->wpdb->prefix . 'subway_memberships_orders_details' );
+			$this->db->prefix . 'subway_memberships_orders_details' );
 
 
 		$uri_params = [
