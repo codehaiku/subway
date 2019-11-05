@@ -210,23 +210,34 @@ class Payment {
 
 				$plan_id = $payment->getTransactions()[0]->getCustom();
 
-				$added_order = $this->wpdb->insert(
+				$plan = new Plan();
+				$plan = $plan->get_plan( $plan_id );
 
+				$plan_name = '';
+
+				if ( $plan ) {
+					$plan->set_product_id( $plan->get_product_id() );
+					$plan_name = sprintf("%s - %s", $plan->get_product_link(), $plan->get_name() );
+				}
+
+				$added_order = $this->wpdb->insert(
 					$this->wpdb->prefix . 'subway_memberships_orders',
 					array(
-						'plan_id'        => $plan_id,
-						'user_id'        => get_current_user_id(),
-						'invoice_number' => $payment->getTransactions()[0]->getInvoiceNumber(),
-						'status'         => $payment->getState(),
-						'amount'         => $payment->getTransactions()[0]->getAmount()->getTotal(),
-						'currency'       => $payment->getTransactions()[0]->getAmount()->getCurrency(),
-						'gateway'        => $this->gateway,
-						'ip_address'     => Helpers::get_ip_address(),
-						'created'        => $payment->getCreateTime(),
-						'last_updated'   => current_time( 'mysql' )
+						'plan_id'            => $plan_id,
+						'recorded_plan_name' => strip_tags( $plan_name ),
+						'user_id'            => get_current_user_id(),
+						'invoice_number'     => $payment->getTransactions()[0]->getInvoiceNumber(),
+						'status'             => $payment->getState(),
+						'amount'             => $payment->getTransactions()[0]->getAmount()->getTotal(),
+						'currency'           => $payment->getTransactions()[0]->getAmount()->getCurrency(),
+						'gateway'            => $this->gateway,
+						'ip_address'         => Helpers::get_ip_address(),
+						'created'            => $payment->getCreateTime(),
+						'last_updated'       => current_time( 'mysql' )
 					),
 					array(
-						'%d', // Product ID.
+						'%d', // Plan ID.
+						'%s', // Recorded Plan Name.
 						'%d', // User ID.
 						'%s', // Invoice No.
 						'%s', // Status.
@@ -288,8 +299,8 @@ class Payment {
 					$user_plans = new Plans( $this->wpdb );
 
 					// Get the Plan's product id.
-					$plans      = new \Subway\Memberships\Plan\Controller();
-					$plan       = $plans->get_plan( $plan_id );
+					$plans = new \Subway\Memberships\Plan\Controller();
+					$plan  = $plans->get_plan( $plan_id );
 
 					$product_id = $plan->get_product_id();
 
