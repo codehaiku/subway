@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'SUBWAY_VERSION', '3.0' );
 
 // Define Database Version.
-define( 'SUBWAY_DB_VERSION', '1.0.6' );
+define( 'SUBWAY_DB_VERSION', uniqid() );
 
 // Define Subway Directory Path.
 define( 'SUBWAY_DIR_PATH', trailingslashit( plugin_dir_path( __FILE__ ) ) );
