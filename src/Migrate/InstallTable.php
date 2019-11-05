@@ -2,6 +2,9 @@
 
 namespace Subway\Migrate;
 
+use Subway\Helpers\Helpers;
+use Subway\Memberships\Orders\Migrate;
+
 class InstallTable {
 
 	protected $wpdb;
@@ -24,10 +27,15 @@ class InstallTable {
 
 		// Install products table.
 		$this->membership_products_install();
+
 		$this->membership_products_plans_install();
+
 		$this->membership_orders_install();
+
 		$this->membership_orders_details_install();
+
 		$this->membership_users_plans_install();
+
 		$this->membership_users_billing_agreements_install();
 
 		return $this;
@@ -36,6 +44,8 @@ class InstallTable {
 	public function update_tables() {
 
 		$this->membership_products_plans_update();
+
+		$this->membership_orders_install_update();
 
 		return $this;
 	}
@@ -179,28 +189,29 @@ class InstallTable {
 
 	protected function membership_orders_install() {
 
-		$table = $this->wpdb->prefix . 'subway_memberships_orders';
+		$orders_migrate = new Migrate( Helpers::get_db() );
 
-		$sql = "CREATE TABLE $table(
-				id mediumint(9) NOT NULL AUTO_INCREMENT,
-				plan_id mediumint(9) NOT NULL,
-				invoice_number varchar(100) NOT NULL,
-				user_id mediumint(9) NOT NULL,
-				status varchar(100) NOT NULL,
-				amount double NOT NULL,
-				tax_rate double NOT NULL,
-				customer_vat_number varchar(100) NOT NULL,
-				currency varchar(50) NOT NULL,
-				gateway varchar(100) NOT NULL,
-				ip_address varchar(100) NOT NULL,
-				created datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-				last_updated datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-				PRIMARY KEY (id)
-			) AUTO_INCREMENT = 1000 $this->collate;";
-
-		dbDelta( $sql );
+		dbDelta( $orders_migrate->sql() );
 
 		update_option( "subway_memberships_orders_version", $this->db_version );
+
+		return $this;
+
+	}
+
+	protected function membership_orders_install_update() {
+
+		$table_version = get_option( "subway_memberships_orders_version" );
+
+		if ( $table_version !== $this->db_version ) {
+
+			$orders_migrate = new Migrate( Helpers::get_db() );
+
+			dbDelta( $orders_migrate->sql() );
+
+			update_option( "subway_memberships_orders_version", $this->db_version );
+
+		}
 
 		return $this;
 
