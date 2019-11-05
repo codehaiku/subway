@@ -9,6 +9,13 @@ class ListTable extends \WP_List_Table {
 
 	var $found_data = array();
 
+	var $plan = null;
+
+	function __construct( $args = array() ) {
+		parent::__construct( $args );
+		$this->plan = new Plan();
+	}
+
 	function get_columns() {
 
 		$columns = array(
@@ -145,33 +152,31 @@ class ListTable extends \WP_List_Table {
 
 			case 'name':
 
-				$product_id = $item['product_id'];
+				$plan_id = $item['plan_id'];
 
-				$product_edit_link = esc_url( add_query_arg( [
-					'page'    => 'subway-membership',
-					'edit'    => 'yes',
-					'product' => $product_id
-				],
-					admin_url( 'wp-admin/user-edit.php' )
-				) );
+				$plan_edit_link = $this->plan->get_edit_url( $plan_id );
 
-				$product_edit_link = wp_nonce_url( $product_edit_link, sprintf( 'edit_product_%s', $product_id ), '_wpnonce' );
+				$this->plan->set_product_id( 1 );
 
 				$product_column = sprintf(
-					"<a href='%s' title='%s'>%s</a>",
-					$product_edit_link,
-					$item[ $column_name ],
-					$item[ $column_name ]
+					"<strong>%s</strong><br/><a href='%s' title='%s'>%s</a>",
+					$this->plan->get_product_link( $plan_id ),
+					$plan_edit_link, $item[ $column_name ],$item[ $column_name ]
 				);
 
 				return apply_filters( 'subway_orders_list_table_product', $product_column );;
 
 				break;
+
 			case 'order_created':
 			case 'order_last_updated':
+
 				return date( $datetime_format, strtotime( $item[ $column_name ] ) );
+
 				break;
+
 			default:
+
 				return $item[ $column_name ];
 		}
 
@@ -226,11 +231,11 @@ class ListTable extends \WP_List_Table {
 
 			check_admin_referer( 'bulk-' . $this->_args['plural'] );
 
-			$product_ids = filter_input( INPUT_POST, 'product_ids',
+			$plan_id_collection = filter_input( INPUT_POST, 'plan_id_collection',
 				FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 
-			if ( ! empty( $product_ids ) ) {
-				foreach ( $product_ids as $id ) {
+			if ( ! empty( $plan_id_collection ) ) {
+				foreach ( $plan_id_collection as $id ) {
 					$order->delete( $id );
 				}
 			}

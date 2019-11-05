@@ -49,7 +49,7 @@ class Orders {
 				$this->table . '.user_id as order_user_id',
 				$this->table . '.status as order_status',
 				$this->table . '.gateway as order_gateway',
-				$plan_table . '.id as product_id',
+				$plan_table . '.id as plan_id',
 				$plan_table . '.name'
 			]
 		);
