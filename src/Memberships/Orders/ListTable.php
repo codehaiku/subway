@@ -13,19 +13,20 @@ class ListTable extends \WP_List_Table {
 	var $plan = null;
 
 	function __construct( $args = array() ) {
+
 		parent::__construct( $args );
 		$this->plan = new Plan();
+
 	}
 
 	function get_columns() {
 
 		$columns = array(
-			'cb'      => '<input type="checkbox" />',
-			'created' => 'Created',
-			'plan_id' => 'Membership Plan',
-			'id'      => 'Order ID',
-			'amount'  => 'Amount',
-			'user_id' => 'Customer',
+			'cb'                 => '<input type="checkbox" />',
+			'created'            => esc_html__( 'Created', 'subway' ),
+			'recorded_plan_name' => esc_html__( 'Plan Name', 'subway' ),
+			'amount'             => esc_html__( 'Amount', 'subway' ),
+			'user_id'            => esc_html__( 'Customer', 'subway' ),
 		);
 
 		return $columns;
@@ -102,8 +103,8 @@ class ListTable extends \WP_List_Table {
 
 			case 'amount':
 
-				$src           = 'https://www.paypalobjects.com/webstatic/mktg/logo-center/PP_Acceptance_Marks_for_LogoCenter_76x48.png';
-				$amount_column = '<img style="vertical-align: middle;" width="32" alt="PayPal Logo" src="' . esc_url( $src ) . '" />';
+				$src           = apply_filters('subway_memberships_orders_paypal_logo', 'https://www.paypalobjects.com/webstatic/mktg/logo-center/PP_Acceptance_Marks_for_LogoCenter_76x48.png');
+				$amount_column = '<img style="vertical-align: middle;" width="32" alt="' . esc_attr__('PayPal Logo', 'subway') . '" src="' . esc_url( $src ) . '" />';
 				$amount        = $currency->format( $item[ $column_name ], get_option( 'subway_currency', 'USD' ) );
 				$amount_column = $amount_column . '&nbsp;' . $amount;
 
@@ -117,7 +118,7 @@ class ListTable extends \WP_List_Table {
 
 				$user = get_userdata( $user_id );
 
-				$user_column = esc_html__( 'Error: WP User was not found. User might be deleted.', 'box-membership' );
+				$user_column = esc_html__( '[Unknown User]', 'box-membership' );
 
 				if ( $user ) {
 
@@ -196,7 +197,7 @@ class ListTable extends \WP_List_Table {
 
 	}
 
-	function process_bulk_action( $membership ) {
+	function process_bulk_action( $order ) {
 
 		if ( 'delete' === $this->current_action() ) {
 
@@ -226,5 +227,3 @@ class ListTable extends \WP_List_Table {
 	}
 
 }
-
-$list_table = new ListTable();
