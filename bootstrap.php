@@ -125,3 +125,7 @@ $user_controller->attach_hooks();
 // Load Products Actions.
 $hook_products = new Actions();
 $hook_products->attach_hooks();
+
+// Load Orders Actions
+$hook_orders = new \Subway\Memberships\Orders\Actions();
+$hook_orders->attach_hooks();
