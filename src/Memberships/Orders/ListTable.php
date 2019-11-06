@@ -172,7 +172,7 @@ class ListTable extends \WP_List_Table {
 		);
 
 		$actions = array(
-			'edit'   => sprintf( '<a href="%s">' . esc_html__( 'See Payment Details', 'subway' ) . '</a>', esc_url( $edit_url ) ),
+			'edit'   => sprintf( '<a href="%s">' . esc_html__( 'Order Details', 'subway' ) . '</a>', esc_url( $edit_url ) ),
 			'trash' => sprintf( '<a href="%s">' . esc_html__( 'Cancel', 'subway' ) . '</a>', esc_url( $cancel_url ) ),
 		);
 
