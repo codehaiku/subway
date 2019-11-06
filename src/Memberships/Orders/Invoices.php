@@ -9,15 +9,15 @@ class Invoices {
 
 	protected $id = 0;
 	protected $user = 0;
-	protected $wpdb = '';
+	protected $db = null;
 	protected $table_orders = '';
 	protected $table_orders_details = '';
 
-	public function __construct( \wpdb $wpdb ) {
+	public function __construct() {
 
-		$this->wpdb                 = $wpdb;
-		$this->table_orders         = $this->wpdb->prefix . 'subway_memberships_orders';
-		$this->table_orders_details = $this->wpdb->prefix . 'subway_memberships_orders_details';
+		$this->db                   = Helpers::get_db();
+		$this->table_orders         = $this->db->prefix . 'subway_memberships_orders';
+		$this->table_orders_details = $this->db->prefix . 'subway_memberships_orders_details';
 
 		return $this;
 
@@ -27,7 +27,9 @@ class Invoices {
 	 * @return string
 	 */
 	public function get_user() {
+
 		return $this->user;
+
 	}
 
 	/**
@@ -36,6 +38,7 @@ class Invoices {
 	 * @return Invoices
 	 */
 	public function set_user( $user ) {
+
 		$this->user = $user;
 
 		return $this;
@@ -69,14 +72,14 @@ class Invoices {
 
 		$invoice = [];
 
-		$stmt = $this->wpdb->prepare(
+		$stmt = $this->db->prepare(
 			"SELECT * FROM $this->table_orders WHERE id = %d AND user_id = %d",
 			$this->get_id(),
 			$this->get_user()
 		);
 
 		// Get the order
-		$order = $this->wpdb->get_row( $stmt, OBJECT );
+		$order = $this->db->get_row( $stmt, OBJECT );
 
 		$details       = new Details( Helpers::get_db() );
 		$order_details = $details->get( $order->id );
@@ -90,14 +93,12 @@ class Invoices {
 
 	public function get_user_invoices() {
 
-		$user = $this->user;
-
-		$stmt = $this->wpdb->prepare(
+		$stmt = $this->db->prepare(
 			"SELECT * FROM $this->table_orders WHERE user_id = %d AND status = %s",
 			$this->get_user(), 'approved'
 		);
 
-		$results = $this->wpdb->get_results( $stmt, OBJECT );
+		$results = $this->db->get_results( $stmt, OBJECT );
 
 		$invoices = [];
 
