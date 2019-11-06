@@ -75,24 +75,9 @@ class InstallTable {
 
 	protected function membership_products_plans_install() {
 
-		$table = $this->wpdb->prefix . "subway_memberships_products_plans";
+		$migrate = new \Subway\Memberships\Plan\Migrate();
 
-		$sql = "CREATE TABLE $table (
-				id mediumint(9) NOT NULL AUTO_INCREMENT,
-				product_id mediumint(9) NOT NULL,
-				name tinytext NOT NULL,
-				sku tinytext NOT NULL,
-				description text NULL,
-				amount double NOT NULL,
-				status varchar(100) DEFAULT 'draft',
-				type tinytext NOT NULL,
-				date_created datetime DEFAULT CURRENT_TIMESTAMP,
-				date_updated datetime DEFAULT CURRENT_TIMESTAMP,
-				PRIMARY KEY  (id)
-			) $this->collate;";
-
-
-		dbDelta( $sql );
+		dbDelta( $migrate->sql() );
 
 		update_option( "subway_memberships_products_plans_version", $this->db_version );
 
@@ -104,27 +89,9 @@ class InstallTable {
 
 		$table_version = get_option( "subway_memberships_products_plans_version" );
 
-		$table = $this->wpdb->prefix . "subway_memberships_products_plans";
-
 		if ( $table_version !== $this->db_version ) {
 
-			$sql = "CREATE TABLE $table (
-						id mediumint(9) NOT NULL AUTO_INCREMENT,
-						product_id mediumint(9) NOT NULL,
-						name tinytext NOT NULL,
-						sku tinytext NOT NULL,
-						description text NULL,
-						amount double NOT NULL,
-						status varchar(100) DEFAULT 'draft',
-						type tinytext NOT NULL,
-						date_created datetime DEFAULT CURRENT_TIMESTAMP,
-						date_updated datetime DEFAULT CURRENT_TIMESTAMP
-						PRIMARY KEY  (id)
-				) $this->collate;";
-
-			dbDelta( $sql );
-
-			update_option( "subway_memberships_products_plans_version", $this->db_version );
+			$this->membership_products_plans_install();
 
 			return $this;
 
