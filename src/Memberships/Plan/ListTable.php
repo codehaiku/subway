@@ -102,7 +102,7 @@ class ListTable extends \WP_List_Table {
 			'status'    => $status
 		) );
 
-		$total_items = absint( get_option( 'subway_plans_count' ) );
+		$total_items = $plan->get_num_total();
 
 		if ( ! empty( $search_value ) ) {
 			$total_items = count( $data );
@@ -178,7 +178,6 @@ class ListTable extends \WP_List_Table {
 				'delete' => sprintf( '<a href="%s">' . esc_html__( 'Delete Permanently', 'subway' ) . '</a>', esc_url( $delete_url ) ),
 			);
 		}
-
 
 		$plan_name = sprintf( '<strong><a href="%1$s" title="%2$s">%2$s</a></strong>', $edit_url, $item['name'] );
 

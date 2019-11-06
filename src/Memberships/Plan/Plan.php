@@ -872,4 +872,12 @@ class Plan {
 
 	}
 
+	public function get_num_total() {
+
+		$stmt = $this->db->prepare( "SELECT COUNT(id) FROM $this->table WHERE id > %d; ", 0 );
+
+		return $this->db->get_var( $stmt );
+		
+	}
+
 }

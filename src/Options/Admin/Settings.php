@@ -555,7 +555,7 @@ class Settings {
 		$args = array(
 			'label'   => esc_html__( 'Plan', 'subway' ),
 			'default' => 10,
-			'option'  => 'products_per_page'
+			'option'  => 'plans_per_page'
 		);
 
 		add_screen_option( $option, $args );
