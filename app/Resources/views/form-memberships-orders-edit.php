@@ -102,7 +102,7 @@
                 </tr>
                 </tbody>
             </table>
-            <p>
+            <p> 
 				<?php esc_html_e( 'Payment has been made using the IP Address:', 'subway' ); ?>
 				<?php echo esc_html( $order->ip_address ); ?>
             </p>

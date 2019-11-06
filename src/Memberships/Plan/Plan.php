@@ -877,7 +877,7 @@ class Plan {
 		$stmt = $this->db->prepare( "SELECT COUNT(id) FROM $this->table WHERE id > %d; ", 0 );
 
 		return $this->db->get_var( $stmt );
-		
+
 	}
 
 }
