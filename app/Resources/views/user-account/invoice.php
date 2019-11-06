@@ -11,8 +11,8 @@
 
             <tr>
                 <th><?php esc_html_e( 'Date', 'subway' ); ?></th>
-                <th><?php esc_html_e( 'Product - Plan', 'subway' ); ?></th>
-                <th><?php esc_html_e( 'Invoice Number', 'subway' ); ?></th>
+                <th><?php esc_html_e( 'Plan', 'subway' ); ?></th>
+                <th><?php esc_html_e( 'Invoice', 'subway' ); ?></th>
                 <th><?php esc_html_e( 'Amount Paid', 'subway' ); ?></th>
                 <th><?php esc_html_e( 'Status', 'subway' ); ?></th>
             </tr>
