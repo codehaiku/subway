@@ -22,7 +22,7 @@ class Pricing extends Plan {
 	protected $date_created = '';
 	protected $date_updated = '';
 
-	protected $table = null;
+	var $table = null;
 
 	public function __construct() {
 		parent::__construct();
@@ -58,10 +58,19 @@ class Pricing extends Plan {
 	}
 
 	/**
-	 * @return null
+	 * @param $id
+	 * @param string $status
+	 *
+	 * @return bool|mixed|Plan
 	 */
-	public function get_plan() {
-		return $this->plan;
+	public function get_plan( $id, $status = 'public' ) {
+
+		if ( ! empty( $this->get_plan_id() ) ) {
+			$id = $this->get_plan_id();
+		}
+
+		return $this->get_plan( $id, $status = 'public' );
+
 	}
 
 	/**
