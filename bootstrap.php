@@ -111,7 +111,7 @@ $checkout = new Repair( $wpdb );
 $checkout->attach_hooks();
 
 // Load Orders Actions
-$order = new Orders( $wpdb );
+$order = new Orders();
 $order->attach_hooks();
 
 // Load Plan Controller.
