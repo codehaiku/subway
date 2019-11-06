@@ -231,84 +231,10 @@
 
         </div>
 
-        <div>
-            <h3>
-				<?php esc_html_e( 'My Invoices', 'subway' ); ?>
-            </h3>
-            <div class="subway-flex-wrap">
-                <div class="subway-flex-column-100">
-                    <table class="subway-membership-lists subway-mg-top-zero">
-                        <thead>
-                        <tr>
-                            <th><?php esc_html_e( 'Date', 'subway' ); ?></th>
-                            <th><?php esc_html_e( 'Plan', 'subway' ); ?></th>
-                            <th><?php esc_html_e( 'Invoice Number', 'subway' ); ?></th>
-                            <th><?php esc_html_e( 'Total Amount', 'subway' ); ?></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-						<?php if ( ! empty( $invoices ) ): ?>
-							<?php foreach ( $invoices as $invoice ): ?>
-								<?php $item = $plan->get_plan( $invoice->plan_id ); ?>
-								<?php if ( $item ): ?>
-                                    <tr>
-                                        <td><?php echo esc_html( $invoice->created ); ?></td>
-                                        <td>
-                                            <h4 class="subway-mg-top-zero subway-mg-bot-zero">
-												<?php echo $item->get_product_link(); ?>
-                                            </h4>
-                                            <a href="<?php echo esc_url( $item->get_plan_url() ); ?>"
-                                               title="<?php echo esc_attr( $item->get_name() ); ?>">
-												<?php echo esc_html( $item->get_name() ); ?>
-                                            </a>
+        <div id="subway-user-invoices">
 
-                                        </td>
-                                        <td>
+            <?php $this->render('invoice', ['invoices' => $invoices, 'options' => $options ], false, 'user-account'); ?>
 
-											<?php
-											$invoice_url = add_query_arg( [
-												'account-page' => 'invoice',
-												'invoice_id'   => $invoice->id
-											], $options->get_accounts_page_url() );
-											?>
-
-                                            <a href="<?php echo esc_url( $invoice_url ); ?>"
-                                               title="<?php echo esc_html( $invoice->invoice_number ); ?>">
-
-												<?php echo esc_html( $invoice->invoice_number ); ?>
-
-                                            </a>
-                                        </td>
-
-                                        <td>
-											<?php echo esc_html( $invoice->amount ); ?>
-                                        </td>
-                                    </tr>
-								<?php endif; ?>
-
-							<?php endforeach; ?>
-						<?php else: ?>
-                            <tr>
-                                <td colspan="4">
-									<?php esc_html_e( 'There are no invoices found.', 'subway' ); ?>
-                                </td>
-                            </tr>
-						<?php endif; ?>
-
-                        </tbody>
-                        <tfoot>
-                        <tr>
-                            <td colspan="4">
-								<?php $invoice_count = count( $invoices ); ?>
-								<?php printf( _n( 'Found %d Invoice', 'Found %d Invoices', $invoice_count, 'subway' ), number_format_i18n( $invoice_count ) ); ?>
-                            </td>
-                        </tr>
-                        </tfoot>
-                    </table>
-
-                </div>
-
-            </div>
         </div>
         <h6>
             <a class="sw-button sw-button-danger" title="<?php esc_attr_e( 'Sign out of my account', 'subway' ); ?>"
