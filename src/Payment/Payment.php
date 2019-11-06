@@ -214,10 +214,19 @@ class Payment {
 				$plan = $plan->get_plan( $plan_id );
 
 				$plan_name = '';
+				$tax_rate  = 0;
 
 				if ( $plan ) {
+					// Set plan product id.
 					$plan->set_product_id( $plan->get_product_id() );
-					$plan_name = sprintf("%s - %s", $plan->get_product_link(), $plan->get_name() );
+					// Format product and plan.
+					$plan_name = sprintf( "%s - %s", $plan->get_product_link(), $plan->get_name() );
+					// Get the corresponding product.
+					$product   = $plan->get_product();
+					// Get tax rate.
+					if ( $product ) {
+						$tax_rate = $product->get_tax_rate();
+					}
 				}
 
 				$added_order = $this->wpdb->insert(
@@ -229,6 +238,7 @@ class Payment {
 						'invoice_number'     => $payment->getTransactions()[0]->getInvoiceNumber(),
 						'status'             => $payment->getState(),
 						'amount'             => $payment->getTransactions()[0]->getAmount()->getTotal(),
+						'tax_rate'           => $tax_rate,
 						'currency'           => $payment->getTransactions()[0]->getAmount()->getCurrency(),
 						'gateway'            => $this->gateway,
 						'ip_address'         => Helpers::get_ip_address(),
@@ -242,6 +252,7 @@ class Payment {
 						'%s', // Invoice No.
 						'%s', // Status.
 						'%f', // Amount.
+						'%f', // Tax Rate.
 						'%s', // Currency.
 						'%s', // Gateway.
 						'%s', // Ip Address.
