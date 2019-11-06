@@ -137,6 +137,8 @@ class Controller extends Plan {
 
 		check_admin_referer( 'subway_plan_edit_action', 'subway_plan_edit_action' );
 
+		do_action('subway_membership_plans_edit_before');
+
 		$id      = filter_input( 0, 'plan_id', 519 );
 		$title   = filter_input( 0, 'title', 513 );
 		$desc    = filter_input( 0, 'description', FILTER_DEFAULT );
@@ -216,6 +218,8 @@ class Controller extends Plan {
 				'message' => __( 'Memberships Plan has been successfully updated.', 'subway' )
 			] );
 		}
+
+		do_action('subway_membership_plans_edit_after');
 
 		wp_safe_redirect( $referrer, 302 );
 

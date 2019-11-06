@@ -5,10 +5,10 @@ namespace Subway\Bootstrap;
 use Subway\Api\Products as ApiProducts;
 use Subway\Archives\Author;
 use Subway\Hooks\Hooks;
-use Subway\Memberships\Orders\Details;
-use Subway\Memberships\Orders\Orders;
 use Subway\Memberships\Plan\Controller;
+use Subway\Memberships\Plan\Pricing\Actions as PricingActions;
 use Subway\Memberships\Product\Actions;
+use Subway\Memberships\Orders\Actions as OrdersActions;
 use Subway\Migrate\InstallTable;
 use Subway\Options\Admin\Settings;
 use Subway\Post\Shortcodes\Checkout;
@@ -27,6 +27,7 @@ use Subway\User\User;
 use Subway\Enqueue\Enqueue;
 use Subway\Helpers\Helpers;
 use Subway\Taxonomy\Taxonomy;
+
 
 global $wpdb;
 
@@ -123,5 +124,9 @@ $hook_products = new Actions();
 $hook_products->attach_hooks();
 
 // Load Orders Actions
-$hook_orders = new \Subway\Memberships\Orders\Actions();
+$hook_orders = new OrdersActions();
 $hook_orders->attach_hooks();
+
+// Load Pricing Actions.
+$hooks_pricing = new PricingActions();
+$hooks_pricing->attach_hooks();
