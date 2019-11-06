@@ -4,7 +4,7 @@ namespace Subway\Memberships\Orders;
 
 class Actions extends Orders {
 
-	const trash_order_action = 'subway_trash_order';
+	const cancel_order_action = 'subway_cancel_order';
 
 	const edit_action = 'subway_order_edit';
 
@@ -16,7 +16,7 @@ class Actions extends Orders {
 
 		$order_id = filter_input( 1, 'order-id', FILTER_SANITIZE_NUMBER_INT );
 
-		check_admin_referer( self::trash_order_action );
+		check_admin_referer( self::cancel_order_action );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_die( __( 'Error: You are not allowed to do that.', 'subway' ) );
@@ -90,7 +90,7 @@ class Actions extends Orders {
 
 	public function attach_hooks() {
 
-		add_action( "admin_post_" . self::trash_order_action, [ $this, 'trash_order_action' ] );
+		add_action( "admin_post_" . self::cancel_order_action, [ $this, 'trash_order_action' ] );
 		add_action( "admin_post_" . self::edit_action, [ $this, 'edit_action' ] );
 
 	}
