@@ -1,3 +1,5 @@
+<?php $currency = new Subway\Currency\Currency(); ?>
+
 <div class="wrap">
 
     <h1 class="wp-heading-inline">
@@ -43,60 +45,59 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td>Order ID</td>
+                    <td><?php esc_html_e('Order ID', 'subway'); ?></td>
                     <td><?php echo esc_html( $order->id ); ?></td>
                 </tr>
                 <tr>
-                    <td>Invoice Number</td>
+                    <td><?php esc_html_e('Invoice Number', 'subway'); ?></td>
                     <td><?php echo esc_html( $order->invoice_number ); ?></td>
                 </tr>
 
                 <tr>
-					<?php
-					$plans = new \Subway\Memberships\Plan\Plan();
-					$plan  = $plans->get_plan( $order->plan_id );
-					?>
-                    <td>Product/Plan ID</td>
-                    <td><?php echo esc_html( $plan->get_name() ); ?></td>
+
+                    <td><?php esc_html_e('Product - Plan', 'subway'); ?></td>
+                    <td>
+						<?php echo esc_html( $order->recorded_plan_name ); ?>
+                    </td>
                 </tr>
                 <tr>
-                    <td>Customer ID</td>
-                    <td><?php echo esc_html( $order->user_id ); ?></td>
+                    <td><?php esc_html_e('Customer ID', 'subway'); ?></td>
+                    <td>
+						<?php echo esc_html( $order->user_id ); ?>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><?php esc_html_e('Tax Rate', 'subway'); ?></td>
+                    <td><?php printf( '%s%%', $order->tax_rate ); ?></td>
                 </tr>
                 <tr>
-                    <td>Amount</td>
-                    <td><?php echo esc_html( $plan->get_real_amount() ); ?></td>
+                    <td><?php esc_html_e('Amount Paid', 'subway'); ?></td>
+                    <td>
+						<?php
+
+						echo esc_html( $currency->format( $order->amount, $order->currency ) );
+						?>
+                    </td>
                 </tr>
                 <tr>
-                    <td>Displayed Amount</td>
-                    <td><?php echo esc_html( $plan->get_displayed_price_without_tax() ); ?></td>
-                </tr>
-                <tr>
-                    <td>Tax Rate</td>
-                    <td><?php echo esc_html( $plan->get_tax_rate() ); ?>%</td>
-                </tr>
-                <tr>
-                    <td>Displayed Total Amount</td>
-                    <td><?php echo esc_html( $plan->get_displayed_price() ); ?></td>
-                </tr>
-                <tr>
-                    <td>Currency</td>
+                    <td><?php esc_html_e('Currency', 'subway'); ?></td>
                     <td><?php echo esc_html( $order->currency ); ?></td>
                 </tr>
                 <tr>
-                    <td>Vat Number</td>
+                    <td><?php esc_html_e('Vat Number', 'subway'); ?></td>
                     <td><?php echo esc_html( $order->customer_vat_number ); ?></td>
                 </tr>
                 <tr>
-                    <td>Status</td>
+                    <td><?php esc_html_e('Status', 'subway'); ?></td>
                     <td><?php echo esc_html( $order->status ); ?></td>
                 </tr>
                 <tr>
-                    <td>Created</td>
+                    <td><?php esc_html_e('Created', 'subway'); ?></td>
                     <td><?php echo esc_html( $order->created ); ?></td>
                 </tr>
                 <tr>
-                    <td>Last Updated</td>
+                    <td><?php esc_html_e('Last Updated', 'subway'); ?></td>
                     <td><?php echo esc_html( $order->last_updated ); ?></td>
                 </tr>
                 </tbody>
