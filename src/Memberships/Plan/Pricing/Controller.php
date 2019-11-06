@@ -30,11 +30,17 @@ class Controller extends Pricing {
 		// Check if the record exists.
 		if ( $this->get() ) {
 			// Update if it does.
-			$this->db->update( $this->table, $args, [ 'id' => $this->get_id() ] );
+			if ( false !== $this->db->update( $this->table, $args, [ 'id' => $this->get_id() ] ) ) {
+				return true;
+			}
 		} else {
 			// Otherwise, insert new data.
-			$this->db->insert( $this->table, $args );
+			if ( $this->db->insert( $this->table, $args ) ) {
+				return true;
+			}
 		}
+
+		return false;
 
 	}
 

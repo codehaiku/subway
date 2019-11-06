@@ -28,15 +28,23 @@ class InstallTable {
 		// Install products table.
 		$this->membership_products_install();
 
+		// Install Product Plans.
 		$this->membership_products_plans_install();
 
+		// Install Orders.
 		$this->membership_orders_install();
 
+		// Install Order Details.
 		$this->membership_orders_details_install();
 
+		// Install User Plans.
 		$this->membership_users_plans_install();
 
+		// Install Billing Agreements.
 		$this->membership_users_billing_agreements_install();
+
+		// Install Pricing.
+		$this->plans_pricing_install();
 
 		return $this;
 	}
@@ -48,6 +56,34 @@ class InstallTable {
 		$this->membership_orders_install_update();
 
 		return $this;
+	}
+
+	public function plans_pricing_install() {
+
+		$migrate = new \Subway\Memberships\Plan\Pricing\Migrate();
+
+		dbDelta( $migrate->sql() );
+
+		update_option( "subway_memberships_products_plans_pricing_version", $this->db_version );
+
+		return $this;
+
+	}
+
+	protected function plans_pricing_install_update() {
+
+		$table_version = get_option( "subway_memberships_products_plans_pricing_version" );
+
+		if ( $table_version !== $this->db_version ) {
+
+			$this->plans_pricing_install();
+
+			return $this;
+
+		}
+
+		return $this;
+
 	}
 
 	protected function membership_products_install() {
