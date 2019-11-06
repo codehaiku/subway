@@ -12,8 +12,6 @@ class Orders {
 
 	protected $db = null;
 
-	const count_key = 'subway_count_orders';
-
 	public function __construct() {
 
 		$this->db = Helpers::get_db();
@@ -31,9 +29,9 @@ class Orders {
 	 *
 	 * @return string
 	 */
-	public function get_trash_url( $order_id ) {
+	public function get_cancel_url( $order_id ) {
 
-		$action = 'subway_trash_order';
+		$action = 'subway_cancel_order';
 
 		return add_query_arg( [
 			'order-id' => $order_id,
@@ -133,10 +131,7 @@ class Orders {
 		$stmt = $this->db->prepare( "SELECT COUNT(id) FROM $this->table WHERE status = %s'; ", 'approved' );
 
 		return $this->db->get_var( $stmt );
-		
+
 	}
 
-	public function attach_hooks() {
-		return $this;
-	}
 }
