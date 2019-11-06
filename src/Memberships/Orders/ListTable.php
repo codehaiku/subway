@@ -12,10 +12,13 @@ class ListTable extends \WP_List_Table {
 
 	var $plan = null;
 
+	var $order = null;
+
 	function __construct( $args = array() ) {
 
 		parent::__construct( $args );
 		$this->plan = new Plan();
+		$this->order  = new Orders();
 
 	}
 
@@ -65,7 +68,7 @@ class ListTable extends \WP_List_Table {
 			'limit'   => $per_page
 		) );
 
-		$total_items = absint( get_option( 'subway_count_orders', 0 ) );
+		$total_items = $this->order->get_num_approved_orders();
 
 		$this->set_pagination_args( array(
 			'total_items' => $total_items, // We have to calculate the total number of items.
@@ -160,16 +163,7 @@ class ListTable extends \WP_List_Table {
 			get_option( 'date_format', 'F j, Y' )
 		);
 
-		$trash_uri = esc_url( add_query_arg( array(
-			'action' => 'listing_delete_action',
-			'id'     => $item['id'],
-		), get_admin_url() . 'admin-post.php' ) );
-
-		$delete_url = wp_nonce_url(
-			$trash_uri,
-			sprintf( 'trash_order_%s', $item['id'] ),
-			'_wpnonce'
-		);
+		$trash_url = $this->order->get_trash_url( $item['id'] );
 
 		$edit_url = wp_nonce_url(
 			sprintf( '?page=%s&edit=%s&order=%s', $_REQUEST['page'], 'yes', $item['id'] ),
@@ -179,7 +173,7 @@ class ListTable extends \WP_List_Table {
 
 		$actions = array(
 			'edit'   => sprintf( '<a href="%s">' . esc_html__( 'See Payment Details', 'subway' ) . '</a>', esc_url( $edit_url ) ),
-			'delete' => sprintf( '<a href="%s">' . esc_html__( 'Trash', 'subway' ) . '</a>', esc_url( $delete_url ) ),
+			'trash' => sprintf( '<a href="%s">' . esc_html__( 'Trash', 'subway' ) . '</a>', esc_url( $trash_url ) ),
 		);
 
 		return sprintf( '%1$s %2$s', '<a href="#"><strong>' . date( $datetime_format, strtotime( $item['created'] ) ) . '</strong></a>',
