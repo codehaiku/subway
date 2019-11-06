@@ -12,9 +12,9 @@ final class Migrate extends Pricing {
 	}
 
 	public function sql() {
-		return "CREATE TABLE $this->table (
+		return "CREATE TABLE IF NOT EXISTS $this->table (
 				id mediumint(9) NOT NULL AUTO_INCREMENT,
-				plan_id mediumint(9) NOT NULL AUTO_INCREMENT,
+				plan_id mediumint(9) NOT NULL,
 				billing_cycle_frequency smallint(9) NOT NULL,
 				billing_cycle_period varchar(100) NOT NULL,
 				billing_limit mediumint(9) NOT NULL,
