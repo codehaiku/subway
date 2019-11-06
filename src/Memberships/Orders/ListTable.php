@@ -163,7 +163,7 @@ class ListTable extends \WP_List_Table {
 			get_option( 'date_format', 'F j, Y' )
 		);
 
-		$trash_url = $this->order->get_trash_url( $item['id'] );
+		$cancel_url = $this->order->get_cancel_url( $item['id'] );
 
 		$edit_url = wp_nonce_url(
 			sprintf( '?page=%s&edit=%s&order=%s', $_REQUEST['page'], 'yes', $item['id'] ),
@@ -173,7 +173,7 @@ class ListTable extends \WP_List_Table {
 
 		$actions = array(
 			'edit'   => sprintf( '<a href="%s">' . esc_html__( 'See Payment Details', 'subway' ) . '</a>', esc_url( $edit_url ) ),
-			'trash' => sprintf( '<a href="%s">' . esc_html__( 'Trash', 'subway' ) . '</a>', esc_url( $trash_url ) ),
+			'cancel' => sprintf( '<a href="%s">' . esc_html__( 'Cancel', 'subway' ) . '</a>', esc_url( $cancel_url ) ),
 		);
 
 		return sprintf( '%1$s %2$s', '<a href="#"><strong>' . date( $datetime_format, strtotime( $item['created'] ) ) . '</strong></a>',
