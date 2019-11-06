@@ -12,7 +12,9 @@ class Orders {
 
 	protected $db = null;
 
-	public function __construct( \wpdb $wpdb ) {
+	const count_key = 'subway_count_orders';
+
+	public function __construct() {
 
 		$this->db = Helpers::get_db();
 
@@ -22,7 +24,33 @@ class Orders {
 
 	}
 
-	public function get_orders( $args = [] ) {
+	/**
+	 * Returns the url for trashing orders.
+	 *
+	 * @param $order_id
+	 *
+	 * @return string
+	 */
+	public function get_trash_url( $order_id ) {
+
+		$action = 'subway_trash_order';
+
+		return add_query_arg( [
+			'order-id' => $order_id,
+			'_wpnonce' => wp_create_nonce( $action ),
+			'action'   => $action
+		], admin_url( 'admin-post.php' ) );
+
+	}
+
+	/**
+	 * Fetch orders.
+	 *
+	 * @param array $args
+	 *
+	 * @return array|object|null
+	 */
+	public function get_orders( $args = [], $status = 'approved' ) {
 
 		$defaults = [
 			'orderby' => 'created',
@@ -37,12 +65,13 @@ class Orders {
 
 		$stmt = $this->db->prepare( "
 				SELECT $fields FROM $this->table 
-				WHERE id > %d
+				WHERE id > %d and status = %s
 				ORDER BY {$args['orderby']} {$args['order']}
 				LIMIT %d OFFSET %d
 				"
 			,
 			0,
+			$status,
 			$args['limit'],
 			$args['offset']
 		);
@@ -53,6 +82,13 @@ class Orders {
 
 	}
 
+	/**
+	 * Fetches single order via order id.
+	 *
+	 * @param int $order_id
+	 *
+	 * @return array|object|void|null
+	 */
 	public function get_order( $order_id = 0 ) {
 
 		$stmt = $this->db->prepare( "SELECT * FROM $this->table WHERE id = %d", $order_id );
@@ -92,73 +128,15 @@ class Orders {
 
 	}
 
-	private function edit_submit() {
+	public function get_num_approved_orders() {
 
-		Helpers::debug( $_POST );
+		$stmt = $this->db->prepare( "SELECT COUNT(id) FROM $this->table WHERE status = %s'; ", 'approved' );
 
-		do_action( 'orders_edit_submit' );
-
-		$gateway_customer_name           = filter_input( 0, 'gateway_customer_name', 516 );
-		$gateway_customer_lastname       = filter_input( 0, 'gateway_customer_lastname', 516 );
-		$gateway_customer_email          = filter_input( 0, 'gateway_customer_email', 516 );
-		$gateway_customer_address_line_1 = filter_input( 0, 'gateway_customer_address_line_1', 516 );
-		$gateway_customer_address_line_2 = filter_input( 0, 'gateway_customer_address_line_2', 516 );
-		$gateway_customer_postal_code    = filter_input( 0, 'gateway_customer_postal_code', 516 );
-		$gateway_customer_city           = filter_input( 0, 'gateway_customer_city', 516 );
-		$gateway_customer_country        = filter_input( 0, 'gateway_customer_country', 516 );
-		$gateway_customer_state          = filter_input( 0, 'gateway_customer_state', 516 );
-		$gateway_customer_phone_number   = filter_input( 0, 'gateway_customer_phone_number', 516 );
-		$order_id                        = filter_input( 0, 'order_details_id', 516 );
-
-		$args = [
-			'gateway_customer_name'           => $gateway_customer_name,
-			'gateway_customer_lastname'       => $gateway_customer_lastname,
-			'gateway_customer_email'          => $gateway_customer_email,
-			'gateway_customer_address_line_1' => $gateway_customer_address_line_1,
-			'gateway_customer_address_line_2' => $gateway_customer_address_line_2,
-			'gateway_customer_postal_code'    => $gateway_customer_postal_code,
-			'gateway_customer_city'           => $gateway_customer_city,
-			'gateway_customer_country'        => $gateway_customer_country,
-			'gateway_customer_state'          => $gateway_customer_state,
-			'gateway_customer_phone_number'   => $gateway_customer_phone_number,
-		];
-
-		$compare = [
-			'id' => $order_id
-		];
-
-		$format_v = [ '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s' ];
-		$format_c = [ '%d' ];
-
-		$edited = $this->edit( $args, $compare, $format_v, $format_c,
-			$this->db->prefix . 'subway_memberships_orders_details' );
-
-
-		$uri_params = [
-			'page'    => 'subway-membership-orders',
-			'edit'    => 'yes',
-			'success' => 'true',
-			'order'   => $order_id
-		];
-
-		if ( false === $edited ) {
-			$uri_params['type'] = 'fail';
-		}
-
-		$return_url = esc_url_raw( add_query_arg( $uri_params, admin_url( 'admin.php' ) ) );
-
-		wp_safe_redirect( $return_url, 302 );
-
-		exit;
+		return $this->db->get_var( $stmt );
+		
 	}
-
 
 	public function attach_hooks() {
-
-		add_action( 'admin_post_subway_order_edit', function () {
-			$this->edit_submit();
-		}, 10 );
-
+		return $this;
 	}
-
 }
