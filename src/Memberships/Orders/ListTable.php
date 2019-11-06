@@ -173,7 +173,7 @@ class ListTable extends \WP_List_Table {
 
 		$actions = array(
 			'edit'   => sprintf( '<a href="%s">' . esc_html__( 'See Payment Details', 'subway' ) . '</a>', esc_url( $edit_url ) ),
-			'cancel' => sprintf( '<a href="%s">' . esc_html__( 'Cancel', 'subway' ) . '</a>', esc_url( $cancel_url ) ),
+			'trash' => sprintf( '<a href="%s">' . esc_html__( 'Cancel', 'subway' ) . '</a>', esc_url( $cancel_url ) ),
 		);
 
 		return sprintf( '%1$s %2$s', '<a href="#"><strong>' . date( $datetime_format, strtotime( $item['created'] ) ) . '</strong></a>',
