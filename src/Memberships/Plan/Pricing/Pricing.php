@@ -17,6 +17,7 @@ class Pricing extends Plan {
 	protected $billing_cycle_period = '';
 	protected $billing_limit = '';
 	protected $has_trial = false;
+	protected $trial_amount = 0.00;
 	protected $trial_frequency = '';
 	protected $trial_period = '';
 	protected $date_created = '';
@@ -134,6 +135,20 @@ class Pricing extends Plan {
 	 */
 	public function set_has_trial( $has_trial ) {
 		$this->has_trial = $has_trial;
+	}
+
+	/**
+	 * @return float
+	 */
+	public function get_trial_amount() {
+		return $this->trial_amount;
+	}
+
+	/**
+	 * @param float $trial_amount
+	 */
+	public function set_trial_amount( $trial_amount ) {
+		$this->trial_amount = $trial_amount;
 	}
 
 	/**
