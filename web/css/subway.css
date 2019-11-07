@@ -835,3 +835,9 @@ tr.checked > td label.plan-pricing-details {
 .subway-payment-gateway-option:last-child{
     border-left: 0 none;
 }
+.subway-trial-button,
+.entry-content .subway-trial-button {
+    text-decoration: none;
+    font-size: smaller;
+    display: block;
+}
