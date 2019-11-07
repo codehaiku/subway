@@ -784,11 +784,13 @@ table.subway-membership-lists td {
 .product-plan-pricing {
     display: block;
 }
+
 .product-plan-pricing {
     font-weight: normal;
     font-size: larger;
-    margin-left: 1.5em;
+    margin-left: 1.45em;
 }
+
 span.product-plan-pricing-text {
     border: 1px dashed #826eb4;
     padding: 1px 5px;
