@@ -1,3 +1,12 @@
+<?php
+if ( ! defined( 'ABSPATH' ) ) {
+	return;
+}
+$pricing = new \Subway\Memberships\Plan\Pricing\Controller();
+$pricing->set_plan_id( $plan->get_id() );
+$pricing = $pricing->get( true );
+
+?>
 <!-- Payment Type -->
 <div class="subway-form-row">
     <h3 class="field-title">
@@ -34,6 +43,7 @@
 				<?php echo esc_html( $label ); ?>
             </option>
 		<?php endforeach; ?>
+
     </select>
 </div>
 <!--/.Payment Type-->
@@ -81,16 +91,21 @@
         <div class="subway-flex-column">
             <select id="billing-cycle-number" name="billing-cycle-number">
 				<?php for ( $i = 1; $i <= 30; $i ++ ) { ?>
-                    <option><?php echo esc_html( $i ); ?></option>
+                    <option <?php selected( $pricing->get_billing_cycle_frequency(), $i ); ?>
+                            value="<?php echo esc_attr( $i ); ?>"><?php echo esc_html( $i ); ?></option>
 				<?php } ?>
             </select>
         </div>
         <div class="subway-flex-column">
             <select id="billing-cycle-period" name="billing-cycle-period">
-                <option><?php esc_html_e( 'Day(s)' ); ?></option>
-                <option><?php esc_html_e( 'Week(s)' ); ?></option>
-                <option><?php esc_html_e( 'Month(s)' ); ?></option>
-                <option><?php esc_html_e( 'Year(s)' ); ?></option>
+                <option <?php selected( $pricing->get_billing_cycle_period(), 'days' ); ?>
+                        value="days"><?php esc_html_e( 'Day(s)' ); ?></option>
+                <option <?php selected( $pricing->get_billing_cycle_period(), 'weeks' ); ?>
+                        value="weeks"><?php esc_html_e( 'Week(s)' ); ?></option>
+                <option <?php selected( $pricing->get_billing_cycle_period(), 'months' ); ?>
+                        value="months"><?php esc_html_e( 'Month(s)' ); ?></option>
+                <option <?php selected( $pricing->get_billing_cycle_period(), 'years' ); ?>
+                        value="years"><?php esc_html_e( 'Year(s)' ); ?></option>
             </select>
         </div>
 
@@ -110,10 +125,12 @@
 		<?php esc_html_e( 'Select how many cycles until the billing should stop.', 'subway' ); ?>
     </p>
 
-    <select name="billing-cycle-number">
-        <option><?php esc_html_e( 'Never', 'subway' ); ?></option>
+    <select name="billing-limit">
+        <option <?php selected( $pricing->get_billing_limit(), 0 ); ?>
+                value="0"><?php esc_html_e( 'Never', 'subway' ); ?></option>
 		<?php for ( $i = 2; $i <= 31; $i ++ ) { ?>
-            <option><?php echo esc_html( $i ); ?></option>
+            <option <?php selected( $pricing->get_billing_limit(), $i ); ?>
+                    value="<?php echo esc_attr( $i ); ?>"><?php echo esc_html( $i ); ?></option>
 		<?php } ?>
     </select>
 
@@ -125,9 +142,9 @@
 <div class="subway-form-row" id="free-trial">
     <h3 class="field-title">
         <label for="input-free-trial-checkbox">
-            <input type="checkbox" name="free-trial" id="input-free-trial-checkbox"/>
+            <input <?php checked( $pricing->is_has_trial(), true ) ?> type="checkbox" value="1" name="free-trial"
+                                                                      id="input-free-trial-checkbox"/>
 			<?php esc_html_e( 'Offer Trial Period', 'subway' ); ?>
-
         </label>
     </h3>
     <div id="trial-period-details">
@@ -138,16 +155,21 @@
             <div class="subway-flex-column">
                 <select id="trial-billing-cycle-number" name="trial-billing-cycle-number">
 					<?php for ( $i = 1; $i <= 52; $i ++ ) { ?>
-                        <option><?php echo esc_html( $i ); ?></option>
+                        <option <?php selected( $pricing->get_trial_frequency(), $i ); ?>
+                                value="<?php echo esc_attr( $i ); ?>"><?php echo esc_html( $i ); ?></option>
 					<?php } ?>
                 </select>
             </div>
             <div class="subway-flex-column">
                 <select id="trial-billing-cycle-period" name="trial-billing-cycle-period">
-                    <option><?php esc_html_e( 'Day(s)' ); ?></option>
-                    <option><?php esc_html_e( 'Week(s)' ); ?></option>
-                    <option><?php esc_html_e( 'Month(s)' ); ?></option>
-                    <option><?php esc_html_e( 'Year(s)' ); ?></option>
+                    <option <?php selected( $pricing->get_trial_period(), "days" ); ?>
+                            value="days"><?php esc_html_e( 'Day(s)' ); ?></option>
+                    <option <?php selected( $pricing->get_trial_period(), "weeks" ); ?>
+                            value="weeks"><?php esc_html_e( 'Week(s)' ); ?></option>
+                    <option <?php selected( $pricing->get_trial_period(), "month" ); ?>
+                            value="month"><?php esc_html_e( 'Month(s)' ); ?></option>
+                    <option <?php selected( $pricing->get_trial_period(), "years" ); ?>
+                            value="years"><?php esc_html_e( 'Year(s)' ); ?></option>
                 </select>
             </div>
         </div>
@@ -155,13 +177,15 @@
 			<?php esc_html_e( 'Amount to bill for the trial period. Enter 0.00 for free trials.', 'subway' ); ?>
         </p>
         <div class="field-group">
-                                <span class="currency-amount">
-                                    <?php echo get_option( 'subway_currency', 'USD' ); ?>
-                                </span>
 
-            <input autofocus="" id="input-trial-amount" name="trial_amount" type="number"
+            <span class="currency-amount">
+                <?php echo get_option( 'subway_currency', 'USD' ); ?>
+            </span>
+
+            <input autofocus="" id="input-trial-amount" name="trial-amount" type="number"
                    style="width: 6em;"
-                   size="3" placeholder="0.00" step="0.01" value="10">
+                   size="3" placeholder="0.00" step="0.01"
+                   value="<?php echo esc_attr( $pricing->get_trial_amount() ); ?>">
         </div>
     </div><!--#trial-period-details-->
 </div>
