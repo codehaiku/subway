@@ -12,7 +12,7 @@ final class Migrate extends Pricing {
 	}
 
 	public function sql() {
-		return "CREATE TABLE IF NOT EXISTS $this->table (
+		return "CREATE TABLE $this->table (
 				id mediumint(9) NOT NULL AUTO_INCREMENT,
 				plan_id mediumint(9) NOT NULL,
 				billing_cycle_frequency smallint(9) NOT NULL,
@@ -21,6 +21,7 @@ final class Migrate extends Pricing {
 				has_trial tinyint(1) NOT NULL,
 				trial_frequency smallint(9) NOT NULL,
 				trial_period varchar(100) NOT NULL,
+				trial_amount double NOT NULL,
 				date_created datetime DEFAULT CURRENT_TIMESTAMP,
 				date_updated datetime DEFAULT CURRENT_TIMESTAMP,
 				PRIMARY KEY  (id)
