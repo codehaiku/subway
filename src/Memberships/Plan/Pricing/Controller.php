@@ -4,6 +4,7 @@ namespace Subway\Memberships\Plan\Pricing;
 
 use Subway\Currency\Currency;
 use Subway\Memberships\Plan\Plan;
+use Subway\Options\Options;
 
 class Controller extends Pricing {
 
@@ -15,8 +16,12 @@ class Controller extends Pricing {
 
 	}
 
-	public function get_trial_checkout_url() {
-		return '#';
+	public function get_trial_checkout_url( $plan_id ) {
+
+		$options = new Options();
+
+		return add_query_arg( [ 'plan_id' => $plan_id, 'is_trial' => 'true' ], $options->get_checkout_page_url() );
+
 	}
 
 	public function get_trial_info() {

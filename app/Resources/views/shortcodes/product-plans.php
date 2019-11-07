@@ -75,7 +75,7 @@ $pricing = new \Subway\Memberships\Plan\Pricing\Controller();
 
                                 <?php if ( $pricing ): ?>
                                     <?php if ( $pricing->is_has_trial() ): ?>
-                                        <a class="subway-trial-button" href="<?php echo esc_url( $pricing->get_trial_checkout_url() ); ?>" title="<?php esc_attr( $pricing->get_trial_info() ); ?>">
+                                        <a class="subway-trial-button" href="<?php echo esc_url( $pricing->get_trial_checkout_url( $plan->get_id() ) ); ?>" title="<?php esc_attr( $pricing->get_trial_info() ); ?>">
                                             <?php echo esc_html( $pricing->get_trial_info() ); ?>
                                         </a>
                                     <?php endif; ?>
