@@ -67,7 +67,7 @@ $pricing = new \Subway\Memberships\Plan\Pricing\Controller();
 
                                 <?php if ( $pricing ): ?>
                                     <span class="product-plan-pricing-text">
-                                        <?php echo esc_html( $pricing->get_text() ); ?>
+                                        <?php echo esc_html( $pricing->get_text( $plan ) ); ?>
                                     </span>
 								<?php endif; ?>
 

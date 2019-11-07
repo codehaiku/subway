@@ -20,8 +20,8 @@ $pricing = $pricing->get( true );
 	<?php
 	$options = [
 		'free'      => esc_html__( 'Free', 'subway' ),
-		'fixed'     => esc_html__( 'Fixed (One-Time Payment)', 'subway' ),
-		'recurring' => esc_html__( 'Recurring (Subscription Payment)', 'subway' ),
+		'fixed'     => esc_html__( 'Fixed (One-Time)', 'subway' ),
+		'recurring' => esc_html__( 'Fixed (Recurring)', 'subway' ),
 	];
 	?>
 

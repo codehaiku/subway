@@ -3,6 +3,7 @@
 namespace Subway\Memberships\Plan\Pricing;
 
 use Subway\Currency\Currency;
+use Subway\Memberships\Plan\Plan;
 
 class Controller extends Pricing {
 
@@ -43,13 +44,17 @@ class Controller extends Pricing {
 
 	}
 
-	public function get_text() {
+	public function get_text( Plan $plan ) {
 
 		$period = $this->get_billing_cycle_period();
 
 		$frequency = absint( $this->get_billing_cycle_frequency() );
 
-		$i18 = _n( 'Billed every %2$s', 'Billed every %1$d %2$s', $frequency );
+		$i18 = 'One-time Payment';
+
+		if ( 'recurring' === $plan->get_type() ) {
+			$i18 = _n( 'Billed every %2$s', 'Billed every %1$d %2$s', $frequency );
+		}
 
 		if ( 1 === $frequency ) {
 			$period = str_replace( 's', '', $period );
