@@ -60,15 +60,30 @@ $pricing = new \Subway\Memberships\Plan\Pricing\Controller();
 							<?php endif; ?>
 
                             <span class="product-plan-pricing">
-								<?php $pricing->set_plan_id( $plan->get_id() ); ?>
-								<?php $pricing = $pricing->get(); ?>
-								<?php if ( $pricing ): ?>
+
+                                <?php $pricing->set_plan_id( $plan->get_id() ); ?>
+
+                                <?php $pricing = $pricing->get(); ?>
+
+                                <?php if ( $pricing ): ?>
                                     <span class="product-plan-pricing-text">
                                         <?php echo esc_html( $pricing->get_text() ); ?>
                                     </span>
 								<?php endif; ?>
+
 								<?php echo esc_html( $plan->get_displayed_price() ); ?>
+
+                                <?php if ( $pricing ): ?>
+                                    <?php if ( $pricing->is_has_trial() ): ?>
+                                        <a class="subway-trial-button" href="<?php echo esc_url( $pricing->get_trial_checkout_url() ); ?>" title="<?php esc_attr( $pricing->get_trial_info() ); ?>">
+                                            <?php echo esc_html( $pricing->get_trial_info() ); ?>
+                                        </a>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+
                             </span>
+
+
 
                         </label>
 
