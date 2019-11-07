@@ -14,7 +14,7 @@ class Actions extends Controller {
 		$billing_limit              = filter_input( 0, 'billing-limit', 519 );
 		$trial_billing_cycle_number = filter_input( 0, 'trial-billing-cycle-number', 519 );
 		$trial_billing_cycle_period = filter_input( 0, 'trial-billing-cycle-period', 513 );
-		$trial_amount               = filter_input( 0, 'trial-amount', 520 );
+		$trial_amount               = filter_input( 0, 'trial-amount', 520, FILTER_FLAG_ALLOW_FRACTION );
 		$free_trial                 = filter_input( 0, 'free-trial', 513 );
 		$has_trial                  = false;
 
