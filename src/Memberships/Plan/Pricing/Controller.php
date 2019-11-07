@@ -2,6 +2,8 @@
 
 namespace Subway\Memberships\Plan\Pricing;
 
+use Subway\Currency\Currency;
+
 class Controller extends Pricing {
 
 	const format = [];
@@ -12,13 +14,42 @@ class Controller extends Pricing {
 
 	}
 
+	public function get_trial_checkout_url() {
+		return '#';
+	}
+
+	public function get_trial_info() {
+
+		$currency = new Currency();
+
+		$i18             = __( 'Start %d %s trial for %s &rarr;', 'subway' );
+		$trial_amount    = doubleval( $this->get_trial_amount() );
+		$displayed_price = $currency->format( $trial_amount, get_option( 'subway_currency', 'USD' ) );
+
+		$period    = $this->get_trial_period();
+		$frequency = absint( $this->get_trial_frequency() );
+
+		if ( 1 === $frequency ) {
+			$period = str_replace( 's', '', $period );
+		}
+
+		if ( 0 === $trial_amount ) {
+			$displayed_price = __( 'free.', 'subway' );
+		}
+
+		$text = sprintf( $i18, $frequency, $period, $displayed_price );
+
+		return apply_filters( __METHOD__, $text, $period, $frequency, $displayed_price );
+
+	}
+
 	public function get_text() {
 
 		$period = $this->get_billing_cycle_period();
 
 		$frequency = absint( $this->get_billing_cycle_frequency() );
 
-		$i18  = _n( 'Billed every %2$s', 'Billed every %1$d %2$s', $frequency );
+		$i18 = _n( 'Billed every %2$s', 'Billed every %1$d %2$s', $frequency );
 
 		if ( 1 === $frequency ) {
 			$period = str_replace( 's', '', $period );
