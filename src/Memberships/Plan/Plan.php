@@ -305,7 +305,7 @@ class Plan {
 
 		}
 
-		return apply_filters( 'subway_product_get_amount', $amount );
+		return apply_filters( __METHOD__, $amount );
 
 	}
 
@@ -839,6 +839,15 @@ class Plan {
 		$cancel_url = add_query_arg( $args, $options->get_accounts_page_url() );
 
 		return apply_filters( 'subway_memberships_plan_get_cancel_url', $cancel_url );
+
+	}
+
+	public function get_pricing() {
+
+		$pricing = new \Subway\Memberships\Plan\Pricing\Controller();
+		$pricing->set_plan_id( $this->get_id() );
+
+		return $pricing->get();
 
 	}
 
