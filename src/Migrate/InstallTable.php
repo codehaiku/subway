@@ -55,6 +55,8 @@ class InstallTable {
 
 		$this->membership_orders_install_update();
 
+		$this->plans_pricing_install_update();
+
 		return $this;
 	}
 
@@ -90,7 +92,7 @@ class InstallTable {
 
 		$table = $this->wpdb->prefix . "subway_memberships_products";
 
-		$sql = "CREATE TABLE IF NOT EXISTS $table (
+		$sql = "CREATE TABLE $table (
 				id mediumint(9) NOT NULL AUTO_INCREMENT,
 				name varchar(255) NOT NULL,
 				description text NULL,
@@ -141,7 +143,7 @@ class InstallTable {
 
 		$table = $this->wpdb->prefix . 'subway_memberships_users_billing_agreements';
 
-		$sql = "CREATE TABLE IF NOT EXISTS $table(
+		$sql = "CREATE TABLE $table(
 				id mediumint(9) NOT NULL AUTO_INCREMENT,
 				user_id mediumint(9) NOT NULL,
 				prod_id mediumint(9) NOT NULL,
@@ -169,7 +171,7 @@ class InstallTable {
 
 		$table = $this->wpdb->prefix . 'subway_memberships_users_plans';
 
-		$sql = "CREATE TABLE IF NOT EXISTS $table(
+		$sql = "CREATE TABLE $table(
 				id mediumint(9) NOT NULL AUTO_INCREMENT,
 				user_id mediumint(9) NOT NULL,
 				plan_id mediumint(9) NOT NULL,
@@ -224,7 +226,7 @@ class InstallTable {
 
 		$table = $this->wpdb->prefix . 'subway_memberships_orders_details';
 
-		$sql = "CREATE TABLE IF NOT EXISTS $table(
+		$sql = "CREATE TABLE $table(
 				id mediumint(9) NOT NULL AUTO_INCREMENT,
 				order_id mediumint(9) NOT NULL,
 				gateway_name varchar(100) NOT NULL,
