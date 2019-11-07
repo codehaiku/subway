@@ -20,6 +20,14 @@
                title="<?php esc_attr_e( '(Change)', 'subway' ); ?>">
 				<?php esc_html_e( '(Change)', 'subway' ); ?>
             </a>
+            <?php $pricing = new \Subway\Memberships\Plan\Pricing\Controller(); ?>
+	        <?php $pricing->set_plan_id( $plan->get_id() ); ?>
+	        <?php $pricing = $pricing->get(); ?>
+	        <?php if ( $pricing ): ?>
+                <span class="product-plan-pricing-text">
+                    <?php echo esc_html( $pricing->get_text() ); ?>
+                </span>
+	        <?php endif; ?>
         </td>
         <td>
             <strong>
