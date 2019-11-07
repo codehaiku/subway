@@ -59,30 +59,33 @@ $pricing = new \Subway\Memberships\Plan\Pricing\Controller();
                                 </span>
 							<?php endif; ?>
 
-                            <span class="product-plan-pricing">
+							<?php if ( ! $disabled ): ?>
 
-                                <?php $pricing->set_plan_id( $plan->get_id() ); ?>
+                                <div class="product-plan-pricing">
 
-                                <?php $pricing = $pricing->get(); ?>
+                                    <?php $pricing->set_plan_id( $plan->get_id() ); ?>
 
-                                <?php if ( $pricing ): ?>
-                                    <span class="product-plan-pricing-text">
-                                        <?php echo esc_html( $pricing->get_text( $plan ) ); ?>
-                                    </span>
-								<?php endif; ?>
+                                    <?php $pricing = $pricing->get(); ?>
 
-								<?php echo esc_html( $plan->get_displayed_price() ); ?>
+                                    <?php if ( $pricing ): ?>
+                                        <span class="product-plan-pricing-text">
+                                            <?php echo esc_html( $pricing->get_text( $plan ) ); ?>
+                                        </span>
+                                    <?php endif; ?>
 
-                                <?php if ( $pricing ): ?>
-                                    <?php if ( $pricing->is_has_trial() ): ?>
-                                        <a class="subway-trial-button" href="<?php echo esc_url( $pricing->get_trial_checkout_url( $plan->get_id() ) ); ?>" title="<?php esc_attr( $pricing->get_trial_info() ); ?>">
+                                    <?php echo esc_html( $plan->get_displayed_price() ); ?>
+
+                                    <?php if ( $pricing ): ?>
+                                        <?php if ( $pricing->is_has_trial() ): ?>
+                                            <a class="subway-trial-button"
+                                               href="<?php echo esc_url( $pricing->get_trial_checkout_url( $plan->get_id() ) ); ?>"
+                                               title="<?php esc_attr( $pricing->get_trial_info() ); ?>">
                                             <?php echo esc_html( $pricing->get_trial_info() ); ?>
                                         </a>
+                                        <?php endif; ?>
                                     <?php endif; ?>
-                                <?php endif; ?>
-
-                            </span>
-
+                                </div>
+							<?php endif; ?>
 
 
                         </label>
