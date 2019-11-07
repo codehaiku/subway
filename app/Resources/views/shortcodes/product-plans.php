@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 $user = new \Subway\User\User();
 $user->set_id( get_current_user_id() );
+$pricing = new \Subway\Memberships\Plan\Pricing\Controller();
 ?>
 <?php if ( $plans ): ?>
     <form action="<?php echo esc_url( $plan->get_plan_checkout_url() ); ?>" method="GET">
@@ -59,7 +60,14 @@ $user->set_id( get_current_user_id() );
 							<?php endif; ?>
 
                             <span class="product-plan-pricing">
-							    <?php echo esc_html( $plan->get_displayed_price() ); ?>  / <?php echo esc_html( $plan->get_type() ); ?>
+								<?php $pricing->set_plan_id( $plan->get_id() ); ?>
+								<?php $pricing = $pricing->get(); ?>
+								<?php if ( $pricing ): ?>
+                                    <span class="product-plan-pricing-text">
+                                        <?php echo esc_html( $pricing->get_text() ); ?>
+                                    </span>
+								<?php endif; ?>
+								<?php echo esc_html( $plan->get_displayed_price() ); ?>
                             </span>
 
                         </label>
