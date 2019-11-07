@@ -167,7 +167,7 @@ $pricing = $pricing->get( true );
                     <option <?php selected( $pricing->get_trial_period(), "weeks" ); ?>
                             value="weeks"><?php esc_html_e( 'Week(s)' ); ?></option>
                     <option <?php selected( $pricing->get_trial_period(), "month" ); ?>
-                            value="month"><?php esc_html_e( 'Month(s)' ); ?></option>
+                            value="months"><?php esc_html_e( 'Month(s)' ); ?></option>
                     <option <?php selected( $pricing->get_trial_period(), "years" ); ?>
                             value="years"><?php esc_html_e( 'Year(s)' ); ?></option>
                 </select>
