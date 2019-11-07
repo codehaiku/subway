@@ -786,6 +786,17 @@ table.subway-membership-lists td {
 }
 .product-plan-pricing {
     font-weight: normal;
+    font-size: larger;
+    margin-left: 1.5em;
+}
+span.product-plan-pricing-text {
+    border: 1px dashed #826eb4;
+    padding: 1px 5px;
+    border-radius: 3px;
+    display: block;
+    margin: 5px 0;
+    font-size: smaller;
+    text-transform: capitalize;
 }
 
 .disabled.subway-membership-product-plans tr.checked > td {
