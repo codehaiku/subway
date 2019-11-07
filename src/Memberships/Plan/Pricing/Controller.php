@@ -7,7 +7,27 @@ class Controller extends Pricing {
 	const format = [];
 
 	public function __construct() {
+
 		parent::__construct();
+
+	}
+
+	public function get_text() {
+
+		$period = $this->get_billing_cycle_period();
+
+		$frequency = absint( $this->get_billing_cycle_frequency() );
+
+		$i18  = _n( 'Billed every %2$s', 'Billed every %1$d %2$s', $frequency );
+
+		if ( 1 === $frequency ) {
+			$period = str_replace( 's', '', $period );
+		}
+
+		$text = sprintf( $i18, $frequency, $period );
+
+		return apply_filters( __METHOD__, $text, $period, $frequency );
+
 	}
 
 	public function set( $args = [] ) {
