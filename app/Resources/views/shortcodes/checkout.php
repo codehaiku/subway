@@ -29,24 +29,18 @@
 
                 <div id="subway-checkout-inner-wrap">
 
-                    <div class="subway-checkout-user-info-title">
-
-                        <h3>
-							<?php esc_html_e( 'Review Order', 'subway' ); ?>
-                        </h3>
-
-                    </div>
-
                     <div class="subway-flex-wrap">
                         <div class="subway-flex-column-100">
                             <div id="subway-checkout-order-review">
 								<?php
+                                $checkout = new \Subway\Checkout\Checkout();
 								$view->render(
 									'checkout-order',
 									[
 										'plan'     => $plan,
 										'currency' => $currency,
-										'options'  => $options
+										'options'  => $options,
+                                        'checkout' => $checkout
 									] );
 								?>
                             </div>
