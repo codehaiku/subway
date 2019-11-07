@@ -16,6 +16,17 @@ class Controller extends Pricing {
 
 	}
 
+	public function get_trial_displayed_amount() {
+
+		$currency = new Currency();
+
+		$trial_amount    = doubleval( $this->get_trial_amount() );
+		$displayed_price = $currency->format( $trial_amount, get_option( 'subway_currency', 'USD' ) );
+
+		return apply_filters( __METHOD__, $displayed_price, $trial_amount );
+
+	}
+
 	public function get_trial_checkout_url( $plan_id ) {
 
 		$options = new Options();
@@ -39,7 +50,7 @@ class Controller extends Pricing {
 			$period = str_replace( 's', '', $period );
 		}
 
-		if ( 0 === $trial_amount ) {
+		if ( 0.00 === $trial_amount ) {
 			$displayed_price = __( 'free.', 'subway' );
 		}
 
