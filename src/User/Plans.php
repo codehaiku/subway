@@ -165,9 +165,11 @@ class Plans {
 	 * @return Plans
 	 */
 	public function set_created( $created ) {
+
 		$this->created = $created;
 
 		return $this;
+
 	}
 
 
