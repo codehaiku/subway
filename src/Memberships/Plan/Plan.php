@@ -277,47 +277,30 @@ class Plan {
 	 */
 	public function get_amount() {
 
-		$tax = $this->get_tax_rate();
-
-		$tax_displayed = true;
-
-		// Allow to specify whether to display the tax or not.
-		if ( ! $this->is_display_tax() ) {
-			$tax_displayed = false;
-		}
-
-		$item_cost = $this->amount;
-
-		$amount = $item_cost;
-
-		if ( $tax_displayed ) {
-
-			$sales_tax = $tax / 100;
-
-			$sales_tax = $item_cost * $sales_tax;
-
-			$amount = $item_cost + $sales_tax;
-
-		}
-
-		return apply_filters( __METHOD__, $amount );
+		return $this->amount;
 
 	}
 
 
-	public function get_price( $tax_included = false ) {
+	public function get_price( $tax_included = false, $format = true ) {
 
 		$price      = $this->get_amount();
 		$tax_rate   = $this->get_tax_rate();
 		$tax_amount = 0.00;
 
 		if ( $tax_included ) {
-
 			$tax_amount = $price * ( $tax_rate / 100 );
-			
 		}
 
-		return apply_filters( __METHOD__, $price + round( $tax_amount, 2 ) );
+		$price = $price + round( $tax_amount, 2 );
+
+		if ( $format ) {
+			$currency = new Currency();
+			$price    = $currency->format( $price, get_option( 'subway_currency', 'USD' ) );
+		}
+
+		return apply_filters( __METHOD__, $price );
+
 	}
 
 	public function get_tax_amount() {
@@ -525,7 +508,7 @@ class Plan {
 				$p['id']           = $plan->get_id();
 				$p['name']         = $plan->get_name();
 				$p['sku']          = $plan->get_sku();
-				$p['amount']       = $plan->get_displayed_price_without_tax();
+				$p['amount']       = $plan->get_price();
 				$p['description']  = $plan->get_description();
 				$p['type']         = $plan->get_type();
 				$p['status']       = $plan->get_status();
