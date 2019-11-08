@@ -1,9 +1,13 @@
 <?php $is_trial = filter_input( 1, 'is_trial', 516 ); ?>
+
 <?php $pricing = $plan->get_pricing(); ?>
+
 <?php $checkout->set_plan( $plan ); ?>
 
 <?php if ( ! empty( $is_trial ) ): ?>
+
 	<?php $checkout->set_is_trial( true ); ?>
+
 <?php endif; ?>
 
 <table class="subway-checkout-review-order">
@@ -24,6 +28,12 @@
 
             <h3 class="subway-mg-bot-zero subway-mg-top-zero">
 				<?php echo esc_html( $checkout->get_plan()->get_name() ); ?>
+                <?php if ( $checkout->is_trial() ): ?>
+                    <span class="subway-label-trial">
+                        <?php echo esc_html( sprintf('%d %s Trial', $pricing->get_trial_frequency(), $pricing->get_trial_period() ) ); ?>
+                    </span>
+                <?php endif; ?>
+
             </h3>
 
             <span class="product-plan-pricing-text">
