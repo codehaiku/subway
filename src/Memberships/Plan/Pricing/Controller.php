@@ -16,14 +16,17 @@ class Controller extends Pricing {
 
 	}
 
-	public function get_trial_displayed_amount() {
+	public function get_trial_price( $tax_included = false ) {
 
-		$currency = new Currency();
+		$price      = $this->get_trial_amount();
+		$tax_rate   = $this->get_product()->get_tax_rate();
+		$tax_amount = 0.00;
 
-		$trial_amount    = doubleval( $this->get_trial_amount() );
-		$displayed_price = $currency->format( $trial_amount, get_option( 'subway_currency', 'USD' ) );
+		if ( $tax_included ) {
+			$tax_amount = $price * ( $tax_rate / 100 );
+		}
 
-		return apply_filters( __METHOD__, $displayed_price, $trial_amount );
+		return apply_filters( __METHOD__, $price + round( $tax_amount, 2 ) );
 
 	}
 
@@ -39,8 +42,20 @@ class Controller extends Pricing {
 
 		$currency = new Currency();
 
-		$i18             = __( 'Start %d %s trial for %s &rarr;', 'subway' );
-		$trial_amount    = doubleval( $this->get_trial_amount() );
+		$i18 = __( 'Start %d %s trial for %s &rarr;', 'subway' );
+
+		$tax_included = false;
+
+		$product = $this->get_product();
+
+		if ( $product ) {
+			if ( $product->is_tax_displayed() ) {
+				$tax_included = true;
+			}
+		}
+
+		$trial_amount = doubleval( $this->get_trial_price( $tax_included ) );
+
 		$displayed_price = $currency->format( $trial_amount, get_option( 'subway_currency', 'USD' ) );
 
 		$period    = $this->get_trial_period();
