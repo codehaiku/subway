@@ -74,7 +74,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                                 </h3>
                                 <h4>
                                 <span id="plan-displayed-price">
-								    <?php echo esc_html( $default_plan->get_displayed_price() ); ?>
+								    <?php echo esc_html( $default_plan->get_price() ); ?>
                                 </span>
                                     /
                                     <span id="plan-type">
