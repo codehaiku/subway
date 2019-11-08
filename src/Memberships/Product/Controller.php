@@ -403,7 +403,7 @@ class Controller extends Product {
 						'subway'
 					),
 					$this->get_plan_count(),
-					$plan_lowest_priced->get_displayed_price()
+					$plan_lowest_priced->get_price()
 				);
 			}
 		}
