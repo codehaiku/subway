@@ -25,7 +25,7 @@
                     <tr>
                         <td>
                             <?php echo esc_html( date( 'F j, Y', strtotime( $invoice->created ) ) ); ?><br/>
-	                        <?php echo esc_html( date( 'g:i a', strtotime( $invoice->created ) ) ); ?><br/>
+	                        <?php echo esc_html( date( 'g:i a', strtotime( $invoice->created ) ) ); ?>
                         </td>
                         <td>
                             <strong>

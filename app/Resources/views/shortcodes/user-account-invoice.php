@@ -88,19 +88,15 @@
             <!--Invoice Merchant End-->
         </div>
 
-		<?php
-		$plans = new \Subway\Memberships\Plan\Plan();
-		$plan  = $plans->get_plan( $invoice['order']->plan_id );
-		?>
         <div class="subway-flex-column-50">
             <!--Invoice Merchant-->
             <div id="subway-invoice-payment-status">
                 <h3>Paid</h3>
                 <h4 id="subway-invoice-payment-status-date">
-					<?php echo esc_html( $plan->get_date_created() ); ?>
+					<?php echo esc_html( $order->created ); ?>
                 </h4>
                 <h4 id="subway-invoice-payment-status-amount">
-					<?php echo esc_html( $plan->get_price( true ) ); ?>
+					<?php echo esc_html( $order->amount ); ?>
                 </h4>
             </div>
             <!--Invoice Merchant End-->
@@ -121,16 +117,13 @@
                 <tbody>
                 <tr>
                     <td colspan="2">
-                        <h4 class="subway-mg-top-zero subway-mg-bot-zero">
-		                    <?php echo $plan->get_product_link(); ?>
-                        </h4>
-						<?php echo esc_html( $plan->get_name() ); ?>
+                        <?php echo esc_html( $order->recorded_plan_name ); ?>
                     </td>
                     <td>
-						<?php echo esc_html( $plan->get_price() ); ?>
+						<?php echo esc_html( $order->amount ); ?>
                     </td>
                     <td id="subway-invoice-row-subtotal">
-						<?php echo esc_html( $plan->get_price() ); ?>
+						<?php echo esc_html( $order->amount ); ?>
                     </td>
                 </tr>
                 </tbody>
@@ -145,19 +138,19 @@
             <table id="subway-invoice-numbers">
                 <tr>
                     <td>Subtotal</td>
-                    <td><?php echo esc_html( $plan->get_price() ); ?></td>
+                    <td><?php echo esc_html( $order->amount ); ?></td>
                 </tr>
                 <tr>
-                    <td>Tax (<?php echo esc_html( $plan->get_tax_rate() ); ?>%)</td>
-                    <td><?php echo esc_html( $plan->get_tax_amount() ); ?></td>
+                    <td>Tax (<?php echo esc_html( $order->tax_rate ); ?>%)</td>
+                    <td><?php echo esc_html( $order->tax_rate ); ?></td>
                 </tr>
                 <tr>
                     <td>Total</td>
-                    <td><?php echo esc_html( $plan->get_price(true) ); ?></td>
+                    <td><?php echo esc_html( $order->amount ); ?></td>
                 </tr>
                 <tr>
                     <td>Paid</td>
-                    <td>(<?php echo esc_html( $plan->get_price(true) ); ?>)</td>
+                    <td>(<?php echo esc_html( $order->amount ); ?>)</td>
                 </tr>
                 <tr>
                     <td>Amount Due</td>
@@ -174,7 +167,7 @@
         <div class="subway-flex-column-100">
             <h5>Payments</h5>
 			<?php echo $order->created ?>
-			<?php echo $plan->get_price() ?>
+			<?php echo $order->amount ?>
             Payment from
 			<?php echo $order->gateway; ?>
 
