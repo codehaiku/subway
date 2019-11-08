@@ -25,7 +25,7 @@ class Checkout {
 	}
 
 	/**
-	 * @return null
+	 * @return object $Plan
 	 */
 	public function get_plan() {
 		return $this->plan;
@@ -54,18 +54,21 @@ class Checkout {
 
 	/**
 	 * @param bool $tax_included
+	 * @param bool $format
 	 *
 	 * @return float
 	 */
-	public function get_price( $tax_included = false ) {
+	public function get_price( $tax_included = false, $format = true ) {
 
-		$plan = $this->get_plan();
-
+		$plan    = $this->get_plan();
 		$pricing = $plan->get_pricing();
-		$this->set_price( $plan->get_price( $tax_included ) );
 
-		if ( $this->is_trial() ) {
-			$this->set_price( $pricing->get_trial_price( $tax_included ) );
+		$this->set_price( $plan->get_price( $tax_included, $format ) );
+
+		if ( $pricing->is_has_trial() ) {
+			if ( $this->is_trial() ) {
+				$this->set_price( $pricing->get_trial_price( $tax_included, $format ) );
+			}
 		}
 
 		return $this->price;
@@ -145,12 +148,10 @@ class Checkout {
 
 	public function pay() {
 
-		$action = filter_input( INPUT_POST, 'sw-action', 516 );
-
+		$action  = filter_input( INPUT_POST, 'sw-action', 516 );
 		$plan_id = filter_input( INPUT_POST, 'sw-plan-id', 519 );
 
 		$plan = new Plan();
-
 		$plan = $plan->get_plan( $plan_id );
 
 		if ( ! $plan ) {
@@ -163,9 +164,8 @@ class Checkout {
 
 		if ( 'checkout' === $action ) {
 
-			$payment = new Payment( $this->db );
-
-			$payment->pay( $plan_id );
+			$payment = new Payment( $plan );
+			$payment->pay();
 
 		}
 
