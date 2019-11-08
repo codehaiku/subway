@@ -59,19 +59,25 @@ class Payment {
 
 	public function pay() {
 
-		$is_trial = filter_input(1, 'is_trial', 516);
+		$is_trial = filter_input( 1, 'is_trial', 516 );
 
 		$checkout = new Checkout();
 		$checkout->set_plan( $this->plan );
 
+		$redirect_url = esc_url_raw( add_query_arg( 'success', 'true', $this->return_url ) );
+		$cancel_url   = esc_url_raw( add_query_arg( 'success', 'false', $this->cancel_url ) );
+
 		// Check to see if its a trial or not.
 		if ( ! empty( $is_trial ) ) {
+
+			$redirect_url = esc_url_raw( add_query_arg( 'is_trial', 'true', $redirect_url ) );
+			$cancel_url   = esc_url_raw( add_query_arg( 'is_trial', 'true', $cancel_url ) );
+
 			$checkout->set_is_trial( true );
+
 		}
 
-		if ( ! $this->plan ) {
-			return false;
-		}
+		if ( ! $this->plan ) { return false; }
 
 		$plan           = $checkout->get_plan();
 		$tax_rate       = $plan->get_tax_rate();
@@ -82,8 +88,6 @@ class Payment {
 		$name           = $plan->get_name();
 		$sku            = $plan->get_sku();
 		$currency       = get_option( 'subway_currency', 'USD' );
-		$redirect_url   = esc_url( add_query_arg( 'success', 'true', $this->return_url ) );
-		$cancel_url     = esc_url( add_query_arg( 'success', 'false', $this->cancel_url ) );
 		$prefix         = apply_filters( __METHOD__ . '-invoice', get_option( 'subway_invoice_prefix', self::invoice_prefix ) );
 		$user_id        = get_current_user_id();
 		$combination    = date( 'y' ) . date( 'd' ) . date( 'H' ) . date( 'i' ) . date( 's' );
@@ -187,7 +191,7 @@ class Payment {
 
 			try {
 
-				$result = $payment->execute( $execution, $this->api_context );
+				$payment->execute( $execution, $this->api_context );
 
 				$payment = \PayPal\Api\Payment::get( $payment_id, $this->api_context );
 
