@@ -118,11 +118,6 @@ class Plan {
 
 			$this->set_tax_rate( $product->get_tax_rate() );
 
-		} else {
-
-			// Use Options instead.
-			$this->set_tax_rate( get_option( 'subway_tax_rate', 0 ) );
-
 		}
 
 		return $this->tax_rate;
@@ -309,65 +304,27 @@ class Plan {
 
 	}
 
-	/**
-	 * @return mixed|void
-	 */
-	public function get_displayed_price() {
 
-		$currency = new Currency();
+	public function get_price( $tax_included = false ) {
 
-		$displayed_price = $this->get_amount();
+		$price      = $this->get_amount();
+		$tax_rate   = $this->get_tax_rate();
+		$tax_amount = 0.00;
 
-		$formatted_amount = $currency->format( $displayed_price, get_option( 'subway_currency' ) );
+		if ( $tax_included ) {
 
-		if ( 'free' === $this->get_type() ) {
-
-			$formatted_amount = esc_html__( 'Free', 'subway' );
-
+			$tax_amount = $price * ( $tax_rate / 100 );
+			
 		}
 
-		return apply_filters( 'subway_product_get_displayed_price', $formatted_amount );
-
-	}
-
-	public function get_displayed_price_without_tax() {
-
-		$currency = new Currency();
-
-		$displayed_price = $this->get_real_amount();
-
-		$formatted_amount = $currency->format( $displayed_price, get_option( 'subway_currency' ) );
-
-		if ( 'free' === $this->get_type() ) {
-			$formatted_amount = esc_html__( 'Free', 'subway' );
-		}
-
-		return apply_filters( 'subway_product_get_displayed_price_with_out_tax', $formatted_amount );
-	}
-
-	public function get_taxed_price() {
-
-		$currency = new Currency();
-
-		$tax_rate = 1 + ( $this->get_tax_rate() / 100 );
-
-		$taxed_price = $this->amount * $tax_rate;
-
-		$amount = $currency->format( $taxed_price, get_option( 'subway_currency', 'USD ' ) );
-
-		return apply_filters( 'subway_product_get_amount', $amount );
-
+		return apply_filters( __METHOD__, $price + round( $tax_amount, 2 ) );
 	}
 
 	public function get_tax_amount() {
 
-		$currency = new Currency();
-
 		$tax_rate = $this->get_tax_rate() / 100;
 
-		$taxed_price = $this->amount * $tax_rate;
-
-		$tax_amount = $currency->format( $taxed_price, get_option( 'subway_currency', 'USD ' ) );
+		$tax_amount = $this->amount * $tax_rate;
 
 		return apply_filters( 'subway_product_get_tax_amount', $tax_amount );
 
