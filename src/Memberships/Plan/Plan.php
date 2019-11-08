@@ -782,6 +782,9 @@ class Plan {
 
 	}
 
+	/**
+	 * @return bool|Pricing\Controller
+	 */
 	public function get_pricing() {
 
 		$pricing = new \Subway\Memberships\Plan\Pricing\Controller();
