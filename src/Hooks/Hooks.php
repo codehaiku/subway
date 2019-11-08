@@ -4,6 +4,7 @@ namespace Subway\Hooks;
 
 use Subway\Currency\Currency;
 use Subway\FlashMessage\FlashMessage;
+use Subway\Memberships\Plan\Plan;
 use Subway\Options\Options;
 use Subway\Payment\Payment;
 use Subway\User\User;
@@ -12,9 +13,9 @@ class Hooks {
 
 	public function confirm_order() {
 
-		global $wpdb;
+		$plan = new Plan();
 
-		$payment = new Payment( $wpdb );
+		$payment = new Payment( $plan );
 
 		$payment->confirm();
 
