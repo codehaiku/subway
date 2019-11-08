@@ -254,7 +254,7 @@ class Controller extends Plan {
 			$response['plan']['name']            = $plan->get_name();
 			$response['plan']['description']     = wp_kses_post( wpautop( $plan->get_description() ) );
 			$response['plan']['sku']             = $plan->get_sku();
-			$response['plan']['displayed_price'] = $plan->get_displayed_price();
+			$response['plan']['displayed_price'] = $plan->get_price( $plan->is_display_tax() );
 			$response['plan']['tax_rate']        = $plan->get_tax_rate();
 			$response['plan']['type']            = $plan->get_type();
 			$response['user']['has_plan']        = false;
