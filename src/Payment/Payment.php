@@ -10,6 +10,7 @@ use PayPal\Api\Payer;
 use PayPal\Api\PaymentExecution;
 use PayPal\Api\RedirectUrls;
 use PayPal\Api\Transaction;
+use Subway\Checkout\Checkout;
 use Subway\Helpers\Helpers;
 use Subway\Memberships\Orders\Details as OrderDetails;
 use Subway\Memberships\Plan\Plan;
@@ -19,30 +20,29 @@ use Subway\User\Plans;
 
 class Payment {
 
-	protected $gateway = "paypal";
+	const gateway = "paypal";
+	const invoice_prefix = "SUBWAY";
 
 	protected $return_url = "";
-
 	protected $cancel_url = "";
+	protected $db = null;
 
-	protected $wpdb = '';
-
-	private $api_context = "";
-
+	private $api_context = null;
 	private $quantity = 1;
 
-	function __construct( \wpdb $wpdb ) {
+	protected $plan = null;
 
-		$confirmation_id = absint( get_option( 'subway_options_account_page' ) );
+	function __construct( Plan $plan ) {
 
-		$cancel_id = absint( get_option( 'subway_paypal_page_cancel' ) );
+		$this->db   = Helpers::get_db();
+		$this->plan = $plan;
 
+		$confirmation_id  = absint( get_option( 'subway_options_account_page' ) );
+		$cancel_id        = absint( get_option( 'subway_paypal_page_cancel' ) );
 		$confirmation_url = get_permalink( $confirmation_id );
-
-		$cancel_url = get_permalink( $cancel_id );
+		$cancel_url       = get_permalink( $cancel_id );
 
 		$this->return_url = $confirmation_url;
-
 		$this->cancel_url = $cancel_url;
 
 		$this->api_context = new \PayPal\Rest\ApiContext(
@@ -52,60 +52,43 @@ class Payment {
 			)
 		);
 
-		$this->wpdb = $wpdb;
+		return $this;
 
 	}
 
-	/**
-	 * @param int $plan_id
-	 *
-	 * @return bool|\PayPal\Api\Payment
-	 */
-	public function pay( $plan_id = 0 ) {
 
-		if ( empty( $plan_id ) ) {
+	public function pay() {
 
-			return false;
+		$is_trial = filter_input(1, 'is_trial', 516);
 
+		$checkout = new Checkout();
+		$checkout->set_plan( $this->plan );
+
+		// Check to see if its a trial or not.
+		if ( ! empty( $is_trial ) ) {
+			$checkout->set_is_trial( true );
 		}
 
-		$plans = new Plan();
-
-		$plan = $plans->get_plan( $plan_id );
-
-		if ( empty( $plan ) ) {
-
+		if ( ! $this->plan ) {
 			return false;
-
 		}
 
-		$tax_rate = $plan->get_tax_rate();
-
-		$price = $plan->get_real_amount();
-
-		$quantity = $this->quantity;
-
-		$tax = $price * ( $tax_rate / 100 );
-
-		$subtotal = $price * $quantity;
-
-		$name = $plan->get_name();
-
-		$currency = get_option( 'subway_currency', 'USD' );
-
-		$sku = $plan->get_sku();
-
-		$redirect_url = esc_url( add_query_arg( 'success', 'true', $this->return_url ) );
-
-		$cancel_url = esc_url( add_query_arg( 'success', 'false', $this->cancel_url ) );
-
-		// Generate Invoice Number.
-		$prefix = apply_filters( 'subway\payment.pay.invoice_number_prefix', get_option( 'subway_invoice_prefix', 'WPBXM' ) );
-
+		$plan           = $checkout->get_plan();
+		$tax_rate       = $plan->get_tax_rate();
+		$price          = $checkout->get_price( false, false );
+		$quantity       = $this->quantity;
+		$tax            = $price * ( $tax_rate / 100 );
+		$subtotal       = $price * $quantity;
+		$name           = $plan->get_name();
+		$sku            = $plan->get_sku();
+		$currency       = get_option( 'subway_currency', 'USD' );
+		$redirect_url   = esc_url( add_query_arg( 'success', 'true', $this->return_url ) );
+		$cancel_url     = esc_url( add_query_arg( 'success', 'false', $this->cancel_url ) );
+		$prefix         = apply_filters( __METHOD__ . '-invoice', get_option( 'subway_invoice_prefix', self::invoice_prefix ) );
 		$user_id        = get_current_user_id();
 		$combination    = date( 'y' ) . date( 'd' ) . date( 'H' ) . date( 'i' ) . date( 's' );
 		$invoice        = sprintf( '%s-%s-%s', $prefix, $user_id, $combination );
-		$invoice_number = apply_filters( 'subway\payment.pay.invoice_number', $invoice );
+		$invoice_number = apply_filters( __METHOD__ . '-invoice-number', $invoice );
 
 		// Add description.
 		$description = sprintf( __( 'Payment for: %s', 'subway' ), $plan->get_name() );
@@ -113,7 +96,7 @@ class Payment {
 		try {
 
 			$payer = new Payer();
-			$payer->setPaymentMethod( "paypal" );
+			$payer->setPaymentMethod( self::gateway );
 
 			$item = new Item();
 
@@ -222,15 +205,15 @@ class Payment {
 					// Format product and plan.
 					$plan_name = sprintf( "%s - %s", $plan->get_product_link(), $plan->get_name() );
 					// Get the corresponding product.
-					$product   = $plan->get_product();
+					$product = $plan->get_product();
 					// Get tax rate.
 					if ( $product ) {
 						$tax_rate = $product->get_tax_rate();
 					}
 				}
 
-				$added_order = $this->wpdb->insert(
-					$this->wpdb->prefix . 'subway_memberships_orders',
+				$added_order = $this->db->insert(
+					$this->db->prefix . 'subway_memberships_orders',
 					array(
 						'plan_id'            => $plan_id,
 						'recorded_plan_name' => strip_tags( $plan_name ),
@@ -240,7 +223,7 @@ class Payment {
 						'amount'             => $payment->getTransactions()[0]->getAmount()->getTotal(),
 						'tax_rate'           => $tax_rate,
 						'currency'           => $payment->getTransactions()[0]->getAmount()->getCurrency(),
-						'gateway'            => $this->gateway,
+						'gateway'            => self::gateway,
 						'ip_address'         => Helpers::get_ip_address(),
 						'created'            => $payment->getCreateTime(),
 						'last_updated'       => current_time( 'mysql' )
@@ -261,7 +244,7 @@ class Payment {
 					)
 				);
 
-				$last_order_id = $this->wpdb->insert_id;
+				$last_order_id = $this->db->insert_id;
 
 				if ( $added_order ) {
 
@@ -301,13 +284,13 @@ class Payment {
 						'gateway_transaction_created'     => $payment->getCreateTime()
 					];
 
-					$order_details = new OrderDetails( $this->wpdb );
+					$order_details = new OrderDetails( $this->db );
 
 					// Create new order detail.
 					$ordered = $order_details->add( $order_details_args );
 
 					// Create new user plan.
-					$user_plans = new Plans( $this->wpdb );
+					$user_plans = new Plans( $this->db );
 
 					// Get the Plan's product id.
 					$plans = new \Subway\Memberships\Plan\Controller();
