@@ -164,7 +164,7 @@
 
                                                     <?php else: ?>
 
-                                                        <?php echo esc_html( $subscription->plan->get_displayed_price_without_tax() ); ?>
+                                                        <?php echo esc_html( $subscription->plan->get_price() ); ?>
                                                         /
                                                         <?php echo esc_html( $subscription->plan->get_type() ); ?>
 
