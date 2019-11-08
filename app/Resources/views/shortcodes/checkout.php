@@ -34,6 +34,7 @@
                             <div id="subway-checkout-order-review">
 								<?php
                                 $checkout = new \Subway\Checkout\Checkout();
+
 								$view->render(
 									'checkout-order',
 									[
