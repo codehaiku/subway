@@ -540,7 +540,7 @@ tr.current-user-plan > td {
 .entry-content .subway-checkout-review-order th,
 .entry-content .subway-membership-lists th {
     border-color: #ddd;
-    background: #212121;
+    background: #32373C;
     font-size: 16px;
     color: #fff;
     font-weight: normal;
@@ -842,4 +842,9 @@ tr.checked > td label.plan-pricing-details {
     text-decoration: none;
     font-size: smaller;
     display: block;
+}
+.subway-label-trial {
+    font-size: small;
+    background: #0073AA;
+    color: #fff;
 }
