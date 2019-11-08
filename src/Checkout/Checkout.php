@@ -53,17 +53,23 @@ class Checkout {
 	}
 
 	/**
+	 * @param bool $tax_included
+	 *
 	 * @return float
 	 */
-	public function get_price() {
+	public function get_price( $tax_included = false ) {
+
+		$plan = $this->get_plan();
+
+		$pricing = $plan->get_pricing();
+		$this->set_price( $plan->get_price( $tax_included ) );
 
 		if ( $this->is_trial() ) {
-			$this->set_price( $this->plan->get_pricing()->get_trial_amount() * 1.10 );
-		} else {
-			$this->set_price( $this->plan->get_displayed_price_without_tax() );
+			$this->set_price( $pricing->get_trial_price( $tax_included ) );
 		}
 
 		return $this->price;
+
 	}
 
 	/**
@@ -79,6 +85,7 @@ class Checkout {
 	public function get_subtotal() {
 		// Copy price in the meantime.
 		$this->set_subtotal( $this->get_price() );
+
 		return $this->subtotal;
 	}
 
@@ -93,13 +100,15 @@ class Checkout {
 	 * @return float
 	 */
 	public function get_tax_rate() {
+		$this->set_tax_rate( $this->plan->get_tax_rate() );
+
 		return $this->tax_rate;
 	}
 
 	/**
 	 * @param $tax_rate
 	 */
-	public function set_tax_rate( $tax_rate ) {
+	protected function set_tax_rate( $tax_rate ) {
 		$this->tax_rate = $tax_rate;
 	}
 
@@ -107,6 +116,7 @@ class Checkout {
 	 * @return float
 	 */
 	public function get_total() {
+		$this->set_total( $this->get_price( true ) );
 
 		return $this->total;
 	}
