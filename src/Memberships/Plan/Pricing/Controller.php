@@ -16,7 +16,7 @@ class Controller extends Pricing {
 
 	}
 
-	public function get_trial_price( $tax_included = false ) {
+	public function get_trial_price( $tax_included = false, $format = true ) {
 
 		$price      = $this->get_trial_amount();
 		$tax_rate   = $this->get_product()->get_tax_rate();
@@ -26,7 +26,14 @@ class Controller extends Pricing {
 			$tax_amount = $price * ( $tax_rate / 100 );
 		}
 
-		return apply_filters( __METHOD__, $price + round( $tax_amount, 2 ) );
+		$price = $price + round( $tax_amount, 2 );
+
+		if ( $format ) {
+			$currency = new Currency();
+			$price    = $currency->format( $price, get_option( 'subway_currency', 'USD' ) );
+		}
+
+		return apply_filters( __METHOD__, $price );
 
 	}
 
@@ -54,7 +61,7 @@ class Controller extends Pricing {
 			}
 		}
 
-		$trial_amount = doubleval( $this->get_trial_price( $tax_included ) );
+		$trial_amount = doubleval( $this->get_trial_price( $tax_included, false ) );
 
 		$displayed_price = $currency->format( $trial_amount, get_option( 'subway_currency', 'USD' ) );
 
