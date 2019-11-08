@@ -100,7 +100,7 @@
 					<?php echo esc_html( $plan->get_date_created() ); ?>
                 </h4>
                 <h4 id="subway-invoice-payment-status-amount">
-					<?php echo esc_html( $plan->get_taxed_price() ); ?>
+					<?php echo esc_html( $plan->get_price( true ) ); ?>
                 </h4>
             </div>
             <!--Invoice Merchant End-->
@@ -127,10 +127,10 @@
 						<?php echo esc_html( $plan->get_name() ); ?>
                     </td>
                     <td>
-						<?php echo esc_html( $plan->get_displayed_price_without_tax() ); ?>
+						<?php echo esc_html( $plan->get_price() ); ?>
                     </td>
                     <td id="subway-invoice-row-subtotal">
-						<?php echo esc_html( $plan->get_displayed_price_without_tax() ); ?>
+						<?php echo esc_html( $plan->get_price() ); ?>
                     </td>
                 </tr>
                 </tbody>
@@ -145,7 +145,7 @@
             <table id="subway-invoice-numbers">
                 <tr>
                     <td>Subtotal</td>
-                    <td><?php echo esc_html( $plan->get_displayed_price_without_tax() ); ?></td>
+                    <td><?php echo esc_html( $plan->get_price() ); ?></td>
                 </tr>
                 <tr>
                     <td>Tax (<?php echo esc_html( $plan->get_tax_rate() ); ?>%)</td>
@@ -153,11 +153,11 @@
                 </tr>
                 <tr>
                     <td>Total</td>
-                    <td><?php echo esc_html( $plan->get_taxed_price() ); ?></td>
+                    <td><?php echo esc_html( $plan->get_price(true) ); ?></td>
                 </tr>
                 <tr>
                     <td>Paid</td>
-                    <td>(<?php echo esc_html( $plan->get_taxed_price() ); ?>)</td>
+                    <td>(<?php echo esc_html( $plan->get_price(true) ); ?>)</td>
                 </tr>
                 <tr>
                     <td>Amount Due</td>
@@ -174,9 +174,9 @@
         <div class="subway-flex-column-100">
             <h5>Payments</h5>
 			<?php echo $order->created ?>
-			<?php echo $plan->get_displayed_price_without_tax() ?>
+			<?php echo $plan->get_price() ?>
             Payment from
-			<?php $order->gateway; ?>
+			<?php echo $order->gateway; ?>
 
             <h5>Notes</h5>
             <p>
