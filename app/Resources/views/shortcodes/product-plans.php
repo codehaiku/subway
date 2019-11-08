@@ -73,7 +73,7 @@ $pricing = new \Subway\Memberships\Plan\Pricing\Controller();
                                         </span>
                                     <?php endif; ?>
 
-                                    <?php echo esc_html( $plan->get_displayed_price() ); ?>
+                                    <?php echo esc_html( $plan->get_price( $plan->is_display_tax() ) ); ?>
 
                                     <?php if ( $pricing ): ?>
                                         <?php if ( $pricing->is_has_trial() ): ?>
