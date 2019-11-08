@@ -5,8 +5,8 @@ final class Migrate extends Orders {
 
 	protected $collate = '';
 
-	public function __construct( \wpdb $wpdb ) {
-		parent::__construct( $wpdb );
+	public function __construct() {
+		parent::__construct();
 		$this->collate = $this->db->get_charset_collate();
 	}
 
