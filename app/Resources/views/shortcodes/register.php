@@ -25,12 +25,14 @@ $plan_id = filter_input( INPUT_GET, 'plan_id', 519 );
             <div class="subway-flex-column-100">
                 <div id="subway-checkout-order-review">
 		            <?php
+		            $checkout = new \Subway\Checkout\Checkout();
 		            $this->render(
 			            'checkout-order',
 			            [
 				            'plan'     => $plan,
 				            'currency' => $currency,
-				            'options'  => $options
+				            'options'  => $options,
+                            'checkout' => $checkout
 			            ] );
 		            ?>
                 </div>
