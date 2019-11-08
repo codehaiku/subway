@@ -57,6 +57,8 @@ class InstallTable {
 
 		$this->plans_pricing_install_update();
 
+		$this->membership_users_plans_update();
+
 		return $this;
 	}
 
@@ -169,22 +171,9 @@ class InstallTable {
 
 	protected function membership_users_plans_install() {
 
-		$table = $this->wpdb->prefix . 'subway_memberships_users_plans';
+		$users_plans = new \Subway\User\Migrate();
 
-		$sql = "CREATE TABLE $table(
-				id mediumint(9) NOT NULL AUTO_INCREMENT,
-				user_id mediumint(9) NOT NULL,
-				plan_id mediumint(9) NOT NULL,
-				product_id mediumint(9) NOT NULL,
-				status varchar(100) NOT NULL,
-				trial_status varchar(100) NOT NULL,
-				notes text NOT NULL,
-				updated datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-				created datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-				PRIMARY KEY (id)
-			) $this->collate;";
-
-		dbDelta( $sql );
+		dbDelta( $users_plans->sql() );
 
 		update_option( "subway_memberships_users_plans_version", $this->db_version );
 
@@ -192,9 +181,22 @@ class InstallTable {
 
 	}
 
+	protected function membership_users_plans_update() {
+
+		$table_version = get_option( "subway_memberships_users_plans_version" );
+
+		if ( $table_version !== $this->db_version ) {
+
+			$this->membership_users_plans_install();
+		}
+
+		return $this;
+
+	}
+
 	protected function membership_orders_install() {
 
-		$orders_migrate = new Migrate( Helpers::get_db() );
+		$orders_migrate = new Migrate();
 
 		dbDelta( $orders_migrate->sql() );
 
@@ -210,7 +212,7 @@ class InstallTable {
 
 		if ( $table_version !== $this->db_version ) {
 
-			$orders_migrate = new Migrate( Helpers::get_db() );
+			$orders_migrate = new Migrate();
 
 			dbDelta( $orders_migrate->sql() );
 
