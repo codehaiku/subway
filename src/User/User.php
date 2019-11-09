@@ -16,12 +16,27 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class User extends Plans {
 
-	protected $plan = null;
+	protected $plans = [];
 	protected $db = null;
 
 	public function __construct() {
 		parent::__construct( Helpers::get_db() );
 	}
+
+	/**
+	 * @return array
+	 */
+	public function get_plans() {
+		return $this->plans;
+	}
+
+	/**
+	 * @param array $plans
+	 */
+	public function set_plans( $plans ) {
+		$this->plans = $plans;
+	}
+
 
 	/**
 	 * Returns the given user role.

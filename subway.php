@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Define Subway Plugin Version.
 define( 'SUBWAY_VERSION', '3.0' );
 
-// Define Database Version.s\
+// Define Database Version.
 define( 'SUBWAY_DB_VERSION', '1.0.0' );
 
 // Define Subway Directory Path.

@@ -224,6 +224,7 @@ class Payment {
 					$this->db->prefix . 'subway_memberships_orders',
 					array(
 						'plan_id'            => $plan_id,
+						'txn_id'             => $payment->getId(),
 						'recorded_plan_name' => strip_tags( $plan_name ),
 						'user_id'            => get_current_user_id(),
 						'invoice_number'     => $payment->getTransactions()[0]->getInvoiceNumber(),
@@ -238,6 +239,7 @@ class Payment {
 					),
 					array(
 						'%d', // Plan ID.
+						'%s', // TXN ID.
 						'%s', // Recorded Plan Name.
 						'%d', // User ID.
 						'%s', // Invoice No.
@@ -309,6 +311,7 @@ class Payment {
 
 					// Actually insert the plan into users plan table.
 					$user_plan_args = [
+						'txn_id'       => $payment->getId(),
 						'user_id'      => get_current_user_id(),
 						'product_id'   => $product_id,
 						'plan_id'      => $plan_id,

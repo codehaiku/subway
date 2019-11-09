@@ -178,6 +178,7 @@ class Plans {
 		$defaults = [
 			'user_id'      => '',
 			'plan_id'      => '',
+			'txn_id'       => '',
 			'product_id'   => '',
 			'status'       => 'pending',
 			'trial_status' => 'none',
@@ -243,12 +244,16 @@ class Plans {
 
 	}
 
+	/**
+	 * @param $user_id
+	 *
+	 * @return array [plan = Object]
+	 */
 	public function get_user_plans( $user_id ) {
 
 		$stmt = $this->wpdb->prepare( "SELECT * FROM $this->table WHERE user_id = %d ORDER BY id DESC", $user_id );
 
 		$results = $this->wpdb->get_results( $stmt, OBJECT );
-
 
 		$plans = [];
 

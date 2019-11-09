@@ -763,6 +763,7 @@ table.subway-membership-lists td {
 
 .product-plan-user-cancelled,
 .product-plan-user-trial,
+.product-plan-user-subscribed,
 .product-plan-user-active {
     border: 1px solid;
     padding: 3px 6px;

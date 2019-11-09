@@ -1,4 +1,5 @@
 <?php
+
 namespace Subway\User;
 
 use Subway\Helpers\Helpers;
@@ -20,6 +21,7 @@ final class Migrate {
 				id mediumint(9) NOT NULL AUTO_INCREMENT,
 				user_id mediumint(9) NOT NULL,
 				plan_id mediumint(9) NOT NULL,
+				txn_id varchar(100) NOT NULL,
 				product_id mediumint(9) NOT NULL,
 				status varchar(100) NOT NULL,
 				trial_status varchar(100) NOT NULL,

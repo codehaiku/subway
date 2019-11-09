@@ -1,4 +1,5 @@
 <?php
+
 namespace Subway\Memberships\Orders;
 
 final class Migrate extends Orders {
@@ -10,10 +11,11 @@ final class Migrate extends Orders {
 		$this->collate = $this->db->get_charset_collate();
 	}
 
-	public function sql(){
+	public function sql() {
 		return "CREATE TABLE {$this->table} (
 				id mediumint(9) NOT NULL AUTO_INCREMENT,
 				plan_id mediumint(9) NOT NULL,
+				txn_id varchar(100) NOT NULL,
 				recorded_plan_name varchar(100) NOT NULL,
 				invoice_number varchar(100) NOT NULL,
 				user_id mediumint(9) NOT NULL,

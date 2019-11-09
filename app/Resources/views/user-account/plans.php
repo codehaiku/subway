@@ -13,10 +13,10 @@
 
                 <thead>
                 <tr>
-                    <th><?php esc_html_e( 'Membership Plan', 'subway' ); ?></th>
+                    <th><?php esc_html_e( 'Plan', 'subway' ); ?></th>
                     <th><?php esc_html_e( 'Status', 'subway' ); ?></th>
-                    <th><?php esc_html_e( 'Last Payment', 'subway' ); ?></th>
-                    <th><?php esc_html_e( 'Next Payment', 'subway' ); ?></th>
+                    <th><?php esc_html_e( 'Recent Payment', 'subway' ); ?></th>
+                    <th><?php esc_html_e( 'Next Due Date', 'subway' ); ?></th>
                 </tr>
                 </thead>
 
@@ -25,6 +25,7 @@
 				<?php foreach ( $subscriptions as $subscription ): ?>
 
 					<?php if ( $subscription->plan ) : ?>
+						<?php $plan = $subscription->plan; ?>
                         <tr>
                             <td>
                                 <h4 class="subway-mg-top-zero subway-mg-bot-zero">
@@ -37,6 +38,8 @@
 											<?php echo esc_html( $subscription->plan->get_name() ); ?>
                                         </strong>
                                     </a>
+                                    <br/>
+									<?php echo esc_html( $subscription->plan->get_pricing()->get_text( $subscription->plan ) ); ?>
                                 </p>
 
                             </td>
@@ -47,10 +50,21 @@
 								<?php if ( 'active' === $subscription->result->trial_status ) { ?>
 									<?php $status = 'trial'; ?>
 								<?php } ?>
+
                                 <div class="product-plan-user-<?php echo esc_attr( $status ); ?>">
 									<?php echo esc_html( $status ); ?>
                                 </div>
 
+								<?php if ( 'trial' === $status ): ?>
+                                    <div class="trial-info">
+                                        <small>
+										<?php echo esc_html( sprintf( __( '%s expires on %s', 'subway' ),
+                                            $subscription->plan->get_pricing()->get_trial_info( true ),
+                                            date( 'F j, Y  g:iA', $subscription->result->trial_ending ) ) );
+										?>
+                                        </small>
+                                    </div>
+								<?php endif; ?>
                             </td>
 
                             <td>
@@ -66,14 +80,16 @@
                                         </p>
 									<?php else: ?>
 
-										<?php echo esc_html( $subscription->plan->get_price() ); ?>
-                                        /
-										<?php echo esc_html( $subscription->plan->get_type() ); ?>
+                                        Amount: <?php echo esc_html( $subscription->plan->get_price() ); ?>
 
                                         <p class="subway-mg-bot-zero">
-                                            <small>Paid:
-                                                Oct 18, 2019 @TODO
+                                            <small>
+                                                Date: Oct 18, 2019 @TODO
+                                                <a href="#">
+                                                    View Invoice
+                                                </a>
                                             </small>
+
                                         </p>
 
 

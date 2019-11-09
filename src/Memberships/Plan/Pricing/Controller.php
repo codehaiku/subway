@@ -45,11 +45,15 @@ class Controller extends Pricing {
 
 	}
 
-	public function get_trial_info() {
+	public function get_trial_info( $simple = false ) {
 
 		$currency = new Currency();
 
-		$i18 = __( 'Start %d %s trial for %s &rarr;', 'subway' );
+		$i18 = __( 'Start %1$d %2$s trial for %3$s &rarr;', 'subway' );
+
+		if ( $simple ) {
+			$i18 = __('%1$d %2$s trial', 'subway');
+		}
 
 		$tax_included = false;
 
