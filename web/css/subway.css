@@ -762,17 +762,23 @@ table.subway-membership-lists td {
 }
 
 .product-plan-user-cancelled,
-.product-plan-user-subscribed {
-    display: inline-block;
+.product-plan-user-trial,
+.product-plan-user-active {
     border: 1px solid;
     padding: 3px 6px;
     color: #46B450;
     font-size: smaller;
+    text-align: center;
+    display: block;
     text-transform: capitalize;
 }
 
 .product-plan-user-cancelled {
     color: #DC3232;
+}
+
+.product-plan-user-trial {
+    color: #0073AA;
 }
 
 .product-plan-title {
