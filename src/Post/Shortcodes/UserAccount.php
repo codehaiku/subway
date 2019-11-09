@@ -39,14 +39,14 @@ class UserAccount {
 		];
 
 		// Set default template to user account.
-		$template = 'user-account';
+		$template = 'home';
 
 		switch ( $current_page ):
 
 			case 'update-email-address':
 
 				$flash           = new FlashMessage( get_current_user_id(), 'subway-user-edit-email' );
-				$template        = 'user-account-email-edit';
+				$template        = 'email-edit';
 				$args['message'] = $flash->get();
 
 				break;
@@ -54,7 +54,7 @@ class UserAccount {
 			case 'update-personal-information':
 
 				$flash           = new FlashMessage( get_current_user_id(), 'subway-user-edit-profile' );
-				$template        = 'user-account-edit';
+				$template        = 'edit';
 				$args['message'] = $flash->get();
 
 				break;
@@ -63,20 +63,20 @@ class UserAccount {
 
 				$id = filter_input( 1, 'invoice_id', 516 );
 
-				$invoices = new Invoices( Helpers::get_db() );
+				$invoices = new Invoices();
 				$invoices->set_user( get_current_user_id() );
 				$invoices->set_id( $id );
 
 				$invoice         = $invoices->get_user_invoice();
 				$args['invoice'] = $invoice;
 
-				$template = 'user-account-invoice';
+				$template = 'invoice-single';
 
 				break;
 
 			case 'cancel-membership':
 
-				$template = 'user-account-cancel-membership';
+				$template = 'cancel-membership';
 
 				$plan = new Plan();
 
@@ -88,7 +88,7 @@ class UserAccount {
 
 			default:
 
-				$invoices = new Invoices( Helpers::get_db() );
+				$invoices = new Invoices();
 
 				$invoices->set_user( get_current_user_id() );
 
@@ -98,7 +98,7 @@ class UserAccount {
 
 		endswitch;
 
-		return $this->view->render( $template, $args, true, 'shortcodes' );
+		return $this->view->render( $template, $args, true, 'user-account' );
 
 	}
 
