@@ -181,6 +181,7 @@ class Plans {
 			'product_id'   => '',
 			'status'       => 'pending',
 			'trial_status' => 'none',
+			'trial_ending' => '',
 			'notes'        => '',
 			'updated'      => current_time( 'mysql' ),
 			'created'      => current_time( 'mysql' ),
