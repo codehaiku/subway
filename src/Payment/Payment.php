@@ -77,7 +77,9 @@ class Payment {
 
 		}
 
-		if ( ! $this->plan ) { return false; }
+		if ( ! $this->plan ) {
+			return false;
+		}
 
 		$plan           = $checkout->get_plan();
 		$tax_rate       = $plan->get_tax_rate();
@@ -180,6 +182,8 @@ class Payment {
 	public function confirm() {
 
 		if ( isset( $_GET['paymentId'] ) && isset( $_GET['success'] ) && $_GET['success'] == 'true' ) {
+
+			$is_trial = filter_input( 1, 'is_trial', 516 );
 
 			$paymentId = $_GET['paymentId'];
 			$payment   = \PayPal\Api\Payment::get( $paymentId, $this->api_context );
@@ -297,19 +301,37 @@ class Payment {
 					$user_plans = new Plans( $this->db );
 
 					// Get the Plan's product id.
-					$plans = new \Subway\Memberships\Plan\Controller();
-					$plan  = $plans->get_plan( $plan_id );
+					$plans   = new \Subway\Memberships\Plan\Controller();
+					$plan    = $plans->get_plan( $plan_id );
+					$pricing = $plan->get_pricing();
 
 					$product_id = $plan->get_product_id();
 
 					// Actually insert the plan into users plan table.
-					$user_plan_added = $user_plans->add( [
+					$user_plan_args = [
 						'user_id'      => get_current_user_id(),
 						'product_id'   => $product_id,
 						'plan_id'      => $plan_id,
 						'status'       => 'active',
 						'trial_status' => 'none'
-					] );
+					];
+
+					if ( ! empty( $is_trial ) ) {
+
+						if ( $pricing ) {
+
+							$pricing->set_plan( $plan );
+
+							$trial_duration = sprintf( "+ %d %s", $pricing->get_trial_frequency(), $pricing->get_trial_period() );
+
+							$user_plan_args['trial_status'] = 'active';
+
+							$user_plan_args['trial_ending'] = strtotime( current_time( 'mysql' ) . $trial_duration );
+
+						}
+					}
+
+					$user_plan_added = $user_plans->add( $user_plan_args );
 
 					if ( ! is_numeric( $user_plan_added ) ) {
 						$this->error_redirect_url( $this->cancel_url );
