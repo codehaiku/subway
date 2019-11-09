@@ -94,7 +94,7 @@ class Invoices {
 	public function get_user_invoices() {
 
 		$stmt = $this->db->prepare(
-			"SELECT * FROM $this->table_orders WHERE user_id = %d AND status = %s",
+			"SELECT * FROM $this->table_orders WHERE user_id = %d AND status = %s ORDER BY id DESC;",
 			$this->get_user(), 'approved'
 		);
 
