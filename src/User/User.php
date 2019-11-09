@@ -16,10 +16,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class User extends Plans {
 
+	protected $plan = null;
+	protected $db = null;
+
 	public function __construct() {
 		parent::__construct( Helpers::get_db() );
 	}
-
 
 	/**
 	 * Returns the given user role.
@@ -29,6 +31,7 @@ class User extends Plans {
 	 * @return array The user roles.
 	 */
 	public function get_role( $user_id = 0 ) {
+
 		$roles = array();
 
 		$user = get_userdata( absint( $user_id ) );
@@ -38,6 +41,7 @@ class User extends Plans {
 		}
 
 		return $roles;
+
 	}
 
 	public function is_subscribed( $post_id ) {
