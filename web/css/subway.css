@@ -539,8 +539,8 @@ tr.current-user-plan > td {
 .entry-content .subway-checkout-user-info-table th,
 .entry-content .subway-checkout-review-order th,
 .entry-content .subway-membership-lists th {
-    border-color: #ddd;
-    background: #32373C;
+    border-color: #0073AA;
+    background: #0073AA;
     font-size: 16px;
     color: #fff;
     font-weight: normal;
@@ -765,13 +765,12 @@ table.subway-membership-lists td {
 .product-plan-user-trial,
 .product-plan-user-subscribed,
 .product-plan-user-active {
+    color: #46B450;
     border: 1px solid;
     padding: 3px 6px;
-    color: #46B450;
-    font-size: smaller;
-    text-align: center;
-    display: block;
     text-transform: capitalize;
+    display: inline-block;
+    border-radius: 3px;
 }
 
 .product-plan-user-cancelled {
