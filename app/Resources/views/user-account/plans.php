@@ -1,3 +1,4 @@
+<?php $currency = new Subway\Currency\Currency(); ?>
 <h3>
 	<?php esc_html_e( 'Membership Plans', 'subway' ); ?>
 </h3>
@@ -24,7 +25,9 @@
 
 				<?php foreach ( $subscriptions as $subscription ): ?>
 
+
 					<?php if ( $subscription->plan ) : ?>
+
 						<?php $plan = $subscription->plan; ?>
                         <tr>
                             <td>
@@ -58,8 +61,8 @@
 								<?php if ( 'trial' === $status ): ?>
                                     <div class="trial-info">
 										<?php echo esc_html( sprintf( __( '%s expires on %s', 'subway' ),
-                                            $subscription->plan->get_pricing()->get_trial_info( true ),
-                                            date( 'F j, Y  g:iA', $subscription->result->trial_ending ) ) );
+											$subscription->plan->get_pricing()->get_trial_info( true ),
+											date( 'F j, Y  g:iA', $subscription->result->trial_ending ) ) );
 										?>
                                     </div>
 								<?php endif; ?>
@@ -78,18 +81,22 @@
                                         </p>
 									<?php else: ?>
 
-                                        Amount: <?php echo esc_html( $subscription->plan->get_price() ); ?>
+                                        <div class="product-plan-user-trial">
+											<?php esc_html_e( 'Amount:', 'subway' ); ?>
+											<?php echo esc_html( $currency->format( $subscription->result->orders_amount, $subscription->result->orders_currency ) ); ?>
+                                        </div>
 
                                         <p class="subway-mg-bot-zero">
-                                            <small>
-                                                Date: Oct 18, 2019 @TODO
-                                                <a href="#">
-                                                    View Invoice
-                                                </a>
-                                            </small>
 
+											<?php echo date( 'F j, <\b\\r> Y  g:i a', strtotime( $subscription->result->created ) ); ?>
+                                            <br/>
+                                            <a href="<?php echo esc_url( add_query_arg( [
+												'account-page' => 'invoice',
+												'invoice_id'   => 20
+											], $options->get_accounts_page_url() ) ); ?>">
+												<?php esc_html_e( 'View Invoice', 'subway' ); ?>
+                                            </a>
                                         </p>
-
 
 									<?php endif; ?>
 
@@ -109,10 +116,9 @@
 
 								<?php else: ?>
 
-                                    <p class="subway-mg-bot-zero">July 02, 2020 @TODO</p>
                                     <p>
                                         <a title="<?php esc_attr_e( 'Cancel Membership', 'subway' ); ?>"
-                                           href="<?php echo esc_url( $subscription->plan->get_cancel_url() ); ?>">
+                                           href="<?php echo esc_url( $subscription->plan->get_cancel_url() ); ?>" class="sw-button">
 											<?php esc_html_e( 'Cancel Membership', 'subway' ); ?>
                                         </a>
                                     </p>
