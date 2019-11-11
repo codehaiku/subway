@@ -247,35 +247,26 @@ class Plans {
 	/**
 	 * @param $user_id
 	 *
-	 * @return array [plan = Object]
+	 * @return array
 	 */
 	public function get_user_plans( $user_id ) {
 
-		$stmt = $this->wpdb->prepare( "SELECT * FROM $this->table WHERE user_id = %d ORDER BY id DESC", $user_id );
+		$r    = new \stdClass();
+		$plan = new Plan();
 
+		$stmt    = $this->get_user_plans_query( $user_id );
 		$results = $this->wpdb->get_results( $stmt, OBJECT );
 
 		$plans = [];
+		$user  = [];
 
 		if ( ! empty( $results ) ) {
-
 			foreach ( $results as $result ) {
-
-				$r = new \stdClass();
-
-				$plan = new Plan();
-				$plan = $plan->get_plan( $result->plan_id );
-
-				$user = [];
-
 				$r->result = $result;
 				$r->user   = $user;
-				$r->plan   = $plan;
-
+				$r->plan   = $plan->get_plan( $result->plan_id );
 				array_push( $plans, $r );
-
 			}
-
 		}
 
 		return $plans;
@@ -309,6 +300,59 @@ class Plans {
 		}
 
 		return true;
+
+	}
+
+	private function get_user_plans_query( $user_id ) {
+
+		$orders_table = $this->wpdb->prefix . 'subway_memberships_orders';
+
+		// User Plans Fields.
+		$fields = [
+			"{$this->table}.id",
+			"{$this->table}.user_id",
+			"{$this->table}.plan_id",
+			"{$this->table}.product_id",
+			"{$this->table}.txn_id",
+			"{$this->table}.status",
+			"{$this->table}.trial_status",
+			"{$this->table}.notes",
+			"{$this->table}.updated",
+			"{$this->table}.created",
+			"{$this->table}.trial_ending"
+		];
+
+		// Order Fields.
+		$orders = [
+			"{$orders_table}.id as orders_id",
+			"{$orders_table}.user_id as orders_user_id",
+			"{$orders_table}.plan_id as orders_plan_id",
+			"{$orders_table}.txn_id as orders_txn_id",
+			"{$orders_table}.recorded_plan_name as orders_recorded_plan_name",
+			"{$orders_table}.invoice_number as orders_invoice_number",
+			"{$orders_table}.status as orders_status",
+			"{$orders_table}.amount as orders_amount",
+			"{$orders_table}.tax_rate as orders_tax_rate",
+			"{$orders_table}.customer_vat_number as orders_customer_vat_number",
+			"{$orders_table}.currency as orders_currency",
+			"{$orders_table}.gateway as orders_gateway",
+			"{$orders_table}.ip_address as orders_ip_address",
+			"{$orders_table}.created as orders_created",
+			"{$orders_table}.last_updated as orders_last_updated"
+		];
+
+		$fields = implode( ',', array_merge( $fields, $orders ) );
+
+		return $this->wpdb->prepare(
+			"SELECT $fields FROM $this->table 
+			INNER JOIN $orders_table 
+			ON {$this->table}.txn_id = {$orders_table}.txn_id
+			WHERE {$this->table}.user_id = %d
+			AND {$this->table}.txn_id <> ''
+			ORDER BY id DESC
+			",
+			$user_id
+		);
 
 	}
 
