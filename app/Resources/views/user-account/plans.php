@@ -57,12 +57,10 @@
 
 								<?php if ( 'trial' === $status ): ?>
                                     <div class="trial-info">
-                                        <small>
 										<?php echo esc_html( sprintf( __( '%s expires on %s', 'subway' ),
                                             $subscription->plan->get_pricing()->get_trial_info( true ),
                                             date( 'F j, Y  g:iA', $subscription->result->trial_ending ) ) );
 										?>
-                                        </small>
                                     </div>
 								<?php endif; ?>
                             </td>
