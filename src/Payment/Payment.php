@@ -121,9 +121,6 @@ class Payment {
 			exit( 1 );
 		}
 
-		// echo 'success'; echo '<br>';
-		// Helpers::debug( $request );
-		// Helpers::debug( $output );
 		$created_plan = \PayPal\Api\Plan::get( $output->getId(), $this->api_context );
 
 		try {
@@ -140,7 +137,9 @@ class Payment {
 			$created_plan = \PayPal\Api\Plan::get( $created_plan->getId(), $this->api_context );
 
 		} catch ( \Exception $ex ) {
+			
 			die( 'error' );
+
 		}
 
 		$start_date = date( 'c', strtotime( 'now + 1 minutes' ) );
